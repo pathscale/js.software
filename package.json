@@ -20,7 +20,6 @@
     "vite-plugin-solid": "^2.11.6"
   },
   "dependencies": {
-    "@ark-ui/solid": "^5.9.0",
     "@solid-primitives/refs": "^1.1.1",
     "@solidjs/router": "^0.15.3",
     "class-variance-authority": "^0.7.1",
