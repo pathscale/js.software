@@ -1,7 +1,7 @@
 {
-  "name": "vite-template-solid",
-  "version": "0.0.0",
-  "description": "",
+  "name": "JS Software UI",
+  "version": "0.0.1",
+  "description": "Kitchen sink showcase of Solid UI components",
   "type": "module",
   "scripts": {
     "start": "vite",
