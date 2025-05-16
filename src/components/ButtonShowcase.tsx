@@ -2,6 +2,7 @@ import ShowcaseLayout from "./ShowcaseLayout";
 import { Button } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
+import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function ButtonShowcase() {
   const variants = ["fill", "gray", "ghost"] as const;
@@ -18,6 +19,17 @@ export default function ButtonShowcase() {
   const shapes = ["rounded", "circle"] as const;
   const spacing = [0, "xs", "sm", "md", "lg"] as const;
   const alignments = ["start", "center", "end"] as const;
+
+  const sections = [
+    { id: "variants-colors", title: "Variants × Colors" },
+    { id: "sizes", title: "Sizes" },
+    { id: "spacing", title: "Spacing" },
+    { id: "alignment", title: "Alignment" },
+    { id: "shapes", title: "Shapes" },
+    { id: "states", title: "States" },
+    { id: "polymorphic", title: "Polymorphic Usage" },
+    { id: "props", title: "Props" },
+  ] as const;
 
   const buttonProps = [
     {
@@ -84,147 +96,138 @@ export default function ButtonShowcase() {
   return (
     <ShowcaseLayout>
       <div class="space-y-4">
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">Variants × Colors</h2>
-          <div class="space-y-3">
-            {variants.map((variant) => (
-              <div class="space-y-2">
-                <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  {variant}
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                  {colors.map((color) => (
-                    <Button variant={variant} color={color}>
-                      {color}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+        <ShowcaseSection id="contents" title="Contents">
+          <nav class="space-y-1">
+            {sections.map((section) => (
+              <a
+                href={`#${section.id}`}
+                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+              >
+                {section.title}
+              </a>
             ))}
-            <CodeBlock
-              code={`// Variant and color combinations
+          </nav>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="variants-colors" title="Variants × Colors">
+          {variants.map((variant) => (
+            <div class="space-y-2">
+              <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                {variant}
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                {colors.map((color) => (
+                  <Button variant={variant} color={color}>
+                    {color}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          ))}
+          <CodeBlock
+            code={`// Variant and color combinations
 <Button variant="fill" color="primary">Primary Fill</Button>
 <Button variant="gray" color="accent">Accent Gray</Button>
 <Button variant="ghost" color="destructive">Destructive Ghost</Button>`}
-            />
-          </div>
-        </div>
+          />
+        </ShowcaseSection>
 
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">Sizes</h2>
-          <div class="space-y-3">
-            <div class="flex flex-wrap gap-2 items-center">
-              {sizes.map((size) => (
-                <Button size={size}>Size {size}</Button>
-              ))}
-            </div>
-            <CodeBlock
-              code={`// Size variations
+        <ShowcaseSection id="sizes" title="Sizes">
+          <div class="flex flex-wrap gap-2 items-center">
+            {sizes.map((size) => (
+              <Button size={size}>Size {size}</Button>
+            ))}
+          </div>
+          <CodeBlock
+            code={`// Size variations
 <Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
 <Button size="lg">Large</Button>`}
-            />
-          </div>
-        </div>
+          />
+        </ShowcaseSection>
 
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">Spacing</h2>
-          <div class="space-y-3">
-            <div class="flex flex-wrap gap-2">
-              {spacing.map((space) => (
-                <Button spacing={space}>Spacing {space}</Button>
-              ))}
-            </div>
-            <CodeBlock
-              code={`// Spacing variations
+        <ShowcaseSection id="spacing" title="Spacing">
+          <div class="flex flex-wrap gap-2">
+            {spacing.map((space) => (
+              <Button spacing={space}>Spacing {space}</Button>
+            ))}
+          </div>
+          <CodeBlock
+            code={`// Spacing variations
 <Button spacing={0}>No Spacing</Button>
 <Button spacing="xs">XS Spacing</Button>
 <Button spacing="sm">SM Spacing</Button>
 <Button spacing="md">MD Spacing</Button>
 <Button spacing="lg">LG Spacing</Button>`}
-            />
-          </div>
-        </div>
+          />
+        </ShowcaseSection>
 
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">Alignment</h2>
-          <div class="space-y-3">
-            <div class="space-y-2">
-              {alignments.map((align) => (
-                <Button align={align} stretched class="w-64">
-                  Align {align}
-                </Button>
-              ))}
-            </div>
-            <CodeBlock
-              code={`// Content alignment
+        <ShowcaseSection id="alignment" title="Alignment">
+          <div class="space-y-2">
+            {alignments.map((align) => (
+              <Button align={align} stretched class="w-64">
+                Align {align}
+              </Button>
+            ))}
+          </div>
+          <CodeBlock
+            code={`// Content alignment
 <Button align="start">Left aligned content</Button>
 <Button align="center">Centered content</Button>
 <Button align="end">Right aligned content</Button>`}
-            />
-          </div>
-        </div>
+          />
+        </ShowcaseSection>
 
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">Shapes</h2>
-          <div class="space-y-3">
-            <div class="flex flex-wrap gap-2">
-              {shapes.map((shape) => (
-                <Button shape={shape}>{shape}</Button>
-              ))}
-            </div>
-            <CodeBlock
-              code={`// Shape variations
+        <ShowcaseSection id="shapes" title="Shapes">
+          <div class="flex flex-wrap gap-2">
+            {shapes.map((shape) => (
+              <Button shape={shape}>{shape}</Button>
+            ))}
+          </div>
+          <CodeBlock
+            code={`// Shape variations
 <Button shape="rounded">Rounded</Button>
 <Button shape="circle">Circle</Button>`}
-            />
-          </div>
-        </div>
+          />
+        </ShowcaseSection>
 
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">States</h2>
-          <div class="space-y-3">
-            <div class="space-y-2">
-              <div class="flex flex-wrap gap-2">
-                <Button>Normal</Button>
-                <Button disabled>Disabled</Button>
-                <Button loading>Loading</Button>
-              </div>
-              <Button stretched>Full Width</Button>
+        <ShowcaseSection id="states" title="States">
+          <div class="space-y-2">
+            <div class="flex flex-wrap gap-2">
+              <Button>Normal</Button>
+              <Button disabled>Disabled</Button>
+              <Button loading>Loading</Button>
             </div>
-            <CodeBlock
-              code={`// Interactive states
+            <Button stretched>Full Width</Button>
+          </div>
+          <CodeBlock
+            code={`// Interactive states
 <Button>Normal</Button>
 <Button disabled>Disabled</Button>
 <Button loading>Loading</Button>
 <Button stretched>Full Width</Button>`}
-            />
-          </div>
-        </div>
+          />
+        </ShowcaseSection>
 
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">Polymorphic Usage</h2>
-          <div class="space-y-3">
-            <div class="flex flex-wrap gap-2">
-              <Button as="a" href="#" onClick={(e) => e.preventDefault()}>
-                Link Button
-              </Button>
-              <Button as="span" role="button">
-                Span Button
-              </Button>
-            </div>
-            <CodeBlock
-              code={`// Polymorphic usage
+        <ShowcaseSection id="polymorphic" title="Polymorphic Usage">
+          <div class="flex flex-wrap gap-2">
+            <Button as="a" href="#" onClick={(e) => e.preventDefault()}>
+              Link Button
+            </Button>
+            <Button as="span" role="button">
+              Span Button
+            </Button>
+          </div>
+          <CodeBlock
+            code={`// Polymorphic usage
 <Button as="a" href="#">Link Button</Button>
 <Button as="span" role="button">Span Button</Button>`}
-            />
-          </div>
-        </div>
+          />
+        </ShowcaseSection>
 
-        <div class="p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <h2 class="text-xl font-semibold mb-2">Props</h2>
+        <ShowcaseSection id="props" title="Props">
           <PropsTable props={buttonProps} />
-        </div>
+        </ShowcaseSection>
       </div>
     </ShowcaseLayout>
   );

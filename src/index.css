@@ -28,3 +28,9 @@
   --color-fg-positive: var(--color-fg-positive);
   --color-fg-destructive: var(--color-fg-destructive);
 }
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
