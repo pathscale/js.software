@@ -7,6 +7,18 @@ import { PropsTable } from "./showcase/PropsTable";
 
 export default function SelectShowcase() {
   const [selected, setSelected] = createSignal("");
+  const [colorSelected, setColorSelected] = createSignal("");
+  const [sizeSelected, setSizeSelected] = createSignal("");
+
+  const sections = [
+    { id: "contents", title: "Contents" },
+    { id: "basic", title: "Basic Usage" },
+    { id: "colors", title: "Color Variants" },
+    { id: "sizes", title: "Size Variants" },
+    { id: "states", title: "States" },
+    { id: "variants", title: "Variants" },
+    { id: "props", title: "Props" },
+  ] as const;
 
   const props = [
     {
@@ -23,11 +35,6 @@ export default function SelectShowcase() {
       name: "placeholder",
       type: "string",
       description: "Placeholder option shown when value is empty",
-    },
-    {
-      name: "nativeSize",
-      type: "string | number",
-      description: "Native HTML select size (number of visible options)",
     },
     {
       name: "size",
@@ -62,119 +69,271 @@ export default function SelectShowcase() {
     {
       name: "disabled",
       type: "boolean",
+      default: "false",
       description: "Disable the select input",
+    },
+    {
+      name: "nativeSize",
+      type: "string | number",
+      description: "Native HTML select size (number of visible options)",
     },
     { name: "class", type: "string", description: "Additional custom classes" },
   ];
 
-  const options = ["Option A", "Option B", "Option C"];
+  const fruitOptions = [
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana" },
+    { value: "orange", label: "Orange" },
+    { value: "grape", label: "Grape" },
+    { value: "mango", label: "Mango" },
+    { value: "kiwi", label: "Kiwi" },
+  ];
+
+  const colorOptions = [
+    { value: "red", label: "Ruby Red" },
+    { value: "blue", label: "Ocean Blue" },
+    { value: "green", label: "Forest Green" },
+    { value: "purple", label: "Royal Purple" },
+    { value: "orange", label: "Sunset Orange" },
+  ];
+
+  const sizeOptions = [
+    { value: "xs", label: "Extra Small" },
+    { value: "sm", label: "Small" },
+    { value: "md", label: "Medium" },
+    { value: "lg", label: "Large" },
+    { value: "xl", label: "Extra Large" },
+  ];
+
+  const categoryOptions = [
+    { value: "electronics", label: "Electronics" },
+    { value: "clothing", label: "Clothing" },
+    { value: "books", label: "Books" },
+    { value: "sports", label: "Sports" },
+    { value: "home", label: "Home & Garden" },
+  ];
+
+  const animalOptions = [
+    { value: "cat", label: "Cat" },
+    { value: "dog", label: "Dog" },
+    { value: "rabbit", label: "Rabbit" },
+    { value: "hamster", label: "Hamster" },
+    { value: "bird", label: "Bird" },
+  ];
 
   return (
     <ShowcaseLayout>
-      <ShowcaseSection id="basic" title="Basic Controlled Select">
-        <Select
-          placeholder="Choose an option"
-          value={selected()}
-          onChange={(e: { currentTarget: { value: any } }) =>
-            setSelected(e.currentTarget.value)
-          }
-        >
-          {options.map((opt) => (
-            <option value={opt}>{opt}</option>
-          ))}
-        </Select>
-        <CodeBlock
-          code={`<Select
-  placeholder="Choose an option"
+      <div class="space-y-8">
+        <ShowcaseSection id="contents" title="Contents">
+          <nav class="space-y-1">
+            {sections.map((section) => (
+              <a
+                href={`#${section.id}`}
+                class="block text-sm text-gray-600 hover:text-gray-900"
+              >
+                {section.title}
+              </a>
+            ))}
+          </nav>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="basic" title="Basic Usage">
+          <div class="space-y-4">
+            <Select
+              placeholder="Select a fruit"
+              value={selected()}
+              onChange={(e) => setSelected(e.currentTarget.value)}
+            >
+              {fruitOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <div class="text-sm text-gray-600">
+              Selected fruit: {selected() || "(none)"}
+            </div>
+          </div>
+          <CodeBlock
+            code={`const [selected, setSelected] = createSignal("");
+
+const fruitOptions = [
+  { value: "apple", label: "Apple" },
+  { value: "banana", label: "Banana" },
+  { value: "orange", label: "Orange" },
+  { value: "grape", label: "Grape" },
+  { value: "mango", label: "Mango" },
+  { value: "kiwi", label: "Kiwi" },
+];
+
+<Select
+  placeholder="Select a fruit"
   value={selected()}
   onChange={(e) => setSelected(e.currentTarget.value)}
 >
-  <option value="Option A">Option A</option>
-  <option value="Option B">Option B</option>
-  <option value="Option C">Option C</option>
+  {fruitOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
 </Select>`}
-        />
-      </ShowcaseSection>
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="sizes" title="Size Variants">
-        <div class="flex flex-col gap-4">
-          <Select size="sm" placeholder="Small">
-            <option>One</option>
-          </Select>
-          <Select size="md" placeholder="Medium">
-            <option>Two</option>
-          </Select>
-          <Select size="lg" placeholder="Large">
-            <option>Three</option>
-          </Select>
-        </div>
-        <CodeBlock
-          code={`<Select size="sm" placeholder="Small"><option>One</option></Select>
-<Select size="md" placeholder="Medium"><option>Two</option></Select>
-<Select size="lg" placeholder="Large"><option>Three</option></Select>`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="colors" title="Color Variants">
+          <div class="flex flex-col gap-4">
+            <Select
+              placeholder="Select a color"
+              color="primary"
+              value={colorSelected()}
+              onChange={(e) => setColorSelected(e.currentTarget.value)}
+            >
+              {colorOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select placeholder="Select a category" color="info">
+              {categoryOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select placeholder="Select a fruit" color="success">
+              {fruitOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select placeholder="Select a size" color="warning">
+              {sizeOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select placeholder="Select an animal" color="danger">
+              {animalOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+          </div>
+          <CodeBlock
+            code={`<Select placeholder="Select a color" color="primary">
+  {colorOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>
+<Select placeholder="Select a category" color="info">
+  {categoryOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>
+// ... More color variants with different option sets ...`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="colors" title="Color Variants">
-        <div class="flex flex-col gap-4">
-          <Select color="primary" placeholder="Primary">
-            <option>1</option>
-          </Select>
-          <Select color="info" placeholder="Info">
-            <option>2</option>
-          </Select>
-          <Select color="success" placeholder="Success">
-            <option>3</option>
-          </Select>
-          <Select color="warning" placeholder="Warning">
-            <option>4</option>
-          </Select>
-          <Select color="danger" placeholder="Danger">
-            <option>5</option>
-          </Select>
-        </div>
-        <CodeBlock
-          code={`<Select color="primary" placeholder="Primary"><option>1</option></Select>
-<Select color="info" placeholder="Info"><option>2</option></Select>
-<Select color="success" placeholder="Success"><option>3</option></Select>
-<Select color="warning" placeholder="Warning"><option>4</option></Select>
-<Select color="danger" placeholder="Danger"><option>5</option></Select>`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="sizes" title="Size Variants">
+          <div class="flex flex-col gap-4">
+            <Select
+              size="sm"
+              placeholder="Small size"
+              value={sizeSelected()}
+              onChange={(e) => setSizeSelected(e.currentTarget.value)}
+            >
+              {sizeOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select size="md" placeholder="Medium size">
+              {animalOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select size="lg" placeholder="Large size">
+              {fruitOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+          </div>
+          <CodeBlock
+            code={`<Select size="sm" placeholder="Small size">
+  {sizeOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>
+<Select size="md" placeholder="Medium size">
+  {animalOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>
+<Select size="lg" placeholder="Large size">
+  {fruitOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="states" title="States: Disabled and Loading">
-        <div class="flex flex-col gap-4">
-          <Select disabled placeholder="Disabled">
-            <option>Can't select</option>
-          </Select>
-          <Select loading placeholder="Loading...">
-            <option>Loading</option>
-          </Select>
-        </div>
-        <CodeBlock
-          code={`<Select disabled placeholder="Disabled"><option>Can't select</option></Select>
-<Select loading placeholder="Loading..."><option>Loading</option></Select>`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="states" title="States">
+          <div class="flex flex-col gap-4">
+            <Select disabled placeholder="Disabled state">
+              {fruitOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select loading placeholder="Loading state">
+              {animalOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+          </div>
+          <CodeBlock
+            code={`<Select disabled placeholder="Disabled state">
+  {fruitOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>
+<Select loading placeholder="Loading state">
+  {animalOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="layout" title="Layout Options">
-        <div class="flex flex-col gap-4">
-          <Select expanded placeholder="Expanded full width">
-            <option>Expanded</option>
-          </Select>
-          <Select rounded placeholder="Rounded">
-            <option>Rounded</option>
-          </Select>
-        </div>
-        <CodeBlock
-          code={`<Select expanded placeholder="Expanded full width"><option>Expanded</option></Select>
-<Select rounded placeholder="Rounded"><option>Rounded</option></Select>`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="variants" title="Variants">
+          <div class="flex flex-col gap-4">
+            <Select rounded placeholder="Rounded corners">
+              {colorOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select expanded placeholder="Full width">
+              {categoryOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+            <Select nativeSize={4} placeholder="Multiple visible options">
+              {animalOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </Select>
+          </div>
+          <CodeBlock
+            code={`<Select rounded placeholder="Rounded corners">
+  {colorOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>
+<Select expanded placeholder="Full width">
+  {categoryOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>
+<Select nativeSize={4} placeholder="Multiple visible options">
+  {animalOptions.map((opt) => (
+    <option value={opt.value}>{opt.label}</option>
+  ))}
+</Select>`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="props" title="Props">
-        <PropsTable props={props} />
-      </ShowcaseSection>
+        <ShowcaseSection id="props" title="Props">
+          <PropsTable props={props} />
+        </ShowcaseSection>
+      </div>
     </ShowcaseLayout>
   );
 }

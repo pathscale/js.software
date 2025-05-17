@@ -8,6 +8,16 @@ import { PropsTable } from "./showcase/PropsTable";
 export default function TextareaShowcase() {
   const [value, setValue] = createSignal("");
 
+  const sections = [
+    { id: "contents", title: "Contents" },
+    { id: "basic", title: "Basic Usage" },
+    { id: "colors", title: "Color Variants" },
+    { id: "sizes", title: "Size Variants" },
+    { id: "states", title: "States" },
+    { id: "resize", title: "Resize Options" },
+    { id: "props", title: "Props" },
+  ] as const;
+
   const props = [
     { name: "value", type: "string", description: "Textarea content value" },
     {
@@ -55,99 +65,104 @@ export default function TextareaShowcase() {
 
   return (
     <ShowcaseLayout>
-      <ShowcaseSection id="basic" title="Basic Controlled Textarea">
-        <Textarea
-          value={value()}
-          onInput={(e) => setValue(e.currentTarget.value)}
-          placeholder="Type something..."
-        />
-        <CodeBlock
-          code={`<Textarea
+      <div class="space-y-8">
+        <ShowcaseSection id="contents" title="Contents">
+          <nav class="space-y-1">
+            {sections.map((section) => (
+              <a
+                href={`#${section.id}`}
+                class="block text-sm text-gray-600 hover:text-gray-900"
+              >
+                {section.title}
+              </a>
+            ))}
+          </nav>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="basic" title="Basic Usage">
+          <div class="space-y-4">
+            <Textarea
+              value={value()}
+              onInput={(e) => setValue(e.currentTarget.value)}
+              placeholder="Write your message here..."
+            />
+            <div class="text-sm text-gray-600">
+              Characters: {value().length}
+            </div>
+          </div>
+          <CodeBlock
+            code={`const [value, setValue] = createSignal("");
+
+<Textarea
   value={value()}
   onInput={(e) => setValue(e.currentTarget.value)}
-  placeholder="Type something..."
+  placeholder="Write your message here..."
 />`}
-        />
-      </ShowcaseSection>
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="sizes" title="Size Variants">
-        <div class="flex flex-col gap-4">
-          <Textarea size="sm" placeholder="Small" />
-          <Textarea size="md" placeholder="Medium" />
-          <Textarea size="lg" placeholder="Large" />
-        </div>
-        <CodeBlock
-          code={`<Textarea size="sm" placeholder="Small" />
-<Textarea size="md" placeholder="Medium" />
-<Textarea size="lg" placeholder="Large" />`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="colors" title="Color Variants">
+          <div class="flex flex-col gap-4">
+            <Textarea color="primary" placeholder="Primary textarea" />
+            <Textarea color="info" placeholder="Info textarea" />
+            <Textarea color="success" placeholder="Success textarea" />
+            <Textarea color="warning" placeholder="Warning textarea" />
+            <Textarea color="danger" placeholder="Danger textarea" />
+          </div>
+          <CodeBlock
+            code={`<Textarea color="primary" placeholder="Primary textarea" />
+<Textarea color="info" placeholder="Info textarea" />
+<Textarea color="success" placeholder="Success textarea" />
+<Textarea color="warning" placeholder="Warning textarea" />
+<Textarea color="danger" placeholder="Danger textarea" />`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="colors" title="Color Variants">
-        <div class="flex flex-col gap-4">
-          <Textarea color="primary" placeholder="Primary" />
-          <Textarea color="info" placeholder="Info" />
-          <Textarea color="success" placeholder="Success" />
-          <Textarea color="warning" placeholder="Warning" />
-          <Textarea color="danger" placeholder="Danger" />
-        </div>
-        <CodeBlock
-          code={`<Textarea color="primary" placeholder="Primary" />
-<Textarea color="info" placeholder="Info" />
-<Textarea color="success" placeholder="Success" />
-<Textarea color="warning" placeholder="Warning" />
-<Textarea color="danger" placeholder="Danger" />`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="sizes" title="Size Variants">
+          <div class="flex flex-col gap-4">
+            <Textarea size="sm" placeholder="Small size textarea" />
+            <Textarea size="md" placeholder="Medium size textarea" />
+            <Textarea size="lg" placeholder="Large size textarea" />
+          </div>
+          <CodeBlock
+            code={`<Textarea size="sm" placeholder="Small size textarea" />
+<Textarea size="md" placeholder="Medium size textarea" />
+<Textarea size="lg" placeholder="Large size textarea" />`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="states" title="Disabled and Loading">
-        <div class="flex flex-col gap-4">
-          <Textarea disabled placeholder="Disabled" />
-          <Textarea loading placeholder="Loading..." />
-        </div>
-        <CodeBlock
-          code={`<Textarea disabled placeholder="Disabled" />
-<Textarea loading placeholder="Loading..." />`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="states" title="States">
+          <div class="flex flex-col gap-4">
+            <Textarea disabled placeholder="Disabled state" />
+            <Textarea loading placeholder="Loading state" />
+            <Textarea readonly placeholder="Read-only state" />
+          </div>
+          <CodeBlock
+            code={`<Textarea disabled placeholder="Disabled state" />
+<Textarea loading placeholder="Loading state" />
+<Textarea readonly placeholder="Read-only state" />`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="resize" title="Resize Options">
-        <div class="flex flex-col gap-4">
-          <Textarea resize="none" placeholder="No resize" />
-          <Textarea resize="x" placeholder="Resize X" />
-          <Textarea resize="y" placeholder="Resize Y" />
-          <Textarea resize="both" placeholder="Resize Both" />
-        </div>
-        <CodeBlock
-          code={`<Textarea resize="none" placeholder="No resize" />
-<Textarea resize="x" placeholder="Resize X" />
-<Textarea resize="y" placeholder="Resize Y" />
-<Textarea resize="both" placeholder="Resize Both" />`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="resize" title="Resize Options">
+          <div class="flex flex-col gap-4">
+            <Textarea resize="none" placeholder="No resize" />
+            <Textarea resize="x" placeholder="Horizontal resize" />
+            <Textarea resize="y" placeholder="Vertical resize" />
+            <Textarea resize="both" placeholder="Both directions resize" />
+          </div>
+          <CodeBlock
+            code={`<Textarea resize="none" placeholder="No resize" />
+<Textarea resize="x" placeholder="Horizontal resize" />
+<Textarea resize="y" placeholder="Vertical resize" />
+<Textarea resize="both" placeholder="Both directions resize" />`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="counter" title="Character Counter">
-        <Textarea
-          hasCounter
-          maxLength={100}
-          value={value()}
-          onInput={(e) => setValue(e.currentTarget.value)}
-          placeholder="With counter..."
-        />
-        <CodeBlock
-          code={`<Textarea
-  hasCounter
-  maxLength={100}
-  value={value()}
-  onInput={(e) => setValue(e.currentTarget.value)}
-  placeholder="With counter..."
-/>`}
-        />
-      </ShowcaseSection>
-
-      <ShowcaseSection id="props" title="Props">
-        <PropsTable props={props} />
-      </ShowcaseSection>
+        <ShowcaseSection id="props" title="Props">
+          <PropsTable props={props} />
+        </ShowcaseSection>
+      </div>
     </ShowcaseLayout>
   );
 }

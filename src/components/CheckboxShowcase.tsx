@@ -8,6 +8,15 @@ import { PropsTable } from "./showcase/PropsTable";
 export default function CheckboxShowcase() {
   const [checked, setChecked] = createSignal(false);
 
+  const sections = [
+    { id: "contents", title: "Contents" },
+    { id: "basic", title: "Basic Usage" },
+    { id: "colors", title: "Color Variants" },
+    { id: "sizes", title: "Size Variants" },
+    { id: "states", title: "States" },
+    { id: "props", title: "Props" },
+  ] as const;
+
   const props = [
     {
       name: "label",
@@ -48,69 +57,104 @@ export default function CheckboxShowcase() {
       type: "JSX.EventHandlerUnion<HTMLInputElement, Event>",
       description: "Callback triggered when the checkbox changes",
     },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        "Accessible label for the checkbox when visual label is not used",
+    },
+    {
+      name: "aria-describedby",
+      type: "string",
+      description: "ID of element containing additional descriptive text",
+    },
   ];
 
   return (
     <ShowcaseLayout>
-      <ShowcaseSection id="default" title="Basic Usage">
-        <Checkbox
-          checked={checked()}
-          onChange={(e) => setChecked(e.currentTarget.checked)}
-          label={<span>Enable feature</span>}
-        />
-        <CodeBlock
-          code={`<Checkbox
+      <div class="space-y-8">
+        <ShowcaseSection id="contents" title="Contents">
+          <nav class="space-y-1">
+            {sections.map((section) => (
+              <a
+                href={`#${section.id}`}
+                class="block text-sm text-gray-600 hover:text-gray-900"
+              >
+                {section.title}
+              </a>
+            ))}
+          </nav>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="basic" title="Basic Usage">
+          <div class="space-y-4">
+            <Checkbox
+              checked={checked()}
+              onChange={(e) => setChecked(e.currentTarget.checked)}
+              label={<span>Enable feature</span>}
+            />
+            <div class="text-sm text-gray-600">
+              Checked state: {checked() ? "true" : "false"}
+            </div>
+          </div>
+          <CodeBlock
+            code={`const [checked, setChecked] = createSignal(false);
+
+<Checkbox
   checked={checked()}
   onChange={(e) => setChecked(e.currentTarget.checked)}
   label={<span>Enable feature</span>}
 />`}
-        />
-      </ShowcaseSection>
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="colors" title="Color Variants">
-        <div class="flex flex-col gap-4">
-          <Checkbox color="primary" label={<span>Primary</span>} />
-          <Checkbox color="success" label={<span>Success</span>} />
-          <Checkbox color="warning" label={<span>Warning</span>} />
-          <Checkbox color="danger" label={<span>Danger</span>} />
-        </div>
-        <CodeBlock
-          code={`<Checkbox color="primary" label="Primary" />
-<Checkbox color="success" label="Success" />
-<Checkbox color="warning" label="Warning" />
-<Checkbox color="danger" label="Danger" />`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="colors" title="Color Variants">
+          <div class="flex flex-col gap-4">
+            <Checkbox checked color="primary" label="Primary" />
+            <Checkbox checked color="success" label="Success" />
+            <Checkbox checked color="warning" label="Warning" />
+            <Checkbox checked color="danger" label="Danger" />
+          </div>
+          <CodeBlock
+            code={`<Checkbox checked color="primary" label="Primary" />
+<Checkbox checked color="success" label="Success" />
+<Checkbox checked color="warning" label="Warning" />
+<Checkbox checked color="danger" label="Danger" />`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="sizes" title="Size Variants">
-        <div class="flex flex-col gap-4">
-          <Checkbox size="sm" label="Small" />
-          <Checkbox size="md" label="Medium" />
-          <Checkbox size="lg" label="Large" />
-        </div>
-        <CodeBlock
-          code={`<Checkbox size="sm" label="Small" />
-<Checkbox size="md" label="Medium" />
-<Checkbox size="lg" label="Large" />`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="sizes" title="Size Variants">
+          <div class="flex flex-col gap-4">
+            <Checkbox size="sm" label="Small size checkbox" />
+            <Checkbox size="md" label="Medium size checkbox" />
+            <Checkbox size="lg" label="Large size checkbox" />
+          </div>
+          <CodeBlock
+            code={`<Checkbox size="sm" label="Small size checkbox" />
+<Checkbox size="md" label="Medium size checkbox" />
+<Checkbox size="lg" label="Large size checkbox" />`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="states" title="States">
-        <div class="flex flex-col gap-4">
-          <Checkbox checked label="Checked" />
-          <Checkbox indeterminate label="Indeterminate" />
-          <Checkbox disabled label="Disabled" />
-        </div>
-        <CodeBlock
-          code={`<Checkbox checked label="Checked" />
-<Checkbox indeterminate label="Indeterminate" />
-<Checkbox disabled label="Disabled" />`}
-        />
-      </ShowcaseSection>
+        <ShowcaseSection id="states" title="States">
+          <div class="flex flex-col gap-4">
+            <Checkbox checked label="Checked state" />
+            <Checkbox indeterminate label="Indeterminate state" />
+            <Checkbox disabled label="Disabled state" />
+            <Checkbox checked disabled label="Checked and disabled" />
+          </div>
+          <CodeBlock
+            code={`<Checkbox checked label="Checked state" />
+<Checkbox indeterminate label="Indeterminate state" />
+<Checkbox disabled label="Disabled state" />
+<Checkbox checked disabled label="Checked and disabled" />`}
+          />
+        </ShowcaseSection>
 
-      <ShowcaseSection id="props" title="Props">
-        <PropsTable props={props} />
-      </ShowcaseSection>
+        <ShowcaseSection id="props" title="Props">
+          <PropsTable props={props} />
+        </ShowcaseSection>
+      </div>
     </ShowcaseLayout>
   );
 }
