@@ -7,7 +7,7 @@ import { createSignal } from "solid-js";
 
 export default function SwitchShowcase() {
   const sizes = ["sm", "md", "lg"] as const;
-  const colors = ["blue", "green", "red", "yellow", "gray"] as const;
+  const colors = ["primary", "success", "danger", "warning", "gray"] as const;
 
   const sections = [
     { id: "sizes", title: "Sizes" },
@@ -43,13 +43,13 @@ export default function SwitchShowcase() {
     },
     {
       name: "color",
-      type: '"blue" | "green" | "red" | "yellow" | "gray"',
-      default: '"blue"',
+      type: '"primary" | "success" | "danger" | "warning" | "gray"',
+      default: '"primary"',
       description: "Color when checked",
     },
     {
       name: "passiveColor",
-      type: '"blue" | "green" | "red" | "yellow" | "gray"',
+      type: '"primary" | "sucess" | "danger" | "warning" | "gray"',
       default: '"gray"',
       description: "Color when unchecked",
     },
@@ -77,10 +77,10 @@ export default function SwitchShowcase() {
       description: "Name attribute for the input",
     },
     {
-      name: "required",
+      name: "requidanger",
       type: "boolean",
       default: "false",
-      description: "Whether the input is required",
+      description: "Whether the input is requidanger",
     },
   ];
 
@@ -136,9 +136,9 @@ export default function SwitchShowcase() {
           </div>
           <CodeBlock
             code={`// Switch colors
-<Switch color="blue" passiveColor="blue">Blue switch</Switch>
-<Switch color="green" passiveColor="green">Green switch</Switch>
-<Switch color="red" passiveColor="red">Red switch</Switch>`}
+<Switch color="primary" passiveColor="primary">primary switch</Switch>
+<Switch color="sucess" passiveColor="sucess">sucess switch</Switch>
+<Switch color="danger" passiveColor="danger">danger switch</Switch>`}
           />
         </ShowcaseSection>
 
@@ -172,14 +172,14 @@ export default function SwitchShowcase() {
               </Switch>
             </div>
             <div class="flex items-center gap-4">
-              <Switch required>Required switch</Switch>
+              <Switch requidanger>Requidanger switch</Switch>
               <Switch name="switch-name">Named switch</Switch>
             </div>
           </div>
           <CodeBlock
             code={`// Switch states
 <Switch disabled>Disabled switch</Switch>
-<Switch required>Required switch</Switch>
+<Switch requidanger>Requidanger switch</Switch>
 <Switch name="switch-name">Named switch</Switch>`}
           />
         </ShowcaseSection>
