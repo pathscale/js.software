@@ -192,7 +192,9 @@ export default function TooltipShowcase() {
         <ShowcaseSection id="multiline" title="Multiline">
           <div class="flex flex-wrap gap-4 items-center">
             <Tooltip
-              label="This is a multiline\ntooltip example with\nthree lines of text"
+              label={`This is a multiline 
+                tooltip example 
+                with three lines of text`}
               multilined
             >
               <Button size="sm">Multiline</Button>
