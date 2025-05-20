@@ -7,10 +7,27 @@
     "start": "rsbuild dev",
     "dev": "rsbuild dev",
     "build": "rsbuild build",
-    "preview": "rsbuild preview"
+    "preview": "rsbuild preview",
+    "prepare": "husky",
+    "lint": "biome check .",
+    "format": "biome format . --write",
+    "commit": "cz"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,css,md}": [
+      "biome check --apply"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   },
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^19.0.3",
+    "@commitlint/config-conventional": "^19.0.3",
+    "@commitlint/cz-commitlint": "^19.8.1",
     "@pathscale/ui": "0.0.8",
     "@rsbuild/core": "^1.3.20",
     "@rsbuild/plugin-babel": "^1.0.5",
@@ -19,10 +36,14 @@
     "@solidjs/router": "^0.15.3",
     "@tailwindcss/postcss": "^4.1.7",
     "@types/node": "^22.15.17",
+    "biome": "^0.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk-solid": "^1.1.2",
+    "commitizen": "^4.3.0",
     "embla-carousel-solid": "^8.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
     "prismjs": "^1.30.0",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.5",
