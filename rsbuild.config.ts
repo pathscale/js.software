@@ -1,9 +1,6 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginBabel } from "@rsbuild/plugin-babel";
 import { pluginSolid } from "@rsbuild/plugin-solid";
-import path from "path";
-
-const runNumber = process.env.GITHUB_RUN_NUMBER || "dev";
 
 export default defineConfig({
   plugins: [
@@ -12,38 +9,44 @@ export default defineConfig({
     }),
     pluginSolid(),
   ],
-  server: {
-    port: 3000,
-  },
-  html: {
-    template: "./index.html",
-  },
-  output: {
-    inlineStyles: true,
-    assetPrefix: "/",
-    filename: {
-      js: `assets/[name]-${runNumber}.[hash].js`,
-      css: `assets/[name]-${runNumber}.[hash].css`,
-    },
-    distPath: {
-      root: "dist",
-      js: "assets",
-      css: "assets",
-      html: "",
-      image: "assets",
-    },
-  },
   source: {
     alias: {
-      "~": path.resolve(__dirname, "./src"),
+      "~": "./src",
     },
   },
   tools: {
     rspack: {
-      target: "web",
       optimization: {
-        minimize: true,
+        splitChunks: {
+          chunks: "all",
+          minSize: 30000,
+          cacheGroups: {
+            styles: {
+              name: "styles",
+              type: "css/mini-extract",
+              chunks: "all",
+              enforce: true,
+            },
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendors",
+              chunks: "all",
+              priority: 10,
+            },
+            common: {
+              name: "common",
+              minChunks: 2,
+              chunks: "async",
+              priority: 5,
+              reuseExistingChunk: true,
+              enforce: true,
+            },
+          },
+        },
       },
     },
+  },
+  output: {
+    inlineStyles: true,
   },
 });
