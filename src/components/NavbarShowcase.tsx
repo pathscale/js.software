@@ -18,50 +18,82 @@ export default function NavbarShowcase() {
 
   const navbarProps = [
     {
-      name: "brand",
-      type: "JSX.Element",
-      description: "Content for the brand/logo section",
-    },
-    {
-      name: "start",
-      type: "JSX.Element",
-      description: "Content for the start/left section",
-    },
-    {
-      name: "end",
-      type: "JSX.Element",
-      description: "Content for the end/right section",
-    },
-    {
       name: "color",
-      type: '"info" | "primary" | "success" | "light"',
-      default: '"info"',
-      description: "Color theme of the navbar",
+      type: `"primary" | "info" | "success" | "danger" | "warning" | "light"`,
+      default: `"primary"`,
+      description: "Visual color scheme for the navbar",
+    },
+    {
+      name: "modelValue",
+      type: "string",
+      description: "Current selected label value",
+    },
+    {
+      name: "onChange",
+      type: "(value: string) => void",
+      description: "Called when a new item is selected",
+    },
+    {
+      name: "spaced",
+      type: "boolean",
+      default: "false",
+      description: "Applies horizontal and vertical spacing",
+    },
+    {
+      name: "shadow",
+      type: "boolean",
+      default: "false",
+      description: "Adds a shadow below the navbar",
+    },
+    {
+      name: "transparent",
+      type: "boolean",
+      default: "false",
+      description: "Removes background and borders",
+    },
+    {
+      name: "fixedTop",
+      type: "boolean",
+      default: "false",
+      description: "Fixes the navbar to the top of the page",
+    },
+    {
+      name: "fixedBottom",
+      type: "boolean",
+      default: "false",
+      description: "Fixes the navbar to the bottom of the page",
+    },
+    {
+      name: "children",
+      type: "JSX.Element",
+      description:
+        "The content inside the navbar, typically NavbarItems and Dropdowns",
     },
   ];
 
   const navbarItemProps = [
     {
-      name: "active",
-      type: "boolean",
-      default: "false",
-      description: "Whether the item is in active state",
-    },
-    {
-      name: "href",
+      name: "label",
       type: "string",
-      description: "URL for link items",
+      required: true,
+      description: "Value used for selection and active state",
     },
     {
-      name: "tag",
-      type: '"a" | "div"',
-      default: '"div"',
-      description: "HTML element to render as",
+      name: "color",
+      type: `"light" | "default"`,
+      default: `"default"`,
+      description: "Visual variant of the item",
     },
     {
-      name: "to",
-      type: "string",
-      description: "Router link destination",
+      name: "align",
+      type: `"start" | "end"`,
+      default: `"start"`,
+      description: "Aligns the item to left or right",
+    },
+    {
+      name: "children",
+      type: "JSX.Element",
+      description: "Visual content of the item",
     },
   ];
 
@@ -70,19 +102,24 @@ export default function NavbarShowcase() {
       name: "label",
       type: "string",
       required: true,
-      description: "Text label for the dropdown trigger",
+      description: "Trigger label for the dropdown menu",
     },
     {
       name: "hoverable",
       type: "boolean",
       default: "false",
-      description: "Whether dropdown opens on hover",
+      description: "Open dropdown on hover instead of click",
     },
     {
       name: "align",
-      type: '"left" | "right"',
-      default: '"left"',
-      description: "Alignment of the dropdown menu",
+      type: `"left" | "right"`,
+      default: `"left"`,
+      description: "Horizontal alignment of the dropdown menu",
+    },
+    {
+      name: "children",
+      type: "JSX.Element",
+      description: "Content shown inside the dropdown",
     },
   ];
 
@@ -133,111 +170,122 @@ export default function NavbarShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="with-items" title="With Items">
-          <Navbar
-            start={
-              <>
-                <NavbarItem active>Home</NavbarItem>
-                <NavbarItem>Features</NavbarItem>
-                <NavbarItem>Pricing</NavbarItem>
-                <NavbarItem>About</NavbarItem>
-              </>
-            }
-            end={
-              <>
-                <NavbarItem>Login</NavbarItem>
-                <NavbarItem>Sign Up</NavbarItem>
-              </>
-            }
-          />
+          <div class="space-y-4">
+            <Navbar
+              modelValue="Home"
+              onChange={(val) => console.log("selected:", val)}
+            >
+              <NavbarItem label="Home">Home</NavbarItem>
+              <NavbarItem label="Features">Features</NavbarItem>
+              <NavbarItem label="Pricing">Pricing</NavbarItem>
+              <NavbarItem label="About">About</NavbarItem>
+              <NavbarItem label="Login">Login</NavbarItem>
+              <NavbarItem label="Sign Up">Sign Up</NavbarItem>
+            </Navbar>
+          </div>
           <CodeBlock
-            code={`<Navbar
-  start={
-    <>
-      <NavbarItem active>Home</NavbarItem>
-      <NavbarItem>Features</NavbarItem>
-      <NavbarItem>Pricing</NavbarItem>
-      <NavbarItem>About</NavbarItem>
-    </>
-  }
-  end={
-    <>
-      <NavbarItem>Login</NavbarItem>
-      <NavbarItem>Sign Up</NavbarItem>
-    </>
-  }
-/>`}
+            code={`<Navbar modelValue="Home" onChange={(val) => console.log("selected:", val)}>
+  <NavbarItem label="Home">Home</NavbarItem>
+  <NavbarItem label="Features">Features</NavbarItem>
+  <NavbarItem label="Pricing">Pricing</NavbarItem>
+  <NavbarItem label="About">About</NavbarItem>
+  <NavbarItem label="Login">Login</NavbarItem>
+  <NavbarItem label="Sign Up">Sign Up</NavbarItem>
+</Navbar>`}
           />
         </ShowcaseSection>
 
         <ShowcaseSection id="with-dropdown" title="With Dropdown">
-          <Navbar
-            start={
-              <>
-                <NavbarItem active>Home</NavbarItem>
-                <NavbarDropdown label="Products" hoverable>
-                  <div class="p-2">
-                    <NavbarItem>Product 1</NavbarItem>
-                    <NavbarItem>Product 2</NavbarItem>
-                    <NavbarItem>Product 3</NavbarItem>
-                  </div>
-                </NavbarDropdown>
-                <NavbarDropdown label="Services" hoverable align="right">
-                  <div class="p-2">
-                    <NavbarItem>Service 1</NavbarItem>
-                    <NavbarItem>Service 2</NavbarItem>
-                  </div>
-                </NavbarDropdown>
-              </>
-            }
-          />
-          <CodeBlock
-            code={`<Navbar
-  start={
-    <>
-      <NavbarItem active>Home</NavbarItem>
-      <NavbarDropdown label="Products" hoverable>
-        <div class="p-2">
-          <NavbarItem>Product 1</NavbarItem>
-          <NavbarItem>Product 2</NavbarItem>
-          <NavbarItem>Product 3</NavbarItem>
-        </div>
-      </NavbarDropdown>
-      <NavbarDropdown label="Services" hoverable align="right">
-        <div class="p-2">
-          <NavbarItem>Service 1</NavbarItem>
-          <NavbarItem>Service 2</NavbarItem>
-        </div>
-      </NavbarDropdown>
-    </>
-  }
-/>`}
-          />
+          <div class="space-y-4">
+            <Navbar
+              modelValue="Home"
+              onChange={(val) => console.log("selected:", val)}
+            >
+              <NavbarItem label="Home">Home</NavbarItem>
+              <NavbarDropdown label="Products" hoverable>
+                <div class="p-2 space-y-1">
+                  <NavbarItem label="Product A" color="light">
+                    Product A
+                  </NavbarItem>
+                  <NavbarItem label="Product B" color="light">
+                    Product B
+                  </NavbarItem>
+                </div>
+              </NavbarDropdown>
+              <NavbarDropdown label="Resources" hoverable align="right">
+                <div class="p-2 space-y-1">
+                  <NavbarItem label="Docs" color="light">
+                    Docs
+                  </NavbarItem>
+                  <NavbarItem label="API" color="light">
+                    API
+                  </NavbarItem>
+                </div>
+              </NavbarDropdown>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar modelValue="Home" onChange={(val) => console.log("selected:", val)}>
+  <NavbarItem label="Home">Home</NavbarItem>
+  <NavbarDropdown label="Products" hoverable>…</NavbarDropdown>
+  <NavbarDropdown label="Resources" hoverable align="right">…</NavbarDropdown>
+</Navbar>`}
+            />
+          </div>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-brand" title="With Brand">
-          <Navbar
-            brand={<div class="text-xl font-bold">Logo</div>}
-            start={
-              <>
-                <NavbarItem active>Home</NavbarItem>
-                <NavbarItem>Features</NavbarItem>
-                <NavbarItem>About</NavbarItem>
-              </>
-            }
-          />
+          <div class="space-y-4">
+            <Navbar
+              modelValue="Home"
+              onChange={(val) => console.log("selected:", val)}
+            >
+              <NavbarItem label="Home">
+                <span class="text-xl font-bold">Logo</span>
+              </NavbarItem>
+              <NavbarItem label="Features">Features</NavbarItem>
+              <NavbarItem label="About">About</NavbarItem>
+            </Navbar>
+          </div>
+
           <CodeBlock
-            code={`<Navbar
-  brand={
-    <div class="text-xl font-bold">Logo</div>
-  }
-  start={
-    <>
-      <NavbarItem active>Home</NavbarItem>
-      <NavbarItem>Features</NavbarItem>
-      <NavbarItem>About</NavbarItem>
-    </>
-  }
-/>`}
+            code={`<Navbar modelValue="Home" onChange={(val) => console.log("selected:", val)}>
+  <NavbarItem label="Home">
+    <span class="text-xl font-bold">Logo</span>
+  </NavbarItem>
+  <NavbarItem label="Features">Features</NavbarItem>
+  <NavbarItem label="About">About</NavbarItem>
+</Navbar>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="visual-variants" title="Visual Variants">
+          <div class="space-y-6">
+            <Navbar color="primary" spaced shadow modelValue="Home">
+              <NavbarItem label="Home">Home</NavbarItem>
+              <NavbarItem label="About">About</NavbarItem>
+              <NavbarItem label="Contact">Contact</NavbarItem>
+            </Navbar>
+
+            <Navbar color="light" transparent modelValue="Home">
+              <NavbarItem label="Home">Home</NavbarItem>
+              <NavbarItem label="Docs">Docs</NavbarItem>
+              <NavbarItem label="API">API</NavbarItem>
+            </Navbar>
+          </div>
+
+          <CodeBlock
+            code={`<Navbar color="primary" spaced shadow modelValue="Home">...</Navbar>
+<Navbar color="light" transparent modelValue="Home">...</Navbar>
+
+<div class="h-64 overflow-y-scroll relative">
+  <Navbar fixedTop>...</Navbar>
+  <div class="pt-16">...</div>
+</div>
+
+<div class="h-64 overflow-y-scroll relative">
+  <div class="pb-16">...</div>
+  <Navbar fixedBottom>...</Navbar>
+</div>`}
           />
         </ShowcaseSection>
 
