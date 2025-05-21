@@ -155,6 +155,12 @@ export const routes: RouteConfig[] = [
     description: "Multiline text field for entering longer content.",
   },
   {
+    name: "Theming",
+    path: "/theming",
+    component: lazy(() => import("./pages/Theming")),
+    description: "Playground for testing dynamic HSL-based theme settings.",
+  },
+  {
     name: "Timeline",
     path: "/timeline",
     component: lazy(() => import("./components/TimelineShowcase")),
