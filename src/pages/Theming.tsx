@@ -1,25 +1,36 @@
-import { createSignal, createEffect, onCleanup } from "solid-js";
+import { createSignal, createEffect, onCleanup, onMount } from "solid-js";
 import ShowcaseLayout from "../components/ShowcaseLayout";
+import { theme, setTheme } from "../lib/theme";
 
 export default function Theming() {
   const [hue, setHue] = createSignal(200);
   const [saturation, setSaturation] = createSignal(50);
-  const [theme, setTheme] = createSignal<"light" | "dark">("light");
 
   const lightness = () => (theme() === "light" ? 90 : 10);
   const labelClass = () => (theme() === "dark" ? "text-white" : "text-black");
   const valueClass = () =>
     theme() === "dark" ? "text-gray-300" : "text-gray-700";
 
+  onMount(() => {
+    const saved = localStorage.getItem("theme") || "light";
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const initial =
+      saved === "dark" || (!saved && prefersDark) ? "dark" : "light";
+    setTheme(initial);
+    document.documentElement.dataset.theme = initial;
+  });
+
   createEffect(() => {
     const hsl = `${hue()} ${saturation()}% ${lightness()}%`;
     document.documentElement.style.setProperty("--color-bg", hsl);
-    document.documentElement.classList.toggle("dark", theme() === "dark");
+    document.documentElement.dataset.theme = theme();
+    localStorage.setItem("theme", theme());
   });
 
   onCleanup(() => {
     document.documentElement.style.removeProperty("--color-bg");
-    document.documentElement.classList.remove("dark");
   });
 
   return (
@@ -27,9 +38,7 @@ export default function Theming() {
       <div class="min-h-screen space-y-6 bg-[hsl(var(--color-bg)/1)] transition-colors">
         <div class="mt-4">
           <button
-            onClick={() =>
-              setTheme((prev) => (prev === "light" ? "dark" : "light"))
-            }
+            onClick={() => setTheme(theme() === "light" ? "dark" : "light")}
             class="inline-flex items-center px-4 py-2 rounded border font-medium text-sm bg-white dark:bg-gray-800 dark:text-white"
           >
             {theme() === "light" ? "Light Mode" : "Dark Mode"}

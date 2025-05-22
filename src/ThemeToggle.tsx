@@ -1,24 +1,24 @@
-import { createSignal, onMount } from "solid-js";
+import { onMount } from "solid-js";
 import { FiSun, FiMoon } from "solid-icons/fi";
+import { theme, setTheme } from "./lib/theme";
 
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = createSignal(false);
-
   const toggleTheme = () => {
-    const newTheme = !isDark();
-    setIsDark(newTheme);
-    document.documentElement.dataset.theme = newTheme ? "dark" : "light";
-    localStorage.setItem("theme", newTheme ? "dark" : "light");
+    const next = theme() === "light" ? "dark" : "light";
+    setTheme(next);
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem("theme", next);
   };
 
   onMount(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
+    const saved = localStorage.getItem("theme") || "light";
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-    const initialTheme = savedTheme === "dark" || (!savedTheme && prefersDark);
-    setIsDark(initialTheme);
-    document.documentElement.dataset.theme = initialTheme ? "dark" : "light";
+    const initial =
+      saved === "dark" || (!saved && prefersDark) ? "dark" : "light";
+    setTheme(initial);
+    document.documentElement.dataset.theme = initial;
   });
 
   return (
@@ -27,7 +27,7 @@ export default function ThemeToggle() {
       class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
       aria-label="Toggle theme"
     >
-      {isDark() ? <FiSun size={20} /> : <FiMoon size={20} />}
+      {theme() === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
     </button>
   );
 }
