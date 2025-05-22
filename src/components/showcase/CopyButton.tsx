@@ -21,9 +21,12 @@ export function CopyButton(props: CopyButtonProps) {
       type="button"
       onClick={copy}
       title={props.title}
-      class={`inline-flex items-center justify-center p-1.5 rounded-md text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors ${
-        props.class ?? ""
-      }`}
+      class={`inline-flex items-center justify-center p-1.5 rounded-md
+        text-[hsl(var(--color-fg-secondary)/1)]
+        hover:text-[hsl(var(--color-fg-body)/1)]
+        bg-[hsl(var(--color-bg-secondary)/1)]
+        hover:bg-[hsl(var(--color-bg-secondary)/0.85)]
+        transition-colors ${props.class ?? ""}`}
     >
       {copied() ? <TbCheck size={16} /> : <TbCopy size={16} />}
     </button>

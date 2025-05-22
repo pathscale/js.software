@@ -234,7 +234,7 @@ export default function UploadShowcase() {
         <ShowcaseSection id="features" title="Features">
           <div class="space-y-4">
             <div class="space-y-4">
-              <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              <h3 class="text-sm font-medium text-[hsl(var(--color-fg-secondary)/1)]">
                 Multiple Files
               </h3>
               <Upload
@@ -257,7 +257,7 @@ export default function UploadShowcase() {
             </div>
 
             <div class="space-y-4">
-              <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              <h3 class="text-sm font-medium text-[hsl(var(--color-fg-secondary)/1)]">
                 Drag and Drop
               </h3>
               <Upload
@@ -280,7 +280,7 @@ export default function UploadShowcase() {
             </div>
 
             <div class="space-y-4">
-              <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              <h3 class="text-sm font-medium text-[hsl(var(--color-fg-secondary)/1)]">
                 File Type Filter
               </h3>
               <Upload

@@ -9,7 +9,6 @@ export default function AvatarShowcase() {
   const sizes = ["sm", "md", "lg"] as const;
   const shapes = ["circle", "rounded"] as const;
 
-  // Sample avatar images and texts for demonstration
   const sampleImages = [
     "https://i.pravatar.cc/300?img=1",
     "https://i.pravatar.cc/300?img=2",
@@ -81,7 +80,7 @@ export default function AvatarShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -93,7 +92,7 @@ export default function AvatarShowcase() {
           <div class="space-y-4">
             {variants.map((variant) => (
               <div class="space-y-2">
-                <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <h3 class="text-sm font-medium text-[hsl(var(--color-fg-tertiary)/1)]">
                   {variant}
                 </h3>
                 <div class="flex flex-wrap gap-4 items-center">

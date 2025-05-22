@@ -67,7 +67,7 @@ export default function MenuShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -78,13 +78,15 @@ export default function MenuShowcase() {
         <ShowcaseSection id="basic" title="Basic Usage">
           <div class="w-64">
             <Menu>
-              <div class="px-4 pb-2 font-medium text-gray-700">
+              <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">
                 Main Navigation
               </div>
               <MenuItem label="Home" />
               <MenuItem label="About" />
               <MenuItem label="Contact" />
-              <div class="px-4 pb-2 font-medium text-gray-700">User</div>
+              <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">
+                User
+              </div>
               <MenuItem label="Profile" />
               <MenuItem label="Settings" />
               <MenuItem label="Logout" />
@@ -92,11 +94,11 @@ export default function MenuShowcase() {
           </div>
           <CodeBlock
             code={`<Menu>
-  <div class="px-4 pb-2 font-medium text-gray-700">Main Navigation</div>
+  <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">Main Navigation</div>
   <MenuItem label="Home" />
   <MenuItem label="About" />
   <MenuItem label="Contact" />
-  <div class="px-4 pb-2 font-medium text-gray-700">User</div>
+  <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">User</div>
   <MenuItem label="Profile" />
   <MenuItem label="Settings" />
   <MenuItem label="Logout" />

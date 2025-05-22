@@ -89,7 +89,7 @@ export default function ToastShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
               >
                 {section.title}
               </a>
@@ -100,7 +100,7 @@ export default function ToastShowcase() {
         <ShowcaseSection id="basic" title="Basic Usage">
           <div class="space-y-4">
             <button
-              class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+              class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
               onClick={() => toast.show("This is a basic toast notification")}
             >
               Show Basic Toast
@@ -116,7 +116,7 @@ toast.show("This is a basic toast notification");`}
           <div class="space-y-4">
             <div class="flex flex-wrap gap-3">
               <button
-                class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-success)/1)] hover:bg-[hsl(var(--color-success-hover)/1)] text-white px-4 py-2 rounded"
                 onClick={() =>
                   toast.success("Operation completed successfully!")
                 }
@@ -124,19 +124,19 @@ toast.show("This is a basic toast notification");`}
                 Success Toast
               </button>
               <button
-                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-danger)/1)] hover:bg-[hsl(var(--color-danger-hover)/1)] text-white px-4 py-2 rounded"
                 onClick={() => toast.error("An error occurred")}
               >
                 Error Toast
               </button>
               <button
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-info)/1)] hover:bg-[hsl(var(--color-info-hover)/1)] text-white px-4 py-2 rounded"
                 onClick={() => toast.info("Here's some information")}
               >
                 Info Toast
               </button>
               <button
-                class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-warning)/1)] hover:bg-[hsl(var(--color-warning-hover)/1)] text-black px-4 py-2 rounded"
                 onClick={() => toast.warning("Please be careful")}
               >
                 Warning Toast
@@ -156,7 +156,7 @@ toast.warning("Please be careful");`}
           <div class="space-y-4">
             <div class="flex flex-wrap gap-3">
               <button
-                class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
                 onClick={() =>
                   toast.show("Quick toast (2s)", { duration: 2000 })
                 }
@@ -164,7 +164,7 @@ toast.warning("Please be careful");`}
                 2s Duration
               </button>
               <button
-                class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
                 onClick={() =>
                   toast.show("Long toast (8s)", { duration: 8000 })
                 }
@@ -172,7 +172,7 @@ toast.warning("Please be careful");`}
                 8s Duration
               </button>
               <button
-                class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
                 onClick={() =>
                   toast.show("Persistent toast (click to dismiss)", {
                     duration: false,
@@ -196,7 +196,7 @@ toast.show("Persistent toast", { duration: false });`}
           <div class="space-y-4">
             <div class="flex flex-wrap gap-3">
               <button
-                class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
                 onClick={() =>
                   toast.show("Click me to dismiss", { dismissible: true })
                 }
@@ -204,7 +204,7 @@ toast.show("Persistent toast", { duration: false });`}
                 Dismissible Toast
               </button>
               <button
-                class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
                 onClick={() =>
                   toast.show("Cannot be dismissed by clicking", {
                     dismissible: false,
@@ -226,7 +226,7 @@ toast.show("Cannot be dismissed", { dismissible: false });`}
           <div class="space-y-4">
             <div class="flex flex-wrap gap-3">
               <button
-                class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
                 onClick={() =>
                   toast.success("Custom success toast", {
                     duration: 6000,
@@ -238,7 +238,7 @@ toast.show("Cannot be dismissed", { dismissible: false });`}
                 Combined Options
               </button>
               <button
-                class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded"
+                class="bg-[hsl(var(--color-bg-fill)/1)] hover:bg-[hsl(var(--color-bg-hover)/1)] text-[hsl(var(--color-fg-on-fill)/1)] px-4 py-2 rounded"
                 onClick={() => toast.clear()}
               >
                 Clear All Toasts

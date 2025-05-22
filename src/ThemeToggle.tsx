@@ -24,7 +24,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      class="p-2 rounded-lg hover:bg-[hsl(var(--color-bg-hover)/1)] transition-colors"
       aria-label="Toggle theme"
     >
       {theme() === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}

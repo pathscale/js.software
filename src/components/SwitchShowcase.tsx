@@ -94,7 +94,7 @@ export default function SwitchShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
               >
                 {section.title}
               </a>
@@ -190,7 +190,7 @@ export default function SwitchShowcase() {
               <Switch checked={controlledValue()} onChange={setControlledValue}>
                 Controlled switch
               </Switch>
-              <span class="text-sm text-gray-500">
+              <span class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
                 Value: {controlledValue() ? "On" : "Off"}
               </span>
             </div>

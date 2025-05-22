@@ -117,7 +117,7 @@ export default function TabsShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
               >
                 {section.title}
               </a>
@@ -157,7 +157,7 @@ export default function TabsShowcase() {
           <div class="space-y-8">
             {sizes.map((size) => (
               <div class="space-y-2">
-                <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <h3 class="text-sm font-medium text-[hsl(var(--color-fg-tertiary)/1)]">
                   Size {size}
                 </h3>
                 <Tabs items={sampleTabs} size={size} type="toggle" />

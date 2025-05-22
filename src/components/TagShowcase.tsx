@@ -89,7 +89,7 @@ export default function TagShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
               >
                 {section.title}
               </a>
@@ -201,9 +201,9 @@ export default function TagShowcase() {
           </div>
           <CodeBlock
             code={`// Custom close icon
-<Tag 
-  type="primary" 
-  closable 
+<Tag
+  type="primary"
+  closable
   onClose={handleClose}
   closeIcon={<span class="text-xs">✕</span>}
 >

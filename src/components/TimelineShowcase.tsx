@@ -101,7 +101,7 @@ export default function TimelineShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
               >
                 {section.title}
               </a>
@@ -128,14 +128,14 @@ export default function TimelineShowcase() {
         <ShowcaseSection id="states" title="States">
           <div class="space-y-8 max-w-md pl-6">
             <div>
-              <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
+              <h3 class="text-sm font-medium text-[hsl(var(--color-fg-muted)/1)] mb-4">
                 Active States
               </h3>
               <Timeline stages={stagesWithStates} />
             </div>
 
             <div>
-              <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
+              <h3 class="text-sm font-medium text-[hsl(var(--color-fg-muted)/1)] mb-4">
                 With Error
               </h3>
               <Timeline stages={stagesWithError} />
@@ -171,8 +171,12 @@ const stages = [
               renderStage={(stage) => (
                 <div class="space-y-1">
                   <div class="font-medium">{stage.title}</div>
-                  <div class="text-xs text-gray-500">{stage.date}</div>
-                  <div class="text-sm text-gray-600">{stage.description}</div>
+                  <div class="text-xs text-[hsl(var(--color-fg-muted)/1)]">
+                    {stage.date}
+                  </div>
+                  <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
+                    {stage.description}
+                  </div>
                 </div>
               )}
             />
@@ -199,8 +203,8 @@ const stages = [
   renderStage={(stage) => (
     <div class="space-y-1">
       <div class="font-medium">{stage.title}</div>
-      <div class="text-xs text-gray-500">{stage.date}</div>
-      <div class="text-sm text-gray-600">{stage.description}</div>
+      <div class="text-xs text-[hsl(var(--color-fg-muted)/1)]">{stage.date}</div>
+      <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">{stage.description}</div>
     </div>
   )}
 />`}

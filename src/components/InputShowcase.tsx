@@ -88,7 +88,7 @@ export default function InputShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 hover:text-gray-900"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -103,7 +103,7 @@ export default function InputShowcase() {
               onInput={(e) => setValue(e.currentTarget.value)}
               placeholder="Type here"
             />
-            <div class="text-sm text-gray-600">
+            <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
               Current value: {value() || "(empty)"}
             </div>
           </div>

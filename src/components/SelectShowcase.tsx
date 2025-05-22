@@ -129,7 +129,7 @@ export default function SelectShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 hover:text-gray-900"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -148,7 +148,7 @@ export default function SelectShowcase() {
                 <option value={opt.value}>{opt.label}</option>
               ))}
             </Select>
-            <div class="text-sm text-gray-600">
+            <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
               Selected fruit: {selected() || "(none)"}
             </div>
           </div>

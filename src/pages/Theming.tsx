@@ -17,6 +17,11 @@ export default function Theming() {
   const fgBody = () => hsl(hue(), saturation(), theme() === "dark" ? 90 : 10);
   const primary = () => baseHSL();
   const primaryFg = () => hsl(hue(), saturation(), theme() === "dark" ? 95 : 5);
+  const bgSecondary = () =>
+    hsl(hue(), saturation(), theme() === "dark" ? 15 : 95);
+  const fgSecondary = () =>
+    hsl(hue(), saturation(), theme() === "dark" ? 80 : 30);
+  const bgCode = () => hsl(hue(), saturation(), theme() === "dark" ? 8 : 96);
 
   createEffect(() => {
     document.documentElement.style.setProperty("--tw-color-primary", primary());
@@ -26,6 +31,15 @@ export default function Theming() {
     );
     document.documentElement.style.setProperty("--color-bg-body", bgBody());
     document.documentElement.style.setProperty("--color-fg-body", fgBody());
+    document.documentElement.style.setProperty(
+      "--color-bg-secondary",
+      bgSecondary()
+    );
+    document.documentElement.style.setProperty(
+      "--color-fg-secondary",
+      fgSecondary()
+    );
+    document.documentElement.style.setProperty("--color-bg-code", bgCode());
   });
 
   onCleanup(() => {

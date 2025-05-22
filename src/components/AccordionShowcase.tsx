@@ -60,7 +60,7 @@ export default function AccordionShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -98,7 +98,7 @@ export default function AccordionShowcase() {
               expanded
               headerIsTrigger
               header={
-                <div class="px-3 py-2 font-medium text-blue-600">
+                <div class="px-3 py-2 font-medium text-[hsl(var(--tw-color-primary)/1)]">
                   Expanded by default
                 </div>
               }
@@ -112,7 +112,7 @@ export default function AccordionShowcase() {
             <Accordion
               headerIsTrigger={false}
               header={
-                <div class="px-3 py-2 font-medium text-gray-600">
+                <div class="px-3 py-2 font-medium text-[hsl(var(--color-fg-secondary)/1)]">
                   Non-interactive header
                 </div>
               }
@@ -126,12 +126,12 @@ export default function AccordionShowcase() {
             <Accordion
               headerIsTrigger
               header={
-                <div class="px-3 py-2 font-medium text-green-600">
+                <div class="px-3 py-2 font-medium text-[hsl(var(--color-positive)/1)]">
                   Custom styled header
                 </div>
               }
               content={
-                <div class="px-3 py-2 bg-green-50">
+                <div class="px-3 py-2 bg-[hsl(var(--color-bg-positive)/0.15)]">
                   Content with custom background.
                 </div>
               }
@@ -142,22 +142,22 @@ export default function AccordionShowcase() {
 <Accordion
   expanded
   headerIsTrigger
-  header={<div class="px-3 py-2 font-medium text-blue-600">Expanded by default</div>}
+  header={<div class="px-3 py-2 font-medium text-[hsl(var(--tw-color-primary)/1)]">Expanded by default</div>}
   content={<div class="px-3 py-2">This accordion starts in an expanded state.</div>}
 />
 
 // Non-interactive header
 <Accordion
   headerIsTrigger={false}
-  header={<div class="px-3 py-2 font-medium text-gray-600">Non-interactive header</div>}
+  header={<div class="px-3 py-2 font-medium text-[hsl(var(--color-fg-secondary)/1)]">Non-interactive header</div>}
   content={<div class="px-3 py-2">This accordion's header is not clickable.</div>}
 />
 
 // Custom styled
 <Accordion
   headerIsTrigger
-  header={<div class="px-3 py-2 font-medium text-green-600">Custom styled header</div>}
-  content={<div class="px-3 py-2 bg-green-50">Content with custom background.</div>}
+  header={<div class="px-3 py-2 font-medium text-[hsl(var(--color-positive)/1)]">Custom styled header</div>}
+  content={<div class="px-3 py-2 bg-[hsl(var(--color-bg-positive)/0.15)]">Content with custom background.</div>}
 />`}
           />
         </ShowcaseSection>
@@ -167,7 +167,11 @@ export default function AccordionShowcase() {
             <Accordion
               disabled
               headerIsTrigger
-              header={<div class="px-3 py-2 text-gray-500">Disabled State</div>}
+              header={
+                <div class="px-3 py-2 text-[hsl(var(--color-fg-tertiary)/1)]">
+                  Disabled State
+                </div>
+              }
               content={
                 <div class="px-3 py-2">
                   This accordion cannot be interacted with.
@@ -179,7 +183,7 @@ export default function AccordionShowcase() {
             code={`<Accordion
   disabled
   headerIsTrigger
-  header={<div class="px-3 py-2 text-gray-500">Disabled State</div>}
+  header={<div class="px-3 py-2 text-[hsl(var(--color-fg-tertiary)/1)]">Disabled State</div>}
   content={<div class="px-3 py-2">This accordion cannot be interacted with.</div>}
 />`}
           />

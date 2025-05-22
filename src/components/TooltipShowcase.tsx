@@ -95,7 +95,7 @@ export default function TooltipShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
               >
                 {section.title}
               </a>
@@ -192,8 +192,8 @@ export default function TooltipShowcase() {
         <ShowcaseSection id="multiline" title="Multiline">
           <div class="flex flex-wrap gap-4 items-center">
             <Tooltip
-              label={`This is a multiline 
-                tooltip example 
+              label={`This is a multiline
+                tooltip example
                 with three lines of text`}
               multilined
             >

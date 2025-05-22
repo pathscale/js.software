@@ -27,7 +27,7 @@ export function CodeBlock(props: CodeBlockProps) {
         title="Copy code"
         class="absolute right-2 top-2 opacity-0 group-hover:opacity-100 focus:opacity-100"
       />
-      <pre class="!m-0 rounded-md bg-gray-900 p-4 dark:bg-gray-950">
+      <pre class="!m-0 rounded-md p-4 bg-[hsl(var(--color-bg-code, var(--color-bg-secondary))/1)]">
         <code ref={codeRef} class={`language-${props.language ?? "tsx"}`}>
           {props.code}
         </code>

@@ -60,7 +60,7 @@ export default function BreadcrumbShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -153,11 +153,15 @@ export default function BreadcrumbShowcase() {
         <ShowcaseSection id="props" title="Props">
           <div class="space-y-8">
             <div>
-              <h3 class="text-lg font-medium mb-4">Breadcrumb Props</h3>
+              <h3 class="text-lg font-medium mb-4 text-[hsl(var(--color-fg-body)/1)]">
+                Breadcrumb Props
+              </h3>
               <PropsTable props={breadcrumbProps} />
             </div>
             <div>
-              <h3 class="text-lg font-medium mb-4">BreadcrumbItem Props</h3>
+              <h3 class="text-lg font-medium mb-4 text-[hsl(var(--color-fg-body)/1)]">
+                BreadcrumbItem Props
+              </h3>
               <PropsTable props={breadcrumbItemProps} />
             </div>
           </div>

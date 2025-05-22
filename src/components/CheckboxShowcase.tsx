@@ -78,7 +78,7 @@ export default function CheckboxShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-gray-600 hover:text-gray-900"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -93,7 +93,7 @@ export default function CheckboxShowcase() {
               onChange={(e) => setChecked(e.currentTarget.checked)}
               label={<span>Enable feature</span>}
             />
-            <div class="text-sm text-gray-600">
+            <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
               Checked state: {checked() ? "true" : "false"}
             </div>
           </div>

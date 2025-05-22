@@ -19,7 +19,7 @@ export const ShowcaseSection: ParentComponent<ShowcaseSectionProps> = (
   return (
     <div
       id={props.id}
-      class={`p-3 bg-white dark:bg-gray-800 rounded-lg shadow-sm scroll-mt-6 ${
+      class={`p-3 bg-[hsl(var(--color-bg-secondary, var(--color-bg-body))/1)] rounded-lg shadow-sm scroll-mt-6 ${
         props.class ?? ""
       }`}
     >
@@ -27,10 +27,10 @@ export const ShowcaseSection: ParentComponent<ShowcaseSectionProps> = (
         <h2 class="text-xl font-semibold group/title">
           <a
             href={`#${props.id}`}
-            class="text-inherit hover:text-gray-600 dark:hover:text-gray-300 flex items-center gap-2"
+            class="text-inherit hover:text-[hsl(var(--color-fg-secondary))/1] flex items-center gap-2"
           >
             {props.title}
-            <span class="opacity-0 group-hover/title:opacity-100 text-gray-400 dark:text-gray-500 transition-opacity">
+            <span class="opacity-0 group-hover/title:opacity-100 text-[hsl(var(--color-fg-tertiary))/1] transition-opacity">
               #
             </span>
           </a>
