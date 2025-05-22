@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 const Layout = (props) => {
   return (
-    <div class="min-h-screen text-gray-900 dark:text-gray-100 bg-[hsl(var(--color-bg)/1)] transition-colors duration-300">
+    <div class="min-h-screen bg-[hsl(var(--color-bg-body)/1)] text-[hsl(var(--color-fg-body)/1)] transition-colors duration-300">
       <Sidebar />
       <main class="lg:ml-64 min-h-screen">
         <div class="container mx-auto px-4 py-8">{props.children}</div>

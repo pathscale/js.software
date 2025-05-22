@@ -3,41 +3,46 @@ import ShowcaseLayout from "../components/ShowcaseLayout";
 import { theme, setTheme } from "../lib/theme";
 
 export default function Theming() {
-  const [hue, setHue] = createSignal(200);
-  const [saturation, setSaturation] = createSignal(50);
+  const [hue, setHue] = createSignal(210);
+  const [saturation, setSaturation] = createSignal(60);
+  const lightness = () => (theme() === "dark" ? 10 : 90);
 
-  const lightness = () => (theme() === "light" ? 90 : 10);
-  const labelClass = () => (theme() === "dark" ? "text-white" : "text-black");
-  const valueClass = () =>
-    theme() === "dark" ? "text-gray-300" : "text-gray-700";
+  const hsl = function (h: number, s: number, l: number) {
+    return `${h} ${s}% ${l}%`;
+  };
 
-  onMount(() => {
-    const saved = localStorage.getItem("theme") || "light";
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const initial =
-      saved === "dark" || (!saved && prefersDark) ? "dark" : "light";
-    setTheme(initial);
-    document.documentElement.dataset.theme = initial;
-  });
+  const baseHSL = () => hsl(hue(), saturation(), lightness());
+
+  const bgBody = () => hsl(hue(), saturation(), theme() === "dark" ? 10 : 98);
+  const fgBody = () => hsl(hue(), saturation(), theme() === "dark" ? 90 : 10);
+  const primary = () => baseHSL();
+  const primaryFg = () => hsl(hue(), saturation(), theme() === "dark" ? 95 : 5);
 
   createEffect(() => {
-    const hsl = `${hue()} ${saturation()}% ${lightness()}%`;
-    document.documentElement.style.setProperty("--color-bg", hsl);
-    document.documentElement.dataset.theme = theme();
-    localStorage.setItem("theme", theme());
+    document.documentElement.style.setProperty("--tw-color-primary", primary());
+    document.documentElement.style.setProperty(
+      "--tw-color-primary-foreground",
+      primaryFg()
+    );
+    document.documentElement.style.setProperty("--color-bg-body", bgBody());
+    document.documentElement.style.setProperty("--color-fg-body", fgBody());
   });
 
   onCleanup(() => {
-    document.documentElement.style.removeProperty("--color-bg");
+    const vars = [
+      "--tw-color-primary",
+      "--tw-color-primary-foreground",
+      "--color-bg-body",
+      "--color-fg-body",
+    ];
+    vars.forEach((v) => document.documentElement.style.removeProperty(v));
   });
 
   return (
     <ShowcaseLayout>
       <div class="grid gap-6 md:grid-cols-3 mt-4">
         <div>
-          <label class={`block mb-1 text-sm font-medium ${labelClass()}`}>
+          <label class="block mb-1 text-sm font-medium text-gray-800">
             Hue
           </label>
           <div class="flex items-center gap-2">
@@ -49,11 +54,11 @@ export default function Theming() {
               onInput={(e) => setHue(+e.currentTarget.value)}
               class="w-full"
             />
-            <span class={`text-sm w-10 ${valueClass()}`}>{hue()}</span>
+            <div class="text-sm mt-1 text-gray-600">{hue()}</div>
           </div>
         </div>
         <div>
-          <label class={`block mb-1 text-sm font-medium ${labelClass()}`}>
+          <label class="block mb-1 text-sm font-medium text-gray-800">
             Saturation
           </label>
           <div class="flex items-center gap-2">
@@ -65,7 +70,7 @@ export default function Theming() {
               onInput={(e) => setSaturation(+e.currentTarget.value)}
               class="w-full"
             />
-            <span class={`text-sm w-10 ${valueClass()}`}>{saturation()}%</span>
+            <div class="text-sm mt-1 text-gray-600">{saturation()}%</div>
           </div>
         </div>
         <div>
