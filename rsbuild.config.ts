@@ -17,36 +17,12 @@ export default defineConfig({
   tools: {
     rspack: {
       optimization: {
-        splitChunks: {
-          chunks: "all",
-          minSize: 30000,
-          cacheGroups: {
-            styles: {
-              name: "styles",
-              type: "css/mini-extract",
-              chunks: "all",
-              enforce: true,
-            },
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: "vendors",
-              chunks: "all",
-              priority: 10,
-            },
-            common: {
-              name: "common",
-              minChunks: 2,
-              chunks: "async",
-              priority: 5,
-              reuseExistingChunk: true,
-              enforce: true,
-            },
-          },
-        },
+        splitChunks: false,
+        runtimeChunk: false,
       },
     },
   },
   output: {
-    inlineStyles: true,
+    inlineStyles: false,
   },
 });
