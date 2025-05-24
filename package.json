@@ -41,6 +41,7 @@
     "clsx": "^2.1.1",
     "cmdk-solid": "^1.1.2",
     "commitizen": "^4.3.0",
+    "compression-webpack-plugin": "^11.1.0",
     "embla-carousel-solid": "^8.6.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
