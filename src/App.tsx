@@ -1,6 +1,7 @@
 import { Router, Route } from "@solidjs/router";
 import { routes } from "./routes";
 import Sidebar from "./Sidebar";
+import { Footer } from "./components/Footer";
 
 const Layout = (props) => {
   return (
@@ -9,6 +10,7 @@ const Layout = (props) => {
       <main class="lg:ml-64 min-h-screen">
         <div class="container mx-auto px-4 py-8">{props.children}</div>
       </main>
+      <Footer />
     </div>
   );
 };

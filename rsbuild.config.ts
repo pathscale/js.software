@@ -7,6 +7,11 @@ export default defineConfig({
   plugins: [pluginBabel({ include: /\.(?:jsx|tsx)$/ }), pluginSolid()],
   source: {
     alias: { "~": "./src" },
+    define: {
+      "import.meta.env.VERSION": JSON.stringify(
+        process.env.GITHUB_RUN_NUMBER || "0.0.1"
+      ),
+    },
   },
   tools: {
     rspack: {
