@@ -5,44 +5,33 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function TooltipShowcase() {
-  const types = [
-    "primary",
-    "info",
-    "success",
-    "warning",
-    "danger",
-    "gray",
-  ] as const;
-  const sizes = ["sm", "md", "lg"] as const;
-  const positions = ["top", "bottom", "left", "right"] as const;
-
   const sections = [
-    { id: "types", title: "Types" },
-    { id: "sizes", title: "Sizes" },
+    { id: "contents", title: "Contents" },
+    { id: "default", title: "Default" },
+    { id: "force-open", title: "Force Open" },
     { id: "positions", title: "Positions" },
-    { id: "variants", title: "Variants" },
-    { id: "multiline", title: "Multiline" },
-    { id: "delay", title: "Delay & Always Visible" },
+    { id: "colors", title: "Colors" },
+    { id: "statuses", title: "Statuses" },
     { id: "props", title: "Props" },
   ] as const;
 
   const tooltipProps = [
     {
-      name: "label",
+      name: "message",
       type: "string",
+      required: true,
       description: "The text content of the tooltip",
     },
     {
-      name: "type",
-      type: '"primary" | "info" | "success" | "warning" | "danger" | "gray"',
-      default: '"primary"',
-      description: "The visual style and color of the tooltip",
+      name: "open",
+      type: "boolean",
+      default: "false",
+      description: "Whether the tooltip should always be visible",
     },
     {
-      name: "size",
-      type: '"sm" | "md" | "lg"',
-      default: '"md"',
-      description: "The size of the tooltip text",
+      name: "color",
+      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error" | "ghost"',
+      description: "The color scheme of the tooltip",
     },
     {
       name: "position",
@@ -51,51 +40,41 @@ export default function TooltipShowcase() {
       description: "The position of the tooltip relative to its trigger",
     },
     {
-      name: "rounded",
-      type: "boolean",
-      default: "true",
-      description: "Whether the tooltip should have rounded corners",
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value",
     },
     {
-      name: "dashed",
-      type: "boolean",
-      default: "false",
-      description: "Whether to show a dashed border",
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes",
     },
     {
-      name: "multilined",
-      type: "boolean",
-      default: "false",
-      description: "Whether the tooltip should support multiple lines",
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias)",
     },
     {
-      name: "animated",
-      type: "boolean",
-      default: "true",
-      description: "Whether to animate the tooltip",
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
     },
     {
-      name: "delay",
-      type: "number",
-      description: "Delay in milliseconds before showing the tooltip",
-    },
-    {
-      name: "always",
-      type: "boolean",
-      default: "false",
-      description: "Whether the tooltip should always be visible",
+      name: "children",
+      type: "JSX.Element",
+      description: "The element the tooltip is attached to",
     },
   ];
 
   return (
     <ShowcaseLayout>
-      <div class="space-y-4">
+      <div class="space-y-8">
         <ShowcaseSection id="contents" title="Contents">
           <nav class="space-y-1">
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -103,136 +82,125 @@ export default function TooltipShowcase() {
           </nav>
         </ShowcaseSection>
 
-        <ShowcaseSection id="types" title="Types">
-          <div class="flex flex-wrap gap-4 items-center">
-            {types.map((type) => (
-              <Tooltip label={`${type} tooltip`} type={type}>
-                <Button size="sm">{type}</Button>
-              </Tooltip>
-            ))}
+        <ShowcaseSection id="default" title="Default">
+          <div class="my-6">
+            <Tooltip message="hello">
+              <Button>Hover me</Button>
+            </Tooltip>
           </div>
           <CodeBlock
-            code={`// Tooltip types
-<Tooltip label="Primary tooltip" type="primary">
-  <Button>Primary</Button>
-</Tooltip>
-<Tooltip label="Info tooltip" type="info">
-  <Button>Info</Button>
+            code={`<Tooltip message="hello">
+  <Button>Hover me</Button>
 </Tooltip>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex flex-wrap gap-4 items-center">
-            {sizes.map((size) => (
-              <Tooltip label={`Size ${size}`} size={size}>
-                <Button size="sm">Size {size}</Button>
-              </Tooltip>
-            ))}
+        <ShowcaseSection id="force-open" title="Force Open">
+          <div class="my-6">
+            <Tooltip message="hello" open>
+              <Button>Hover me</Button>
+            </Tooltip>
           </div>
           <CodeBlock
-            code={`// Tooltip sizes
-<Tooltip label="Small tooltip" size="sm">
-  <Button>Small</Button>
-</Tooltip>
-<Tooltip label="Medium tooltip" size="md">
-  <Button>Medium</Button>
-</Tooltip>
-<Tooltip label="Large tooltip" size="lg">
-  <Button>Large</Button>
+            code={`<Tooltip message="hello" open>
+  <Button>Hover me</Button>
 </Tooltip>`}
           />
         </ShowcaseSection>
 
         <ShowcaseSection id="positions" title="Positions">
-          <div class="flex flex-wrap gap-8 items-center justify-center p-16">
-            {positions.map((position) => (
-              <Tooltip label={`${position} position`} position={position}>
-                <Button size="sm">{position}</Button>
-              </Tooltip>
-            ))}
+          <div class="flex gap-8 items-center justify-center p-16">
+            <Tooltip message="top" position="top">
+              <Button size="sm">Top</Button>
+            </Tooltip>
+            <Tooltip message="bottom" position="bottom">
+              <Button size="sm">Bottom</Button>
+            </Tooltip>
+            <Tooltip message="left" position="left">
+              <Button size="sm">Left</Button>
+            </Tooltip>
+            <Tooltip message="right" position="right">
+              <Button size="sm">Right</Button>
+            </Tooltip>
           </div>
           <CodeBlock
-            code={`// Tooltip positions
-<Tooltip label="Top tooltip" position="top">
-  <Button>Top</Button>
+            code={`<Tooltip message="top" position="top">
+  <Button size="sm">Top</Button>
 </Tooltip>
-<Tooltip label="Bottom tooltip" position="bottom">
-  <Button>Bottom</Button>
+<Tooltip message="bottom" position="bottom">
+  <Button size="sm">Bottom</Button>
+</Tooltip>
+<Tooltip message="left" position="left">
+  <Button size="sm">Left</Button>
+</Tooltip>
+<Tooltip message="right" position="right">
+  <Button size="sm">Right</Button>
 </Tooltip>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="variants" title="Variants">
-          <div class="flex flex-wrap gap-4 items-center">
-            <Tooltip label="Default tooltip">
-              <Button size="sm">Default</Button>
+        <ShowcaseSection id="colors" title="Colors">
+          <div class="flex gap-2 mt-6">
+            <Tooltip color="primary" message="primary" open>
+              <Button color="primary">Primary</Button>
             </Tooltip>
-            <Tooltip label="Rounded tooltip" rounded>
-              <Button size="sm">Rounded</Button>
+
+            <Tooltip color="secondary" message="secondary" open>
+              <Button color="secondary">Secondary</Button>
             </Tooltip>
-            <Tooltip label="Dashed border" dashed>
-              <Button size="sm">Dashed</Button>
-            </Tooltip>
-            <Tooltip label="Not animated" animated={false}>
-              <Button size="sm">No Animation</Button>
+
+            <Tooltip color="accent" message="accent" open>
+              <Button color="accent">Accent</Button>
             </Tooltip>
           </div>
           <CodeBlock
-            code={`// Tooltip variants
-<Tooltip label="Default tooltip">
-  <Button>Default</Button>
+            code={`<Tooltip color="primary" message="primary" open>
+  <Button color="primary">Primary</Button>
 </Tooltip>
-<Tooltip label="Dashed border" dashed>
-  <Button>Dashed</Button>
+
+<Tooltip color="secondary" message="secondary" open>
+  <Button color="secondary">Secondary</Button>
+</Tooltip>
+
+<Tooltip color="accent" message="accent" open>
+  <Button color="accent">Accent</Button>
 </Tooltip>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="multiline" title="Multiline">
-          <div class="flex flex-wrap gap-4 items-center">
-            <Tooltip
-              label={`This is a multiline
-                tooltip example
-                with three lines of text`}
-              multilined
-            >
-              <Button size="sm">Multiline</Button>
+        <ShowcaseSection id="statuses" title="Statuses">
+          <div class="flex gap-2 mt-6">
+            <Tooltip color="info" message="info" open>
+              <Button color="info">Info</Button>
             </Tooltip>
-            <Tooltip
-              label="Single line will truncate if it's too long to fit in the available space"
-              multilined={false}
-            >
-              <Button size="sm">Single line</Button>
-            </Tooltip>
-          </div>
-          <CodeBlock
-            code={`// Multiline tooltips
-<Tooltip
-  label="This is a multiline\ntooltip example with\nthree lines of text"
-  multilined
->
-  <Button>Multiline</Button>
-</Tooltip>`}
-          />
-        </ShowcaseSection>
 
-        <ShowcaseSection id="delay" title="Delay & Always Visible">
-          <div class="flex flex-wrap gap-4 items-center">
-            <Tooltip label="Appears with delay" delay={500}>
-              <Button size="sm">Delayed</Button>
+            <Tooltip color="success" message="success" open>
+              <Button color="success">Success</Button>
             </Tooltip>
-            <Tooltip label="Always visible tooltip" always>
-              <Button size="sm">Always visible</Button>
+
+            <Tooltip color="warning" message="warning" open>
+              <Button color="warning">Warning</Button>
+            </Tooltip>
+
+            <Tooltip color="error" message="error" open>
+              <Button color="error">Error</Button>
             </Tooltip>
           </div>
           <CodeBlock
-            code={`// Delayed and always visible tooltips
-<Tooltip label="Appears with delay" delay={500}>
-  <Button>Delayed</Button>
+            code={`<Tooltip color="info" message="info" open>
+  <Button color="info">Info</Button>
 </Tooltip>
-<Tooltip label="Always visible tooltip" always>
-  <Button>Always visible</Button>
+
+<Tooltip color="success" message="success" open>
+  <Button color="success">Success</Button>
+</Tooltip>
+
+<Tooltip color="warning" message="warning" open>
+  <Button color="warning">Warning</Button>
+</Tooltip>
+
+<Tooltip color="error" message="error" open>
+  <Button color="error">Error</Button>
 </Tooltip>`}
           />
         </ShowcaseSection>
