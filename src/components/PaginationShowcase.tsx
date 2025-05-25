@@ -1,80 +1,43 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Pagination } from "@pathscale/ui";
+import { Pagination, Button } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
-import { createSignal } from "solid-js";
 
 export default function PaginationShowcase() {
-  const sizes = ["sm", "md", "lg"] as const;
-  const alignments = ["start", "center", "end"] as const;
-
   const sections = [
+    { id: "contents", title: "Contents" },
+    { id: "default", title: "Default" },
     { id: "sizes", title: "Sizes" },
-    { id: "alignments", title: "Alignments" },
-    { id: "styles", title: "Styles" },
-    { id: "simple", title: "Simple Mode" },
-    { id: "ranges", title: "Custom Ranges" },
+    { id: "disabled", title: "With Disabled Button" },
+    { id: "navigation", title: "Navigation Buttons" },
+    { id: "outline", title: "Outline Navigation" },
+    { id: "radio", title: "Radio Inputs" },
     { id: "props", title: "Props" },
   ] as const;
 
-  const paginationProps = [
+  const props = [
     {
-      name: "total",
-      type: "number",
-      description: "Total number of items",
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes",
     },
     {
-      name: "perPage",
-      type: "number",
-      default: "20",
-      description: "Number of items per page",
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias)",
     },
     {
-      name: "current",
-      type: "number",
-      description: "Current page number",
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
     },
     {
-      name: "onChange",
-      type: "(page: number) => void",
-      description: "Callback when page changes",
-    },
-    {
-      name: "rangeBefore",
-      type: "number",
-      default: "1",
-      description: "Number of pages to show before current page",
-    },
-    {
-      name: "rangeAfter",
-      type: "number",
-      default: "1",
-      description: "Number of pages to show after current page",
-    },
-    {
-      name: "simple",
-      type: "boolean",
-      default: "false",
-      description: "Whether to use simple mode",
-    },
-    {
-      name: "size",
-      type: '"sm" | "md" | "lg"',
-      default: '"md"',
-      description: "Size of the pagination buttons",
-    },
-    {
-      name: "rounded",
-      type: "boolean",
-      default: "false",
-      description: "Whether to use rounded buttons",
+      name: "children",
+      type: "JSX.Element",
+      description: "The content to be joined together",
     },
   ];
-
-  const [currentPage, setCurrentPage] = createSignal(1);
-  const [simplePage, setSimplePage] = createSignal(1);
-  const [rangePage, setRangePage] = createSignal(5);
 
   return (
     <ShowcaseLayout>
@@ -92,168 +55,232 @@ export default function PaginationShowcase() {
           </nav>
         </ShowcaseSection>
 
+        <ShowcaseSection id="default" title="Default">
+          <Pagination>
+            <Button class="join-item">1</Button>
+            <Button class="join-item" active>
+              2
+            </Button>
+            <Button class="join-item">3</Button>
+            <Button class="join-item">4</Button>
+          </Pagination>
+          <CodeBlock
+            code={`<Pagination>
+  <Button class="join-item">1</Button>
+  <Button class="join-item" active>2</Button>
+  <Button class="join-item">3</Button>
+  <Button class="join-item">4</Button>
+</Pagination>`}
+          />
+        </ShowcaseSection>
+
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex flex-col gap-4">
-            {sizes.map((size) => (
-              <Pagination
-                size={size}
-                total={100}
-                current={currentPage()}
-                onChange={setCurrentPage}
-              />
-            ))}
+          <div class="flex flex-col gap-2 items-center">
+            <Pagination>
+              <Button size="xs" class="join-item">
+                1
+              </Button>
+              <Button size="xs" class="join-item" active>
+                2
+              </Button>
+              <Button size="xs" class="join-item">
+                3
+              </Button>
+              <Button size="xs" class="join-item">
+                4
+              </Button>
+            </Pagination>
+
+            <Pagination>
+              <Button size="sm" class="join-item">
+                1
+              </Button>
+              <Button size="sm" class="join-item" active>
+                2
+              </Button>
+              <Button size="sm" class="join-item">
+                3
+              </Button>
+              <Button size="sm" class="join-item">
+                4
+              </Button>
+            </Pagination>
+
+            <Pagination>
+              <Button size="md" class="join-item">
+                1
+              </Button>
+              <Button size="md" class="join-item" active>
+                2
+              </Button>
+              <Button size="md" class="join-item">
+                3
+              </Button>
+              <Button size="md" class="join-item">
+                4
+              </Button>
+            </Pagination>
+
+            <Pagination>
+              <Button size="lg" class="join-item">
+                1
+              </Button>
+              <Button size="lg" class="join-item" active>
+                2
+              </Button>
+              <Button size="lg" class="join-item">
+                3
+              </Button>
+              <Button size="lg" class="join-item">
+                4
+              </Button>
+            </Pagination>
           </div>
           <CodeBlock
-            code={`// Pagination sizes
-<Pagination
-  size="sm"
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-/>
+            code={`<Pagination>
+  <Button size="xs" class="join-item">1</Button>
+  <Button size="xs" class="join-item" active>2</Button>
+  <Button size="xs" class="join-item">3</Button>
+  <Button size="xs" class="join-item">4</Button>
+</Pagination>
 
-<Pagination
-  size="lg"
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-/>`}
+<Pagination>
+  <Button size="sm" class="join-item">1</Button>
+  <Button size="sm" class="join-item" active>2</Button>
+  <Button size="sm" class="join-item">3</Button>
+  <Button size="sm" class="join-item">4</Button>
+</Pagination>
+
+<Pagination>
+  <Button size="md" class="join-item">1</Button>
+  <Button size="md" class="join-item" active>2</Button>
+  <Button size="md" class="join-item">3</Button>
+  <Button size="md" class="join-item">4</Button>
+</Pagination>
+
+<Pagination>
+  <Button size="lg" class="join-item">1</Button>
+  <Button size="lg" class="join-item" active>2</Button>
+  <Button size="lg" class="join-item">3</Button>
+  <Button size="lg" class="join-item">4</Button>
+</Pagination>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="alignments" title="Alignments">
-          <div class="flex flex-col gap-4">
-            {alignments.map((align) => (
-              <Pagination
-                total={100}
-                current={currentPage()}
-                onChange={setCurrentPage}
-                class={`flex items-center gap-1 ${
-                  align === "start"
-                    ? "justify-start"
-                    : align === "center"
-                    ? "justify-center"
-                    : "justify-end"
-                }`}
-              />
-            ))}
-          </div>
+        <ShowcaseSection id="disabled" title="With Disabled Button">
+          <Pagination>
+            <Button class="join-item">1</Button>
+            <Button class="join-item">2</Button>
+            <Button class="join-item" disabled>
+              ...
+            </Button>
+            <Button class="join-item">99</Button>
+            <Button class="join-item">100</Button>
+          </Pagination>
           <CodeBlock
-            code={`// Pagination alignments
-<Pagination
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-  class="flex items-center gap-1 justify-center"
-/>`}
+            code={`<Pagination>
+  <Button class="join-item">1</Button>
+  <Button class="join-item">2</Button>
+  <Button class="join-item" disabled>...</Button>
+  <Button class="join-item">99</Button>
+  <Button class="join-item">100</Button>
+</Pagination>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="styles" title="Styles">
-          <div class="flex flex-col gap-4">
-            <Pagination
-              total={100}
-              current={currentPage()}
-              onChange={setCurrentPage}
-            />
-            <Pagination
-              rounded
-              total={100}
-              current={currentPage()}
-              onChange={setCurrentPage}
-            />
-          </div>
+        <ShowcaseSection id="navigation" title="Navigation Buttons">
+          <Pagination>
+            <Button class="join-item">«</Button>
+            <Button class="join-item">Page 22</Button>
+            <Button class="join-item">»</Button>
+          </Pagination>
           <CodeBlock
-            code={`// Pagination styles
-<Pagination
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-/>
-
-<Pagination
-  rounded
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-/>`}
+            code={`<Pagination>
+  <Button class="join-item">«</Button>
+  <Button class="join-item">Page 22</Button>
+  <Button class="join-item">»</Button>
+</Pagination>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="simple" title="Simple Mode">
-          <div class="flex flex-col gap-4">
-            <Pagination
-              simple
-              total={100}
-              current={simplePage()}
-              onChange={setSimplePage}
-            />
-            <Pagination
-              simple
-              perPage={1}
-              total={100}
-              current={simplePage()}
-              onChange={setSimplePage}
-            />
-          </div>
+        <ShowcaseSection id="outline" title="Outline Navigation">
+          <Pagination class="grid grid-cols-2">
+            <Button variant="outline" class="join-item">
+              Previous page
+            </Button>
+            <Button variant="outline" class="join-item">
+              Next
+            </Button>
+          </Pagination>
           <CodeBlock
-            code={`// Simple pagination
-<Pagination
-  simple
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-/>
-
-<Pagination
-  simple
-  perPage={1}
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-/>`}
+            code={`<Pagination class="grid grid-cols-2">
+  <Button variant="outline" class="join-item">Previous page</Button>
+  <Button variant="outline" class="join-item">Next</Button>
+</Pagination>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="ranges" title="Custom Ranges">
-          <div class="flex flex-col gap-4">
-            <Pagination
-              total={100}
-              current={rangePage()}
-              onChange={setRangePage}
-              rangeBefore={2}
-              rangeAfter={2}
+        <ShowcaseSection id="radio" title="Radio Inputs">
+          <Pagination>
+            <input
+              class="join-item btn btn-square"
+              type="radio"
+              name="options"
+              aria-label="1"
+              checked
             />
-            <Pagination
-              total={100}
-              current={rangePage()}
-              onChange={setRangePage}
-              rangeBefore={3}
-              rangeAfter={1}
+            <input
+              class="join-item btn btn-square"
+              type="radio"
+              name="options"
+              aria-label="2"
             />
-          </div>
+            <input
+              class="join-item btn btn-square"
+              type="radio"
+              name="options"
+              aria-label="3"
+            />
+            <input
+              class="join-item btn btn-square"
+              type="radio"
+              name="options"
+              aria-label="4"
+            />
+          </Pagination>
           <CodeBlock
-            code={`// Custom ranges
-<Pagination
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-  rangeBefore={2}
-  rangeAfter={2}
-/>
-
-<Pagination
-  total={100}
-  current={currentPage()}
-  onChange={setCurrentPage}
-  rangeBefore={3}
-  rangeAfter={1}
-/>`}
+            code={`<Pagination>
+  <input
+    class="join-item btn btn-square"
+    type="radio"
+    name="options"
+    aria-label="1"
+    checked
+  />
+  <input
+    class="join-item btn btn-square"
+    type="radio"
+    name="options"
+    aria-label="2"
+  />
+  <input
+    class="join-item btn btn-square"
+    type="radio"
+    name="options"
+    aria-label="3"
+  />
+  <input
+    class="join-item btn btn-square"
+    type="radio"
+    name="options"
+    aria-label="4"
+  />
+</Pagination>`}
           />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
-          <PropsTable props={paginationProps} />
+          <PropsTable props={props} />
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>
