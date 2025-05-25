@@ -23,7 +23,7 @@ export default defineConfig({
         new CompressionPlugin({
           algorithm: "brotliCompress",
           filename: "[path][base].br",
-          test: /\.(js|css|html|svg|json|txt|xml)$/,
+          test: /\.(mjs|css)$/,
           compressionOptions: {
             level: 11,
           },
