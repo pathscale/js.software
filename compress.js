@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 import { glob } from "glob";
 import { brotliCompressSync } from "zlib";
 
-const files = glob.sync("dist/static/**/*.{mjs,css}");
+const files = glob.sync("dist/static/**/*.{mjs,scss}");
 
 files.forEach((file) => {
   const content = readFileSync(file);
