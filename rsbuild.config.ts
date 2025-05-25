@@ -35,5 +35,9 @@ export default defineConfig({
   },
   output: {
     inlineStyles: false,
+    filename: {
+      js: "static/js/app.mjs",
+      css: "static/css/app.scss",
+    },
   },
 })
