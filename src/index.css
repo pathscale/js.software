@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "daisyui";
 @source "../node_modules/@pathscale/ui/";
 
 @import "./styles/base/index.css";

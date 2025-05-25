@@ -7,7 +7,7 @@
         "@commitlint/cli": "^19.0.3",
         "@commitlint/config-conventional": "^19.0.3",
         "@commitlint/cz-commitlint": "^19.8.1",
-        "@pathscale/ui": "^0.0.10",
+        "@pathscale/ui": "^0.0.12",
         "@rsbuild/core": "^1.3.20",
         "@rsbuild/plugin-babel": "^1.0.5",
         "@rsbuild/plugin-solid": "^1.0.5",
@@ -21,6 +21,7 @@
         "cmdk-solid": "^1.1.2",
         "commitizen": "^4.3.0",
         "compression-webpack-plugin": "^11.1.0",
+        "daisyui": "^5.0.37",
         "embla-carousel-solid": "^8.6.0",
         "husky": "^9.1.7",
         "lint-staged": "^16.0.0",
@@ -179,7 +180,7 @@
 
     "@module-federation/webpack-bundler-runtime": ["@module-federation/webpack-bundler-runtime@0.13.1", "", { "dependencies": { "@module-federation/runtime": "0.13.1", "@module-federation/sdk": "0.13.1" } }, "sha512-QSuSIGa09S8mthbB1L6xERqrz+AzPlHR6D7RwAzssAc+IHf40U6NiTLPzUqp9mmKDhC5Tm0EISU0ZHNeJpnpBQ=="],
 
-    "@pathscale/ui": ["@pathscale/ui@0.0.10", "", { "peerDependencies": { "solid-js": "^1.8" } }, "sha512-QJiox6q2vNPkHHU+AOqcun0/sc3irp4Xj6PWfgXSgQ5FPKJyqwMTm2uaA46HMIJi62Dt0BB2JQ3AMIE1+zl6XA=="],
+    "@pathscale/ui": ["@pathscale/ui@0.0.12", "", { "peerDependencies": { "solid-js": "^1.8" } }, "sha512-1/emPLVL85+GWj8GJfOnPzayRjTzEgPlkN3PYJnRWl5esGlbDBz3aHAqvF3O8hvGsl7zO5pjg1sN9S30HgURgg=="],
 
     "@rsbuild/core": ["@rsbuild/core@1.3.20", "", { "dependencies": { "@rspack/core": "1.3.10", "@rspack/lite-tapable": "~1.0.1", "@swc/helpers": "^0.5.17", "core-js": "~3.42.0", "jiti": "^2.4.2" }, "bin": { "rsbuild": "bin/rsbuild.js" } }, "sha512-5VxOddgGHaq5x4ONdKOZvLYLj8dhVfCAz+cERNLXrKLzBISouY1A9TJcbZBK4xoH/0DJrDtDzapNA+dI9Jr07Q=="],
 
@@ -462,6 +463,8 @@
     "csstype": ["csstype@3.1.3", "", {}, "sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw=="],
 
     "cz-conventional-changelog": ["cz-conventional-changelog@3.3.0", "", { "dependencies": { "chalk": "^2.4.1", "commitizen": "^4.0.3", "conventional-commit-types": "^3.0.0", "lodash.map": "^4.5.1", "longest": "^2.0.1", "word-wrap": "^1.0.3" }, "optionalDependencies": { "@commitlint/load": ">6.1.1" } }, "sha512-U466fIzU5U22eES5lTNiNbZ+d8dfcHcssH4o7QsdWaCcRs/feIPCxKYSWkYBNs5mny7MvEfwpTLWjvbm94hecw=="],
+
+    "daisyui": ["daisyui@5.0.37", "", {}, "sha512-PLc+MhWAqTwolygEGPDi+ac+OsFqIt9nZylTIiyVlEx8loYL7Pt7hNWb8cp5pQQ9dhjYnda1ERiuM6OsJmvPGw=="],
 
     "dargs": ["dargs@8.1.0", "", {}, "sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw=="],
 

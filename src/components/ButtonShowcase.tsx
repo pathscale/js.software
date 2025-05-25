@@ -5,74 +5,87 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function ButtonShowcase() {
-  const variants = ["fill", "gray", "ghost"] as const;
-  const colors = [
-    "inverse",
-    "primary",
-    "secondary",
-    "tertiary",
-    "accent",
-    "positive",
-    "destructive",
-  ] as const;
-  const sizes = ["sm", "md", "lg"] as const;
-  const shapes = ["rounded", "circle"] as const;
-  const spacing = [0, "xs", "sm", "md", "lg"] as const;
-  const alignments = ["start", "center", "end"] as const;
-
   const sections = [
-    { id: "variants-colors", title: "Variants × Colors" },
-    { id: "sizes", title: "Sizes" },
-    { id: "spacing", title: "Spacing" },
-    { id: "alignment", title: "Alignment" },
-    { id: "shapes", title: "Shapes" },
-    { id: "states", title: "States" },
-    { id: "polymorphic", title: "Polymorphic Usage" },
+    { id: "default", title: "Default" },
+    { id: "brand-colors", title: "Brand Colors" },
+    { id: "soft-style", title: "Soft Style" },
+    { id: "outline-style", title: "Outline Style" },
+    { id: "dash-style", title: "Dash Style" },
+    { id: "active-buttons", title: "Active Buttons" },
+    { id: "state-colors", title: "State Colors" },
+    { id: "outline-buttons", title: "Outline Buttons" },
+    { id: "button-sizes", title: "Button Sizes" },
+    { id: "responsive", title: "Responsive" },
+    { id: "wide", title: "Wide" },
+    { id: "glass", title: "Glass" },
+    { id: "html-tags", title: "Different HTML Tags" },
+    { id: "disabled", title: "Disabled" },
+    { id: "square", title: "Square Button" },
+    { id: "circle", title: "Circle Button" },
+    { id: "icon-start", title: "Icon at Start" },
+    { id: "icon-end", title: "Icon at End" },
+    { id: "block", title: "Block Button" },
+    { id: "loading", title: "Loading States" },
+    { id: "no-animation", title: "Without Animation" },
+    { id: "link", title: "Link Button" },
     { id: "props", title: "Props" },
   ] as const;
 
   const buttonProps = [
     {
       name: "variant",
-      type: '"fill" | "gray" | "ghost"',
-      default: '"fill"',
+      type: '"soft" | "dash" | "outline" | "link"',
+      default: "undefined",
       description: "The visual style variant of the button",
     },
     {
       name: "color",
-      type: '"inverse" | "primary" | "secondary" | "tertiary" | "accent" | "positive" | "destructive"',
-      default: '"primary"',
+      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error" | "ghost"',
+      default: "undefined",
       description: "The color scheme of the button",
     },
     {
       name: "size",
-      type: '"sm" | "md" | "lg"',
-      default: '"md"',
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      default: "undefined",
       description: "The size of the button",
     },
     {
       name: "shape",
-      type: '"rounded" | "circle"',
-      default: '"rounded"',
+      type: '"circle" | "square"',
+      default: "undefined",
       description: "The shape of the button",
     },
     {
-      name: "spacing",
-      type: '0 | "xs" | "sm" | "md" | "lg"',
-      default: '"md"',
-      description: "The internal spacing/padding of the button",
-    },
-    {
-      name: "align",
-      type: '"start" | "center" | "end"',
-      default: '"center"',
-      description: "The alignment of button content",
-    },
-    {
-      name: "stretched",
+      name: "glass",
       type: "boolean",
       default: "false",
-      description: "Whether the button should stretch to full width",
+      description: "Whether to apply a glass effect to the button",
+    },
+    {
+      name: "wide",
+      type: "boolean",
+      default: "false",
+      description: "Whether the button should be wider than normal",
+    },
+    {
+      name: "fullWidth",
+      type: "boolean",
+      default: "false",
+      description: "Whether the button should take up the full width",
+    },
+    {
+      name: "responsive",
+      type: "boolean",
+      default: "false",
+      description:
+        "Whether the button should be responsive (changes size based on screen size)",
+    },
+    {
+      name: "animation",
+      type: "boolean",
+      default: "true",
+      description: "Whether to show click animations",
     },
     {
       name: "loading",
@@ -81,15 +94,47 @@ export default function ButtonShowcase() {
       description: "Whether the button is in a loading state",
     },
     {
+      name: "active",
+      type: "boolean",
+      default: "false",
+      description: "Whether the button is in an active state",
+    },
+    {
+      name: "startIcon",
+      type: "JSX.Element",
+      description: "Icon to show at the start of the button",
+    },
+    {
+      name: "endIcon",
+      type: "JSX.Element",
+      description: "Icon to show at the end of the button",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      default: "false",
+      description: "Whether the button is disabled",
+    },
+    {
       name: "as",
-      type: "ValidComponent",
+      type: "ElementType",
       default: '"button"',
-      description: "The HTML element or component to render as",
+      description: "The HTML element to render as",
+    },
+    {
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value",
     },
     {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
     },
   ];
 
@@ -109,119 +154,479 @@ export default function ButtonShowcase() {
           </nav>
         </ShowcaseSection>
 
-        <ShowcaseSection id="variants-colors" title="Variants × Colors">
-          {variants.map((variant) => (
-            <div class="space-y-2">
-              <h3 class="text-sm font-medium text-[hsl(var(--color-fg-tertiary)/1)]">
-                {variant}
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                {colors.map((color) => (
-                  <Button variant={variant} color={color}>
-                    {color}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          ))}
+        <ShowcaseSection id="default" title="Default">
+          <Button>Button</Button>
+          <CodeBlock code={`<Button>Button</Button>`} />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="brand-colors" title="Brand Colors">
+          <div class="flex items-center gap-2">
+            <Button>Default</Button>
+            <Button color="neutral">Neutral</Button>
+            <Button color="primary">Primary</Button>
+            <Button color="secondary">Secondary</Button>
+            <Button color="accent">Accent</Button>
+            <Button color="ghost">Ghost</Button>
+            <Button variant="link">Link</Button>
+          </div>
           <CodeBlock
-            code={`// Variant and color combinations
-<Button variant="fill" color="primary">Primary Fill</Button>
-<Button variant="gray" color="accent">Accent Gray</Button>
-<Button variant="ghost" color="destructive">Destructive Ghost</Button>`}
+            code={`<Button>Default</Button>
+<Button color="neutral">Neutral</Button>
+<Button color="primary">Primary</Button>
+<Button color="secondary">Secondary</Button>
+<Button color="accent">Accent</Button>
+<Button color="ghost">Ghost</Button>
+<Button variant="link">Link</Button>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex flex-wrap gap-2 items-center">
-            {sizes.map((size) => (
-              <Button size={size}>Size {size}</Button>
-            ))}
+        <ShowcaseSection id="soft-style" title="Soft Style">
+          <div class="flex items-center gap-2">
+            <Button variant="soft">Default</Button>
+            <Button variant="soft" color="primary">
+              Primary
+            </Button>
+            <Button variant="soft" color="secondary">
+              Secondary
+            </Button>
+            <Button variant="soft" color="accent">
+              Accent
+            </Button>
+            <Button variant="soft" color="info">
+              Info
+            </Button>
+            <Button variant="soft" color="success">
+              Success
+            </Button>
+            <Button variant="soft" color="warning">
+              Warning
+            </Button>
+            <Button variant="soft" color="error">
+              Error
+            </Button>
           </div>
           <CodeBlock
-            code={`// Size variations
-<Button size="sm">Small</Button>
-<Button size="md">Medium</Button>
-<Button size="lg">Large</Button>`}
+            code={`<Button variant="soft">Default</Button>
+<Button variant="soft" color="primary">Primary</Button>
+<Button variant="soft" color="secondary">Secondary</Button>
+<Button variant="soft" color="accent">Accent</Button>
+<Button variant="soft" color="info">Info</Button>
+<Button variant="soft" color="success">Success</Button>
+<Button variant="soft" color="warning">Warning</Button>
+<Button variant="soft" color="error">Error</Button>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="spacing" title="Spacing">
-          <div class="flex flex-wrap gap-2">
-            {spacing.map((space) => (
-              <Button spacing={space}>Spacing {space}</Button>
-            ))}
+        <ShowcaseSection id="outline-style" title="Outline Style">
+          <div class="flex items-center gap-2">
+            <Button variant="outline">Default</Button>
+            <Button variant="outline" color="primary">
+              Primary
+            </Button>
+            <Button variant="outline" color="secondary">
+              Secondary
+            </Button>
+            <Button variant="outline" color="accent">
+              Accent
+            </Button>
+            <Button variant="outline" color="info">
+              Info
+            </Button>
+            <Button variant="outline" color="success">
+              Success
+            </Button>
+            <Button variant="outline" color="warning">
+              Warning
+            </Button>
+            <Button variant="outline" color="error">
+              Error
+            </Button>
           </div>
           <CodeBlock
-            code={`// Spacing variations
-<Button spacing={0}>No Spacing</Button>
-<Button spacing="xs">XS Spacing</Button>
-<Button spacing="sm">SM Spacing</Button>
-<Button spacing="md">MD Spacing</Button>
-<Button spacing="lg">LG Spacing</Button>`}
+            code={`<Button variant="outline">Default</Button>
+<Button variant="outline" color="primary">Primary</Button>
+<Button variant="outline" color="secondary">Secondary</Button>
+<Button variant="outline" color="accent">Accent</Button>
+<Button variant="outline" color="info">Info</Button>
+<Button variant="outline" color="success">Success</Button>
+<Button variant="outline" color="warning">Warning</Button>
+<Button variant="outline" color="error">Error</Button>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="alignment" title="Alignment">
-          <div class="space-y-2">
-            {alignments.map((align) => (
-              <Button align={align} stretched class="w-64">
-                Align {align}
-              </Button>
-            ))}
+        <ShowcaseSection id="dash-style" title="Dash Style">
+          <div class="flex items-center gap-2">
+            <Button variant="dash">Default</Button>
+            <Button variant="dash" color="primary">
+              Primary
+            </Button>
+            <Button variant="dash" color="secondary">
+              Secondary
+            </Button>
+            <Button variant="dash" color="accent">
+              Accent
+            </Button>
+            <Button variant="dash" color="info">
+              Info
+            </Button>
+            <Button variant="dash" color="success">
+              Success
+            </Button>
+            <Button variant="dash" color="warning">
+              Warning
+            </Button>
+            <Button variant="dash" color="error">
+              Error
+            </Button>
           </div>
           <CodeBlock
-            code={`// Content alignment
-<Button align="start">Left aligned content</Button>
-<Button align="center">Centered content</Button>
-<Button align="end">Right aligned content</Button>`}
+            code={`<Button variant="dash">Default</Button>
+<Button variant="dash" color="primary">Primary</Button>
+<Button variant="dash" color="secondary">Secondary</Button>
+<Button variant="dash" color="accent">Accent</Button>
+<Button variant="dash" color="info">Info</Button>
+<Button variant="dash" color="success">Success</Button>
+<Button variant="dash" color="warning">Warning</Button>
+<Button variant="dash" color="error">Error</Button>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="shapes" title="Shapes">
-          <div class="flex flex-wrap gap-2">
-            {shapes.map((shape) => (
-              <Button shape={shape}>{shape}</Button>
-            ))}
+        <ShowcaseSection id="active-buttons" title="Active Buttons">
+          <div class="flex items-center gap-2">
+            <Button active>Default</Button>
+            <Button active color="neutral">
+              Neutral
+            </Button>
+            <Button active color="primary">
+              Primary
+            </Button>
+            <Button active color="secondary">
+              Secondary
+            </Button>
+            <Button active color="accent">
+              Accent
+            </Button>
+            <Button active color="ghost">
+              Ghost
+            </Button>
+            <Button active variant="link">
+              Link
+            </Button>
           </div>
           <CodeBlock
-            code={`// Shape variations
-<Button shape="rounded">Rounded</Button>
-<Button shape="circle">Circle</Button>`}
+            code={`<Button active>Default</Button>
+<Button active color="neutral">Neutral</Button>
+<Button active color="primary">Primary</Button>
+<Button active color="secondary">Secondary</Button>
+<Button active color="accent">Accent</Button>
+<Button active color="ghost">Ghost</Button>
+<Button active variant="link">Link</Button>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="states" title="States">
-          <div class="space-y-2">
-            <div class="flex flex-wrap gap-2">
-              <Button>Normal</Button>
-              <Button disabled>Disabled</Button>
-              <Button loading>Loading</Button>
-            </div>
-            <Button stretched>Full Width</Button>
+        <ShowcaseSection id="state-colors" title="State Colors">
+          <div class="flex items-center gap-2">
+            <Button color="info">Info</Button>
+            <Button color="success">Success</Button>
+            <Button color="warning">Warning</Button>
+            <Button color="error">Error</Button>
           </div>
           <CodeBlock
-            code={`// Interactive states
+            code={`<Button color="info">Info</Button>
+<Button color="success">Success</Button>
+<Button color="warning">Warning</Button>
+<Button color="error">Error</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="button-sizes" title="Button Sizes">
+          <div class="flex items-center gap-2">
+            <Button size="lg">Large</Button>
+            <Button>Normal</Button>
+            <Button size="sm">Small</Button>
+            <Button size="xs">Tiny</Button>
+          </div>
+          <CodeBlock
+            code={`<Button size="lg">Large</Button>
 <Button>Normal</Button>
-<Button disabled>Disabled</Button>
-<Button loading>Loading</Button>
-<Button stretched>Full Width</Button>`}
+<Button size="sm">Small</Button>
+<Button size="xs">Tiny</Button>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="polymorphic" title="Polymorphic Usage">
-          <div class="flex flex-wrap gap-2">
-            <Button as="a" href="#" onClick={(e) => e.preventDefault()}>
-              Link Button
+        <ShowcaseSection id="responsive" title="Responsive">
+          <Button responsive>Responsive</Button>
+          <CodeBlock code={`<Button responsive>Responsive</Button>`} />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="wide" title="Wide">
+          <Button wide>Wide</Button>
+          <CodeBlock code={`<Button wide>Wide</Button>`} />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="glass" title="Glass">
+          <div
+            class="w-full flex justify-center py-8 rounded-md"
+            style={{
+              "background-image":
+                "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
+            }}
+          >
+            <Button glass>Glass button</Button>
+          </div>
+          <CodeBlock code={`<Button glass>Glass button</Button>`} />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="html-tags" title="Different HTML Tags">
+          <div class="flex gap-2 items-center justify-center">
+            <Button as="a" role="button">
+              Link
             </Button>
-            <Button as="span" role="button">
-              Span Button
+            <Button type="submit">Button</Button>
+            <Button as="input" type="button" value="Input" />
+            <Button as="input" type="submit" value="Submit" />
+            <Button as="button" type="button" aria-label="Radio" />
+            <Button as="button" type="button" aria-label="Checkbox" />
+            <Button as="input" type="reset" value="Reset" />
+          </div>
+          <CodeBlock
+            code={`<Button as="a" role="button">Link</Button>
+<Button type="submit">Button</Button>
+<Button as="input" type="button" value="Input" />
+<Button as="input" type="submit" value="Submit" />
+<Button as="button" type="button" aria-label="Radio" />
+<Button as="button" type="button" aria-label="Checkbox" />
+<Button as="input" type="reset" value="Reset" />`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="disabled" title="Disabled">
+          <div class="flex items-center gap-2">
+            <Button disabled>Disabled using attribute</Button>
+            <Button
+              class="btn btn-disabled"
+              tabIndex={-1}
+              role="button"
+              aria-disabled="true"
+            >
+              Disabled using class name
             </Button>
           </div>
           <CodeBlock
-            code={`// Polymorphic usage
-<Button as="a" href="#">Link Button</Button>
-<Button as="span" role="button">Span Button</Button>`}
+            code={`<Button disabled>Disabled using attribute</Button>
+<Button
+  class="btn btn-disabled"
+  tabIndex={-1}
+  role="button"
+  aria-disabled="true"
+>
+  Disabled using class name
+</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="square" title="Square Button">
+          <div class="flex items-center gap-2">
+            <Button shape="square">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </Button>
+            <Button shape="square" variant="outline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </Button>
+          </div>
+          <CodeBlock
+            code={`<Button shape="square">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</Button>
+<Button shape="square" variant="outline">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="circle" title="Circle Button">
+          <div class="flex items-center gap-2">
+            <Button shape="circle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </Button>
+            <Button shape="circle" variant="outline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </Button>
+          </div>
+          <CodeBlock
+            code={`<Button shape="circle">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</Button>
+<Button shape="circle" variant="outline">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="icon-start" title="Icon at Start">
+          <Button
+            startIcon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            }
+          >
+            Button
+          </Button>
+          <CodeBlock
+            code={`<Button
+  startIcon={
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+  }
+>
+  Button
+</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="icon-end" title="Icon at End">
+          <Button
+            endIcon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            }
+          >
+            Button
+          </Button>
+          <CodeBlock
+            code={`<Button
+  endIcon={
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+  }
+>
+  Button
+</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="block" title="Block Button">
+          <Button fullWidth>Block</Button>
+          <CodeBlock code={`<Button fullWidth>Block</Button>`} />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="loading" title="Loading States">
+          <div class="flex items-center gap-2">
+            <Button loading shape="square" />
+            <Button loading>loading</Button>
+          </div>
+          <CodeBlock
+            code={`<Button loading shape="square" />
+<Button loading>loading</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="no-animation" title="Without Animation">
+          <Button animation={false}>I don't have click animation</Button>
+          <CodeBlock
+            code={`<Button animation={false}>I don't have click animation</Button>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="link" title="Link Button">
+          <Button<"a">
+            as="a"
+            target="_blank"
+            rel="noopener"
+            href="https://daisyui.com/"
+          >
+            Link
+          </Button>
+          <CodeBlock
+            code={`<Button<"a"> as="a" target="_blank" rel="noopener" href="https://daisyui.com/">
+    Link
+  </Button>`}
           />
         </ShowcaseSection>
 
