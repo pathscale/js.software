@@ -9,6 +9,9 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Checkout
@@ -31,13 +34,49 @@ jobs:
       - name: Build Project
         run: bun run build
 
+      - name: Verify Single Bundle and Compression
+        run: |
+          cd dist
+          js_files=$(find static/js -name "*.js" | wc -l)
+          echo "Number of JS files: $js_files"
+          if [ "$js_files" -ne 1 ]; then
+            echo "ERROR: Expected 1 JS bundle, found $js_files"
+            exit 1
+          fi
+
+          css_files=$(find static/css -name "*.css" | wc -l)
+          echo "Number of CSS files: $css_files"
+          if [ "$css_files" -ne 1 ]; then
+            echo "ERROR: Expected 1 CSS bundle, found $css_files"
+            exit 1
+          fi
+
+          js_br_files=$(find static/js -name "*.js.br" | wc -l)
+          css_br_files=$(find static/css -name "*.css.br" | wc -l)
+          echo "JS .br files: $js_br_files"
+          echo "CSS .br files: $css_br_files"
+
+          if [ "$js_br_files" -ne 1 ] || [ "$css_br_files" -ne 1 ]; then
+            echo "ERROR: Missing brotli compressed files"
+            exit 1
+          fi
+
+          for file in static/js/*.js static/css/*.css; do
+            if [ -f "$file" ]; then
+              original_size=$(stat -c%s "$file" 2>/dev/null || stat -f%z "$file")
+              compressed_size=$(stat -c%s "$file.br" 2>/dev/null || stat -f%z "$file.br")
+              ratio=$(echo "scale=2; $compressed_size * 100 / $original_size" | bc)
+              echo "$(basename $file): ${original_size} bytes -> ${compressed_size} bytes (${ratio}% of original)"
+            fi
+          done
+
       - name: Mirror index.html to 404
         run: |
           cd dist
           mkdir -p bunnycdn_errors
           cp index.html bunnycdn_errors/404.html
 
-      - name: Upload to BunnyCDN.
+      - name: Upload to BunnyCDN
         env:
           STORAGE_API_KEY: ${{ secrets.BUNNYCDN_STORAGE_API_KEY }}
           ZONE_API_KEY: ${{ secrets.BUNNYCDN_ZONE_API_KEY }}
@@ -45,10 +84,10 @@ jobs:
           STORAGE_NAME: ${{ secrets.BUNNYCDN_STORAGE_NAME }}
         run: |
           cd dist
-          for file in $(find . -type f); do
-            curl -X PUT -H "AccessKey: $STORAGE_API_KEY" -T "$file" "https://storage.bunnycdn.com/$STORAGE_NAME/$file"
+          find . -type f | while read file; do
+            curl -s -X PUT -H "AccessKey: $STORAGE_API_KEY" -T "$file" "https://storage.bunnycdn.com/$STORAGE_NAME/$file"
           done
-          curl -X POST \
+          curl -s -X POST \
             -H "AccessKey: $ZONE_API_KEY" \
             -H "Content-Type: application/json" \
             -H "Accept: application/json" \
