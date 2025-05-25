@@ -18,13 +18,20 @@ export default defineConfig({
         splitChunks: false,
         runtimeChunk: false,
       },
+      plugins: [
+        new (require('webpack').BannerPlugin)({
+          banner: () => '',
+          test: /\.js$/,
+        })
+      ],
     },
   },
   output: {
     inlineStyles: false,
     filename: {
       js: "app.mjs",
-      css: "app.scss",
+      css: "app.css",
     },
+    legalComments: "none",
   },
 })
