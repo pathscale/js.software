@@ -46,11 +46,7 @@ jobs:
         run: |
           cd dist
           for file in $(find . -type f); do
-            if [[ "$file" == *.mjs || "$file" == *.css ]]; then
-              curl -X PUT -H "AccessKey: $STORAGE_API_KEY" -H "Content-Encoding: br" -T "$file" "https://storage.bunnycdn.com/$STORAGE_NAME/$file"
-            else
-              curl -X PUT -H "AccessKey: $STORAGE_API_KEY" -T "$file" "https://storage.bunnycdn.com/$STORAGE_NAME/$file"
-            fi
+            curl -X PUT -H "AccessKey: $STORAGE_API_KEY" -H "Content-Encoding: br" -T "$file" "https://storage.bunnycdn.com/$STORAGE_NAME/$file"
           done
           curl -X POST \
             -H "AccessKey: $ZONE_API_KEY" \
