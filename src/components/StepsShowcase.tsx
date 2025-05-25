@@ -3,177 +3,74 @@ import { Steps } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
-import { createSignal } from "solid-js";
 
 export default function StepsShowcase() {
   const sections = [
-    { id: "basic", title: "Basic Usage" },
-    { id: "custom", title: "Custom Markers" },
-    { id: "clickable", title: "Clickable Steps" },
-    { id: "animated", title: "Animated Steps" },
+    { id: "contents", title: "Contents" },
+    { id: "default", title: "Default" },
+    { id: "responsive", title: "Responsive" },
+    { id: "data-content", title: "With Data Content" },
+    { id: "custom-colors", title: "Custom Colors" },
+    { id: "scrollable", title: "Scrollable Steps" },
     { id: "props", title: "Props" },
-  ];
+  ] as const;
 
-  const basicSteps = [
+  const props = [
     {
-      title: "Step 1",
-      subtitle: "First step",
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Welcome</h3>
-          <p>This is the content of step 1.</p>
-        </div>
-      ),
-    },
-    {
-      title: "Step 2",
-      subtitle: "Second step",
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Configuration</h3>
-          <p>This is the content of step 2.</p>
-        </div>
-      ),
-    },
-    {
-      title: "Step 3",
-      subtitle: "Final step",
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Complete</h3>
-          <p>This is the content of step 3.</p>
-        </div>
-      ),
-    },
-  ];
-
-  const customSteps = [
-    {
-      title: "Account",
-      marker: "👤",
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Account Setup</h3>
-          <p>Create your account.</p>
-        </div>
-      ),
-    },
-    {
-      title: "Profile",
-      marker: "📝",
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Profile Details</h3>
-          <p>Complete your profile.</p>
-        </div>
-      ),
-    },
-    {
-      title: "Done",
-      marker: "✨",
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">All Set!</h3>
-          <p>Your account is ready.</p>
-        </div>
-      ),
-    },
-  ];
-
-  const [activeStep, setActiveStep] = createSignal(0);
-
-  const clickableSteps = [
-    {
-      title: "Step 1",
-      clickable: true,
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Clickable Step 1</h3>
-          <p>You can click on the steps above to navigate.</p>
-        </div>
-      ),
-    },
-    {
-      title: "Step 2",
-      clickable: true,
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Clickable Step 2</h3>
-          <p>Try clicking on different steps.</p>
-        </div>
-      ),
-    },
-    {
-      title: "Step 3",
-      clickable: true,
-      content: (
-        <div class="p-4 bg-gray-50 rounded">
-          <h3 class="text-lg font-medium mb-2">Clickable Step 3</h3>
-          <p>Navigation made easy.</p>
-        </div>
-      ),
-    },
-  ];
-
-  const stepsProps = [
-    {
-      name: "steps",
-      type: "StepItem[]",
-      required: true,
-      description: "Array of step items to display",
-    },
-    {
-      name: "animated",
+      name: "vertical",
       type: "boolean",
       default: "false",
-      description: "Enable transition animations",
+      description: "Display steps vertically",
     },
     {
-      name: "initial",
-      type: "number",
-      default: "0",
-      description: "Initial active step index",
+      name: "horizontal",
+      type: "boolean",
+      default: "false",
+      description: "Display steps horizontally",
     },
+    {
+      name: "as",
+      type: "ElementType",
+      default: '"ul"',
+      description: "HTML element to render as",
+    },
+    {
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias)",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
+    },
+    {
+      name: "data-theme",
+      type: "string",
+      description: "Theme data attribute value",
+    },
+  ];
+
+  const stepProps = [
     {
       name: "value",
-      type: "number",
-      description: "Controlled active step index",
-    },
-    {
-      name: "onStepChange",
-      type: "(stepIndex: number) => void",
-      description: "Callback fired when step changes",
-    },
-  ];
-
-  const stepItemProps = [
-    {
-      name: "title",
       type: "string",
-      required: true,
-      description: "Title of the step",
+      description: "Custom value to display instead of step number",
     },
     {
-      name: "marker",
-      type: "string",
-      description: "Custom marker content (defaults to step number)",
+      name: "color",
+      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
+      description: "Color of the step",
     },
     {
-      name: "subtitle",
-      type: "string",
-      description: "Optional subtitle text",
-    },
-    {
-      name: "clickable",
-      type: "boolean",
-      default: "false",
-      description: "Whether the step can be clicked to navigate",
-    },
-    {
-      name: "content",
+      name: "children",
       type: "JSX.Element",
-      required: true,
-      description: "Content to display when step is active",
+      description: "Step content",
     },
   ];
 
@@ -185,7 +82,7 @@ export default function StepsShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-primary)/1)]"
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
               >
                 {section.title}
               </a>
@@ -193,92 +90,144 @@ export default function StepsShowcase() {
           </nav>
         </ShowcaseSection>
 
-        <ShowcaseSection id="basic" title="Basic Usage">
-          <Steps steps={basicSteps} />
+        <ShowcaseSection id="default" title="Default">
+          <Steps>
+            <Steps.Step color="primary">Register</Steps.Step>
+            <Steps.Step color="primary">Choose plan</Steps.Step>
+            <Steps.Step>Purchase</Steps.Step>
+            <Steps.Step>Receive Product</Steps.Step>
+          </Steps>
           <CodeBlock
-            code={`const steps = [
-  {
-    title: "Step 1",
-    subtitle: "First step",
-    content: <div>Content for step 1</div>
-  },
-  {
-    title: "Step 2",
-    subtitle: "Second step",
-    content: <div>Content for step 2</div>
-  },
-  {
-    title: "Step 3",
-    subtitle: "Final step",
-    content: <div>Content for step 3</div>
-  }
-];
-
-<Steps steps={steps} />`}
+            code={`<Steps>
+  <Steps.Step color="primary">Register</Steps.Step>
+  <Steps.Step color="primary">Choose plan</Steps.Step>
+  <Steps.Step>Purchase</Steps.Step>
+  <Steps.Step>Receive Product</Steps.Step>
+</Steps>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="custom" title="Custom Markers">
-          <Steps steps={customSteps} />
+        <ShowcaseSection id="responsive" title="Responsive">
+          <Steps class="lg:steps-horizontal" vertical>
+            <Steps.Step color="primary">Register</Steps.Step>
+            <Steps.Step color="primary">Choose plan</Steps.Step>
+            <Steps.Step>Purchase</Steps.Step>
+            <Steps.Step>Receive Product</Steps.Step>
+          </Steps>
           <CodeBlock
-            code={`const steps = [
-  {
-    title: "Account",
-    marker: "👤",
-    content: <div>Account setup content</div>
-  },
-  {
-    title: "Profile",
-    marker: "📝",
-    content: <div>Profile setup content</div>
-  },
-  {
-    title: "Done",
-    marker: "✨",
-    content: <div>Completion content</div>
-  }
-];
-
-<Steps steps={steps} />`}
+            code={`<Steps class="lg:steps-horizontal" vertical>
+  <Steps.Step color="primary">Register</Steps.Step>
+  <Steps.Step color="primary">Choose plan</Steps.Step>
+  <Steps.Step>Purchase</Steps.Step>
+  <Steps.Step>Receive Product</Steps.Step>
+</Steps>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="clickable" title="Clickable Steps">
-          <Steps steps={clickableSteps} />
+        <ShowcaseSection id="data-content" title="With Data Content">
+          <Steps>
+            <Steps.Step value="?" color="neutral">
+              Step 1
+            </Steps.Step>
+            <Steps.Step value="!" color="neutral">
+              Step 2
+            </Steps.Step>
+            <Steps.Step value="✓" color="neutral">
+              Step 3
+            </Steps.Step>
+            <Steps.Step value="✕" color="neutral">
+              Step 4
+            </Steps.Step>
+            <Steps.Step value="!" color="neutral">
+              Step 5
+            </Steps.Step>
+            <Steps.Step value="" color="neutral">
+              Step 6
+            </Steps.Step>
+            <Steps.Step value="●" color="neutral">
+              Step 7
+            </Steps.Step>
+          </Steps>
           <CodeBlock
-            code={`const steps = [
-  {
-    title: "Step 1",
-    clickable: true,
-    content: <div>Content for step 1</div>
-  },
-  {
-    title: "Step 2",
-    clickable: true,
-    content: <div>Content for step 2</div>
-  },
-  {
-    title: "Step 3",
-    clickable: true,
-    content: <div>Content for step 3</div>
-  }
-];
-
-<Steps steps={steps} />`}
+            code={`<Steps>
+  <Steps.Step value="?" color="neutral">Step 1</Steps.Step>
+  <Steps.Step value="!" color="neutral">Step 2</Steps.Step>
+  <Steps.Step value="✓" color="neutral">Step 3</Steps.Step>
+  <Steps.Step value="✕" color="neutral">Step 4</Steps.Step>
+  <Steps.Step value="!" color="neutral">Step 5</Steps.Step>
+  <Steps.Step value="" color="neutral">Step 6</Steps.Step>
+  <Steps.Step value="●" color="neutral">Step 7</Steps.Step>
+</Steps>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="animated" title="Animated Steps">
-          <Steps steps={basicSteps} animated />
-          <CodeBlock code={`<Steps steps={steps} animated />`} />
+        <ShowcaseSection id="custom-colors" title="Custom Colors">
+          <Steps>
+            <Steps.Step color="info">Fly to moon</Steps.Step>
+            <Steps.Step color="info">Shrink the moon</Steps.Step>
+            <Steps.Step color="info">Grab the moon</Steps.Step>
+            <Steps.Step value="?" color="error">
+              Sit on toilet
+            </Steps.Step>
+          </Steps>
+          <CodeBlock
+            code={`<Steps>
+  <Steps.Step color="info">Fly to moon</Steps.Step>
+  <Steps.Step color="info">Shrink the moon</Steps.Step>
+  <Steps.Step color="info">Grab the moon</Steps.Step>
+  <Steps.Step value="?" color="error">Sit on toilet</Steps.Step>
+</Steps>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="scrollable" title="Scrollable Steps">
+          <div class="overflow-x-auto">
+            <Steps>
+              <Steps.Step>start</Steps.Step>
+              <Steps.Step color="secondary">2</Steps.Step>
+              <Steps.Step color="secondary">3</Steps.Step>
+              <Steps.Step color="secondary">4</Steps.Step>
+              <Steps.Step>5</Steps.Step>
+              <Steps.Step color="accent">6</Steps.Step>
+              <Steps.Step color="accent">7</Steps.Step>
+              <Steps.Step>8</Steps.Step>
+              <Steps.Step color="error">9</Steps.Step>
+              <Steps.Step color="error">10</Steps.Step>
+              <Steps.Step>11</Steps.Step>
+              <Steps.Step>12</Steps.Step>
+              <Steps.Step color="warning">13</Steps.Step>
+              <Steps.Step color="warning">14</Steps.Step>
+              <Steps.Step>15</Steps.Step>
+              <Steps.Step color="neutral">16</Steps.Step>
+              <Steps.Step color="neutral">17</Steps.Step>
+              <Steps.Step color="neutral">18</Steps.Step>
+              <Steps.Step color="neutral">19</Steps.Step>
+              <Steps.Step color="neutral">20</Steps.Step>
+              <Steps.Step color="neutral">21</Steps.Step>
+              <Steps.Step color="neutral">22</Steps.Step>
+              <Steps.Step color="neutral">23</Steps.Step>
+              <Steps.Step color="neutral">end</Steps.Step>
+            </Steps>
+          </div>
+          <CodeBlock
+            code={`<div class="overflow-x-auto">
+  <Steps>
+    <Steps.Step>start</Steps.Step>
+    <Steps.Step color="secondary">2</Steps.Step>
+    <Steps.Step color="secondary">3</Steps.Step>
+    {/* More steps... */}
+    <Steps.Step color="neutral">end</Steps.Step>
+  </Steps>
+</div>`}
+          />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
           <h3 class="text-lg font-medium mb-4">Steps Component Props</h3>
-          <PropsTable props={stepsProps} />
+          <PropsTable props={props} />
 
-          <h3 class="text-lg font-medium mt-8 mb-4">StepItem Props</h3>
-          <PropsTable props={stepItemProps} />
+          <h3 class="text-lg font-medium mt-8 mb-4">Step Props</h3>
+          <PropsTable props={stepProps} />
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>
