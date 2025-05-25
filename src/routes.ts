@@ -1,33 +1,47 @@
 import { Component } from "solid-js";
-import Home from "./pages/Home";
 import AccordionShowcase from "./components/AccordionShowcase";
-import AutocompleteShowcase from "./components/AutocompleteShowcase";
+import AlertShowcase from "./components/AlertShowcase";
 import AvatarShowcase from "./components/AvatarShowcase";
+import BadgeShowcase from "./components/BadgeShowcase";
+import BottomNavigationShowcase from "./components/BottomNavigationShowcase";
 import BreadcrumbShowcase from "./components/BreadcrumbShowcase";
 import ButtonShowcase from "./components/ButtonShowcase";
-import ChartShowcase from "./components/ChartShowcase";
+import CardShowcase from "./components/CardShowcase";
+import CarouselShowcase from "./components/CarouselShowcase";
+import ChatBubbleShowcase from "./components/ChatBubbleShowcase";
 import CheckboxShowcase from "./components/CheckboxShowcase";
+import CollapseShowcase from "./components/CollapseShowcase";
+import CountdownShowcase from "./components/CountdownShowcase";
+import DiffShowcase from "./components/DiffShowcase";
 import DropdownShowcase from "./components/DropdownShowcase";
-import FieldShowcase from "./components/FieldShowcase";
+import FileInputShowcase from "./components/FileInputShowcase";
+import Home from "./pages/Home";
 import InputShowcase from "./components/InputShowcase";
+import KbdShowcase from "./components/KbdShowcase";
+import LinkShowcase from "./components/LinkShowcase";
+import LoadingShowcase from "./components/LoadingShowcase";
 import MenuShowcase from "./components/MenuShowcase";
+import ModalShowcase from "./components/ModalShowcase";
 import NavbarShowcase from "./components/NavbarShowcase";
 import PaginationShowcase from "./components/PaginationShowcase";
 import ProgressShowcase from "./components/ProgressShowcase";
+import RadialProgressShowcase from "./components/RadialProgressShowcase";
+import RadioShowcase from "./components/RadioShowcase";
+import RangeShowcase from "./components/RangeShowcase";
+import RatingShowcase from "./components/RatingShowcase";
 import SelectShowcase from "./components/SelectShowcase";
-import SliderShowcase from "./components/SliderShowcase";
+import SkeletonShowcase from "./components/SkeletonShowcase";
+import StatsShowcase from "./components/StatsShowcase";
 import StepsShowcase from "./components/StepsShowcase";
-import SwitchShowcase from "./components/SwitchShowcase";
+import SwapShowcase from "./components/SwapShowcase";
 import TableShowcase from "./components/TableShowcase";
 import TabsShowcase from "./components/TabsShowcase";
-import TagShowcase from "./components/TagShowcase";
 import TextareaShowcase from "./components/TextareaShowcase";
 import Theming from "./pages/Theming";
 import TimelineShowcase from "./components/TimelineShowcase";
 import ToastShowcase from "./components/ToastShowcase";
+import ToggleShowcase from "./components/ToggleShowcase";
 import TooltipShowcase from "./components/TooltipShowcase";
-import UploadShowcase from "./components/UploadShowcase";
-import ValidationShowcase from "./components/ValidationShowcase";
 
 export interface RouteConfig {
   name: string;
@@ -44,16 +58,22 @@ export const routes: RouteConfig[] = [
     description: "Main page and welcome to the component showcase.",
   },
   {
+    name: "Theming",
+    path: "/theming",
+    component: Theming,
+    description: "Playground for testing dynamic HSL-based theme settings.",
+  },
+  {
     name: "Accordion",
     path: "/accordion",
     component: AccordionShowcase,
     description: "Expandable and collapsible sections to show or hide content.",
   },
   {
-    name: "Autocomplete",
-    path: "/autocomplete",
-    component: AutocompleteShowcase,
-    description: "Text field with automatic suggestions based on user input.",
+    name: "Alert",
+    path: "/alert",
+    component: AlertShowcase,
+    description: "Displays important messages to the user.",
   },
   {
     name: "Avatar",
@@ -61,6 +81,18 @@ export const routes: RouteConfig[] = [
     component: AvatarShowcase,
     description:
       "Visual representation of users with images, icons, or initials.",
+  },
+  {
+    name: "Badge",
+    path: "/badge",
+    component: BadgeShowcase,
+    description: "Small count or label to indicate status or quantity.",
+  },
+  {
+    name: "BottomNavigation",
+    path: "/bottom-navigation",
+    component: BottomNavigationShowcase,
+    description: "Navigation bar at the bottom of the screen.",
   },
   {
     name: "Breadcrumb",
@@ -75,10 +107,22 @@ export const routes: RouteConfig[] = [
     description: "Customizable buttons for actions and forms.",
   },
   {
-    name: "Chart",
-    path: "/chart",
-    component: ChartShowcase,
-    description: "Charts and data visualizations in various formats.",
+    name: "Card",
+    path: "/card",
+    component: CardShowcase,
+    description: "Flexible container for grouping related content.",
+  },
+  {
+    name: "Carousel",
+    path: "/carousel",
+    component: CarouselShowcase,
+    description: "A rotating set of images or content.",
+  },
+  {
+    name: "Chat Bubble",
+    path: "/chat-bubble",
+    component: ChatBubbleShowcase,
+    description: "Speech bubbles for chat interfaces.",
   },
   {
     name: "Checkbox",
@@ -87,16 +131,34 @@ export const routes: RouteConfig[] = [
     description: "Checkboxes for selecting one or multiple options.",
   },
   {
+    name: "Collapse",
+    path: "/collapse",
+    component: CollapseShowcase,
+    description: "Expand and collapse content.",
+  },
+  {
+    name: "Countdown",
+    path: "/countdown",
+    component: CountdownShowcase,
+    description: "Displays a countdown timer.",
+  },
+  {
+    name: "Diff",
+    path: "/diff",
+    component: DiffShowcase,
+    description: "Display differences between two pieces of content.",
+  },
+  {
     name: "Dropdown",
     path: "/dropdown",
     component: DropdownShowcase,
     description: "Dropdown menu for displaying additional actions or options.",
   },
   {
-    name: "Field",
-    path: "/field",
-    component: FieldShowcase,
-    description: "Container or wrapper for form fields with labels and help.",
+    name: "FileInput",
+    path: "/file-input",
+    component: FileInputShowcase,
+    description: "Component for uploading files from the user's device.",
   },
   {
     name: "Input",
@@ -105,10 +167,34 @@ export const routes: RouteConfig[] = [
     description: "Text input fields for forms and user data.",
   },
   {
+    name: "Kbd",
+    path: "/kbd",
+    component: KbdShowcase,
+    description: "Display keyboard key presses.",
+  },
+  {
+    name: "Link",
+    path: "/link",
+    component: LinkShowcase,
+    description: "Hyperlinks for navigation.",
+  },
+  {
+    name: "Loading",
+    path: "/loading",
+    component: LoadingShowcase,
+    description: "Indicators for loading states.",
+  },
+  {
     name: "Menu",
     path: "/menu",
     component: MenuShowcase,
     description: "Navigation lists or grouped actions in menus.",
+  },
+  {
+    name: "Modal",
+    path: "/modal",
+    component: ModalShowcase,
+    description: "Modal dialogs for displaying content on top of an overlay.",
   },
   {
     name: "Navbar",
@@ -131,16 +217,46 @@ export const routes: RouteConfig[] = [
       "Visual indicators of progress for tasks or ongoing processes.",
   },
   {
+    name: "Radial Progress",
+    path: "/radial-progress",
+    component: RadialProgressShowcase,
+    description: "Circular progress indicators.",
+  },
+  {
+    name: "Radio",
+    path: "/radio",
+    component: RadioShowcase,
+    description: "Radio buttons for selecting a single option.",
+  },
+  {
+    name: "Range",
+    path: "/range",
+    component: RangeShowcase,
+    description: "Slider control for selecting values within a range.",
+  },
+  {
+    name: "Rating",
+    path: "/rating",
+    component: RatingShowcase,
+    description: "Rating input using stars or other icons.",
+  },
+  {
     name: "Select",
     path: "/select",
     component: SelectShowcase,
     description: "Dropdowns for selecting an option from a list.",
   },
   {
-    name: "Slider",
-    path: "/slider",
-    component: SliderShowcase,
-    description: "Slider control for selecting values within a range.",
+    name: "Skeleton",
+    path: "/skeleton",
+    component: SkeletonShowcase,
+    description: "Placeholder content while loading.",
+  },
+  {
+    name: "Stats",
+    path: "/stats",
+    component: StatsShowcase,
+    description: "Display statistics or data.",
   },
   {
     name: "Steps",
@@ -149,10 +265,10 @@ export const routes: RouteConfig[] = [
     description: "Step indicators for sequential processes or forms.",
   },
   {
-    name: "Switch",
-    path: "/switch",
-    component: SwitchShowcase,
-    description: "Switches for toggling between two states, such as on/off.",
+    name: "Swap",
+    path: "/swap",
+    component: SwapShowcase,
+    description: "Toggle between two elements.",
   },
   {
     name: "Table",
@@ -169,24 +285,12 @@ export const routes: RouteConfig[] = [
       "Tab navigation for switching between different views or panels.",
   },
   {
-    name: "Tag",
-    path: "/tag",
-    component: TagShowcase,
-    description:
-      "Small labels for categorizing, highlighting, or filtering information.",
-  },
-  {
     name: "Textarea",
     path: "/textarea",
     component: TextareaShowcase,
     description: "Multiline text field for entering longer content.",
   },
-  {
-    name: "Theming",
-    path: "/theming",
-    component: Theming,
-    description: "Playground for testing dynamic HSL-based theme settings.",
-  },
+
   {
     name: "Timeline",
     path: "/timeline",
@@ -200,21 +304,15 @@ export const routes: RouteConfig[] = [
     description: "Brief, non-intrusive notifications for user messages.",
   },
   {
+    name: "Toggle",
+    path: "/toggle",
+    component: ToggleShowcase,
+    description: "Switches for toggling between two states, such as on/off.",
+  },
+  {
     name: "Tooltip",
     path: "/tooltip",
     component: TooltipShowcase,
     description: "Informative messages that appear on hover or focus.",
-  },
-  {
-    name: "Upload",
-    path: "/upload",
-    component: UploadShowcase,
-    description: "Component for uploading files from the user's device.",
-  },
-  {
-    name: "Validation",
-    path: "/validation",
-    component: ValidationShowcase,
-    description: "States and messages for validating forms and user input.",
   },
 ];
