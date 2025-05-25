@@ -1,61 +1,61 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Menu, MenuItem } from "@pathscale/ui";
+import { Menu } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function MenuShowcase() {
   const sections = [
-    { id: "basic", title: "Basic Usage" },
-    { id: "states", title: "States" },
-    { id: "nested", title: "Nested Menus" },
-    { id: "inline", title: "Inline Menu" },
-    { id: "links", title: "Links" },
+    { id: "default", title: "Default" },
+    { id: "responsive", title: "Responsive" },
+    { id: "icon-only", title: "Icon Only" },
+    { id: "horizontal", title: "Horizontal" },
+    { id: "sizes", title: "Sizes" },
+    { id: "disabled", title: "Disabled Items" },
+    { id: "icons", title: "With Icons" },
+    { id: "icons-and-badge", title: "Icons and Badge" },
+    { id: "title", title: "With Title" },
+    { id: "submenu", title: "Submenu" },
+    { id: "collapsible", title: "Collapsible Submenu" },
+    { id: "file-tree", title: "File Tree" },
+    { id: "active", title: "Active Item" },
+    { id: "mega-menu", title: "Mega Menu" },
     { id: "props", title: "Props" },
-  ];
+  ] as const;
 
   const menuProps = [
     {
-      name: "inline",
+      name: "vertical",
+      type: "boolean",
+      default: "true",
+      description: "Vertical menu (default)",
+    },
+    {
+      name: "horizontal",
       type: "boolean",
       default: "false",
-      description: "Whether to display menu items horizontally",
+      description: "Horizontal menu",
+    },
+    {
+      name: "responsive",
+      type: "boolean",
+      default: "false",
+      description: "Makes the menu responsive",
+    },
+    {
+      name: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      description: "Size of the menu",
     },
     {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
     },
-  ];
-
-  const menuItemProps = [
     {
-      name: "label",
+      name: "dataTheme",
       type: "string",
-      required: true,
-      description: "Text content of the menu item",
-    },
-    {
-      name: "active",
-      type: "boolean",
-      default: "false",
-      description: "Whether the item is in active state",
-    },
-    {
-      name: "disabled",
-      type: "boolean",
-      default: "false",
-      description: "Whether the item is disabled",
-    },
-    {
-      name: "to",
-      type: "string",
-      description: "URL for link items",
-    },
-    {
-      name: "target",
-      type: "string",
-      description: "Target attribute for link items",
+      description: "Theme data attribute value",
     },
   ];
 
@@ -75,127 +75,468 @@ export default function MenuShowcase() {
           </nav>
         </ShowcaseSection>
 
-        <ShowcaseSection id="basic" title="Basic Usage">
-          <div class="w-64">
+        <ShowcaseSection id="default" title="Default">
+          <div class="w-56 bg-base-200 rounded-box">
             <Menu>
-              <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">
-                Main Navigation
-              </div>
-              <MenuItem label="Home" />
-              <MenuItem label="About" />
-              <MenuItem label="Contact" />
-              <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">
-                User
-              </div>
-              <MenuItem label="Profile" />
-              <MenuItem label="Settings" />
-              <MenuItem label="Logout" />
+              <Menu.Item>
+                <a>Item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 2</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 3</a>
+              </Menu.Item>
             </Menu>
           </div>
           <CodeBlock
             code={`<Menu>
-  <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">Main Navigation</div>
-  <MenuItem label="Home" />
-  <MenuItem label="About" />
-  <MenuItem label="Contact" />
-  <div class="px-4 pb-2 font-medium text-[hsl(var(--color-fg-body)/1)]">User</div>
-  <MenuItem label="Profile" />
-  <MenuItem label="Settings" />
-  <MenuItem label="Logout" />
+  <Menu.Item><a>Item 1</a></Menu.Item>
+  <Menu.Item><a>Item 2</a></Menu.Item>
+  <Menu.Item><a>Item 3</a></Menu.Item>
 </Menu>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="states" title="States">
-          <div class="w-64">
+        <ShowcaseSection id="responsive" title="Responsive">
+          <div class="bg-base-200 rounded-box">
+            <Menu responsive>
+              <Menu.Item>
+                <a>Item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 2</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 3</a>
+              </Menu.Item>
+            </Menu>
+          </div>
+          <CodeBlock
+            code={`<Menu responsive>
+  <Menu.Item><a>Item 1</a></Menu.Item>
+  <Menu.Item><a>Item 2</a></Menu.Item>
+  <Menu.Item><a>Item 3</a></Menu.Item>
+</Menu>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="icon-only" title="Icon Only">
+          <div class="w-56 bg-base-200 rounded-box">
             <Menu>
-              <MenuItem label="Active Item" active />
-              <MenuItem label="Disabled Item" disabled />
-              <MenuItem label="Regular Item" />
+              <Menu.Item>
+                <a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
+                  </svg>
+                </a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    />
+                  </svg>
+                </a>
+              </Menu.Item>
             </Menu>
           </div>
           <CodeBlock
             code={`<Menu>
-  <MenuItem label="Active Item" active />
-  <MenuItem label="Disabled Item" disabled />
-  <MenuItem label="Regular Item" />
+  <Menu.Item>
+    <a>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    </a>
+  </Menu.Item>
+  {/* ... other menu items with icons ... */}
 </Menu>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="nested" title="Nested Menus">
-          <div class="w-64">
+        <ShowcaseSection id="horizontal" title="Horizontal">
+          <div class="bg-base-200 rounded-box">
+            <Menu horizontal>
+              <Menu.Item>
+                <a>Item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 2</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 3</a>
+              </Menu.Item>
+            </Menu>
+          </div>
+          <CodeBlock
+            code={`<Menu horizontal>
+  <Menu.Item><a>Item 1</a></Menu.Item>
+  <Menu.Item><a>Item 2</a></Menu.Item>
+  <Menu.Item><a>Item 3</a></Menu.Item>
+</Menu>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="sizes" title="Sizes">
+          <div class="flex flex-col gap-4">
+            <Menu size="xs" class="w-56 bg-base-200 rounded-box">
+              <Menu.Item>
+                <a>xs item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>xs item 2</a>
+              </Menu.Item>
+            </Menu>
+            <Menu size="sm" class="w-56 bg-base-200 rounded-box">
+              <Menu.Item>
+                <a>sm item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>sm item 2</a>
+              </Menu.Item>
+            </Menu>
+            <Menu size="md" class="w-56 bg-base-200 rounded-box">
+              <Menu.Item>
+                <a>md item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>md item 2</a>
+              </Menu.Item>
+            </Menu>
+            <Menu size="lg" class="w-56 bg-base-200 rounded-box">
+              <Menu.Item>
+                <a>lg item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>lg item 2</a>
+              </Menu.Item>
+            </Menu>
+          </div>
+          <CodeBlock
+            code={`<Menu size="xs">
+  <Menu.Item><a>xs item 1</a></Menu.Item>
+  <Menu.Item><a>xs item 2</a></Menu.Item>
+</Menu>
+{/* ... other sizes ... */}`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="disabled" title="Disabled Items">
+          <div class="w-56 bg-base-200 rounded-box">
             <Menu>
-              <MenuItem label="Settings">
-                <MenuItem label="Account" />
-                <MenuItem label="Security" />
-                <MenuItem label="Notifications" />
-              </MenuItem>
-              <MenuItem label="Help">
-                <MenuItem label="Documentation" />
-                <MenuItem label="Support" />
-              </MenuItem>
+              <Menu.Item>
+                <a>Enabled item</a>
+              </Menu.Item>
+              <Menu.Item disabled>
+                <a>Disabled item</a>
+              </Menu.Item>
+              <Menu.Item disabled>
+                <a>Disabled item</a>
+              </Menu.Item>
             </Menu>
           </div>
           <CodeBlock
             code={`<Menu>
-  <MenuItem label="Settings">
-    <MenuItem label="Account" />
-    <MenuItem label="Security" />
-    <MenuItem label="Notifications" />
-  </MenuItem>
-  <MenuItem label="Help">
-    <MenuItem label="Documentation" />
-    <MenuItem label="Support" />
-  </MenuItem>
+  <Menu.Item><a>Enabled item</a></Menu.Item>
+  <Menu.Item disabled><a>Disabled item</a></Menu.Item>
+  <Menu.Item disabled><a>Disabled item</a></Menu.Item>
 </Menu>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="inline" title="Inline Menu">
-          <Menu inline>
-            <MenuItem label="Home" />
-            <MenuItem label="Products" />
-            <MenuItem label="About" />
-            <MenuItem label="Contact" />
-          </Menu>
-          <CodeBlock
-            code={`<Menu inline>
-  <MenuItem label="Home" />
-  <MenuItem label="Products" />
-  <MenuItem label="About" />
-  <MenuItem label="Contact" />
-</Menu>`}
-          />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="links" title="Links">
-          <div class="w-64">
+        <ShowcaseSection id="icons" title="With Icons">
+          <div class="w-56 bg-base-200 rounded-box">
             <Menu>
-              <MenuItem label="Documentation" to="https://docs.example.com" />
-              <MenuItem
-                label="External Link"
-                to="https://example.com"
-                target="_blank"
-              />
-              <MenuItem label="Internal Link" to="/dashboard" />
+              <Menu.Item>
+                <a>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
+                  </svg>
+                  Item 1
+                </a>
+              </Menu.Item>
+              {/* Similar items with icons */}
             </Menu>
           </div>
           <CodeBlock
             code={`<Menu>
-  <MenuItem label="Documentation" to="https://docs.example.com" />
-  <MenuItem label="External Link" to="https://example.com" target="_blank" />
-  <MenuItem label="Internal Link" to="/dashboard" />
+  <Menu.Item>
+    <a>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+      Item 1
+    </a>
+  </Menu.Item>
+</Menu>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="submenu" title="Submenu">
+          <div class="w-56 bg-base-200 rounded-box">
+            <Menu>
+              <Menu.Item>
+                <a>Item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Parent</a>
+                <Menu>
+                  <Menu.Item>
+                    <a>Level 2 Item 1</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Level 2 Item 2</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Parent</a>
+                    <Menu>
+                      <Menu.Item>
+                        <a>Level 3 Item 1</a>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <a>Level 3 Item 2</a>
+                      </Menu.Item>
+                    </Menu>
+                  </Menu.Item>
+                </Menu>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 3</a>
+              </Menu.Item>
+            </Menu>
+          </div>
+          <CodeBlock
+            code={`<Menu>
+  <Menu.Item><a>Item 1</a></Menu.Item>
+  <Menu.Item>
+    <a>Parent</a>
+    <Menu>
+      <Menu.Item><a>Level 2 Item 1</a></Menu.Item>
+      <Menu.Item><a>Level 2 Item 2</a></Menu.Item>
+      <Menu.Item>
+        <a>Parent</a>
+        <Menu>
+          <Menu.Item><a>Level 3 Item 1</a></Menu.Item>
+          <Menu.Item><a>Level 3 Item 2</a></Menu.Item>
+        </Menu>
+      </Menu.Item>
+    </Menu>
+  </Menu.Item>
+  <Menu.Item><a>Item 3</a></Menu.Item>
+</Menu>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="collapsible" title="Collapsible Submenu">
+          <div class="w-56 bg-base-200 rounded-box">
+            <Menu>
+              <Menu.Item>
+                <a>Item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <Menu.Details open={true} label="Parent">
+                  <Menu.Item>
+                    <a>Level 2 Item 1</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Level 2 Item 2</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Menu.Details open={true} label="Parent">
+                      <Menu.Item>
+                        <a>Level 3 Item 1</a>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <a>Level 3 Item 2</a>
+                      </Menu.Item>
+                    </Menu.Details>
+                  </Menu.Item>
+                </Menu.Details>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 3</a>
+              </Menu.Item>
+            </Menu>
+          </div>
+          <CodeBlock
+            code={`<Menu>
+  <Menu.Item><a>Item 1</a></Menu.Item>
+  <Menu.Item>
+    <Menu.Details open={true} label="Parent">
+      <Menu.Item><a>Level 2 Item 1</a></Menu.Item>
+      <Menu.Item><a>Level 2 Item 2</a></Menu.Item>
+      <Menu.Item>
+        <Menu.Details open={true} label="Parent">
+          <Menu.Item><a>Level 3 Item 1</a></Menu.Item>
+          <Menu.Item><a>Level 3 Item 2</a></Menu.Item>
+        </Menu.Details>
+      </Menu.Item>
+    </Menu.Details>
+  </Menu.Item>
+  <Menu.Item><a>Item 3</a></Menu.Item>
+</Menu>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="active" title="Active Item">
+          <div class="w-56 bg-base-200 rounded-box">
+            <Menu>
+              <Menu.Item>
+                <a>Item 1</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a class="active">Item 2</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Item 3</a>
+              </Menu.Item>
+            </Menu>
+          </div>
+          <CodeBlock
+            code={`<Menu>
+  <Menu.Item><a>Item 1</a></Menu.Item>
+  <Menu.Item><a class="active">Item 2</a></Menu.Item>
+  <Menu.Item><a>Item 3</a></Menu.Item>
+</Menu>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="mega-menu" title="Mega Menu">
+          <div class="bg-base-200 rounded-box lg:min-w-max">
+            <Menu responsive>
+              <Menu.Item>
+                <a>Solutions</a>
+                <Menu>
+                  <Menu.Item>
+                    <a>Design</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Development</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Hosting</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Domain register</a>
+                  </Menu.Item>
+                </Menu>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Enterprise</a>
+                <Menu>
+                  <Menu.Item>
+                    <a>CRM software</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Marketing management</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Security</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Consulting</a>
+                  </Menu.Item>
+                </Menu>
+              </Menu.Item>
+              <Menu.Item>
+                <a>Products</a>
+                <Menu>
+                  <Menu.Item>
+                    <a>UI Kit</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Wordpress themes</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Wordpress plugins</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Open source</a>
+                    <Menu>
+                      <Menu.Item>
+                        <a>Auth management system</a>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <a>VScode theme</a>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <a>Color picker app</a>
+                      </Menu.Item>
+                    </Menu>
+                  </Menu.Item>
+                </Menu>
+              </Menu.Item>
+            </Menu>
+          </div>
+          <CodeBlock
+            code={`<Menu responsive>
+  <Menu.Item>
+    <a>Solutions</a>
+    <Menu>
+      <Menu.Item><a>Design</a></Menu.Item>
+      <Menu.Item><a>Development</a></Menu.Item>
+      <Menu.Item><a>Hosting</a></Menu.Item>
+      <Menu.Item><a>Domain register</a></Menu.Item>
+    </Menu>
+  </Menu.Item>
+  {/* ... other menu items ... */}
 </Menu>`}
           />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
-          <h3 class="text-lg font-medium mb-4">Menu Props</h3>
           <PropsTable props={menuProps} />
-
-          <h3 class="text-lg font-medium mt-8 mb-4">MenuItem Props</h3>
-          <PropsTable props={menuItemProps} />
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>
