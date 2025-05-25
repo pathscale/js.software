@@ -15,15 +15,16 @@ brFiles.forEach((brFile) => {
   renameSync(brFile, originalFile);
 });
 
+const cssPath = "dist/static/css/app.css";
+const scssPath = "dist/static/css/app.scss";
+
+if (existsSync(cssPath)) {
+  renameSync(cssPath, scssPath);
+}
+
 const htmlPath = "dist/index.html";
 let html = readFileSync(htmlPath, "utf8");
-if (!html.includes("app.scss")) {
-  html = html.replace(
-    "</head>",
-    '<link href="/static/css/app.scss" rel="stylesheet"></head>'
-  );
-  writeFileSync(htmlPath, html);
-  console.log("Injected CSS link into index.html");
-}
+html = html.replace("/static/css/app.css", "/static/css/app.scss");
+writeFileSync(htmlPath, html);
 
 console.log("Cleanup completed");
