@@ -20,6 +20,10 @@ export default defineConfig({
         runtimeChunk: false,
       },
       plugins: [
+        new (require('webpack').BannerPlugin)({
+          banner: () => '',
+          test: /\.js$/,
+        }),
         new CompressionPlugin({
           algorithm: "brotliCompress",
           filename: "[path][base].br",
@@ -35,5 +39,10 @@ export default defineConfig({
   },
   output: {
     inlineStyles: false,
+    filename: {
+      js: "app.mjs",
+      css: "app.css",
+    },
+    legalComments: "none",
   },
 })
