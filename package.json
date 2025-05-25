@@ -6,8 +6,7 @@
   "scripts": {
     "start": "rsbuild dev",
     "dev": "rsbuild dev",
-    "build": "rsbuild build && bun run compress",
-    "compress": "bun compress.js",
+    "build": "rsbuild build && bun cleanup.js",
     "preview": "rsbuild preview",
     "prepare": "husky",
     "lint": "biome check .",
