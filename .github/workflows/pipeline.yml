@@ -9,9 +9,6 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
 
     steps:
       - name: Checkout
@@ -48,10 +45,10 @@ jobs:
           STORAGE_NAME: ${{ secrets.BUNNYCDN_STORAGE_NAME }}
         run: |
           cd dist
-          find . -type f | while read file; do
-            curl -s -X PUT -H "AccessKey: $STORAGE_API_KEY" -T "$file" "https://storage.bunnycdn.com/$STORAGE_NAME/$file"
+          for file in $(find . -type f); do
+            curl -X PUT -H "AccessKey: $STORAGE_API_KEY" -T "$file" "https://storage.bunnycdn.com/$STORAGE_NAME/$file"
           done
-          curl -s -X POST \
+          curl -X POST \
             -H "AccessKey: $ZONE_API_KEY" \
             -H "Content-Type: application/json" \
             -H "Accept: application/json" \
