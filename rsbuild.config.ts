@@ -1,7 +1,7 @@
-import { defineConfig } from "@rsbuild/core";
-import { pluginBabel } from "@rsbuild/plugin-babel";
-import { pluginSolid } from "@rsbuild/plugin-solid";
-import CompressionPlugin from "compression-webpack-plugin";
+import { defineConfig } from "@rsbuild/core"
+import { pluginBabel } from "@rsbuild/plugin-babel"
+import { pluginSolid } from "@rsbuild/plugin-solid"
+import CompressionPlugin from "compression-webpack-plugin"
 
 export default defineConfig({
   plugins: [pluginBabel({ include: /\.(?:jsx|tsx)$/ }), pluginSolid()],
@@ -23,12 +23,21 @@ export default defineConfig({
         new CompressionPlugin({
           algorithm: "brotliCompress",
           filename: "[path][base].br",
-          test: /\.(js|css|html|svg)$/,
+          test: /\.(js|css|html|svg|json|txt|xml)$/,
+          compressionOptions: {
+            level: 11,
+          },
+          threshold: 0,
+          minRatio: 1,
         }),
       ],
     },
   },
   output: {
     inlineStyles: false,
+    filename: {
+      js: "static/js/app.mjs",
+      css: "static/css/app.scss",
+    },
   },
-});
+})

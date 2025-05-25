@@ -20,11 +20,15 @@ jobs:
           bun-version: latest
 
       - name: Install Dependencies
-        run: bun install
+        run: bun install --frozen
 
-      - name: Build project
-        env:
-          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+      - name: Set Version
+        run: |
+          echo "Version: 1.0.${GITHUB_RUN_NUMBER}"
+          sed -i "s/\"version\": \".*\"/\"version\": \"1.0.${GITHUB_RUN_NUMBER}\"/" package.json
+          echo "GITHUB_RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+
+      - name: Build Project
         run: bun run build
 
       - name: Mirror index.html to 404
@@ -33,7 +37,7 @@ jobs:
           mkdir -p bunnycdn_errors
           cp index.html bunnycdn_errors/404.html
 
-      - name: Deploy to BunnyCDN
+      - name: Upload to BunnyCDN
         env:
           STORAGE_API_KEY: ${{ secrets.BUNNYCDN_STORAGE_API_KEY }}
           ZONE_API_KEY: ${{ secrets.BUNNYCDN_ZONE_API_KEY }}
