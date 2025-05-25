@@ -22,13 +22,14 @@ export default defineConfig({
       plugins: [
         new CompressionPlugin({
           algorithm: "brotliCompress",
-          filename: "[path][base].br",
-          test: /\.(js|css|html|svg|json|txt|xml)$/,
+          filename: "[path][base]",
+          test: /\.(js|css)$/,
           compressionOptions: {
             level: 11,
           },
           threshold: 0,
           minRatio: 1,
+          deleteOriginalAssets: true,
         }),
       ],
     },
@@ -37,7 +38,7 @@ export default defineConfig({
     inlineStyles: false,
     filename: {
       js: "app.mjs",
-      css: "app.scss",
+      css: "app.css",
     },
   },
 })
