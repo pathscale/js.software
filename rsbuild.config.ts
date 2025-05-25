@@ -24,7 +24,7 @@ export default defineConfig({
     inlineStyles: false,
     filename: {
       js: "app.mjs",
-      css: "app.css",
+      css: "app.scss",
     },
   },
 })
