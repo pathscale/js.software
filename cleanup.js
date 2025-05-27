@@ -24,9 +24,16 @@ const scssPath = "dist/static/css/app.scss";
 if (existsSync(cssPath)) unlinkSync(cssPath);
 if (existsSync(cssBrPath)) renameSync(cssBrPath, scssPath);
 
+const version = process.env.GITHUB_RUN_NUMBER || Date.now();
+
 const htmlPath = "dist/index.html";
 let html = readFileSync(htmlPath, "utf8");
 html = html.replace("/static/css/app.css", "/static/css/app.scss");
+html = html.replace("/static/js/app.mjs", `/static/js/app.mjs?v=${version}`);
+html = html.replace(
+  "/static/css/app.scss",
+  `/static/css/app.scss?v=${version}`
+);
 writeFileSync(htmlPath, html);
 
-console.log("Cleanup completed");
+console.log(`Cleanup completed. Version: ${version}`);

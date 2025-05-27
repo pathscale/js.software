@@ -1,8 +1,8 @@
-import { toast, Toaster } from "@pathscale/ui";
-import ShowcaseLayout from "./ShowcaseLayout";
-import { ShowcaseSection } from "./showcase/ShowcaseSection";
-import { CodeBlock } from "./showcase/CodeBlock";
-import { PropsTable } from "./showcase/PropsTable";
+import { toast, Toaster } from "@pathscale/ui"
+import ShowcaseLayout from "./ShowcaseLayout"
+import { CodeBlock } from "./showcase/CodeBlock"
+import { PropsTable } from "./showcase/PropsTable"
+import { ShowcaseSection } from "./showcase/ShowcaseSection"
 
 export default function ToastShowcase() {
   const sections = [
@@ -13,7 +13,7 @@ export default function ToastShowcase() {
     { id: "dismissible", title: "Dismissible" },
     { id: "custom", title: "Custom Options" },
     { id: "api", title: "API Reference" },
-  ] as const;
+  ] as const
 
   const toastProps = [
     {
@@ -45,7 +45,7 @@ export default function ToastShowcase() {
       type: "() => void",
       description: "Callback function called when the toast is dismissed",
     },
-  ];
+  ]
 
   const toastApi = [
     {
@@ -78,7 +78,7 @@ export default function ToastShowcase() {
       type: "function",
       description: "Remove all currently visible toasts",
     },
-  ];
+  ]
 
   return (
     <ShowcaseLayout>
@@ -273,5 +273,5 @@ toast.clear();`}
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>
-  );
+  )
 }
