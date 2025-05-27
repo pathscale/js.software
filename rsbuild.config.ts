@@ -19,22 +19,22 @@ export default defineConfig({
         splitChunks: false,
         runtimeChunk: false,
       },
-      // plugins: [
-      //   new (require('webpack').BannerPlugin)({
-      //     banner: () => '',
-      //     test: /\.js$/,
-      //   }),
-      //   new CompressionPlugin({
-      //     algorithm: "brotliCompress",
-      //     filename: "[path][base].br",
-      //     test: /\.(mjs|css)$/,
-      //     compressionOptions: {
-      //       level: 11,
-      //     },
-      //     threshold: 0,
-      //     minRatio: 1,
-      //   }),
-      // ],
+      plugins: [
+        new (require("webpack").BannerPlugin)({
+          banner: () => "",
+          test: /\.js$/,
+        }),
+        new CompressionPlugin({
+          algorithm: "brotliCompress",
+          filename: "[path][base].br",
+          test: /\.(mjs|css)$/,
+          compressionOptions: {
+            level: 11,
+          },
+          threshold: 0,
+          minRatio: 1,
+        }),
+      ],
     },
   },
   output: {
