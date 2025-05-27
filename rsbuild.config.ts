@@ -1,7 +1,7 @@
-import { defineConfig } from "@rsbuild/core"
-import { pluginBabel } from "@rsbuild/plugin-babel"
-import { pluginSolid } from "@rsbuild/plugin-solid"
-import CompressionPlugin from "compression-webpack-plugin"
+import { defineConfig } from "@rsbuild/core";
+import { pluginBabel } from "@rsbuild/plugin-babel";
+import { pluginSolid } from "@rsbuild/plugin-solid";
+import CompressionPlugin from "compression-webpack-plugin";
 
 export default defineConfig({
   plugins: [pluginBabel({ include: /\.(?:jsx|tsx)$/ }), pluginSolid()],
@@ -19,22 +19,22 @@ export default defineConfig({
         splitChunks: false,
         runtimeChunk: false,
       },
-      plugins: [
-        new (require('webpack').BannerPlugin)({
-          banner: () => '',
-          test: /\.js$/,
-        }),
-        new CompressionPlugin({
-          algorithm: "brotliCompress",
-          filename: "[path][base].br",
-          test: /\.(mjs|css)$/,
-          compressionOptions: {
-            level: 11,
-          },
-          threshold: 0,
-          minRatio: 1,
-        }),
-      ],
+      // plugins: [
+      //   new (require('webpack').BannerPlugin)({
+      //     banner: () => '',
+      //     test: /\.js$/,
+      //   }),
+      //   new CompressionPlugin({
+      //     algorithm: "brotliCompress",
+      //     filename: "[path][base].br",
+      //     test: /\.(mjs|css)$/,
+      //     compressionOptions: {
+      //       level: 11,
+      //     },
+      //     threshold: 0,
+      //     minRatio: 1,
+      //   }),
+      // ],
     },
   },
   output: {
@@ -45,4 +45,4 @@ export default defineConfig({
     },
     legalComments: "none",
   },
-})
+});

@@ -5,10 +5,10 @@ import { Footer } from "./components/Footer";
 
 const Layout = (props) => {
   return (
-    <div class="min-h-screen bg-[hsl(var(--color-bg-body)/1)] text-[hsl(var(--color-fg-body)/1)] transition-colors duration-300">
+    <div class="relative min-h-screen bg-[hsl(var(--color-bg-body)/1)] text-[hsl(var(--color-fg-body)/1)]">
       <Sidebar />
       <main class="lg:ml-64 min-h-screen">
-        <div class="container mx-auto px-4 py-8">{props.children}</div>
+        <div class="container mx-auto px-4 py-6 sm:py-8">{props.children}</div>
       </main>
       <Footer />
     </div>
