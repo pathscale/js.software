@@ -1,8 +1,8 @@
 import { toast, Toaster } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
+import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function ToastShowcase() {
   const sections = [
