@@ -6,33 +6,31 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 
 export default function CheckboxShowcase() {
-  const [checked, setChecked] = createSignal(false);
-
   const sections = [
-    { id: "contents", title: "Contents" },
-    { id: "basic", title: "Basic Usage" },
-    { id: "colors", title: "Color Variants" },
-    { id: "sizes", title: "Size Variants" },
-    { id: "states", title: "States" },
-    { id: "props", title: "Props" },
+    { id: "default", title: "Default" },
+    { id: "indeterminate", title: "Indeterminate" },
+    { id: "form-control", title: "Form Control" },
+    { id: "colors", title: "Colors" },
+    { id: "sizes", title: "Sizes" },
+    { id: "disabled", title: "Disabled States" },
   ] as const;
 
   const props = [
     {
-      name: "label",
-      type: "JSX.Element",
-      description: "Label text or element displayed next to the checkbox",
+      name: "checked",
+      type: "boolean",
+      description: "Controls the checked state",
     },
     {
       name: "checked",
       type: "boolean",
-      description: "Whether the checkbox is checked",
+      description: "Sets the initial checked state",
     },
     {
       name: "indeterminate",
       type: "boolean",
       default: "false",
-      description: "Displays an indeterminate state (visual only)",
+      description: "Shows an indeterminate state",
     },
     {
       name: "disabled",
@@ -42,31 +40,15 @@ export default function CheckboxShowcase() {
     },
     {
       name: "size",
-      type: '"sm" | "md" | "lg"',
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
       default: '"md"',
-      description: "Size of the checkbox and label text",
+      description: "Size of the checkbox",
     },
     {
       name: "color",
-      type: '"primary" | "success" | "warning" | "danger"',
+      type: '"primary" | "secondary" | "accent" | "neutral" | "success" | "warning" | "info" | "error"',
       default: '"primary"',
-      description: "Color scheme for the checkbox when checked",
-    },
-    {
-      name: "onChange",
-      type: "JSX.EventHandlerUnion<HTMLInputElement, Event>",
-      description: "Callback triggered when the checkbox changes",
-    },
-    {
-      name: "aria-label",
-      type: "string",
-      description:
-        "Accessible label for the checkbox when visual label is not used",
-    },
-    {
-      name: "aria-describedby",
-      type: "string",
-      description: "ID of element containing additional descriptive text",
+      description: "Color variant of the checkbox",
     },
   ];
 
@@ -86,68 +68,94 @@ export default function CheckboxShowcase() {
           </nav>
         </ShowcaseSection>
 
-        <ShowcaseSection id="basic" title="Basic Usage">
-          <div class="space-y-4">
-            <Checkbox
-              checked={checked()}
-              onChange={(e) => setChecked(e.currentTarget.checked)}
-              label={<span>Enable feature</span>}
-            />
-            <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
-              Checked state: {checked() ? "true" : "false"}
+        <ShowcaseSection id="default" title="Default">
+          <Checkbox />
+          <CodeBlock code={`<Checkbox />`} />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="indeterminate" title="Indeterminate">
+          <Checkbox indeterminate />
+          <CodeBlock code={`<Checkbox indeterminate />`} />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="form-control" title="Form Control">
+          <div class="form-control">
+            <label class="label cursor-pointer">
+              <Checkbox />
+              <span class="label-text">Remember me</span>
+            </label>
+          </div>
+
+          <CodeBlock
+            code={`<div class="shadow bg-base-200 w-64 rounded-lg p-4">
+  <div class="form-control">
+    <label class="label cursor-pointer">
+      <span class="label-text">Remember me</span>
+      <Checkbox />
+    </label>
+  </div>
+</div>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="colors" title="Colors">
+          <div class="flex flex-row items-center gap-2">
+            <Checkbox checked color="primary" />
+            <Checkbox checked color="secondary" />
+            <Checkbox checked color="accent" />
+            <Checkbox checked color="neutral" />
+            <Checkbox checked color="success" />
+            <Checkbox checked color="warning" />
+            <Checkbox checked color="info" />
+            <Checkbox checked color="error" />
+          </div>
+          <CodeBlock
+            code={`<div class="flex flex-row items-center gap-2">
+  <Checkbox checked color="primary" />
+  <Checkbox checked color="secondary" />
+  <Checkbox checked color="accent" />
+  <Checkbox checked color="neutral" />
+  <Checkbox checked color="success" />
+  <Checkbox checked color="warning" />
+  <Checkbox checked color="info" />
+  <Checkbox checked color="error" />
+</div>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="sizes" title="Sizes">
+          <div class="flex flex-row items-center gap-2">
+            <Checkbox checked size="xs" />
+            <Checkbox checked size="sm" />
+            <Checkbox checked size="md" />
+            <Checkbox checked size="lg" />
+            <Checkbox checked size="xl" />
+          </div>
+          <CodeBlock
+            code={`<div class="flex flex-row items-center gap-2">
+  <Checkbox checked size="xs" />
+  <Checkbox checked size="sm" />
+  <Checkbox checked size="md" />
+  <Checkbox checked size="lg" />
+  <Checkbox checked size="xl" />
+</div>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="disabled" title="Disabled States">
+          <div class="flex flex-col gap-4">
+            <div>
+              <h3 class="text-sm mb-2">Disabled</h3>
+              <Checkbox disabled />
+            </div>
+            <div>
+              <h3 class="text-sm mb-2">Disabled Checked</h3>
+              <Checkbox checked disabled />
             </div>
           </div>
           <CodeBlock
-            code={`const [checked, setChecked] = createSignal(false);
-
-<Checkbox
-  checked={checked()}
-  onChange={(e) => setChecked(e.currentTarget.checked)}
-  label={<span>Enable feature</span>}
-/>`}
-          />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="colors" title="Color Variants">
-          <div class="flex flex-col gap-4">
-            <Checkbox checked color="primary" label="Primary" />
-            <Checkbox checked color="success" label="Success" />
-            <Checkbox checked color="warning" label="Warning" />
-            <Checkbox checked color="danger" label="Danger" />
-          </div>
-          <CodeBlock
-            code={`<Checkbox checked color="primary" label="Primary" />
-<Checkbox checked color="success" label="Success" />
-<Checkbox checked color="warning" label="Warning" />
-<Checkbox checked color="danger" label="Danger" />`}
-          />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="sizes" title="Size Variants">
-          <div class="flex flex-col gap-4">
-            <Checkbox size="sm" label="Small size checkbox" />
-            <Checkbox size="md" label="Medium size checkbox" />
-            <Checkbox size="lg" label="Large size checkbox" />
-          </div>
-          <CodeBlock
-            code={`<Checkbox size="sm" label="Small size checkbox" />
-<Checkbox size="md" label="Medium size checkbox" />
-<Checkbox size="lg" label="Large size checkbox" />`}
-          />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="states" title="States">
-          <div class="flex flex-col gap-4">
-            <Checkbox checked label="Checked state" />
-            <Checkbox indeterminate label="Indeterminate state" />
-            <Checkbox disabled label="Disabled state" />
-            <Checkbox checked disabled label="Checked and disabled" />
-          </div>
-          <CodeBlock
-            code={`<Checkbox checked label="Checked state" />
-<Checkbox indeterminate label="Indeterminate state" />
-<Checkbox disabled label="Disabled state" />
-<Checkbox checked disabled label="Checked and disabled" />`}
+            code={`<Checkbox disabled />
+<Checkbox checked disabled />`}
           />
         </ShowcaseSection>
 
