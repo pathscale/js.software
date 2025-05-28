@@ -1,11 +1,302 @@
-import { Component } from "solid-js";
+import { Component, createSignal } from "solid-js";
+import ShowcaseLayout from "./ShowcaseLayout";
+import { Rating } from "@pathscale/ui";
+import { PropsTable } from "./showcase/PropsTable";
+import { CodeBlock } from "./showcase/CodeBlock";
+import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 const RatingShowcase: Component = () => {
+  const sections = [
+    { id: "contents", title: "Contents" },
+    { id: "default", title: "Default" },
+    { id: "star2-warning", title: "Star 2 with Warning Color" },
+    { id: "heart-multicolor", title: "Heart with Multiple Colors" },
+    { id: "star2-green", title: "Star 2 with Green Color" },
+    { id: "hidden", title: "Hidden Rating" },
+    { id: "half-stars", title: "Half Stars" },
+    { id: "props", title: "Props" },
+  ] as const;
+
+  const [rating1, setRating1] = createSignal(2);
+  const [rating2, setRating2] = createSignal(2);
+  const [rating3, setRating3] = createSignal(2);
+  const [rating4, setRating4] = createSignal(2);
+  const [rating5, setRating5] = createSignal(0);
+  const [rating6, setRating6] = createSignal(3);
+
+  const ratingProps = [
+    {
+      name: "value",
+      type: "number",
+      description: "Current rating value",
+      required: true,
+    },
+    {
+      name: "onChange",
+      type: "(newRating: number) => void",
+      description: "Callback function when rating changes",
+    },
+    {
+      name: "size",
+      type: '"xs" | "sm" | "md" | "lg"',
+      description: "Size of the rating component",
+    },
+    {
+      name: "half",
+      type: "boolean",
+      default: "false",
+      description: "Enable half star ratings",
+    },
+    {
+      name: "hidden",
+      type: "boolean",
+      default: "false",
+      description: "Hide the rating when value is 0",
+    },
+    {
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes to apply",
+    },
+    {
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value",
+    },
+  ];
+
   return (
-    <div>
-      <h1>Rating Showcase</h1>
-      <p>Placeholder for Rating component showcase.</p>
-    </div>
+    <ShowcaseLayout>
+      <div class="space-y-4">
+        <ShowcaseSection id="contents" title="Contents">
+          <nav class="space-y-1">
+            {sections.map((section) => (
+              <a
+                href={`#${section.id}`}
+                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
+              >
+                {section.title}
+              </a>
+            ))}
+          </nav>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="default" title="Default">
+          <div class="flex w-full component-preview items-center justify-center gap-2">
+            <Rating value={rating1()} onChange={setRating1}>
+              <Rating.Item name="rating-1" class="mask mask-star" />
+              <Rating.Item name="rating-1" class="mask mask-star" />
+              <Rating.Item name="rating-1" class="mask mask-star" />
+              <Rating.Item name="rating-1" class="mask mask-star" />
+              <Rating.Item name="rating-1" class="mask mask-star" />
+            </Rating>
+          </div>
+          <CodeBlock
+            code={`<Rating value={value} onChange={setValue}>
+  <Rating.Item name="rating-1" class="mask mask-star" />
+  <Rating.Item name="rating-1" class="mask mask-star" />
+  <Rating.Item name="rating-1" class="mask mask-star" />
+  <Rating.Item name="rating-1" class="mask mask-star" />
+  <Rating.Item name="rating-1" class="mask mask-star" />
+</Rating>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="star2-warning" title="Star 2 with Warning Color">
+          <div class="flex w-full component-preview items-center justify-center gap-2">
+            <Rating value={rating2()} onChange={setRating2}>
+              <Rating.Item
+                name="rating-2"
+                class="mask mask-star-2 bg-orange-400"
+              />
+              <Rating.Item
+                name="rating-2"
+                class="mask mask-star-2 bg-orange-400"
+              />
+              <Rating.Item
+                name="rating-2"
+                class="mask mask-star-2 bg-orange-400"
+              />
+              <Rating.Item
+                name="rating-2"
+                class="mask mask-star-2 bg-orange-400"
+              />
+              <Rating.Item
+                name="rating-2"
+                class="mask mask-star-2 bg-orange-400"
+              />
+            </Rating>
+          </div>
+          <CodeBlock
+            code={`<Rating value={value} onChange={setValue}>
+  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
+</Rating>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection
+          id="heart-multicolor"
+          title="Heart with Multiple Colors"
+        >
+          <div class="flex w-full component-preview items-center justify-center gap-2">
+            <Rating value={rating3()} onChange={setRating3}>
+              <Rating.Item name="rating-3" class="mask mask-heart bg-red-400" />
+              <Rating.Item
+                name="rating-3"
+                class="mask mask-heart bg-orange-400"
+              />
+              <Rating.Item
+                name="rating-3"
+                class="mask mask-heart bg-yellow-400"
+              />
+              <Rating.Item
+                name="rating-3"
+                class="mask mask-heart bg-lime-400"
+              />
+              <Rating.Item
+                name="rating-3"
+                class="mask mask-heart bg-green-400"
+              />
+            </Rating>
+          </div>
+          <CodeBlock
+            code={`<Rating value={value} onChange={setValue}>
+  <Rating.Item name="rating-3" class="mask mask-heart bg-red-400" />
+  <Rating.Item name="rating-3" class="mask mask-heart bg-orange-400" />
+  <Rating.Item name="rating-3" class="mask mask-heart bg-yellow-400" />
+  <Rating.Item name="rating-3" class="mask mask-heart bg-lime-400" />
+  <Rating.Item name="rating-3" class="mask mask-heart bg-green-400" />
+</Rating>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="star2-green" title="Star 2 with Green Color">
+          <div class="flex w-full component-preview items-center justify-center gap-2">
+            <Rating value={rating4()} onChange={setRating4}>
+              <Rating.Item
+                name="rating-4"
+                class="mask mask-star-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-4"
+                class="mask mask-star-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-4"
+                class="mask mask-star-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-4"
+                class="mask mask-star-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-4"
+                class="mask mask-star-2 bg-green-500"
+              />
+            </Rating>
+          </div>
+          <CodeBlock
+            code={`<Rating value={value} onChange={setValue}>
+  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
+</Rating>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="hidden" title="Hidden Rating">
+          <div class="flex w-full component-preview items-center justify-center gap-2">
+            <Rating value={rating5()} onChange={setRating5} size="lg">
+              <Rating.Item name="rating-9" class="mask mask-star" />
+              <Rating.Item name="rating-9" class="mask mask-star" />
+              <Rating.Item name="rating-9" class="mask mask-star" />
+              <Rating.Item name="rating-9" class="mask mask-star" />
+              <Rating.Item name="rating-9" class="mask mask-star" />
+            </Rating>
+          </div>
+          <CodeBlock
+            code={`<Rating value={0} onChange={setValue} size="lg">
+  <Rating.Item name="rating-9" class="mask mask-star" />
+  <Rating.Item name="rating-9" class="mask mask-star" />
+  <Rating.Item name="rating-9" class="mask mask-star" />
+  <Rating.Item name="rating-9" class="mask mask-star" />
+  <Rating.Item name="rating-9" class="mask mask-star" />
+</Rating>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="half-stars" title="Half Stars">
+          <div class="flex w-full component-preview items-center justify-center gap-2">
+            <Rating value={rating6()} onChange={setRating6} half size="lg">
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-1 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-1 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-1 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-1 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-2 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-1 bg-green-500"
+              />
+              <Rating.Item
+                name="rating-10"
+                class="mask mask-star-2 mask-half-2 bg-green-500"
+              />
+            </Rating>
+          </div>
+          <CodeBlock
+            code={`<Rating value={value} onChange={setValue} half size="lg">
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+</Rating>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="props" title="Props">
+          <PropsTable props={ratingProps} />
+        </ShowcaseSection>
+      </div>
+    </ShowcaseLayout>
   );
 };
 
