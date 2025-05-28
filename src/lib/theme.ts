@@ -1,4 +1,4 @@
-import { createSignal, createEffect } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 
 export type ThemeValue = "light" | "dark";
 
@@ -14,4 +14,5 @@ createEffect(() => {
   localStorage.setItem("theme", current);
 });
 
-export { theme, setTheme };
+export { setTheme, theme };
+
