@@ -1,5 +1,6 @@
+import { CopyButton as UICopyButton } from "@pathscale/ui";
 import { TbCheck, TbCopy } from "solid-icons/tb";
-import { createSignal } from "solid-js";
+import { createSignal, type Component } from "solid-js";
 
 interface CopyButtonProps {
   text: string;
@@ -7,28 +8,22 @@ interface CopyButtonProps {
   title?: string;
 }
 
-export function CopyButton(props: CopyButtonProps) {
+export const CopyButton: Component<CopyButtonProps> = (props) => {
   const [copied, setCopied] = createSignal(false);
 
-  const copy = async () => {
-    await navigator.clipboard.writeText(props.text);
+  const handleCopy = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <button
-      type="button"
-      onClick={copy}
+    <UICopyButton
+      text={props.text}
       title={props.title}
-      class={`inline-flex items-center justify-center p-1.5 rounded-md
-        text-[oklch(var(--color-base-content)/0.7)]
-        hover:text-[oklch(var(--color-base-content)/1)]
-        bg-[oklch(var(--color-base-200)/1)]
-        hover:bg-[oklch(var(--color-base-200)/0.85)]
-        transition-colors ${props.class ?? ""}`}
+      class={props.class}
+      onCopy={handleCopy}
     >
       {copied() ? <TbCheck size={16} /> : <TbCopy size={16} />}
-    </button>
+    </UICopyButton>
   );
-}
+};
