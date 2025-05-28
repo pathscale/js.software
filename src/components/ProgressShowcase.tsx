@@ -1,73 +1,66 @@
+import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Progress } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function ProgressShowcase() {
+const ProgressShowcase: Component = () => {
   const sections = [
-    { id: "basic", title: "Basic Usage" },
-    { id: "sizes", title: "Sizes" },
-    { id: "shapes", title: "Shapes" },
-    { id: "colors", title: "Colors" },
-    { id: "variants", title: "Variants" },
-    { id: "labels", title: "Labels" },
+    { id: "default", title: "Default" },
+    { id: "primary", title: "Primary Color" },
+    { id: "secondary", title: "Secondary Color" },
+    { id: "accent", title: "Accent Color" },
+    { id: "success", title: "Success Color" },
+    { id: "info", title: "Info Color" },
+    { id: "warning", title: "Warning Color" },
+    { id: "error", title: "Error Color" },
     { id: "indeterminate", title: "Indeterminate" },
     { id: "props", title: "Props" },
-  ];
-
-  const colors = ["default", "danger", "success", "info", "warning"] as const;
-  const sizes = ["sm", "md", "lg"] as const;
-  const shapes = ["rounded", "circle"] as const;
-  const variants = ["filled", "outlined", "ghost"] as const;
+  ] as const;
 
   const progressProps = [
     {
       name: "value",
-      type: "number | null",
-      description: "Progress value (0-100). Use null for indeterminate state",
+      type: "number",
+      description: "Current value of the progress bar",
     },
     {
-      name: "size",
-      type: '"sm" | "md" | "lg"',
-      default: '"md"',
-      description: "Size of the progress bar",
-    },
-    {
-      name: "shape",
-      type: '"rounded" | "circle"',
-      default: '"rounded"',
-      description: "Shape of the progress bar",
+      name: "max",
+      type: "number",
+      default: "100",
+      description: "Maximum value of the progress bar",
     },
     {
       name: "color",
-      type: '"default" | "danger" | "success" | "info" | "warning"',
-      default: '"default"',
-      description: "Color theme of the progress bar",
+      type: '"primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
+      description: "Color variant of the progress bar",
     },
     {
-      name: "variant",
-      type: '"filled" | "outlined" | "ghost"',
-      default: '"filled"',
-      description: "Visual variant of the progress bar",
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value",
     },
     {
-      name: "showValue",
-      type: "boolean",
-      default: "false",
-      description: "Whether to show the progress value",
-    },
-    {
-      name: "format",
-      type: '"percent" | "raw"',
-      default: '"percent"',
-      description: "Format of the displayed value",
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes to apply",
     },
   ];
 
+  const ProgressTemplate = (props: { color?: string; max?: number }) => (
+    <div class="flex flex-col gap-y-2">
+      <Progress class="w-56" value={0} max={props.max} color={props.color} />
+      <Progress class="w-56" value={10} max={props.max} color={props.color} />
+      <Progress class="w-56" value={40} max={props.max} color={props.color} />
+      <Progress class="w-56" value={70} max={props.max} color={props.color} />
+      <Progress class="w-56" value={100} max={props.max} color={props.color} />
+    </div>
+  );
+
   return (
     <ShowcaseLayout>
-      <div class="space-y-8">
+      <div class="space-y-4">
         <ShowcaseSection id="contents" title="Contents">
           <nav class="space-y-1">
             {sections.map((section) => (
@@ -81,82 +74,113 @@ export default function ProgressShowcase() {
           </nav>
         </ShowcaseSection>
 
-        <ShowcaseSection id="basic" title="Basic Usage">
-          <div class="space-y-4">
-            <Progress value={60} />
-          </div>
-          <CodeBlock code={`<Progress value={60} />`} />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="sizes" title="Sizes">
-          <div class="space-y-4">
-            {sizes.map((size) => (
-              <Progress value={75} size={size} showValue />
-            ))}
-          </div>
+        <ShowcaseSection id="default" title="Default">
+          <ProgressTemplate max={100} />
           <CodeBlock
-            code={`<Progress value={75} size="sm" />
-<Progress value={75} size="md" />
-<Progress value={75} size="lg" />`}
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} />
+  <Progress class="w-56" value={10} max={100} />
+  <Progress class="w-56" value={40} max={100} />
+  <Progress class="w-56" value={70} max={100} />
+  <Progress class="w-56" value={100} max={100} />
+</div>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="shapes" title="Shapes">
-          <div class="space-y-4">
-            {shapes.map((shape) => (
-              <Progress value={75} shape={shape} showValue />
-            ))}
-          </div>
+        <ShowcaseSection id="primary" title="Primary Color">
+          <ProgressTemplate max={100} color="primary" />
           <CodeBlock
-            code={`<Progress value={75} shape="rounded" />
-<Progress value={75} shape="circle" />`}
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} color="primary" />
+  <Progress class="w-56" value={10} max={100} color="primary" />
+  <Progress class="w-56" value={40} max={100} color="primary" />
+  <Progress class="w-56" value={70} max={100} color="primary" />
+  <Progress class="w-56" value={100} max={100} color="primary" />
+</div>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Colors">
-          <div class="space-y-4">
-            {colors.map((color) => (
-              <Progress value={75} color={color} showValue />
-            ))}
-          </div>
+        <ShowcaseSection id="secondary" title="Secondary Color">
+          <ProgressTemplate max={100} color="secondary" />
           <CodeBlock
-            code={`<Progress value={75} color="default" />
-<Progress value={75} color="danger" />
-<Progress value={75} color="success" />
-<Progress value={75} color="info" />
-<Progress value={75} color="warning" />`}
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} color="secondary" />
+  <Progress class="w-56" value={10} max={100} color="secondary" />
+  <Progress class="w-56" value={40} max={100} color="secondary" />
+  <Progress class="w-56" value={70} max={100} color="secondary" />
+  <Progress class="w-56" value={100} max={100} color="secondary" />
+</div>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="variants" title="Variants">
-          <div class="space-y-4">
-            {variants.map((variant) => (
-              <Progress value={75} variant={variant} showValue />
-            ))}
-          </div>
+        <ShowcaseSection id="accent" title="Accent Color">
+          <ProgressTemplate max={100} color="accent" />
           <CodeBlock
-            code={`<Progress value={75} variant="filled" />
-<Progress value={75} variant="outlined" />
-<Progress value={75} variant="ghost" />`}
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} color="accent" />
+  <Progress class="w-56" value={10} max={100} color="accent" />
+  <Progress class="w-56" value={40} max={100} color="accent" />
+  <Progress class="w-56" value={70} max={100} color="accent" />
+  <Progress class="w-56" value={100} max={100} color="accent" />
+</div>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="labels" title="Labels">
-          <div class="space-y-4">
-            <Progress value={75} showValue format="percent" />
-            <Progress value={75} showValue format="raw" />
-          </div>
+        <ShowcaseSection id="success" title="Success Color">
+          <ProgressTemplate max={100} color="success" />
           <CodeBlock
-            code={`<Progress value={75} showValue format="percent" />
-<Progress value={75} showValue format="raw" />`}
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} color="success" />
+  <Progress class="w-56" value={10} max={100} color="success" />
+  <Progress class="w-56" value={40} max={100} color="success" />
+  <Progress class="w-56" value={70} max={100} color="success" />
+  <Progress class="w-56" value={100} max={100} color="success" />
+</div>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="info" title="Info Color">
+          <ProgressTemplate max={100} color="info" />
+          <CodeBlock
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} color="info" />
+  <Progress class="w-56" value={10} max={100} color="info" />
+  <Progress class="w-56" value={40} max={100} color="info" />
+  <Progress class="w-56" value={70} max={100} color="info" />
+  <Progress class="w-56" value={100} max={100} color="info" />
+</div>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="warning" title="Warning Color">
+          <ProgressTemplate max={100} color="warning" />
+          <CodeBlock
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} color="warning" />
+  <Progress class="w-56" value={10} max={100} color="warning" />
+  <Progress class="w-56" value={40} max={100} color="warning" />
+  <Progress class="w-56" value={70} max={100} color="warning" />
+  <Progress class="w-56" value={100} max={100} color="warning" />
+</div>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="error" title="Error Color">
+          <ProgressTemplate max={100} color="error" />
+          <CodeBlock
+            code={`<div class="flex flex-col gap-y-2">
+  <Progress class="w-56" value={0} max={100} color="error" />
+  <Progress class="w-56" value={10} max={100} color="error" />
+  <Progress class="w-56" value={40} max={100} color="error" />
+  <Progress class="w-56" value={70} max={100} color="error" />
+  <Progress class="w-56" value={100} max={100} color="error" />
+</div>`}
           />
         </ShowcaseSection>
 
         <ShowcaseSection id="indeterminate" title="Indeterminate">
-          <div class="space-y-4">
-            <Progress value={null} />
-          </div>
-          <CodeBlock code={`<Progress value={null} />`} />
+          <Progress class="w-56" />
+          <CodeBlock code={`<Progress class="w-56" />`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
@@ -165,4 +189,6 @@ export default function ProgressShowcase() {
       </div>
     </ShowcaseLayout>
   );
-}
+};
+
+export default ProgressShowcase;
