@@ -4,8 +4,6 @@ import { setTheme, theme } from "./lib/theme";
 export default function ThemeToggle() {
   const toggleTheme = () => {
     const newTheme = theme() === "light" ? "dark" : "light";
-    console.log("Current theme:", theme());
-    console.log("Setting theme to:", newTheme);
     setTheme(newTheme);
 
     setTimeout(() => {
