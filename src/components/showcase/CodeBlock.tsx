@@ -1,9 +1,9 @@
-import { onMount } from "solid-js";
 import Prism from "prismjs";
 import "prismjs/components/prism-jsx";
-import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-tsx";
+import "prismjs/components/prism-typescript";
 import "prismjs/themes/prism-tomorrow.css";
+import { onMount } from "solid-js";
 import { CopyButton } from "./CopyButton";
 
 interface CodeBlockProps {

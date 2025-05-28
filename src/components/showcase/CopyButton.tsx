@@ -1,5 +1,5 @@
+import { TbCheck, TbCopy } from "solid-icons/tb";
 import { createSignal } from "solid-js";
-import { TbCopy, TbCheck } from "solid-icons/tb";
 
 interface CopyButtonProps {
   text: string;
@@ -22,10 +22,10 @@ export function CopyButton(props: CopyButtonProps) {
       onClick={copy}
       title={props.title}
       class={`inline-flex items-center justify-center p-1.5 rounded-md
-        text-[hsl(var(--color-fg-secondary)/1)]
-        hover:text-[hsl(var(--color-fg-body)/1)]
-        bg-[hsl(var(--color-bg-secondary)/1)]
-        hover:bg-[hsl(var(--color-bg-secondary)/0.85)]
+        text-[oklch(var(--color-base-content)/0.7)]
+        hover:text-[oklch(var(--color-base-content)/1)]
+        bg-[oklch(var(--color-base-200)/1)]
+        hover:bg-[oklch(var(--color-base-200)/0.85)]
         transition-colors ${props.class ?? ""}`}
     >
       {copied() ? <TbCheck size={16} /> : <TbCopy size={16} />}
