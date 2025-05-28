@@ -1,5 +1,5 @@
-import { theme, setTheme } from "./lib/theme";
-import { FiSun, FiMoon } from "solid-icons/fi";
+import { FiMoon, FiSun } from "solid-icons/fi";
+import { setTheme, theme } from "./lib/theme";
 
 export default function ThemeToggle() {
   const toggleTheme = () => {
@@ -9,7 +9,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      class="p-2 rounded-lg hover:bg-[hsl(var(--color-bg-secondary))] transition-colors"
+      class="btn btn-ghost btn-circle"
       aria-label="Toggle theme"
     >
       {theme() === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
