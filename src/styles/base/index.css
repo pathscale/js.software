@@ -1,17 +1,17 @@
 @layer base {
   html {
-    scrollbar-color: var(--color-bg-tertiary) transparent;
+    scrollbar-color: oklch(var(--base-300)) transparent;
   }
 
   body {
-    color: var(--color-fg-body);
-    background: var(--color-bg-body);
+    color: oklch(var(--base-content));
+    background: oklch(var(--base-100));
     overflow-x: clip;
     touch-action: manipulation;
   }
 
   *::selection {
-    color: var(--color-fg-inverse);
-    background: var(--color-bg-accent);
+    color: oklch(var(--primary-content));
+    background: oklch(var(--primary));
   }
 }

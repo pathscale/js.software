@@ -1,14 +1,14 @@
-import { createSignal, createEffect, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import ShowcaseLayout from "../components/ShowcaseLayout";
-import { theme, setTheme } from "../lib/theme";
+import { setTheme, theme } from "../lib/theme";
 import {
+  bgBody,
+  bgCode,
+  bgSecondary,
+  fgBody,
+  fgSecondary,
   primary,
   primaryFg,
-  bgBody,
-  fgBody,
-  bgSecondary,
-  fgSecondary,
-  bgCode,
 } from "../lib/theme-colors";
 
 export default function Theming() {
@@ -95,7 +95,6 @@ export default function Theming() {
     </ShowcaseLayout>
   );
 }
-
 // import { createSignal, onMount, createEffect } from "solid-js";
 // import ShowcaseLayout from "../components/ShowcaseLayout";
 // import { theme, setTheme } from "../lib/theme";
@@ -181,3 +180,4 @@ export default function Theming() {
 //     </ShowcaseLayout>
 //   );
 // }
+

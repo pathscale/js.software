@@ -1,9 +1,9 @@
-import { createSignal, Show } from "solid-js";
 import { A, useLocation } from "@solidjs/router";
-import { routes } from "./routes";
-import { FiMenu, FiX } from "solid-icons/fi";
-import ThemeToggle from "./ThemeToggle";
 import clsx from "clsx";
+import { FiMenu, FiX } from "solid-icons/fi";
+import { createSignal, Show } from "solid-js";
+import { routes } from "./routes";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -16,7 +16,7 @@ export default function Sidebar() {
       {/* Mobile menu button */}
       <button
         onClick={toggleSidebar}
-        class="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-lg bg-white dark:bg-gray-800 shadow-md"
+        class="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-lg bg-base-200 shadow-md"
         aria-label="Toggle menu"
       >
         <Show when={isOpen()} fallback={<FiMenu size={24} />}>
@@ -27,7 +27,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         class={clsx(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-gray-200 dark:border-gray-700 shadow-lg",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-base-100 transform transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-base-300 shadow-lg",
           {
             "translate-x-0": isOpen(),
             "-translate-x-full": !isOpen(),
@@ -36,9 +36,9 @@ export default function Sidebar() {
       >
         <div class="h-full flex flex-col">
           {/* Logo/Title */}
-          <div class="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+          <div class="p-4 border-b border-base-300 bg-base-200">
             <div class="flex items-center justify-center">
-              <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+              <h1 class="text-xl font-bold text-base-content">
                 UI Components
               </h1>
             </div>
@@ -50,9 +50,9 @@ export default function Sidebar() {
               <A
                 href={route.path}
                 class={clsx(
-                  "block px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors",
+                  "block px-4 py-2 rounded-lg text-base-content hover:bg-base-200 transition-colors",
                   {
-                    "bg-gray-100 dark:bg-gray-700 font-medium":
+                    "bg-base-200 font-medium":
                       location.pathname === route.path,
                   }
                 )}
@@ -63,8 +63,8 @@ export default function Sidebar() {
           </nav>
 
           {/* Theme toggle in footer */}
-          <div class="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex justify-between items-center">
-            <span class="text-sm text-gray-600 dark:text-gray-400">Theme</span>
+          <div class="p-4 border-t border-base-300 bg-base-200 flex justify-between items-center">
+            <span class="text-sm text-base-content/70">Theme</span>
             <ThemeToggle />
           </div>
         </div>

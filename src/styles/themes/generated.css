@@ -1,0 +1,68 @@
+:root {
+  --primary: oklch(49.12% 0.3096 275.75);
+  --primary-content: oklch(100% 0 0);
+  --secondary: oklch(69.71% 0.329 342.55);
+  --secondary-content: oklch(100% 0 0);
+  --accent: oklch(76.76% 0.184 183.61);
+  --accent-content: oklch(100% 0 0);
+  --neutral: oklch(32.75% 0.02 255.701);
+  --neutral-content: oklch(100% 0 0);
+  --base-100: oklch(100% 0 0);
+  --base-200: oklch(96.14% 0 0);
+  --base-300: oklch(94.51% 0 0);
+  --base-content: oklch(20.37% 0.026 21.416);
+  --info: oklch(70.76% 0.221 198.143);
+  --info-content: oklch(100% 0 0);
+  --success: oklch(64.8% 0.15 160);
+  --success-content: oklch(100% 0 0);
+  --warning: oklch(84.71% 0.199 83.87);
+  --warning-content: oklch(0% 0 0);
+  --error: oklch(71.76% 0.221 22.18);
+  --error-content: oklch(100% 0 0);
+}
+
+[data-theme="light"] {
+  --primary: oklch(49.12% 0.3096 275.75);
+  --primary-content: oklch(100% 0 0);
+  --secondary: oklch(69.71% 0.329 342.55);
+  --secondary-content: oklch(100% 0 0);
+  --accent: oklch(76.76% 0.184 183.61);
+  --accent-content: oklch(100% 0 0);
+  --neutral: oklch(32.75% 0.02 255.701);
+  --neutral-content: oklch(100% 0 0);
+  --base-100: oklch(100% 0 0);
+  --base-200: oklch(96.14% 0 0);
+  --base-300: oklch(94.51% 0 0);
+  --base-content: oklch(20.37% 0.026 21.416);
+  --info: oklch(70.76% 0.221 198.143);
+  --info-content: oklch(100% 0 0);
+  --success: oklch(64.8% 0.15 160);
+  --success-content: oklch(100% 0 0);
+  --warning: oklch(84.71% 0.199 83.87);
+  --warning-content: oklch(0% 0 0);
+  --error: oklch(71.76% 0.221 22.18);
+  --error-content: oklch(100% 0 0);
+}
+
+[data-theme="dark"] {
+  --primary: oklch(65.69% 0.196 275.75);
+  --primary-content: oklch(100% 0 0);
+  --secondary: oklch(74.8% 0.26 342.55);
+  --secondary-content: oklch(100% 0 0);
+  --accent: oklch(74.51% 0.167 183.61);
+  --accent-content: oklch(100% 0 0);
+  --neutral: oklch(32.75% 0.02 255.701);
+  --neutral-content: oklch(100% 0 0);
+  --base-100: oklch(25.18% 0.015 252.417);
+  --base-200: oklch(23.18% 0.016 252.417);
+  --base-300: oklch(21.18% 0.017 252.417);
+  --base-content: oklch(87.71% 0.026 21.416);
+  --info: oklch(70.76% 0.221 198.143);
+  --info-content: oklch(100% 0 0);
+  --success: oklch(64.8% 0.15 160);
+  --success-content: oklch(100% 0 0);
+  --warning: oklch(84.71% 0.199 83.87);
+  --warning-content: oklch(0% 0 0);
+  --error: oklch(71.76% 0.221 22.18);
+  --error-content: oklch(100% 0 0);
+}
