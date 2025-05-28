@@ -5,10 +5,6 @@ export default function ThemeToggle() {
   const toggleTheme = () => {
     const newTheme = theme() === "light" ? "dark" : "light";
     setTheme(newTheme);
-
-    setTimeout(() => {
-      console.log("data-theme attribute:", document.documentElement.dataset.theme);
-    }, 100);
   };
 
   return (
