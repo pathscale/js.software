@@ -10,7 +10,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      class="p-2 rounded-md bg-[oklch(var(--color-primary))] text-[oklch(var(--color-primary-content))]"
+      class="p-2 rounded-md bg-primary text-primary-content"
       aria-label="Toggle theme"
     >
       {theme() === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}

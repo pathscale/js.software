@@ -2,16 +2,26 @@ import { createEffect, createSignal } from "solid-js";
 
 export type ThemeValue = "light" | "dark";
 
-const saved = localStorage.getItem("theme") as ThemeValue | null;
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-const initialTheme: ThemeValue = saved || (prefersDark ? "dark" : "light");
+const getInitialTheme = (): ThemeValue => {
+  if (typeof window === "undefined") return "light";
 
-const [theme, setTheme] = createSignal<ThemeValue>(initialTheme);
+  const saved = localStorage.getItem("theme") as ThemeValue | null;
+  if (saved === "light" || saved === "dark") {
+    return saved;
+  }
+
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return prefersDark ? "dark" : "light";
+};
+
+const [theme, setTheme] = createSignal<ThemeValue>(getInitialTheme());
 
 createEffect(() => {
   const current = theme();
-  document.documentElement.dataset.theme = current;
-  localStorage.setItem("theme", current);
+  if (typeof window !== "undefined") {
+    document.documentElement.setAttribute("data-theme", current);
+    localStorage.setItem("theme", current);
+  }
 });
 
 export { setTheme, theme };
