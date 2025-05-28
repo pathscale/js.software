@@ -3,7 +3,7 @@ import AccordionShowcase from "./components/AccordionShowcase";
 import AlertShowcase from "./components/AlertShowcase";
 import AvatarShowcase from "./components/AvatarShowcase";
 import BadgeShowcase from "./components/BadgeShowcase";
-import BottomNavigationShowcase from "./components/BottomNavigationShowcase";
+import DockShowcase from "./components/DockShowcase";
 import BreadcrumbShowcase from "./components/BreadcrumbShowcase";
 import ButtonShowcase from "./components/ButtonShowcase";
 import CardShowcase from "./components/CardShowcase";
@@ -89,9 +89,9 @@ export const routes: RouteConfig[] = [
     description: "Small count or label to indicate status or quantity.",
   },
   {
-    name: "BottomNavigation",
-    path: "/bottom-navigation",
-    component: BottomNavigationShowcase,
+    name: "Dock",
+    path: "/dock",
+    component: DockShowcase,
     description: "Navigation bar at the bottom of the screen.",
   },
   {
