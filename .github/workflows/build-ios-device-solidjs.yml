@@ -1,0 +1,195 @@
+name: Build iOS App for Device (SolidJS)
+
+on:
+  push:
+    # branches: [ci/tauri-workflows]
+  pull_request:
+    # branches: [ci/tauri-workflows]
+  workflow_dispatch:
+
+jobs:
+  build-ios-device:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+
+      - name: Install iOS Dependencies
+        run: rustup target add aarch64-apple-ios
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install project dependencies
+        run: bun install
+
+      - name: Build frontend
+        run: bun run build:apps
+
+      # Create a new keychain for iOS code signing
+      - name: Setup iOS signing
+        id: ios-signing
+        uses: apple-actions/import-codesign-certs@v2
+        with:
+          p12-file-base64: ${{ secrets.IOS_DEVELOPMENT_CERTIFICATE }}
+          p12-password: ${{ secrets.IOS_DEVELOPMENT_CERTIFICATE_PASSWORD }}
+          keychain-password: ${{ github.run_id }}
+
+      - name: Install provisioning profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo -n "${{ secrets.IOS_ADHOC_PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/adhoc.mobileprovision
+
+      # Add iOS section with developmentTeam
+      - name: Add iOS section with developmentTeam
+        run: |
+          # First check if we need to add iOS section
+          if grep -q '"iOS": {' src-tauri/tauri.conf.json; then
+            echo "iOS section exists, checking for developmentTeam"
+            if grep -q '"developmentTeam"' src-tauri/tauri.conf.json; then
+              echo "Updating existing developmentTeam"
+              sed -i '' 's/"developmentTeam": "[^"]*"/"developmentTeam": "${{ secrets.APPLE_TEAM_ID }}"/' src-tauri/tauri.conf.json
+            else
+              echo "Adding developmentTeam to existing iOS section"
+              sed -i '' 's/"iOS": {/"iOS": {\n      "developmentTeam": "${{ secrets.APPLE_TEAM_ID }}",/' src-tauri/tauri.conf.json
+            fi
+          else
+            echo "Adding iOS section to bundle"
+            sed -i '' '/"bundle": {/,/^  }/ s/"targets": "all",/"targets": "all",\n    "iOS": {\n      "developmentTeam": "${{ secrets.APPLE_TEAM_ID }}"\n    },/' src-tauri/tauri.conf.json
+          fi
+
+          # Verify the change
+          echo "Updated tauri.conf.json:"
+          cat src-tauri/tauri.conf.json
+
+      # Initialize Tauri iOS
+      - name: Initialize Tauri iOS
+        run: bun run tauri ios init
+
+      # Configure automatic code signing
+      - name: Configure automatic code signing
+        run: |
+          # Create the Xcode project directory if it doesn't exist
+          xcodebuild -project src-tauri/gen/apple/app.xcodeproj -list
+
+          # Configure automatic code signing
+          /usr/libexec/PlistBuddy -c "Add :objects:*:buildSettings:CODE_SIGN_STYLE string Automatic" src-tauri/gen/apple/app.xcodeproj/project.pbxproj 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Set :objects:*:buildSettings:CODE_SIGN_STYLE Automatic" src-tauri/gen/apple/app.xcodeproj/project.pbxproj 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Add :objects:*:buildSettings:DEVELOPMENT_TEAM string ${{ secrets.APPLE_TEAM_ID }}" src-tauri/gen/apple/app.xcodeproj/project.pbxproj 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Set :objects:*:buildSettings:DEVELOPMENT_TEAM ${{ secrets.APPLE_TEAM_ID }}" src-tauri/gen/apple/app.xcodeproj/project.pbxproj 2>/dev/null || true
+          # Directly modify the Info.plist after project initialization
+          mkdir -p src-tauri/gen/apple/app_iOS || true
+          /usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string com.jssoftware.ui" src-tauri/gen/apple/app_iOS/Info.plist 2>/dev/null || true
+          /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.jssoftware.ui" src-tauri/gen/apple/app_iOS/Info.plist 2>/dev/null || true
+
+      # Create ExportOptions.plist for proper IPA packaging
+      - name: Create export options
+        run: |
+          cat > ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>development</string>
+              <key>teamID</key>
+              <string>${{ secrets.APPLE_TEAM_ID }}</string>
+              <key>signingStyle</key>
+              <string>automatic</string>
+          </dict>
+          </plist>
+          EOF
+
+          # Verify the file was created properly
+          cat ExportOptions.plist
+
+          # Copy to the Xcode project directory for easier access
+          cp ExportOptions.plist src-tauri/gen/apple/
+
+      # Build using Tauri with export options
+      - name: Build iOS app for device
+        env:
+          DEVELOPER_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          # Debug Info
+          echo "Checking provisioning profiles:"
+          ls -la ~/Library/MobileDevice/Provisioning\ Profiles/
+          echo "Verifying Tauri config iOS section:"
+          cat src-tauri/tauri.conf.json | grep -A 5 iOS
+          echo "Using Export Options:"
+          cat ExportOptions.plist
+
+          # Run build without the problematic flags
+          bun run tauri ios build --debug
+
+      # Find and upload the IPA file
+      - name: Locate and upload IPA
+        run: |
+          # First try to find the IPA directly, as Tauri generated one
+          IPA_PATH=$(find src-tauri -path "*/build/arm64/*.ipa" -type f | head -n 1)
+
+          if [ -n "$IPA_PATH" ]; then
+            echo "Found IPA generated by Tauri at: $IPA_PATH"
+            echo "IPA_PATH=$IPA_PATH" >> $GITHUB_ENV
+          else
+            echo "No IPA directly found, searching for app file to create IPA"
+            
+            # Find the app file
+            APP_PATH=$(find src-tauri -name "*.app" -type d | head -n 1)
+            
+            if [ -z "$APP_PATH" ]; then
+              echo "Error: Could not find any .app file."
+              find src-tauri -type d | grep -i "app\|ipa"
+              exit 1
+            fi
+            
+            echo "Found app at: $APP_PATH"
+            
+            # Create a payload directory
+            PAYLOAD_DIR=$(mktemp -d)/Payload
+            mkdir -p "$PAYLOAD_DIR"
+            
+            # Copy the app to the payload directory
+            cp -R "$APP_PATH" "$PAYLOAD_DIR"
+            
+            # Create the IPA file
+            IPA_NAME=$(basename "$APP_PATH" .app).ipa
+            IPA_DIR=$(dirname "$APP_PATH")
+            cd $(dirname "$PAYLOAD_DIR")
+            zip -r "$IPA_DIR/$IPA_NAME" Payload
+            
+            echo "Created IPA at: $IPA_DIR/$IPA_NAME"
+            echo "IPA_PATH=$IPA_DIR/$IPA_NAME" >> $GITHUB_ENV
+          fi
+
+          # Show final path to verify
+          echo "Final IPA path: $IPA_PATH"
+          ls -la $(dirname "$IPA_PATH")
+
+          # Verify IPA contents for debugging
+          mkdir -p ipa_contents
+          unzip -d ipa_contents "$IPA_PATH"
+          echo "IPA contains:"
+          ls -la ipa_contents/Payload/*.app/
+          echo "Embedded provisioning profile:"
+          ls -la ipa_contents/Payload/*.app/embedded.mobileprovision || echo "No embedded provisioning profile found!"
+
+      # Upload the IPA as an artifact
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: js-software-ui-ios-app
+          path: ${{ env.IPA_PATH }}
+          if-no-files-found: error
