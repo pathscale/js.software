@@ -1,8 +1,8 @@
 name: Build Tauri Desktop Apps
 
 on:
-  push:
-    branches: [ci/tauri-workflows]
+  # push:
+  #   branches: [master]
   workflow_dispatch:
 
 jobs:
