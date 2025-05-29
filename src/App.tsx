@@ -1,12 +1,12 @@
 import { Route, Router } from "@solidjs/router";
 import { Footer } from "./components/Footer";
 import { routes } from "./routes";
-import Sidebar from "./Sidebar";
+import SidenavWrapper from "./SidenavWrapper";
 
 const Layout = (props) => {
   return (
     <div class="relative min-h-screen bg-base-100 text-base-content">
-      <Sidebar />
+      <SidenavWrapper />
       <main class="lg:ml-64 min-h-screen">
         <div class="container mx-auto px-4 py-6 sm:py-8">{props.children}</div>
       </main>
