@@ -1,10 +1,10 @@
 name: Build iOS App for Device (SolidJS)
 
 on:
-  push:
-    # branches: [ci/tauri-workflows]
-  pull_request:
-    # branches: [ci/tauri-workflows]
+  # push:
+  #   branches: [ci/tauri-workflows]
+  # pull_request:
+  #   branches: [ci/tauri-workflows]
   workflow_dispatch:
 
 jobs:
