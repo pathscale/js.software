@@ -54,13 +54,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_ENV_PLATFORM: true
-        with:
-          tagName: v__VERSION__
-          releaseName: "JS Software UI v__VERSION__"
-          releaseBody: "See the assets to download this version and install."
-          releaseDraft: true
-          prerelease: false
-          includeDebug: false
 
       - name: Upload artifacts (macOS)
         if: matrix.platform == 'macos-latest'
