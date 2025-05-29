@@ -1,0 +1,88 @@
+name: Build Android App
+
+on:
+  push:
+    branches: [ci/tauri-workflows]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Android SDK and NDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept SDK Licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Install Android NDK
+        run: sdkmanager --install "ndk;25.2.9519653"
+
+      - name: Install dependencies
+        run: bun install --frozen
+
+      - name: Set Version
+        shell: bash
+        run: |
+          echo "Version: 1.0.${GITHUB_RUN_NUMBER}"
+          sed -i "s/\"version\": \".*\"/\"version\": \"1.0.${GITHUB_RUN_NUMBER}\"/" package.json
+          sed -i "s/\"version\": \".*\"/\"version\": \"1.0.${GITHUB_RUN_NUMBER}\"/" src-tauri/tauri.conf.json
+
+      - name: Build frontend
+        run: bun run build:apps
+
+      - name: Initialize Android project
+        env:
+          ANDROID_NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+          NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+        run: bun run tauri android init
+
+      - name: Build Android app
+        env:
+          ANDROID_NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+          NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+        run: bun run tauri android build --debug
+
+      - name: Find APK location
+        run: |
+          echo "Searching for APK files:"
+          find src-tauri -name "*.apk" -type f | tee apk-files.txt
+
+          APK_PATH=$(find src-tauri -name "*.apk" -type f | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "Error: No APK file found!"
+            echo "Directory structure:"
+            find src-tauri -type d | head -20
+            echo "All files in src-tauri/gen:"
+            find src-tauri/gen -type f | head -20 || echo "src-tauri/gen not found"
+            exit 1
+          fi
+
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+          echo "Found APK at: $APK_PATH"
+          ls -la "$APK_PATH"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: js-software-ui-android-debug
+          path: ${{ env.APK_PATH }}
+          if-no-files-found: error
