@@ -42,6 +42,7 @@ import TimelineShowcase from "./components/TimelineShowcase";
 import ToastShowcase from "./components/ToastShowcase";
 import ToggleShowcase from "./components/ToggleShowcase";
 import TooltipShowcase from "./components/TooltipShowcase";
+import SidenavShowcase from "./components/SidenavShowcase";
 
 export interface RouteConfig {
   name: string;
@@ -251,6 +252,12 @@ export const routes: RouteConfig[] = [
     path: "/skeleton",
     component: SkeletonShowcase,
     description: "Placeholder content while loading.",
+  },
+  {
+    name: "Sidenav",
+    path: "/sidenav",
+    component: SidenavShowcase,
+    description: "Side navigation for app sections.",
   },
   {
     name: "Stats",
