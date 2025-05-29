@@ -63,8 +63,8 @@ export default function SidebarWrapper() {
         onClose={() => setIsOpen(false)}
         class={clsx({ "sidenav-desktop": isDesktop() })}
         footer={
-          <div class="p-4 bg-[oklch(var(--color-base-200))] flex justify-between items-center">
-            <span class="text-sm text-[oklch(var(--color-base-content)/0.7)]">
+          <div class="p-4 bg-base-200 flex justify-between items-center">
+            <span class="text-sm text-base-content/0.7">
               Theme
             </span>
             <ThemeToggle />
