@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 const Layout = (props) => {
   return (
-    <div class="relative min-h-screen bg-[oklch(var(--color-base-100))] text-[oklch(var(--color-base-content))]">
+    <div class="relative min-h-screen bg-base-100 text-base-content">
       <Sidebar />
       <main class="lg:ml-64 min-h-screen">
         <div class="container mx-auto px-4 py-6 sm:py-8">{props.children}</div>
