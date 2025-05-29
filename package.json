@@ -12,7 +12,9 @@
     "prepare": "husky",
     "lint": "biome check .",
     "format": "biome format . --write",
-    "commit": "cz"
+    "commit": "cz",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css,md}": [
