@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @plugin "daisyui";
 @source "../node_modules/@pathscale/ui/";
+@import "@pathscale/ui/dist/sidenav/Sidenav.css";
 
 @import "./styles/themes/generated.css";
 @import "./styles/base/index.css";
