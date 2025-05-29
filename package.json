@@ -7,6 +7,7 @@
     "start": "rsbuild dev",
     "dev": "rsbuild dev",
     "build": "rsbuild build && bun cleanup.js",
+    "build:apps": "rsbuild build",
     "preview": "rsbuild preview",
     "prepare": "husky",
     "lint": "biome check .",
