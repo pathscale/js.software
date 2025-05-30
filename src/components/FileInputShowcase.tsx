@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { FileInput } from "@pathscale/ui";
+import { FileInput, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -68,15 +68,17 @@ const FileInputShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <FileInput class="w-full max-w-xs" />
-          </div>
-          <CodeBlock code={`<FileInput class="w-full max-w-xs" />`} />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <FileInput class="w-full max-w-xs" />
+            </Flex>
+            <CodeBlock code={`<FileInput class="w-full max-w-xs" />`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
               <FileInput class="w-full max-w-xs" color="primary" />
               <FileInput class="w-full max-w-xs" color="secondary" />
               <FileInput class="w-full max-w-xs" color="accent" />
@@ -85,76 +87,77 @@ const FileInputShowcase: Component = () => {
               <FileInput class="w-full max-w-xs" color="success" />
               <FileInput class="w-full max-w-xs" color="warning" />
               <FileInput class="w-full max-w-xs" color="error" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="w-full flex flex-col gap-2">
-  <FileInput class="w-full max-w-xs" color="primary" />
-  <FileInput class="w-full max-w-xs" color="secondary" />
-  <FileInput class="w-full max-w-xs" color="accent" />
-  <FileInput class="w-full max-w-xs" color="ghost" />
-  <FileInput class="w-full max-w-xs" color="info" />
-  <FileInput class="w-full max-w-xs" color="success" />
-  <FileInput class="w-full max-w-xs" color="warning" />
-  <FileInput class="w-full max-w-xs" color="error" />
-</div>`}
-          />
+            </Flex>
+            <CodeBlock
+              code={`<Flex justify="center" align="center">
+<FileInput class="w-full max-w-xs" color="primary" />
+<FileInput class="w-full max-w-xs" color="secondary" />
+<FileInput class="w-full max-w-xs" color="accent" />
+<FileInput class="w-full max-w-xs" color="ghost" />
+<FileInput class="w-full max-w-xs" color="info" />
+<FileInput class="w-full max-w-xs" color="success" />
+<FileInput class="w-full max-w-xs" color="warning" />
+<FileInput class="w-full max-w-xs" color="error" />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
               <FileInput class="w-full max-w-xs" size="xs" />
               <FileInput class="w-full max-w-xs" size="sm" />
               <FileInput class="w-full max-w-xs" size="md" />
               <FileInput class="w-full max-w-xs" size="lg" />
               <FileInput class="w-full max-w-xs" size="xl" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="w-full flex flex-col gap-2">
+            </Flex>
+            <CodeBlock
+              code={`<Flex direction="col" justify="center" align="center" gap="lg">
   <FileInput class="w-full max-w-xs" size="xs" />
   <FileInput class="w-full max-w-xs" size="sm" />
   <FileInput class="w-full max-w-xs" size="md" />
   <FileInput class="w-full max-w-xs" size="lg" />
   <FileInput class="w-full max-w-xs" size="xl" />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="bordered" title="Bordered">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
               <FileInput class="w-full max-w-xs" bordered />
               <FileInput class="w-full max-w-xs" bordered color="primary" />
               <FileInput class="w-full max-w-xs" bordered color="secondary" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="w-full flex flex-col gap-2">
+            </Flex>
+            <CodeBlock
+              code={`<div class="w-full flex flex-col gap-2">
   <FileInput class="w-full max-w-xs" bordered />
   <FileInput class="w-full max-w-xs" bordered color="primary" />
   <FileInput class="w-full max-w-xs" bordered color="secondary" />
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="form-control" title="Form Control and Labels">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="form-control w-full max-w-xs">
-              <label class="label">
-                <span class="label-text">Pick a file</span>
-                <span class="label-text-alt">Alt label</span>
-              </label>
-              <FileInput class="w-full" />
-              <label class="label">
-                <span class="label-text-alt">Alt label</span>
-                <span class="label-text-alt">Alt label</span>
-              </label>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="form-control w-full max-w-xs">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <div class="form-control w-full max-w-xs">
+                <label class="label">
+                  <span class="label-text">Pick a file</span>
+                  <span class="label-text-alt">Alt label</span>
+                </label>
+                <FileInput class="w-full" />
+                <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                  <span class="label-text-alt">Alt label</span>
+                </label>
+              </div>
+            </Flex>
+            <CodeBlock
+              code={`<div class="form-control w-full max-w-xs">
   <label class="label">
     <span class="label-text">Pick a file</span>
     <span class="label-text-alt">Alt label</span>
@@ -165,7 +168,8 @@ const FileInputShowcase: Component = () => {
     <span class="label-text-alt">Alt label</span>
   </label>
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

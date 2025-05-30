@@ -1,6 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Range } from "@pathscale/ui";
+import { Range, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -90,29 +90,32 @@ const RangeShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <Range />
-          </div>
-          <CodeBlock code={`<Range />`} />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Range />
+            </Flex>
+            <CodeBlock code={`<Range />`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="steps" title="With Steps and Ticks">
-          <div class="flex w-full component-preview items-center justify-center gap-2 flex-col">
-            <div class="w-full max-w-xs">
-              <p class="text-sm mb-4">Automatic ticks with step</p>
-              <Range min={0} max={100} step={25} />
-            </div>
-            <div class="w-full max-w-xs mt-8">
-              <p class="text-sm mb-4">Custom tick step</p>
-              <Range min={0} max={100} step={25} ticksStep={10} />
-            </div>
-            <div class="w-full max-w-xs mt-8">
-              <p class="text-sm mb-4">Disabled ticks with step</p>
-              <Range min={0} max={100} step={25} displayTicks={false} />
-            </div>
-          </div>
-          <CodeBlock
-            code={`// Automatic ticks with step
+          <Flex direction="col" gap="md">
+            <Flex direction="col" align="center" justify="center" gap="lg">
+              <div class="w-full max-w-xs">
+                <p class="text-sm mb-4">Automatic ticks with step</p>
+                <Range min={0} max={100} step={25} />
+              </div>
+              <div class="w-full max-w-xs mt-8">
+                <p class="text-sm mb-4">Custom tick step</p>
+                <Range min={0} max={100} step={25} ticksStep={10} />
+              </div>
+              <div class="w-full max-w-xs mt-8">
+                <p class="text-sm mb-4">Disabled ticks with step</p>
+                <Range min={0} max={100} step={25} displayTicks={false} />
+              </div>
+            </Flex>
+            <CodeBlock
+              code={`// Automatic ticks with step
 <Range min={0} max={100} step={25} />
 
 // Custom tick step
@@ -120,23 +123,25 @@ const RangeShowcase: Component = () => {
 
 // Disabled ticks with step
 <Range min={0} max={100} step={25} displayTicks={false} />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
-              <Range value={20} color="primary" />
-              <Range value={30} color="secondary" />
-              <Range value={40} color="accent" />
-              <Range value={50} color="success" />
-              <Range value={60} color="warning" />
-              <Range value={70} color="info" />
-              <Range value={80} color="error" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="w-full flex flex-col gap-2">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="sm">
+                <Range value={20} color="primary" />
+                <Range value={30} color="secondary" />
+                <Range value={40} color="accent" />
+                <Range value={50} color="success" />
+                <Range value={60} color="warning" />
+                <Range value={70} color="info" />
+                <Range value={80} color="error" />
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Flex direction="col" gap="sm">
   <Range value={20} color="primary" />
   <Range value={30} color="secondary" />
   <Range value={40} color="accent" />
@@ -144,29 +149,32 @@ const RangeShowcase: Component = () => {
   <Range value={60} color="warning" />
   <Range value={70} color="info" />
   <Range value={80} color="error" />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
-              <Range value={40} size="xs" />
-              <Range value={50} size="sm" />
-              <Range value={60} size="md" />
-              <Range value={70} size="lg" />
-              <Range value={80} size="xl" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="w-full flex flex-col gap-2">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="sm">
+                <Range value={40} size="xs" />
+                <Range value={50} size="sm" />
+                <Range value={60} size="md" />
+                <Range value={70} size="lg" />
+                <Range value={80} size="xl" />
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Flex direction="col" gap="sm">
   <Range value={40} size="xs" />
   <Range value={50} size="sm" />
   <Range value={60} size="md" />
   <Range value={70} size="lg" />
   <Range value={80} size="xl" />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

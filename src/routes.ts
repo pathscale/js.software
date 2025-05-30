@@ -34,6 +34,7 @@ import SkeletonShowcase from "./components/SkeletonShowcase";
 import StatsShowcase from "./components/StatsShowcase";
 import StepsShowcase from "./components/StepsShowcase";
 import SwapShowcase from "./components/SwapShowcase";
+import SwitchShowcase from "./components/SwitchShowcase";
 import TableShowcase from "./components/TableShowcase";
 import TabsShowcase from "./components/TabsShowcase";
 import TextareaShowcase from "./components/TextareaShowcase";
@@ -90,12 +91,6 @@ export const routes: RouteConfig[] = [
     description: "Small count or label to indicate status or quantity.",
   },
   {
-    name: "Dock",
-    path: "/dock",
-    component: DockShowcase,
-    description: "Navigation bar at the bottom of the screen.",
-  },
-  {
     name: "Breadcrumb",
     path: "/breadcrumb",
     component: BreadcrumbShowcase,
@@ -148,6 +143,12 @@ export const routes: RouteConfig[] = [
     path: "/diff",
     component: DiffShowcase,
     description: "Display differences between two pieces of content.",
+  },
+  {
+    name: "Dock",
+    path: "/dock",
+    component: DockShowcase,
+    description: "Navigation bar at the bottom of the screen.",
   },
   {
     name: "Dropdown",
@@ -297,7 +298,6 @@ export const routes: RouteConfig[] = [
     component: TextareaShowcase,
     description: "Multiline text field for entering longer content.",
   },
-
   {
     name: "Timeline",
     path: "/timeline",

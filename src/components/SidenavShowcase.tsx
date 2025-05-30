@@ -4,6 +4,7 @@ import {
   Sidenav,
   type SidenavItem,
   type SidenavItemGroup,
+  Flex,
 } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { PropsTable } from "./showcase/PropsTable";
@@ -163,22 +164,23 @@ const SidenavShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default Sidenav">
-          <div class="flex">
-            <Sidenav
-              title="Simple Dashboard"
-              items={simpleMenuItems}
-              isOpen={true}
-              collapsed={false}
-            />
-            <div class="flex-1 p-8">
-              <h1>Default Sidenav Example</h1>
-              <p class="text-gray-600">
-                A simple sidenav with flat menu items (no groups)
-              </p>
-            </div>
-          </div>
-          <CodeBlock
-            code={`const simpleMenuItems: SidenavItem[] = [
+          <Flex direction="col" gap="md">
+            <Flex>
+              <Sidenav
+                title="Simple Dashboard"
+                items={simpleMenuItems}
+                isOpen={true}
+                collapsed={false}
+              />
+              <Flex grow direction="col" class="p-8">
+                <h1>Default Sidenav Example</h1>
+                <p class="text-gray-600">
+                  A simple sidenav with flat menu items (no groups)
+                </p>
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`const simpleMenuItems: SidenavItem[] = [
   {
     id: "dashboard",
     label: "Dashboard",
@@ -204,38 +206,41 @@ const SidenavShowcase: Component = () => {
   isOpen={true}
   collapsed={false}
 />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="collapsed" title="Collapsed Sidenav">
-          <div class="flex">
-            <Sidenav
-              title="My Dashboard"
-              items={menuItems}
-              isOpen={true}
-              collapsed={true}
+          <Flex direction="col" gap="md">
+            <Flex>
+              <Sidenav
+                title="My Dashboard"
+                items={menuItems}
+                isOpen={true}
+                collapsed={true}
+              />
+              <Flex grow direction="col" class="p-8">
+                <h1>Collapsed Sidenav Example</h1>
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Sidenav\n  title="My Dashboard"\n  items={menuItems}\n  isOpen={true}\n  collapsed={true}\n/>`}
             />
-            <div class="flex-1 p-8">
-              <h1>Collapsed Sidenav Example</h1>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<Sidenav\n  title="My Dashboard"\n  items={menuItems}\n  isOpen={true}\n  collapsed={true}\n/>`}
-          />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="item-groups" title="Sidenav with Item Groups">
-          <div class="flex">
+          <Flex>
             <Sidenav
               title="My Dashboard"
               items={menuItems}
               isOpen={true}
               collapsed={false}
             />
-            <div class="flex-1 p-8">
+            <Flex grow direction="col" class="p-8">
               <h1>Sidenav with Item Groups Example</h1>
-            </div>
-          </div>
+            </Flex>
+          </Flex>
           {/* Reusing menuItems as it already has groups */}
           <CodeBlock
             code={`const menuItems = [\n  // ... items and groups definition ...\n];\n\n<Sidenav\n  title="My Dashboard"\n  items={menuItems}\n  isOpen={true}\n  collapsed={false}\n/>`}

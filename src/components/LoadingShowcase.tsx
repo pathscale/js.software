@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Loading } from "@pathscale/ui";
+import { Loading, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -70,24 +70,29 @@ export default function LoadingShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Loading variant="spinner" />
-          <CodeBlock code={`<Loading variant="spinner" />`} />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Loading variant="spinner" />
+            </Flex>
+            <CodeBlock code={`<Loading variant="spinner" />`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex flex-wrap gap-4">
-            <Loading class="m-1" />
-            <Loading class="m-1" color="primary" />
-            <Loading class="m-1" color="secondary" />
-            <Loading class="m-1" color="success" />
-            <Loading class="m-1" color="warning" />
-            <Loading class="m-1" color="error" />
-            <Loading class="m-1" color="info" />
-            <Loading class="m-1" color="accent" />
-            <Loading class="m-1" color="ghost" />
-          </div>
-          <CodeBlock
-            code={`<Loading class="m-1" />
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
+              <Loading class="m-1" />
+              <Loading class="m-1" color="primary" />
+              <Loading class="m-1" color="secondary" />
+              <Loading class="m-1" color="success" />
+              <Loading class="m-1" color="warning" />
+              <Loading class="m-1" color="error" />
+              <Loading class="m-1" color="info" />
+              <Loading class="m-1" color="accent" />
+              <Loading class="m-1" color="ghost" />
+            </Flex>
+            <CodeBlock
+              code={`<Loading class="m-1" />
 <Loading class="m-1" color="primary" />
 <Loading class="m-1" color="secondary" />
 <Loading class="m-1" color="success" />
@@ -96,43 +101,48 @@ export default function LoadingShowcase() {
 <Loading class="m-1" color="info" />
 <Loading class="m-1" color="accent" />
 <Loading class="m-1" color="ghost" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="variants" title="Variants">
-          <div class="flex gap-x-2">
-            <Loading variant="spinner" />
-            <Loading variant="dots" />
-            <Loading variant="ring" />
-            <Loading variant="ball" />
-            <Loading variant="bars" />
-            <Loading variant="infinity" />
-          </div>
-          <CodeBlock
-            code={`<Loading variant="spinner" />
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
+              <Loading variant="spinner" />
+              <Loading variant="dots" />
+              <Loading variant="ring" />
+              <Loading variant="ball" />
+              <Loading variant="bars" />
+              <Loading variant="infinity" />
+            </Flex>
+            <CodeBlock
+              code={`<Loading variant="spinner" />
 <Loading variant="dots" />
 <Loading variant="ring" />
 <Loading variant="ball" />
 <Loading variant="bars" />
 <Loading variant="infinity" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex items-center gap-4">
-            <Loading size="xs" />
-            <Loading size="sm" />
-            <Loading size="md" />
-            <Loading size="lg" />
-            <Loading size="xl" />
-          </div>
-          <CodeBlock
-            code={`<Loading size="xs" />
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
+              <Loading size="xs" />
+              <Loading size="sm" />
+              <Loading size="md" />
+              <Loading size="lg" />
+              <Loading size="xl" />
+            </Flex>
+            <CodeBlock
+              code={`<Loading size="xs" />
 <Loading size="sm" />
 <Loading size="md" />
 <Loading size="lg" />
 <Loading size="xl" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

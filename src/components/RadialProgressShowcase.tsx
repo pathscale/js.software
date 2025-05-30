@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { RadialProgress } from "@pathscale/ui";
+import { RadialProgress, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -66,36 +66,43 @@ const RadialProgressShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <RadialProgress value={75}>75%</RadialProgress>
-          <CodeBlock code={`<RadialProgress value={75}>75%</RadialProgress>`} />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <RadialProgress value={75}>75%</RadialProgress>
+            </Flex>
+            <CodeBlock
+              code={`<RadialProgress value={75}>75%</RadialProgress>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex flex-wrap items-center gap-4">
-            <RadialProgress value={75} color="primary">
-              75%
-            </RadialProgress>
-            <RadialProgress value={75} color="secondary">
-              75%
-            </RadialProgress>
-            <RadialProgress value={75} color="accent">
-              75%
-            </RadialProgress>
-            <RadialProgress value={75} color="info">
-              75%
-            </RadialProgress>
-            <RadialProgress value={75} color="success">
-              75%
-            </RadialProgress>
-            <RadialProgress value={75} color="warning">
-              75%
-            </RadialProgress>
-            <RadialProgress value={75} color="error">
-              75%
-            </RadialProgress>
-          </div>
-          <CodeBlock
-            code={`<div class="flex flex-wrap items-center gap-4">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <RadialProgress value={75} color="primary">
+                75%
+              </RadialProgress>
+              <RadialProgress value={75} color="secondary">
+                75%
+              </RadialProgress>
+              <RadialProgress value={75} color="accent">
+                75%
+              </RadialProgress>
+              <RadialProgress value={75} color="info">
+                75%
+              </RadialProgress>
+              <RadialProgress value={75} color="success">
+                75%
+              </RadialProgress>
+              <RadialProgress value={75} color="warning">
+                75%
+              </RadialProgress>
+              <RadialProgress value={75} color="error">
+                75%
+              </RadialProgress>
+            </Flex>
+            <CodeBlock
+              code={`<Flex align="center" justify="center" gap="lg">
   <RadialProgress value={75} color="primary">75%</RadialProgress>
   <RadialProgress value={75} color="secondary">75%</RadialProgress>
   <RadialProgress value={75} color="accent">75%</RadialProgress>
@@ -103,46 +110,53 @@ const RadialProgressShowcase: Component = () => {
   <RadialProgress value={75} color="success">75%</RadialProgress>
   <RadialProgress value={75} color="warning">75%</RadialProgress>
   <RadialProgress value={75} color="error">75%</RadialProgress>
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="background" title="Background Color">
-          <RadialProgress
-            value={75}
-            class="bg-primary text-primary-content border-4 border-primary"
-          >
-            75%
-          </RadialProgress>
-          <CodeBlock
-            code={`<RadialProgress
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <RadialProgress
+                value={75}
+                class="bg-primary text-primary-content border-4 border-primary"
+              >
+                75%
+              </RadialProgress>
+            </Flex>
+            <CodeBlock
+              code={`<RadialProgress
   value={75}
   class="bg-primary text-primary-content border-4 border-primary"
 >
   75%
 </RadialProgress>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="size-thickness" title="Custom Size and Thickness">
-          <div class="flex items-center gap-4">
-            <RadialProgress value={70} size="12rem" thickness="2px">
-              70%
-            </RadialProgress>
-            <RadialProgress value={80} size="12rem" thickness="2rem">
-              80%
-            </RadialProgress>
-          </div>
-          <CodeBlock
-            code={`<div class="flex items-center gap-4">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <RadialProgress value={70} size="12rem" thickness="2px">
+                70%
+              </RadialProgress>
+              <RadialProgress value={80} size="12rem" thickness="2rem">
+                80%
+              </RadialProgress>
+            </Flex>
+            <CodeBlock
+              code={`<Flex align="center" justify="center" gap="lg">
   <RadialProgress value={70} size="12rem" thickness="2px">
     70%
   </RadialProgress>
   <RadialProgress value={80} size="12rem" thickness="2rem">
     80%
   </RadialProgress>
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

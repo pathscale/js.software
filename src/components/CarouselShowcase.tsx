@@ -1,12 +1,5 @@
-import { Component } from "solid-js";
+import ShowcaseLayout from "./ShowcaseLayout";
 
-const CarouselShowcase: Component = () => {
-  return (
-    <div>
-      <h1>Carousel Showcase</h1>
-      <p>Placeholder for Carousel component showcase.</p>
-    </div>
-  );
-};
-
-export default CarouselShowcase;
+export default function CarouselShowcase() {
+  return <ShowcaseLayout></ShowcaseLayout>;
+}

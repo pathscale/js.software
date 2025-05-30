@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Tooltip, Button } from "@pathscale/ui";
+import { Tooltip, Button, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -83,48 +83,53 @@ export default function TooltipShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="my-6">
-            <Tooltip message="hello">
-              <Button>Hover me</Button>
-            </Tooltip>
-          </div>
-          <CodeBlock
-            code={`<Tooltip message="hello">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Tooltip message="hello">
+                <Button>Hover me</Button>
+              </Tooltip>
+            </Flex>
+            <CodeBlock
+              code={`<Tooltip message="hello">
   <Button>Hover me</Button>
 </Tooltip>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="force-open" title="Force Open">
-          <div class="my-6">
-            <Tooltip message="hello" open>
-              <Button>Hover me</Button>
-            </Tooltip>
-          </div>
-          <CodeBlock
-            code={`<Tooltip message="hello" open>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Tooltip message="hello" open>
+                <Button>Hover me</Button>
+              </Tooltip>
+            </Flex>
+            <CodeBlock
+              code={`<Tooltip message="hello" open>
   <Button>Hover me</Button>
 </Tooltip>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="positions" title="Positions">
-          <div class="flex gap-8 items-center justify-center p-16">
-            <Tooltip message="top" position="top">
-              <Button size="sm">Top</Button>
-            </Tooltip>
-            <Tooltip message="bottom" position="bottom">
-              <Button size="sm">Bottom</Button>
-            </Tooltip>
-            <Tooltip message="left" position="left">
-              <Button size="sm">Left</Button>
-            </Tooltip>
-            <Tooltip message="right" position="right">
-              <Button size="sm">Right</Button>
-            </Tooltip>
-          </div>
-          <CodeBlock
-            code={`<Tooltip message="top" position="top">
+          <Flex direction="col" gap="md">
+            <Flex gap="8" align="center" justify="center" class="p-16">
+              <Tooltip message="top" position="top">
+                <Button size="sm">Top</Button>
+              </Tooltip>
+              <Tooltip message="bottom" position="bottom">
+                <Button size="sm">Bottom</Button>
+              </Tooltip>
+              <Tooltip message="left" position="left">
+                <Button size="sm">Left</Button>
+              </Tooltip>
+              <Tooltip message="right" position="right">
+                <Button size="sm">Right</Button>
+              </Tooltip>
+            </Flex>
+            <CodeBlock
+              code={`<Tooltip message="top" position="top">
   <Button size="sm">Top</Button>
 </Tooltip>
 <Tooltip message="bottom" position="bottom">
@@ -136,25 +141,27 @@ export default function TooltipShowcase() {
 <Tooltip message="right" position="right">
   <Button size="sm">Right</Button>
 </Tooltip>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex gap-2 mt-6">
-            <Tooltip color="primary" message="primary" open>
-              <Button color="primary">Primary</Button>
-            </Tooltip>
+          <Flex direction="col" gap="md" class="mt-6">
+            <Flex align="center" justify="center" gap="lg">
+              <Tooltip color="primary" message="primary" open>
+                <Button color="primary">Primary</Button>
+              </Tooltip>
 
-            <Tooltip color="secondary" message="secondary" open>
-              <Button color="secondary">Secondary</Button>
-            </Tooltip>
+              <Tooltip color="secondary" message="secondary" open>
+                <Button color="secondary">Secondary</Button>
+              </Tooltip>
 
-            <Tooltip color="accent" message="accent" open>
-              <Button color="accent">Accent</Button>
-            </Tooltip>
-          </div>
-          <CodeBlock
-            code={`<Tooltip color="primary" message="primary" open>
+              <Tooltip color="accent" message="accent" open>
+                <Button color="accent">Accent</Button>
+              </Tooltip>
+            </Flex>
+            <CodeBlock
+              code={`<Tooltip color="primary" message="primary" open>
   <Button color="primary">Primary</Button>
 </Tooltip>
 
@@ -165,29 +172,31 @@ export default function TooltipShowcase() {
 <Tooltip color="accent" message="accent" open>
   <Button color="accent">Accent</Button>
 </Tooltip>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="statuses" title="Statuses">
-          <div class="flex gap-2 mt-6">
-            <Tooltip color="info" message="info" open>
-              <Button color="info">Info</Button>
-            </Tooltip>
+          <Flex direction="col" gap="md" class="mt-6">
+            <Flex align="center" justify="center" gap="lg">
+              <Tooltip color="info" message="info" open>
+                <Button color="info">Info</Button>
+              </Tooltip>
 
-            <Tooltip color="success" message="success" open>
-              <Button color="success">Success</Button>
-            </Tooltip>
+              <Tooltip color="success" message="success" open>
+                <Button color="success">Success</Button>
+              </Tooltip>
 
-            <Tooltip color="warning" message="warning" open>
-              <Button color="warning">Warning</Button>
-            </Tooltip>
+              <Tooltip color="warning" message="warning" open>
+                <Button color="warning">Warning</Button>
+              </Tooltip>
 
-            <Tooltip color="error" message="error" open>
-              <Button color="error">Error</Button>
-            </Tooltip>
-          </div>
-          <CodeBlock
-            code={`<Tooltip color="info" message="info" open>
+              <Tooltip color="error" message="error" open>
+                <Button color="error">Error</Button>
+              </Tooltip>
+            </Flex>
+            <CodeBlock
+              code={`<Tooltip color="info" message="info" open>
   <Button color="info">Info</Button>
 </Tooltip>
 
@@ -202,7 +211,8 @@ export default function TooltipShowcase() {
 <Tooltip color="error" message="error" open>
   <Button color="error">Error</Button>
 </Tooltip>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

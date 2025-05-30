@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Link } from "@pathscale/ui";
+import { Link, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -66,35 +66,44 @@ const LinkShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Link>It's just a simple link</Link>
-          <CodeBlock code={`<Link>It's just a simple link</Link>`} />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Link>It's just a simple link</Link>
+            </Flex>
+            <CodeBlock code={`<Link>It's just a simple link</Link>`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-href" title="With Href">
-          <Link href="https://google.com" target="_blank">
-            Take me to Google!
-          </Link>
-          <CodeBlock
-            code={`<Link href="https://google.com" target="_blank">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Link href="https://google.com" target="_blank">
+                Take me to Google!
+              </Link>
+            </Flex>
+            <CodeBlock
+              code={`<Link href="https://google.com" target="_blank">
   Take me to Google!
 </Link>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex flex-wrap items-center gap-4">
-            <Link>Default</Link>
-            <Link color="neutral">Neutral</Link>
-            <Link color="primary">Primary</Link>
-            <Link color="secondary">Secondary</Link>
-            <Link color="accent">Accent</Link>
-            <Link color="info">Info</Link>
-            <Link color="success">Success</Link>
-            <Link color="warning">Warning</Link>
-            <Link color="error">Error</Link>
-          </div>
-          <CodeBlock
-            code={`<Link>Default</Link>
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Link>Default</Link>
+              <Link color="neutral">Neutral</Link>
+              <Link color="primary">Primary</Link>
+              <Link color="secondary">Secondary</Link>
+              <Link color="accent">Accent</Link>
+              <Link color="info">Info</Link>
+              <Link color="success">Success</Link>
+              <Link color="warning">Warning</Link>
+              <Link color="error">Error</Link>
+            </Flex>
+            <CodeBlock
+              code={`<Link>Default</Link>
 <Link color="neutral">Neutral</Link>
 <Link color="primary">Primary</Link>
 <Link color="secondary">Secondary</Link>
@@ -103,18 +112,21 @@ const LinkShowcase: Component = () => {
 <Link color="success">Success</Link>
 <Link color="warning">Warning</Link>
 <Link color="error">Error</Link>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="hover" title="Hover Effect">
-          <div class="flex items-center gap-4">
-            <Link hover>With hover effect (default)</Link>
-            <Link hover={false}>Without hover effect</Link>
-          </div>
-          <CodeBlock
-            code={`<Link hover>With hover effect (default)</Link>
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Link hover>With hover effect (default)</Link>
+              <Link hover={false}>Without hover effect</Link>
+            </Flex>
+            <CodeBlock
+              code={`<Link hover>With hover effect (default)</Link>
 <Link hover={false}>Without hover effect</Link>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

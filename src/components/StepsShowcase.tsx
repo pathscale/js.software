@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Steps } from "@pathscale/ui";
+import { Steps, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -91,65 +91,79 @@ export default function StepsShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Steps>
-            <Steps.Step color="primary">Register</Steps.Step>
-            <Steps.Step color="primary">Choose plan</Steps.Step>
-            <Steps.Step>Purchase</Steps.Step>
-            <Steps.Step>Receive Product</Steps.Step>
-          </Steps>
-          <CodeBlock
-            code={`<Steps>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Steps>
+                <Steps.Step color="primary">Register</Steps.Step>
+                <Steps.Step color="primary">Choose plan</Steps.Step>
+                <Steps.Step>Purchase</Steps.Step>
+                <Steps.Step>Receive Product</Steps.Step>
+              </Steps>
+            </Flex>
+
+            <CodeBlock
+              code={`<Steps>
   <Steps.Step color="primary">Register</Steps.Step>
   <Steps.Step color="primary">Choose plan</Steps.Step>
   <Steps.Step>Purchase</Steps.Step>
   <Steps.Step>Receive Product</Steps.Step>
 </Steps>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="responsive" title="Responsive">
-          <Steps class="lg:steps-horizontal" vertical>
-            <Steps.Step color="primary">Register</Steps.Step>
-            <Steps.Step color="primary">Choose plan</Steps.Step>
-            <Steps.Step>Purchase</Steps.Step>
-            <Steps.Step>Receive Product</Steps.Step>
-          </Steps>
-          <CodeBlock
-            code={`<Steps class="lg:steps-horizontal" vertical>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Steps class="lg:steps-horizontal" vertical>
+                <Steps.Step color="primary">Register</Steps.Step>
+                <Steps.Step color="primary">Choose plan</Steps.Step>
+                <Steps.Step>Purchase</Steps.Step>
+                <Steps.Step>Receive Product</Steps.Step>
+              </Steps>
+            </Flex>
+
+            <CodeBlock
+              code={`<Steps class="lg:steps-horizontal" vertical>
   <Steps.Step color="primary">Register</Steps.Step>
   <Steps.Step color="primary">Choose plan</Steps.Step>
   <Steps.Step>Purchase</Steps.Step>
   <Steps.Step>Receive Product</Steps.Step>
 </Steps>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="data-content" title="With Data Content">
-          <Steps>
-            <Steps.Step value="?" color="neutral">
-              Step 1
-            </Steps.Step>
-            <Steps.Step value="!" color="neutral">
-              Step 2
-            </Steps.Step>
-            <Steps.Step value="✓" color="neutral">
-              Step 3
-            </Steps.Step>
-            <Steps.Step value="✕" color="neutral">
-              Step 4
-            </Steps.Step>
-            <Steps.Step value="!" color="neutral">
-              Step 5
-            </Steps.Step>
-            <Steps.Step value="" color="neutral">
-              Step 6
-            </Steps.Step>
-            <Steps.Step value="●" color="neutral">
-              Step 7
-            </Steps.Step>
-          </Steps>
-          <CodeBlock
-            code={`<Steps>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Steps>
+                <Steps.Step value="?" color="neutral">
+                  Step 1
+                </Steps.Step>
+                <Steps.Step value="!" color="neutral">
+                  Step 2
+                </Steps.Step>
+                <Steps.Step value="✓" color="neutral">
+                  Step 3
+                </Steps.Step>
+                <Steps.Step value="✕" color="neutral">
+                  Step 4
+                </Steps.Step>
+                <Steps.Step value="!" color="neutral">
+                  Step 5
+                </Steps.Step>
+                <Steps.Step value="" color="neutral">
+                  Step 6
+                </Steps.Step>
+                <Steps.Step value="●" color="neutral">
+                  Step 7
+                </Steps.Step>
+              </Steps>
+            </Flex>
+
+            <CodeBlock
+              code={`<Steps>
   <Steps.Step value="?" color="neutral">Step 1</Steps.Step>
   <Steps.Step value="!" color="neutral">Step 2</Steps.Step>
   <Steps.Step value="✓" color="neutral">Step 3</Steps.Step>
@@ -158,68 +172,98 @@ export default function StepsShowcase() {
   <Steps.Step value="" color="neutral">Step 6</Steps.Step>
   <Steps.Step value="●" color="neutral">Step 7</Steps.Step>
 </Steps>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="custom-colors" title="Custom Colors">
-          <Steps>
-            <Steps.Step color="info">Fly to moon</Steps.Step>
-            <Steps.Step color="info">Shrink the moon</Steps.Step>
-            <Steps.Step color="info">Grab the moon</Steps.Step>
-            <Steps.Step value="?" color="error">
-              Sit on toilet
-            </Steps.Step>
-          </Steps>
-          <CodeBlock
-            code={`<Steps>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Steps>
+                <Steps.Step color="info">Fly to moon</Steps.Step>
+                <Steps.Step color="info">Shrink the moon</Steps.Step>
+                <Steps.Step color="info">Grab the moon</Steps.Step>
+                <Steps.Step value="?" color="error">
+                  Sit on toilet
+                </Steps.Step>
+              </Steps>
+            </Flex>
+
+            <CodeBlock
+              code={`<Steps>
   <Steps.Step color="info">Fly to moon</Steps.Step>
   <Steps.Step color="info">Shrink the moon</Steps.Step>
   <Steps.Step color="info">Grab the moon</Steps.Step>
   <Steps.Step value="?" color="error">Sit on toilet</Steps.Step>
 </Steps>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="scrollable" title="Scrollable Steps">
-          <div class="overflow-x-auto">
-            <Steps>
-              <Steps.Step>start</Steps.Step>
-              <Steps.Step color="secondary">2</Steps.Step>
-              <Steps.Step color="secondary">3</Steps.Step>
-              <Steps.Step color="secondary">4</Steps.Step>
-              <Steps.Step>5</Steps.Step>
-              <Steps.Step color="accent">6</Steps.Step>
-              <Steps.Step color="accent">7</Steps.Step>
-              <Steps.Step>8</Steps.Step>
-              <Steps.Step color="error">9</Steps.Step>
-              <Steps.Step color="error">10</Steps.Step>
-              <Steps.Step>11</Steps.Step>
-              <Steps.Step>12</Steps.Step>
-              <Steps.Step color="warning">13</Steps.Step>
-              <Steps.Step color="warning">14</Steps.Step>
-              <Steps.Step>15</Steps.Step>
-              <Steps.Step color="neutral">16</Steps.Step>
-              <Steps.Step color="neutral">17</Steps.Step>
-              <Steps.Step color="neutral">18</Steps.Step>
-              <Steps.Step color="neutral">19</Steps.Step>
-              <Steps.Step color="neutral">20</Steps.Step>
-              <Steps.Step color="neutral">21</Steps.Step>
-              <Steps.Step color="neutral">22</Steps.Step>
-              <Steps.Step color="neutral">23</Steps.Step>
-              <Steps.Step color="neutral">end</Steps.Step>
-            </Steps>
-          </div>
-          <CodeBlock
-            code={`<div class="overflow-x-auto">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <div class="overflow-x-auto">
+                <Steps>
+                  <Steps.Step>start</Steps.Step>
+                  <Steps.Step color="secondary">2</Steps.Step>
+                  <Steps.Step color="secondary">3</Steps.Step>
+                  <Steps.Step color="secondary">4</Steps.Step>
+                  <Steps.Step>5</Steps.Step>
+                  <Steps.Step color="accent">6</Steps.Step>
+                  <Steps.Step color="accent">7</Steps.Step>
+                  <Steps.Step>8</Steps.Step>
+                  <Steps.Step color="error">9</Steps.Step>
+                  <Steps.Step color="error">10</Steps.Step>
+                  <Steps.Step>11</Steps.Step>
+                  <Steps.Step>12</Steps.Step>
+                  <Steps.Step color="warning">13</Steps.Step>
+                  <Steps.Step color="warning">14</Steps.Step>
+                  <Steps.Step>15</Steps.Step>
+                  <Steps.Step color="neutral">16</Steps.Step>
+                  <Steps.Step color="neutral">17</Steps.Step>
+                  <Steps.Step color="neutral">18</Steps.Step>
+                  <Steps.Step color="neutral">19</Steps.Step>
+                  <Steps.Step color="neutral">20</Steps.Step>
+                  <Steps.Step color="neutral">21</Steps.Step>
+                  <Steps.Step color="neutral">22</Steps.Step>
+                  <Steps.Step color="neutral">23</Steps.Step>
+                  <Steps.Step color="neutral">end</Steps.Step>
+                </Steps>
+              </div>
+            </Flex>
+
+            <CodeBlock
+              code={`<div class="overflow-x-auto">
   <Steps>
     <Steps.Step>start</Steps.Step>
     <Steps.Step color="secondary">2</Steps.Step>
     <Steps.Step color="secondary">3</Steps.Step>
-    {/* More steps... */}
+    <Steps.Step color="secondary">4</Steps.Step>
+    <Steps.Step>5</Steps.Step>
+    <Steps.Step color="accent">6</Steps.Step>
+    <Steps.Step color="accent">7</Steps.Step>
+    <Steps.Step>8</Steps.Step>
+    <Steps.Step color="error">9</Steps.Step>
+    <Steps.Step color="error">10</Steps.Step>
+    <Steps.Step>11</Steps.Step>
+    <Steps.Step>12</Steps.Step>
+    <Steps.Step color="warning">13</Steps.Step>
+    <Steps.Step color="warning">14</Steps.Step>
+    <Steps.Step>15</Steps.Step>
+    <Steps.Step color="neutral">16</Steps.Step>
+    <Steps.Step color="neutral">17</Steps.Step>
+    <Steps.Step color="neutral">18</Steps.Step>
+    <Steps.Step color="neutral">19</Steps.Step>
+    <Steps.Step color="neutral">20</Steps.Step>
+    <Steps.Step color="neutral">21</Steps.Step>
+    <Steps.Step color="neutral">22</Steps.Step>
+    <Steps.Step color="neutral">23</Steps.Step>
     <Steps.Step color="neutral">end</Steps.Step>
   </Steps>
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

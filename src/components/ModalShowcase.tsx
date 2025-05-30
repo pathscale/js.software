@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Modal, Button } from "@pathscale/ui";
+import { Modal, Button, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -84,24 +84,25 @@ export default function ModalShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="font-sans">
-            <Button onClick={() => setDefaultOpen(true)}>Open Modal</Button>
-            <Modal open={defaultOpen()} backdrop position="middle">
-              <Modal.Header class="font-bold">Hello!</Modal.Header>
-              <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-              <Modal.Actions>
-                <form method="dialog">
-                  <Button>Close</Button>
-                </form>
-              </Modal.Actions>
-            </Modal>
-          </div>
-          <CodeBlock
-            code={`const [open, setOpen] = createSignal(false);
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Button onClick={() => setDefaultOpen(true)}>Open Modal</Button>
+              <Modal open={defaultOpen()} backdrop position="middle">
+                <Modal.Header class="font-bold">Hello!</Modal.Header>
+                <Modal.Body>Press ESC key or click outside to close</Modal.Body>
+                <Modal.Actions>
+                  <form method="dialog">
+                    <Button>Close</Button>
+                  </form>
+                </Modal.Actions>
+              </Modal>
+            </Flex>
+            <CodeBlock
+              code={`const [open, setOpen] = createSignal(false);
 
 <Button onClick={() => setOpen(true)}>Open Modal</Button>
-<Modal 
-  open={open()} 
+<Modal
+  open={open()}
   backdrop
   position="middle"
 >
@@ -115,57 +116,63 @@ export default function ModalShowcase() {
     </form>
   </Modal.Actions>
 </Modal>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="clicked-outside" title="Clicked Outside">
-          <div class="font-sans">
-            <Button onClick={() => setOutsideOpen(true)}>Open Modal</Button>
-            <Modal open={outsideOpen()} backdrop position="middle">
-              <Modal.Header class="font-bold">Hello!</Modal.Header>
-              <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-            </Modal>
-          </div>
-          <CodeBlock
-            code={`const [open, setOpen] = createSignal(false);
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Button onClick={() => setOutsideOpen(true)}>Open Modal</Button>
+              <Modal open={outsideOpen()} backdrop position="middle">
+                <Modal.Header class="font-bold">Hello!</Modal.Header>
+                <Modal.Body>Press ESC key or click outside to close</Modal.Body>
+              </Modal>
+            </Flex>
+            <CodeBlock
+              code={`const [open, setOpen] = createSignal(false);
 
 <Button onClick={() => setOpen(true)}>Open Modal</Button>
-<Modal 
-  open={open()} 
-  backdrop 
+<Modal
+  open={open()}
+  backdrop
   position="middle"
 >
   <Modal.Header class="font-bold">Hello!</Modal.Header>
   <Modal.Body>Press ESC key or click outside to close</Modal.Body>
 </Modal>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="close-button" title="Close Button">
-          <div class="font-sans">
-            <Button onClick={() => setCloseButtonOpen(true)}>Open Modal</Button>
-            <Modal open={closeButtonOpen()} backdrop position="middle">
-              <form method="dialog">
-                <Button
-                  size="sm"
-                  color="ghost"
-                  shape="circle"
-                  class="absolute right-2 top-2"
-                >
-                  ✕
-                </Button>
-              </form>
-              <Modal.Header class="font-bold">Hello!</Modal.Header>
-              <Modal.Body>
-                Press ESC key or click on X button to close
-              </Modal.Body>
-            </Modal>
-          </div>
-          <CodeBlock
-            code={`const [open, setOpen] = createSignal(false);
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Button onClick={() => setCloseButtonOpen(true)}>
+                Open Modal
+              </Button>
+              <Modal open={closeButtonOpen()} backdrop position="middle">
+                <form method="dialog">
+                  <Button
+                    size="sm"
+                    color="ghost"
+                    shape="circle"
+                    class="absolute right-2 top-2"
+                  >
+                    ✕
+                  </Button>
+                </form>
+                <Modal.Header class="font-bold">Hello!</Modal.Header>
+                <Modal.Body>
+                  Press ESC key or click on X button to close
+                </Modal.Body>
+              </Modal>
+            </Flex>
+            <CodeBlock
+              code={`const [open, setOpen] = createSignal(false);
 
 <Button onClick={() => setOpen(true)}>Open Modal</Button>
-<Modal 
+<Modal
   open={open()}
   backdrop
   position="middle"
@@ -183,33 +190,37 @@ export default function ModalShowcase() {
   <Modal.Header class="font-bold">Hello!</Modal.Header>
   <Modal.Body>Press ESC key or click on X button to close</Modal.Body>
 </Modal>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="custom-width" title="Custom Width">
-          <div class="font-sans">
-            <Button onClick={() => setCustomWidthOpen(true)}>Open Modal</Button>
-            <Modal
-              open={customWidthOpen()}
-              class="w-11/12 max-w-5xl"
-              backdrop
-              position="middle"
-            >
-              <Modal.Header class="font-bold">Hello!</Modal.Header>
-              <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-              <Modal.Actions>
-                <form method="dialog">
-                  <Button>Close</Button>
-                </form>
-              </Modal.Actions>
-            </Modal>
-          </div>
-          <CodeBlock
-            code={`const [open, setOpen] = createSignal(false);
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Button onClick={() => setCustomWidthOpen(true)}>
+                Open Modal
+              </Button>
+              <Modal
+                open={customWidthOpen()}
+                class="w-11/12 max-w-5xl"
+                backdrop
+                position="middle"
+              >
+                <Modal.Header class="font-bold">Hello!</Modal.Header>
+                <Modal.Body>Press ESC key or click outside to close</Modal.Body>
+                <Modal.Actions>
+                  <form method="dialog">
+                    <Button>Close</Button>
+                  </form>
+                </Modal.Actions>
+              </Modal>
+            </Flex>
+            <CodeBlock
+              code={`const [open, setOpen] = createSignal(false);
 
 <Button onClick={() => setOpen(true)}>Open Modal</Button>
-<Modal 
-  open={open()} 
+<Modal
+  open={open()}
   class="w-11/12 max-w-5xl"
   backdrop
   position="middle"
@@ -224,7 +235,8 @@ export default function ModalShowcase() {
     </form>
   </Modal.Actions>
 </Modal>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

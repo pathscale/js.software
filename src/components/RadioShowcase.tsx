@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Radio } from "@pathscale/ui";
+import { Radio, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -72,30 +72,33 @@ const RadioShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex gap-4">
-            <Radio name="radio1" defaultChecked />
-            <Radio name="radio1" />
-          </div>
-          <CodeBlock
-            code={`<div class="flex gap-4">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="sm">
+              <Radio name="radio1" defaultChecked />
+              <Radio name="radio1" />
+            </Flex>
+            <CodeBlock
+              code={`<Flex align="center" justify="center" gap="sm">
   <Radio name="radio1" defaultChecked />
   <Radio name="radio1" />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex flex-col items-start gap-2">
-            <Radio defaultChecked color="primary" name="radio2" />
-            <Radio defaultChecked color="secondary" name="radio3" />
-            <Radio defaultChecked color="accent" name="radio4" />
-            <Radio defaultChecked color="success" name="radio5" />
-            <Radio defaultChecked color="warning" name="radio6" />
-            <Radio defaultChecked color="info" name="radio7" />
-            <Radio defaultChecked color="error" name="radio8" />
-          </div>
-          <CodeBlock
-            code={`<div class="flex flex-col items-start gap-2">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="sm">
+              <Radio defaultChecked color="primary" name="radio2" />
+              <Radio defaultChecked color="secondary" name="radio3" />
+              <Radio defaultChecked color="accent" name="radio4" />
+              <Radio defaultChecked color="success" name="radio5" />
+              <Radio defaultChecked color="warning" name="radio6" />
+              <Radio defaultChecked color="info" name="radio7" />
+              <Radio defaultChecked color="error" name="radio8" />
+            </Flex>
+            <CodeBlock
+              code={`<Flex align="center" justify="center" gap="sm">
   <Radio defaultChecked color="primary" name="radio2" />
   <Radio defaultChecked color="secondary" name="radio3" />
   <Radio defaultChecked color="accent" name="radio4" />
@@ -103,46 +106,63 @@ const RadioShowcase: Component = () => {
   <Radio defaultChecked color="warning" name="radio6" />
   <Radio defaultChecked color="info" name="radio7" />
   <Radio defaultChecked color="error" name="radio8" />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="disabled" title="Disabled">
-          <div class="flex gap-4">
-            <Radio name="radio9" disabled />
-            <Radio name="radio9" disabled />
-          </div>
-          <CodeBlock
-            code={`<div class="flex gap-4">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="sm">
+              <Radio name="radio9" disabled />
+              <Radio name="radio9" disabled />
+            </Flex>
+            <CodeBlock
+              code={`<Flex align="center" justify="center" gap="sm">
   <Radio name="radio9" disabled />
   <Radio name="radio9" disabled />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-labels" title="With Labels and Form">
-          <div class="bg-[hsl(var(--color-bg-secondary)/1)] w-full max-w-sm p-4 rounded-lg shadow">
-            <label class="flex items-center gap-2 cursor-pointer mb-4">
-              <Radio name="radio10" class="checked:bg-red-500" defaultChecked />
-              <span>Red Pill</span>
-            </label>
-            <label class="flex items-center gap-2 cursor-pointer">
-              <Radio name="radio10" class="checked:bg-blue-500" />
-              <span>Blue Pill</span>
-            </label>
-          </div>
-          <CodeBlock
-            code={`<div class="bg-[hsl(var(--color-bg-secondary)/1)] w-full max-w-sm p-4 rounded-lg shadow">
-  <label class="flex items-center gap-2 cursor-pointer mb-4">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex
+                gap="lg"
+                class="bg-[hsl(var(--color-bg-secondary)/1)] w-full max-w-sm p-4 rounded-lg shadow"
+              >
+                <label class="cursor-pointer flex items-center gap-2">
+                  <Radio
+                    name="radio10"
+                    class="checked:bg-red-500"
+                    defaultChecked
+                  />
+                  <span>Red Pill</span>
+                </label>
+                <label class="cursor-pointer flex items-center gap-2">
+                  <Radio name="radio10" class="checked:bg-blue-500" />
+                  <span>Blue Pill</span>
+                </label>
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Flex
+  gap="lg"
+  class="bg-[hsl(var(--color-bg-secondary)/1)] w-full max-w-sm p-4 rounded-lg shadow"
+>
+  <label class="cursor-pointer flex items-center gap-2">
     <Radio name="radio10" class="checked:bg-red-500" defaultChecked />
     <span>Red Pill</span>
   </label>
-  <label class="flex items-center gap-2 cursor-pointer">
+  <label class="cursor-pointer flex items-center gap-2">
     <Radio name="radio10" class="checked:bg-blue-500" />
     <span>Blue Pill</span>
   </label>
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

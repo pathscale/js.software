@@ -1,6 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Textarea } from "@pathscale/ui";
+import { Textarea, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -75,37 +75,43 @@ const TextareaShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <Textarea
-              value={value()}
-              onInput={(e) => setValue(e.currentTarget.value)}
-              placeholder="Bio"
-            />
-          </div>
-          <CodeBlock
-            code={`const [value, setValue] = createSignal("");
+          <Flex direction="col" gap="md">
+            <Flex justify="center" items="center" gap="sm">
+              <Textarea
+                value={value()}
+                onInput={(e) => setValue(e.currentTarget.value)}
+                placeholder="Bio"
+              />
+            </Flex>
+
+            <CodeBlock
+              code={`const [value, setValue] = createSignal("");
 
 <Textarea
   value={value()}
   onInput={(e) => setValue(e.currentTarget.value)}
   placeholder="Bio"
 />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex flex-col gap-2 w-full max-w-md">
-            <Textarea color="primary" placeholder="Primary" />
-            <Textarea color="secondary" placeholder="Secondary" />
-            <Textarea color="accent" placeholder="Accent" />
-            <Textarea color="ghost" placeholder="Ghost" />
-            <Textarea color="info" placeholder="Info" />
-            <Textarea color="success" placeholder="Success" />
-            <Textarea color="warning" placeholder="Warning" />
-            <Textarea color="error" placeholder="Error" />
-          </div>
-          <CodeBlock
-            code={`<Textarea color="primary" placeholder="Primary" />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="sm">
+                <Textarea color="primary" placeholder="Primary" />
+                <Textarea color="secondary" placeholder="Secondary" />
+                <Textarea color="accent" placeholder="Accent" />
+                <Textarea color="ghost" placeholder="Ghost" />
+                <Textarea color="info" placeholder="Info" />
+                <Textarea color="success" placeholder="Success" />
+                <Textarea color="warning" placeholder="Warning" />
+                <Textarea color="error" placeholder="Error" />
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Textarea color="primary" placeholder="Primary" />
 <Textarea color="secondary" placeholder="Secondary" />
 <Textarea color="accent" placeholder="Accent" />
 <Textarea color="ghost" placeholder="Ghost" />
@@ -113,67 +119,45 @@ const TextareaShowcase: Component = () => {
 <Textarea color="success" placeholder="Success" />
 <Textarea color="warning" placeholder="Warning" />
 <Textarea color="error" placeholder="Error" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex flex-col gap-2 w-full max-w-md">
-            <Textarea size="xs" placeholder="Extra small" />
-            <Textarea size="sm" placeholder="Small" />
-            <Textarea size="md" placeholder="Medium (default)" />
-            <Textarea size="lg" placeholder="Large" />
-            <Textarea size="xl" placeholder="Extra large" />
-          </div>
-          <CodeBlock
-            code={`<Textarea size="xs" placeholder="Extra small" />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="sm">
+                <Textarea size="xs" placeholder="Extra small" />
+                <Textarea size="sm" placeholder="Small" />
+                <Textarea size="md" placeholder="Medium (default)" />
+                <Textarea size="lg" placeholder="Large" />
+                <Textarea size="xl" placeholder="Extra large" />
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Textarea size="xs" placeholder="Extra small" />
 <Textarea size="sm" placeholder="Small" />
 <Textarea size="md" placeholder="Medium (default)" />
 <Textarea size="lg" placeholder="Large" />
 <Textarea size="xl" placeholder="Extra large" />`}
-          />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="form-control" title="Form Control and Labels">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="form-control w-full max-w-md">
-              <label class="label">
-                <span class="label-text">Your bio</span>
-                <span class="label-text-alt">Alt label</span>
-              </label>
-              <Textarea placeholder="Bio" />
-              <label class="label">
-                <span class="label-text-alt">Your bio</span>
-                <span class="label-text-alt">Alt label</span>
-              </label>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="form-control w-full max-w-md">
-  <label class="label">
-    <span class="label-text">Your bio</span>
-    <span class="label-text-alt">Alt label</span>
-  </label>
-  <Textarea placeholder="Bio" />
-  <label class="label">
-    <span class="label-text-alt">Your bio</span>
-    <span class="label-text-alt">Alt label</span>
-  </label>
-</div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="states" title="States">
-          <div class="flex flex-col gap-2 w-full max-w-md">
-            <Textarea disabled placeholder="Disabled textarea" />
-            <Textarea
-              class="textarea-disabled"
-              placeholder="Disabled via class"
-            />
-          </div>
-          <CodeBlock
-            code={`<Textarea disabled placeholder="Disabled textarea" />
+          <Flex direction="col" gap="md">
+            <Flex direction="col" align="center" justify="center" gap="sm">
+              <Textarea disabled placeholder="Disabled textarea" />
+              <Textarea
+                class="textarea-disabled"
+                placeholder="Disabled via class"
+              />
+            </Flex>
+            <CodeBlock
+              code={`<Textarea disabled placeholder="Disabled textarea" />
 <Textarea class="textarea-disabled" placeholder="Disabled via class" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

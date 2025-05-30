@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Collapse } from "@pathscale/ui";
+import { Collapse, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -79,101 +79,112 @@ export default function CollapseShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Collapse>
-            <Collapse.Title>Click to open/close</Collapse.Title>
-            <Collapse.Content>
-              <p>content</p>
-            </Collapse.Content>
-          </Collapse>
-          <CodeBlock
-            code={`<Collapse>
+          <Flex direction="col" gap="md">
+            <Collapse>
+              <Collapse.Title>Click to open/close</Collapse.Title>
+              <Collapse.Content>
+                <p>content</p>
+              </Collapse.Content>
+            </Collapse>
+            <CodeBlock
+              code={`<Collapse>
   <Collapse.Title>Click to open/close</Collapse.Title>
   <Collapse.Content>
     <p>content</p>
   </Collapse.Content>
 </Collapse>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-arrow" title="With Arrow">
-          <Collapse icon="arrow">
-            <Collapse.Title>Click to open/close</Collapse.Title>
-            <Collapse.Content>
-              <p>content</p>
-            </Collapse.Content>
-          </Collapse>
-          <CodeBlock
-            code={`<Collapse icon="arrow">
+          <Flex direction="col" gap="md">
+            <Collapse icon="arrow">
+              <Collapse.Title>Click to open/close</Collapse.Title>
+              <Collapse.Content>
+                <p>content</p>
+              </Collapse.Content>
+            </Collapse>
+            <CodeBlock
+              code={`<Collapse icon="arrow">
   <Collapse.Title>Click to open/close</Collapse.Title>
   <Collapse.Content>
     <p>content</p>
   </Collapse.Content>
 </Collapse>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-plus" title="With Plus">
-          <Collapse icon="plus">
-            <Collapse.Title>Click to open/close</Collapse.Title>
-            <Collapse.Content>
-              <p>content</p>
-            </Collapse.Content>
-          </Collapse>
-          <CodeBlock
-            code={`<Collapse icon="plus">
+          <Flex direction="col" gap="md">
+            <Collapse icon="plus">
+              <Collapse.Title>Click to open/close</Collapse.Title>
+              <Collapse.Content>
+                <p>content</p>
+              </Collapse.Content>
+            </Collapse>
+            <CodeBlock
+              code={`<Collapse icon="plus">
   <Collapse.Title>Click to open/close</Collapse.Title>
   <Collapse.Content>
     <p>content</p>
   </Collapse.Content>
 </Collapse>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-checkbox" title="With Checkbox">
-          <Collapse checkbox>
-            <Collapse.Title>Click to open/close</Collapse.Title>
-            <Collapse.Content>
-              <p>content</p>
-            </Collapse.Content>
-          </Collapse>
-          <CodeBlock
-            code={`<Collapse checkbox>
+          <Flex direction="col" gap="md">
+            <Collapse checkbox>
+              <Collapse.Title>Click to open/close</Collapse.Title>
+              <Collapse.Content>
+                <p>content</p>
+              </Collapse.Content>
+            </Collapse>
+            <CodeBlock
+              code={`<Collapse checkbox>
   <Collapse.Title>Click to open/close</Collapse.Title>
   <Collapse.Content>
     <p>content</p>
   </Collapse.Content>
 </Collapse>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="controlled" title="Controlled">
-          <Collapse open={true}>
-            <Collapse.Title>This collapse is forced open</Collapse.Title>
-            <Collapse.Content>
-              <p>content</p>
-            </Collapse.Content>
-          </Collapse>
-          <CodeBlock
-            code={`<Collapse open={true}>
+          <Flex direction="col" gap="md">
+            <Collapse open={true}>
+              <Collapse.Title>This collapse is forced open</Collapse.Title>
+              <Collapse.Content>
+                <p>content</p>
+              </Collapse.Content>
+            </Collapse>
+            <CodeBlock
+              code={`<Collapse open={true}>
   <Collapse.Title>This collapse is forced open</Collapse.Title>
   <Collapse.Content>
     <p>content</p>
   </Collapse.Content>
 </Collapse>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="details" title="Details">
-          <Collapse.Details class="bg-base-200">
-            <Collapse.Details.Title class="text-xl font-medium">
-              Click to open/close
-            </Collapse.Details.Title>
-            <Collapse.Content>
-              <p>content</p>
-            </Collapse.Content>
-          </Collapse.Details>
-          <CodeBlock
-            code={`<Collapse.Details class="bg-base-200">
+          <Flex direction="col" gap="md">
+            <Collapse.Details class="bg-base-200">
+              <Collapse.Details.Title class="text-xl font-medium">
+                Click to open/close
+              </Collapse.Details.Title>
+              <Collapse.Content>
+                <p>content</p>
+              </Collapse.Content>
+            </Collapse.Details>
+            <CodeBlock
+              code={`<Collapse.Details class="bg-base-200">
   <Collapse.Details.Title class="text-xl font-medium">
     Click to open/close
   </Collapse.Details.Title>
@@ -181,7 +192,8 @@ export default function CollapseShowcase() {
     <p>content</p>
   </Collapse.Content>
 </Collapse.Details>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

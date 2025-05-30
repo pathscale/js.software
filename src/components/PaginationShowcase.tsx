@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Pagination, Button } from "@pathscale/ui";
+import { Pagination, Button, Flex, Grid } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -56,88 +56,93 @@ export default function PaginationShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Pagination>
-            <Button class="join-item">1</Button>
-            <Button class="join-item" active>
-              2
-            </Button>
-            <Button class="join-item">3</Button>
-            <Button class="join-item">4</Button>
-          </Pagination>
-          <CodeBlock
-            code={`<Pagination>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Pagination>
+                <Button class="join-item">1</Button>
+                <Button class="join-item" active>
+                  2
+                </Button>
+                <Button class="join-item">3</Button>
+                <Button class="join-item">4</Button>
+              </Pagination>
+            </Flex>
+            <CodeBlock
+              code={`<Pagination>
   <Button class="join-item">1</Button>
   <Button class="join-item" active>2</Button>
   <Button class="join-item">3</Button>
   <Button class="join-item">4</Button>
 </Pagination>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex flex-col gap-2 items-center">
-            <Pagination>
-              <Button size="xs" class="join-item">
-                1
-              </Button>
-              <Button size="xs" class="join-item" active>
-                2
-              </Button>
-              <Button size="xs" class="join-item">
-                3
-              </Button>
-              <Button size="xs" class="join-item">
-                4
-              </Button>
-            </Pagination>
+          <Flex direction="col" gap="md">
+            <Flex direction="col" align="center" justify="center" gap="lg">
+              <Pagination>
+                <Button size="xs" class="join-item">
+                  1
+                </Button>
+                <Button size="xs" class="join-item" active>
+                  2
+                </Button>
+                <Button size="xs" class="join-item">
+                  3
+                </Button>
+                <Button size="xs" class="join-item">
+                  4
+                </Button>
+              </Pagination>
 
-            <Pagination>
-              <Button size="sm" class="join-item">
-                1
-              </Button>
-              <Button size="sm" class="join-item" active>
-                2
-              </Button>
-              <Button size="sm" class="join-item">
-                3
-              </Button>
-              <Button size="sm" class="join-item">
-                4
-              </Button>
-            </Pagination>
+              <Pagination>
+                <Button size="sm" class="join-item">
+                  1
+                </Button>
+                <Button size="sm" class="join-item" active>
+                  2
+                </Button>
+                <Button size="sm" class="join-item">
+                  3
+                </Button>
+                <Button size="sm" class="join-item">
+                  4
+                </Button>
+              </Pagination>
 
-            <Pagination>
-              <Button size="md" class="join-item">
-                1
-              </Button>
-              <Button size="md" class="join-item" active>
-                2
-              </Button>
-              <Button size="md" class="join-item">
-                3
-              </Button>
-              <Button size="md" class="join-item">
-                4
-              </Button>
-            </Pagination>
+              <Pagination>
+                <Button size="md" class="join-item">
+                  1
+                </Button>
+                <Button size="md" class="join-item" active>
+                  2
+                </Button>
+                <Button size="md" class="join-item">
+                  3
+                </Button>
+                <Button size="md" class="join-item">
+                  4
+                </Button>
+              </Pagination>
 
-            <Pagination>
-              <Button size="lg" class="join-item">
-                1
-              </Button>
-              <Button size="lg" class="join-item" active>
-                2
-              </Button>
-              <Button size="lg" class="join-item">
-                3
-              </Button>
-              <Button size="lg" class="join-item">
-                4
-              </Button>
-            </Pagination>
-          </div>
-          <CodeBlock
-            code={`<Pagination>
+              <Pagination>
+                <Button size="lg" class="join-item">
+                  1
+                </Button>
+                <Button size="lg" class="join-item" active>
+                  2
+                </Button>
+                <Button size="lg" class="join-item">
+                  3
+                </Button>
+                <Button size="lg" class="join-item">
+                  4
+                </Button>
+              </Pagination>
+            </Flex>
+            <CodeBlock
+              code={`<Pagination>
   <Button size="xs" class="join-item">1</Button>
   <Button size="xs" class="join-item" active>2</Button>
   <Button size="xs" class="join-item">3</Button>
@@ -164,92 +169,112 @@ export default function PaginationShowcase() {
   <Button size="lg" class="join-item">3</Button>
   <Button size="lg" class="join-item">4</Button>
 </Pagination>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="disabled" title="With Disabled Button">
-          <Pagination>
-            <Button class="join-item">1</Button>
-            <Button class="join-item">2</Button>
-            <Button class="join-item" disabled>
-              ...
-            </Button>
-            <Button class="join-item">99</Button>
-            <Button class="join-item">100</Button>
-          </Pagination>
-          <CodeBlock
-            code={`<Pagination>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Pagination>
+                <Button class="join-item">1</Button>
+                <Button class="join-item">2</Button>
+                <Button class="join-item" disabled>
+                  ...
+                </Button>
+                <Button class="join-item">99</Button>
+                <Button class="join-item">100</Button>
+              </Pagination>
+            </Flex>
+            <CodeBlock
+              code={`<Pagination>
   <Button class="join-item">1</Button>
   <Button class="join-item">2</Button>
   <Button class="join-item" disabled>...</Button>
   <Button class="join-item">99</Button>
   <Button class="join-item">100</Button>
 </Pagination>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="navigation" title="Navigation Buttons">
-          <Pagination>
-            <Button class="join-item">«</Button>
-            <Button class="join-item">Page 22</Button>
-            <Button class="join-item">»</Button>
-          </Pagination>
-          <CodeBlock
-            code={`<Pagination>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Pagination>
+                <Button class="join-item">«</Button>
+                <Button class="join-item">Page 22</Button>
+                <Button class="join-item">»</Button>
+              </Pagination>
+            </Flex>
+            <CodeBlock
+              code={`<Pagination>
   <Button class="join-item">«</Button>
   <Button class="join-item">Page 22</Button>
   <Button class="join-item">»</Button>
 </Pagination>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="outline" title="Outline Navigation">
-          <Pagination class="grid grid-cols-2">
-            <Button variant="outline" class="join-item">
-              Previous page
-            </Button>
-            <Button variant="outline" class="join-item">
-              Next
-            </Button>
-          </Pagination>
-          <CodeBlock
-            code={`<Pagination class="grid grid-cols-2">
-  <Button variant="outline" class="join-item">Previous page</Button>
-  <Button variant="outline" class="join-item">Next</Button>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Pagination>
+                <Grid cols="2">
+                  <Button variant="outline" class="join-item">
+                    Previous page
+                  </Button>
+                  <Button variant="outline" class="join-item">
+                    Next
+                  </Button>
+                </Grid>
+              </Pagination>
+            </Flex>
+            <CodeBlock
+              code={`<Pagination>
+  <Grid cols="2">
+    <Button variant="outline" class="join-item">Previous page</Button>
+    <Button variant="outline" class="join-item">Next</Button>
+  </Grid>
 </Pagination>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="radio" title="Radio Inputs">
-          <Pagination>
-            <input
-              class="join-item btn btn-square"
-              type="radio"
-              name="options"
-              aria-label="1"
-              checked
-            />
-            <input
-              class="join-item btn btn-square"
-              type="radio"
-              name="options"
-              aria-label="2"
-            />
-            <input
-              class="join-item btn btn-square"
-              type="radio"
-              name="options"
-              aria-label="3"
-            />
-            <input
-              class="join-item btn btn-square"
-              type="radio"
-              name="options"
-              aria-label="4"
-            />
-          </Pagination>
-          <CodeBlock
-            code={`<Pagination>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Pagination>
+                <input
+                  class="join-item btn btn-square"
+                  type="radio"
+                  name="options"
+                  aria-label="1"
+                  checked
+                />
+                <input
+                  class="join-item btn btn-square"
+                  type="radio"
+                  name="options"
+                  aria-label="2"
+                />
+                <input
+                  class="join-item btn btn-square"
+                  type="radio"
+                  name="options"
+                  aria-label="3"
+                />
+                <input
+                  class="join-item btn btn-square"
+                  type="radio"
+                  name="options"
+                  aria-label="4"
+                />
+              </Pagination>
+            </Flex>
+            <CodeBlock
+              code={`<Pagination>
   <input
     class="join-item btn btn-square"
     type="radio"
@@ -276,7 +301,8 @@ export default function PaginationShowcase() {
     aria-label="4"
   />
 </Pagination>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

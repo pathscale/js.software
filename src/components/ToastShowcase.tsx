@@ -1,6 +1,6 @@
 import { Component, createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Toast, Button, Alert } from "@pathscale/ui";
+import { Toast, Button, Alert, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -114,80 +114,90 @@ const ToastShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <Toast>Default toast message.</Toast>
-          </div>
-          <CodeBlock code={`<Toast>Default toast message.</Toast>`} />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Toast>Default toast message.</Toast>
+            </Flex>
+            <CodeBlock code={`<Toast>Default toast message.</Toast>`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-alert" title="With Alert">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <Toast>
-              <Alert status="info">
-                <span>New message arrived.</span>
-              </Alert>
-            </Toast>
-          </div>
-          <CodeBlock
-            code={`<Toast>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Toast>
+                <Alert status="info">
+                  <span>New message arrived.</span>
+                </Alert>
+              </Toast>
+            </Flex>
+            <CodeBlock
+              code={`<Toast>
   <Alert status="info">
     <span>New message arrived.</span>
   </Alert>
 </Toast>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="multiple" title="Multiple Alerts">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <Toast>
-              <Alert status="info">New message arrived.</Alert>
-              <Alert status="success">Message sent successfully.</Alert>
-              <Alert status="warning">Connection unstable.</Alert>
-            </Toast>
-          </div>
-          <CodeBlock
-            code={`<Toast>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Toast>
+                <Alert status="info">New message arrived.</Alert>
+                <Alert status="success">Message sent successfully.</Alert>
+                <Alert status="warning">Connection unstable.</Alert>
+              </Toast>
+            </Flex>
+            <CodeBlock
+              code={`<Toast>
   <Alert status="info">New message arrived.</Alert>
   <Alert status="success">Message sent successfully.</Alert>
   <Alert status="warning">Connection unstable.</Alert>
 </Toast>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="dynamic" title="Dynamic Alerts">
-          <div class="flex w-full component-preview items-center justify-center gap-2 flex-col">
-            <div class="flex gap-2 mb-4">
-              <Button onClick={addAlert}>Add Toast</Button>
-            </div>
-            <Toast max={0}>
-              {alerts().map((alert, index) => (
-                <Alert
-                  status={alert.status}
-                  class="flex justify-between gap-4"
-                  style="min-width: 16rem;"
-                >
-                  <span>{alert.text}</span>
-                  <Button
-                    size="sm"
-                    color="ghost"
-                    onClick={() => removeAlert(index)}
-                  >
-                    ✕
-                  </Button>
-                </Alert>
-              ))}
-            </Toast>
-          </div>
-          <CodeBlock
-            code={`const [alerts, setAlerts] = createSignal<AlertItem[]>([
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="md" align="center">
+                <Button onClick={addAlert}>Add Toast</Button>
+                <Toast max={0}>
+                  {alerts().map((alert, index) => (
+                    <Alert
+                      status={alert.status}
+                      class="flex justify-between gap-4"
+                      style="min-width: 16rem;"
+                    >
+                      <span>{alert.text}</span>
+                      <Button
+                        size="sm"
+                        color="ghost"
+                        onClick={() => removeAlert(index)}
+                      >
+                        ✕
+                      </Button>
+                    </Alert>
+                  ))}
+                </Toast>
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`const [alerts, setAlerts] = createSignal<AlertItem[]>([
   { text: "This is a custom alert!", status: "info" },
 ]);
 
 const addAlert = () => {
-  setAlerts(prev => [...prev, {
-    text: \`Message #\${alerts().length + 1}\`,
-    status: // random status
-  }]);
+  setAlerts(prev => [
+    ...prev,
+    {
+      text: \`Message #\${alerts().length + 1}\`,
+      status: // random status
+    }
+  ]);
 };
 
 const removeAlert = (index: number) => {
@@ -200,6 +210,7 @@ return (
       <Alert
         status={alert.status}
         class="flex justify-between gap-4"
+        style="min-width: 16rem;"
       >
         <span>{alert.text}</span>
         <Button
@@ -212,36 +223,38 @@ return (
       </Alert>
     ))}
   </Toast>
-)`}
-          />
+);`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="limited" title="Limited Dynamic Alerts">
-          <div class="flex w-full component-preview items-center justify-center gap-2 flex-col">
-            <div class="flex gap-2 mb-4">
-              <Button onClick={addLimitedAlert}>Add Toast (Max 3)</Button>
-            </div>
-            <Toast max={3}>
-              {limitedAlerts().map((alert, index) => (
-                <Alert
-                  status={alert.status}
-                  class="flex justify-between gap-4"
-                  style="min-width: 16rem;"
-                >
-                  <span>{alert.text}</span>
-                  <Button
-                    size="sm"
-                    color="ghost"
-                    onClick={() => removeLimitedAlert(index)}
-                  >
-                    ✕
-                  </Button>
-                </Alert>
-              ))}
-            </Toast>
-          </div>
-          <CodeBlock
-            code={`<Toast max={3}>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="md" align="center">
+                <Button onClick={addLimitedAlert}>Add Toast (Max 3)</Button>
+                <Toast max={3}>
+                  {limitedAlerts().map((alert, index) => (
+                    <Alert
+                      status={alert.status}
+                      class="flex justify-between gap-4"
+                      style="min-width: 16rem;"
+                    >
+                      <span>{alert.text}</span>
+                      <Button
+                        size="sm"
+                        color="ghost"
+                        onClick={() => removeLimitedAlert(index)}
+                      >
+                        ✕
+                      </Button>
+                    </Alert>
+                  ))}
+                </Toast>
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Toast max={3}>
   {limitedAlerts().map((alert, index) => (
     <Alert
       status={alert.status}
@@ -258,34 +271,36 @@ return (
     </Alert>
   ))}
 </Toast>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="positions" title="Positions">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
-              <Toast position="top">
-                <Alert status="info">Top position</Alert>
-              </Toast>
-              <Toast position="bottom">
-                <Alert status="info">Bottom position</Alert>
-              </Toast>
-              <Toast position="top-left">
-                <Alert status="info">Top-left position</Alert>
-              </Toast>
-              <Toast position="top-right">
-                <Alert status="info">Top-right position</Alert>
-              </Toast>
-              <Toast position="bottom-left">
-                <Alert status="info">Bottom-left position</Alert>
-              </Toast>
-              <Toast position="bottom-right">
-                <Alert status="info">Bottom-right position</Alert>
-              </Toast>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<Toast position="top">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="sm" class="w-full">
+                <Toast position="top">
+                  <Alert status="info">Top position</Alert>
+                </Toast>
+                <Toast position="bottom">
+                  <Alert status="info">Bottom position</Alert>
+                </Toast>
+                <Toast position="top-left">
+                  <Alert status="info">Top-left position</Alert>
+                </Toast>
+                <Toast position="top-right">
+                  <Alert status="info">Top-right position</Alert>
+                </Toast>
+                <Toast position="bottom-left">
+                  <Alert status="info">Bottom-left position</Alert>
+                </Toast>
+                <Toast position="bottom-right">
+                  <Alert status="info">Bottom-right position</Alert>
+                </Toast>
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Toast position="top">
   <Alert status="info">Top position</Alert>
 </Toast>
 <Toast position="bottom">
@@ -303,7 +318,8 @@ return (
 <Toast position="bottom-right">
   <Alert status="info">Bottom-right position</Alert>
 </Toast>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
