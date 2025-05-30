@@ -1,5 +1,4 @@
-import { createSignal } from "solid-js";
-import { Checkbox } from "@pathscale/ui";
+import { Checkbox, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -69,25 +68,36 @@ export default function CheckboxShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Checkbox />
-          <CodeBlock code={`<Checkbox />`} />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Checkbox />
+            </Flex>
+            <CodeBlock code={`<Checkbox />`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="indeterminate" title="Indeterminate">
-          <Checkbox indeterminate />
-          <CodeBlock code={`<Checkbox indeterminate />`} />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Checkbox indeterminate />
+            </Flex>
+            <CodeBlock code={`<Checkbox indeterminate />`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="form-control" title="Form Control">
-          <div class="form-control">
-            <label class="label cursor-pointer">
-              <Checkbox />
-              <span class="label-text">Remember me</span>
-            </label>
-          </div>
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <div class="form-control">
+                <label class="label cursor-pointer">
+                  <Checkbox />
+                  <span class="label-text">Remember me</span>
+                </label>
+              </div>
+            </Flex>
 
-          <CodeBlock
-            code={`<div class="shadow bg-base-200 w-64 rounded-lg p-4">
+            <CodeBlock
+              code={`<div class="shadow bg-base-200 w-64 rounded-lg p-4">
   <div class="form-control">
     <label class="label cursor-pointer">
       <span class="label-text">Remember me</span>
@@ -95,22 +105,24 @@ export default function CheckboxShowcase() {
     </label>
   </div>
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex flex-row items-center gap-2">
-            <Checkbox checked color="primary" />
-            <Checkbox checked color="secondary" />
-            <Checkbox checked color="accent" />
-            <Checkbox checked color="neutral" />
-            <Checkbox checked color="success" />
-            <Checkbox checked color="warning" />
-            <Checkbox checked color="info" />
-            <Checkbox checked color="error" />
-          </div>
-          <CodeBlock
-            code={`<div class="flex flex-row items-center gap-2">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Checkbox checked color="primary" />
+              <Checkbox checked color="secondary" />
+              <Checkbox checked color="accent" />
+              <Checkbox checked color="neutral" />
+              <Checkbox checked color="success" />
+              <Checkbox checked color="warning" />
+              <Checkbox checked color="info" />
+              <Checkbox checked color="error" />
+            </Flex>
+            <CodeBlock
+              code={`<div class="flex flex-row items-center gap-2">
   <Checkbox checked color="primary" />
   <Checkbox checked color="secondary" />
   <Checkbox checked color="accent" />
@@ -120,43 +132,48 @@ export default function CheckboxShowcase() {
   <Checkbox checked color="info" />
   <Checkbox checked color="error" />
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex flex-row items-center gap-2">
-            <Checkbox checked size="xs" />
-            <Checkbox checked size="sm" />
-            <Checkbox checked size="md" />
-            <Checkbox checked size="lg" />
-            <Checkbox checked size="xl" />
-          </div>
-          <CodeBlock
-            code={`<div class="flex flex-row items-center gap-2">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Checkbox checked size="xs" />
+              <Checkbox checked size="sm" />
+              <Checkbox checked size="md" />
+              <Checkbox checked size="lg" />
+              <Checkbox checked size="xl" />
+            </Flex>
+            <CodeBlock
+              code={`<div class="flex flex-row items-center gap-2">
   <Checkbox checked size="xs" />
   <Checkbox checked size="sm" />
   <Checkbox checked size="md" />
   <Checkbox checked size="lg" />
   <Checkbox checked size="xl" />
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="disabled" title="Disabled States">
-          <div class="flex flex-col gap-4">
-            <div>
-              <h3 class="text-sm mb-2">Disabled</h3>
-              <Checkbox disabled />
-            </div>
-            <div>
-              <h3 class="text-sm mb-2">Disabled Checked</h3>
-              <Checkbox checked disabled />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<Checkbox disabled />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <div>
+                <h3 class="text-sm mb-2">Disabled</h3>
+                <Checkbox disabled />
+              </div>
+              <div>
+                <h3 class="text-sm mb-2">Disabled Checked</h3>
+                <Checkbox checked disabled />
+              </div>
+            </Flex>
+            <CodeBlock
+              code={`<Checkbox disabled />
 <Checkbox checked disabled />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

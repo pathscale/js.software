@@ -9,6 +9,7 @@ import {
   Badge,
   Card,
   Indicator,
+  Flex,
 } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -157,127 +158,134 @@ const NavbarShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Navbar class="bg-base-100 shadow-xl rounded-box">
-            <Button as="a" class="text-xl normal-case" color="ghost">
-              daisyUI
-            </Button>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 shadow-xl rounded-box">
+              <Button as="a" class="text-xl normal-case" color="ghost">
+                daisyUI
+              </Button>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
   <Button as="a" class="text-xl normal-case" color="ghost">
     daisyUI
   </Button>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="title-and-icon" title="Title and Icon">
-          <Navbar class="bg-base-100 shadow-xl rounded-box">
-            <div class="flex-1">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </div>
-            <div class="flex-none">
-              <Button shape="square" color="ghost">
-                <DotsIcon />
-              </Button>
-            </div>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
-  <div class="flex-1">
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 shadow-xl rounded-box">
+              <Flex grow>
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
+                </Button>
+              </Flex>
+              <Flex shrink={false}>
+                <Button shape="square" color="ghost">
+                  <DotsIcon />
+                </Button>
+              </Flex>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
+  <Flex grow>
     <Button as="a" class="text-xl normal-case" color="ghost">
       daisyUI
     </Button>
-  </div>
-  <div class="flex-none">
+  </Flex>
+  <Flex shrink={false}>
     <Button shape="square" color="ghost">
       <DotsIcon />
     </Button>
-  </div>
+  </Flex>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection
           id="icon-at-start-and-end"
           title="Icon at Start and End"
         >
-          <Navbar class="bg-base-100 shadow-xl rounded-box">
-            <div class="flex-none">
-              <Button shape="square" color="ghost">
-                <MenuIcon />
-              </Button>
-            </div>
-            <div class="flex-1">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </div>
-            <div class="flex-none">
-              <Button shape="square" color="ghost">
-                <DotsIcon />
-              </Button>
-            </div>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
-  <div class="flex-none">
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 shadow-xl rounded-box">
+              <Flex shrink={false}>
+                <Button shape="square" color="ghost">
+                  <MenuIcon />
+                </Button>
+              </Flex>
+              <Flex grow>
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
+                </Button>
+              </Flex>
+              <Flex shrink={false}>
+                <Button shape="square" color="ghost">
+                  <DotsIcon />
+                </Button>
+              </Flex>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
+  <Flex shrink={false}>
     <Button shape="square" color="ghost">
       <MenuIcon />
     </Button>
-  </div>
-  <div class="flex-1">
+  </Flex>
+  <Flex grow>
     <Button as="a" class="text-xl normal-case" color="ghost">
       daisyUI
     </Button>
-  </div>
-  <div class="flex-none">
+  </Flex>
+  <Flex shrink={false}>
     <Button shape="square" color="ghost">
       <DotsIcon />
     </Button>
-  </div>
+  </Flex>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="menu-and-submenu" title="Menu and Submenu">
-          <Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
-            <div class="flex-1">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </div>
-            <div class="flex-none">
-              <Menu horizontal class="px-1">
-                <Menu.Item>
-                  <a>Link</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <details>
-                    <summary>Parent</summary>
-                    <ul class="p-2 bg-base-100">
-                      <li>
-                        <a>Link 1</a>
-                      </li>
-                      <li>
-                        <a>Link 2</a>
-                      </li>
-                    </ul>
-                  </details>
-                </Menu.Item>
-              </Menu>
-            </div>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
-  <div class="flex-1">
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
+              <Flex grow>
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
+                </Button>
+              </Flex>
+              <Flex shrink={false}>
+                <Menu horizontal class="px-1">
+                  <Menu.Item>
+                    <a>Link</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <details>
+                      <summary>Parent</summary>
+                      <ul class="p-2 bg-base-100">
+                        <li>
+                          <a>Link 1</a>
+                        </li>
+                        <li>
+                          <a>Link 2</a>
+                        </li>
+                      </ul>
+                    </details>
+                  </Menu.Item>
+                </Menu>
+              </Flex>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
+  <Flex grow>
     <Button as="a" class="text-xl normal-case" color="ghost">
       daisyUI
     </Button>
-  </div>
-  <div class="flex-none">
+  </Flex>
+  <Flex shrink={false}>
     <Menu horizontal class="px-1">
       <Menu.Item>
         <a>Link</a>
@@ -292,50 +300,52 @@ const NavbarShowcase: Component = () => {
         </details>
       </Menu.Item>
     </Menu>
-  </div>
+  </Flex>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection
           id="search-input-and-dropdown"
           title="Search Input and Dropdown"
         >
-          <Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
-            <div class="flex-1">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </div>
-            <div class="flex-none gap-2">
-              <Input placeholder="Search" class="w-24 md:w-auto" />
-              <Dropdown end>
-                <Button color="ghost" class="avatar" shape="circle">
-                  <div class="w-10 rounded-full">
-                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                  </div>
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
+              <Flex grow>
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
                 </Button>
-                <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1] p-2">
-                  <li>
-                    <a class="justify-between">
-                      Profile
-                      <Badge>New</Badge>
-                    </a>
-                  </li>
-                  <Dropdown.Item>Settings</Dropdown.Item>
-                  <Dropdown.Item>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
-  <div class="flex-1">
+              </Flex>
+              <Flex shrink={false} gap="md">
+                <Input placeholder="Search" class="w-24 md:w-auto" />
+                <Dropdown end>
+                  <Button color="ghost" class="avatar" shape="circle">
+                    <div class="w-10 rounded-full">
+                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                  </Button>
+                  <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1] p-2">
+                    <li>
+                      <a class="justify-between">
+                        Profile
+                        <Badge>New</Badge>
+                      </a>
+                    </li>
+                    <Dropdown.Item>Settings</Dropdown.Item>
+                    <Dropdown.Item>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Flex>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
+  <Flex grow>
     <Button as="a" class="text-xl normal-case" color="ghost">
       daisyUI
     </Button>
-  </div>
-  <div class="flex-none gap-2">
+  </Flex>
+  <Flex shrink={false} gap="md">
     <Input placeholder="Search" class="w-24 md:w-auto" />
     <Dropdown end>
       <Button color="ghost" class="avatar" shape="circle">
@@ -354,70 +364,72 @@ const NavbarShowcase: Component = () => {
         <Dropdown.Item>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
-  </div>
+  </Flex>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection
           id="icon-indicator-and-dropdown"
           title="Icon Indicator and Dropdown"
         >
-          <Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
-            <div class="flex-1">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </div>
-            <div class="flex-none">
-              <Dropdown end>
-                <Button color="ghost" shape="circle">
-                  <Indicator>
-                    <Badge size="sm" class="indicator-item">
-                      8
-                    </Badge>
-                    <CartIcon />
-                  </Indicator>
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
+              <Flex grow>
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
                 </Button>
-                <Dropdown.Menu class="mt-3 z-[1] card card-compact w-52 !p-0">
-                  <Card.Body>
-                    <span class="font-bold text-lg">8 Items</span>
-                    <span class="text-info">Subtotal: $999</span>
-                    <Card.Actions>
-                      <Button color="primary" fullWidth>
-                        View cart
-                      </Button>
-                    </Card.Actions>
-                  </Card.Body>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown end>
-                <Button color="ghost" class="avatar" shape="circle">
-                  <div class="w-10 rounded-full">
-                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                  </div>
-                </Button>
-                <Dropdown.Menu class="mt-3 z-[1] w-52 menu-sm">
-                  <li>
-                    <a class="justify-between">
-                      Profile
-                      <Badge>New</Badge>
-                    </a>
-                  </li>
-                  <Dropdown.Item>Settings</Dropdown.Item>
-                  <Dropdown.Item>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
-  <div class="flex-1">
+              </Flex>
+              <Flex shrink={false} gap="md">
+                <Dropdown end>
+                  <Button color="ghost" shape="circle">
+                    <Indicator>
+                      <Badge size="sm" class="indicator-item">
+                        8
+                      </Badge>
+                      <CartIcon />
+                    </Indicator>
+                  </Button>
+                  <Dropdown.Menu class="mt-3 z-[1] card card-compact w-52 !p-0">
+                    <Card.Body>
+                      <span class="font-bold text-lg">8 Items</span>
+                      <span class="text-info">Subtotal: $999</span>
+                      <Card.Actions>
+                        <Button color="primary" fullWidth>
+                          View cart
+                        </Button>
+                      </Card.Actions>
+                    </Card.Body>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown end>
+                  <Button color="ghost" class="avatar" shape="circle">
+                    <div class="w-10 rounded-full">
+                      <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
+                  </Button>
+                  <Dropdown.Menu class="mt-3 z-[1] w-52 menu-sm">
+                    <li>
+                      <a class="justify-between">
+                        Profile
+                        <Badge>New</Badge>
+                      </a>
+                    </li>
+                    <Dropdown.Item>Settings</Dropdown.Item>
+                    <Dropdown.Item>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Flex>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
+  <Flex grow>
     <Button as="a" class="text-xl normal-case" color="ghost">
       daisyUI
     </Button>
-  </div>
-  <div class="flex-none">
+  </Flex>
+  <Flex shrink={false} gap="md">
     <Dropdown end>
       <Button color="ghost" shape="circle">
         <Indicator>
@@ -454,47 +466,49 @@ const NavbarShowcase: Component = () => {
         <Dropdown.Item>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
-  </div>
+  </Flex>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection
           id="dropdown-center-logo-and-icon"
           title="Dropdown Center Logo and Icon"
         >
-          <Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
-            <Navbar.Start>
-              <Dropdown>
-                <Button color="ghost" shape="circle">
-                  <MenuIcon />
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
+              <Navbar.Start>
+                <Dropdown>
+                  <Button color="ghost" shape="circle">
+                    <MenuIcon />
+                  </Button>
+                  <Dropdown.Menu class="menu-sm w-52 mt-3 z-[1]">
+                    <Dropdown.Item>Homepage</Dropdown.Item>
+                    <Dropdown.Item>Portfolio</Dropdown.Item>
+                    <Dropdown.Item>About</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Navbar.Start>
+              <Navbar.Center>
+                <Button as="a" color="ghost" class="normal-case text-xl">
+                  daisyUI
                 </Button>
-                <Dropdown.Menu class="menu-sm w-52 mt-3 z-[1]">
-                  <Dropdown.Item>Homepage</Dropdown.Item>
-                  <Dropdown.Item>Portfolio</Dropdown.Item>
-                  <Dropdown.Item>About</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Navbar.Start>
-            <Navbar.Center>
-              <Button as="a" color="ghost" class="normal-case text-xl">
-                daisyUI
-              </Button>
-            </Navbar.Center>
-            <Navbar.End>
-              <Button color="ghost" shape="circle">
-                <SearchIcon />
-              </Button>
-              <Button color="ghost" shape="circle">
-                <Indicator>
-                  <Badge size="xs" color="primary" class="indicator-item" />
-                  <BellIcon />
-                </Indicator>
-              </Button>
-            </Navbar.End>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
+              </Navbar.Center>
+              <Navbar.End>
+                <Button color="ghost" shape="circle">
+                  <SearchIcon />
+                </Button>
+                <Button color="ghost" shape="circle">
+                  <Indicator>
+                    <Badge size="xs" color="primary" class="indicator-item" />
+                    <BellIcon />
+                  </Indicator>
+                </Button>
+              </Navbar.End>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
   <Navbar.Start>
     <Dropdown>
       <Button color="ghost" shape="circle">
@@ -524,65 +538,67 @@ const NavbarShowcase: Component = () => {
     </Button>
   </Navbar.End>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="responsive" title="Responsive">
-          <Navbar class="bg-base-100 mb-48 shadow-xl rounded-box">
-            <Navbar.Start>
-              <Dropdown>
-                <Button color="ghost" class="lg:hidden">
-                  <MenuIcon />
+          <Flex direction="col" gap="md">
+            <Navbar class="bg-base-100 mb-48 shadow-xl rounded-box">
+              <Navbar.Start>
+                <Dropdown>
+                  <Button color="ghost" class="lg:hidden">
+                    <MenuIcon />
+                  </Button>
+                  <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1]">
+                    <Dropdown.Item>Item 1</Dropdown.Item>
+                    <li>
+                      <a>Parent</a>
+                      <ul class="p-2">
+                        <li>
+                          <a>Submenu 1</a>
+                        </li>
+                        <li>
+                          <a>Submenu 2</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <Dropdown.Item>Item 3</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Button as="a" color="ghost" class="normal-case text-xl">
+                  daisyUI
                 </Button>
-                <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1]">
-                  <Dropdown.Item>Item 1</Dropdown.Item>
-                  <li>
-                    <a>Parent</a>
-                    <ul class="p-2">
-                      <li>
-                        <a>Submenu 1</a>
-                      </li>
-                      <li>
-                        <a>Submenu 2</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <Dropdown.Item>Item 3</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Button as="a" color="ghost" class="normal-case text-xl">
-                daisyUI
-              </Button>
-            </Navbar.Start>
-            <Navbar.Center class="hidden lg:flex">
-              <Menu horizontal class="px-1">
-                <Menu.Item>
-                  <a>Item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <details>
-                    <summary>Parent</summary>
-                    <ul class="p-2">
-                      <Menu.Item>
-                        <a>Submenu 1</a>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <a>Submenu 2</a>
-                      </Menu.Item>
-                    </ul>
-                  </details>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>Item 3</a>
-                </Menu.Item>
-              </Menu>
-            </Navbar.Center>
-            <Navbar.End>
-              <Button>Button</Button>
-            </Navbar.End>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="bg-base-100 mb-48 shadow-xl rounded-box">
+              </Navbar.Start>
+              <Navbar.Center class="hidden lg:flex">
+                <Menu horizontal class="px-1">
+                  <Menu.Item>
+                    <a>Item 1</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <details>
+                      <summary>Parent</summary>
+                      <ul class="p-2">
+                        <Menu.Item>
+                          <a>Submenu 1</a>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <a>Submenu 2</a>
+                        </Menu.Item>
+                      </ul>
+                    </details>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a>Item 3</a>
+                  </Menu.Item>
+                </Menu>
+              </Navbar.Center>
+              <Navbar.End>
+                <Button>Button</Button>
+              </Navbar.End>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="bg-base-100 mb-48 shadow-xl rounded-box">
   <Navbar.Start>
     <Dropdown>
       <Button color="ghost" class="lg:hidden">
@@ -627,29 +643,31 @@ const NavbarShowcase: Component = () => {
     <Button>Button</Button>
   </Navbar.End>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="space-y-4">
-            <Navbar class="rounded-box bg-neutral text-neutral-content">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </Navbar>
-            <Navbar class="rounded-box bg-base-300">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </Navbar>
-            <Navbar class="rounded-box bg-primary text-primary-content">
-              <Button as="a" class="text-xl normal-case" color="ghost">
-                daisyUI
-              </Button>
-            </Navbar>
-          </div>
-          <CodeBlock
-            code={`<Navbar class="rounded-box bg-neutral text-neutral-content">
+          <Flex direction="col" gap="md">
+            <div class="space-y-4">
+              <Navbar class="rounded-box bg-neutral text-neutral-content">
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
+                </Button>
+              </Navbar>
+              <Navbar class="rounded-box bg-base-300">
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
+                </Button>
+              </Navbar>
+              <Navbar class="rounded-box bg-primary text-primary-content">
+                <Button as="a" class="text-xl normal-case" color="ghost">
+                  daisyUI
+                </Button>
+              </Navbar>
+            </div>
+            <CodeBlock
+              code={`<Navbar class="rounded-box bg-neutral text-neutral-content">
   <Button as="a" class="text-xl normal-case" color="ghost">
     daisyUI
   </Button>
@@ -666,7 +684,8 @@ const NavbarShowcase: Component = () => {
     daisyUI
   </Button>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

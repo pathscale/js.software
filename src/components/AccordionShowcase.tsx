@@ -1,4 +1,4 @@
-import { Accordion, Join } from "@pathscale/ui";
+import { Accordion, Join, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -62,7 +62,7 @@ export default function AccordionShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex flex-wrap gap-2">
+          <Flex wrap="wrap" gap="md">
             <Accordion class="bg-base-200" checked>
               <Accordion.Title class="text-xl font-medium">
                 Click to open this one and close others
@@ -87,7 +87,7 @@ export default function AccordionShowcase() {
                 <p>hello</p>
               </Accordion.Content>
             </Accordion>
-          </div>
+          </Flex>
           <CodeBlock
             code={`<Accordion class="bg-base-200" checked>
   <Accordion.Title class="text-xl font-medium">
@@ -101,7 +101,7 @@ export default function AccordionShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="with-arrow" title="With Arrow">
-          <div class="flex flex-wrap gap-2">
+          <Flex wrap="wrap" gap="md">
             <Accordion class="bg-base-200" icon="arrow" checked>
               <Accordion.Title class="text-xl font-medium">
                 Click to open this one and close others
@@ -126,7 +126,7 @@ export default function AccordionShowcase() {
                 <p>hello</p>
               </Accordion.Content>
             </Accordion>
-          </div>
+          </Flex>
           <CodeBlock
             code={`<Accordion class="bg-base-200" icon="arrow" checked>
   <Accordion.Title class="text-xl font-medium">
@@ -140,7 +140,7 @@ export default function AccordionShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="with-plus" title="With Plus/Minus">
-          <div class="flex flex-wrap gap-2">
+          <Flex wrap="wrap" gap="md">
             <Accordion class="bg-base-200" icon="plus" checked>
               <Accordion.Title class="text-xl font-medium">
                 Click to open this one and close others
@@ -165,7 +165,7 @@ export default function AccordionShowcase() {
                 <p>hello</p>
               </Accordion.Content>
             </Accordion>
-          </div>
+          </Flex>
           <CodeBlock
             code={`<Accordion class="bg-base-200" icon="plus" checked>
   <Accordion.Title class="text-xl font-medium">
@@ -226,7 +226,7 @@ export default function AccordionShowcase() {
 
         <ShowcaseSection id="multiple" title="Multiple Groups">
           <div class="space-y-4">
-            <div class="flex flex-wrap gap-2">
+            <Flex wrap="wrap" gap="md">
               <Accordion class="bg-base-200" name="groupA" checked>
                 <Accordion.Title class="text-xl font-medium">
                   Group A
@@ -251,9 +251,9 @@ export default function AccordionShowcase() {
                   <p>hello</p>
                 </Accordion.Content>
               </Accordion>
-            </div>
+            </Flex>
 
-            <div class="flex flex-wrap gap-2">
+            <Flex wrap="wrap" gap="md">
               <Accordion class="bg-base-200" name="groupB" checked>
                 <Accordion.Title class="text-xl font-medium">
                   Group B
@@ -278,7 +278,7 @@ export default function AccordionShowcase() {
                   <p>hello</p>
                 </Accordion.Content>
               </Accordion>
-            </div>
+            </Flex>
           </div>
           <CodeBlock
             code={`{/* Group A */}

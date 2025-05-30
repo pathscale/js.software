@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Toggle } from "@pathscale/ui";
+import { Toggle, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -83,29 +83,32 @@ export default function ToggleShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex items-center gap-4">
-            <Toggle />
-            <Toggle checked />
-          </div>
-          <CodeBlock
-            code={`<Toggle />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Toggle />
+              <Toggle checked />
+            </Flex>
+            <CodeBlock
+              code={`<Toggle />
 <Toggle checked />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="flex flex-wrap items-center gap-4">
-            <Toggle color="primary" checked />
-            <Toggle color="secondary" checked />
-            <Toggle color="accent" checked />
-            <Toggle color="neutral" checked />
-            <Toggle color="info" checked />
-            <Toggle color="success" checked />
-            <Toggle color="warning" checked />
-            <Toggle color="error" checked />
-          </div>
-          <CodeBlock
-            code={`<Toggle color="primary" checked />
+          <Flex direction="col" gap="md">
+            <Flex wrap="wrap" align="center" justify="center" gap="lg">
+              <Toggle color="primary" checked />
+              <Toggle color="secondary" checked />
+              <Toggle color="accent" checked />
+              <Toggle color="neutral" checked />
+              <Toggle color="info" checked />
+              <Toggle color="success" checked />
+              <Toggle color="warning" checked />
+              <Toggle color="error" checked />
+            </Flex>
+            <CodeBlock
+              code={`<Toggle color="primary" checked />
 <Toggle color="secondary" checked />
 <Toggle color="accent" checked />
 <Toggle color="neutral" checked />
@@ -113,35 +116,40 @@ export default function ToggleShowcase() {
 <Toggle color="success" checked />
 <Toggle color="warning" checked />
 <Toggle color="error" checked />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex items-center gap-4">
-            <Toggle size="xs" />
-            <Toggle size="sm" />
-            <Toggle size="md" />
-            <Toggle size="lg" />
-            <Toggle size="xl" />
-          </div>
-          <CodeBlock
-            code={`<Toggle size="xs" />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Toggle size="xs" />
+              <Toggle size="sm" />
+              <Toggle size="md" />
+              <Toggle size="lg" />
+              <Toggle size="xl" />
+            </Flex>
+            <CodeBlock
+              code={`<Toggle size="xs" />
 <Toggle size="sm" />
 <Toggle size="md" />
 <Toggle size="lg" />
 <Toggle size="xl" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="disabled" title="Disabled">
-          <div class="flex items-center gap-4">
-            <Toggle disabled />
-            <Toggle disabled checked />
-          </div>
-          <CodeBlock
-            code={`<Toggle disabled />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Toggle disabled />
+              <Toggle disabled checked />
+            </Flex>
+            <CodeBlock
+              code={`<Toggle disabled />
 <Toggle disabled checked />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

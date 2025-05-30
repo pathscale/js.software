@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Dropdown, Card, Navbar, Button } from "@pathscale/ui";
+import { Dropdown, Card, Navbar, Button, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -55,40 +55,43 @@ export default function DropdownShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="my-32">
-            <Dropdown>
-              <Dropdown.Toggle>Click</Dropdown.Toggle>
-              <Dropdown.Menu class="w-52">
-                <Dropdown.Item>Item 1</Dropdown.Item>
-                <Dropdown.Item>Item 2</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-          <CodeBlock
-            code={`<Dropdown>
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" class="my-16">
+              <Dropdown>
+                <Dropdown.Toggle>Click</Dropdown.Toggle>
+                <Dropdown.Menu class="w-52">
+                  <Dropdown.Item>Item 1</Dropdown.Item>
+                  <Dropdown.Item>Item 2</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Flex>
+            <CodeBlock
+              code={`<Dropdown>
   <Dropdown.Toggle>Click</Dropdown.Toggle>
   <Dropdown.Menu class="w-52">
     <Dropdown.Item>Item 1</Dropdown.Item>
     <Dropdown.Item>Item 2</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="as-card" title="As Card">
-          <div class="my-32">
-            <Dropdown>
-              <Dropdown.Toggle>Click</Dropdown.Toggle>
-              <Dropdown.Menu class="card card-compact w-64 p-2 shadow bg-primary text-primary-content m-1">
-                <Card.Body>
-                  <Card.Title tag="h3">Card title!</Card.Title>
-                  <p>you can use any element as a dropdown.</p>
-                </Card.Body>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-          <CodeBlock
-            code={`<Dropdown>
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" class="my-16">
+              <Dropdown>
+                <Dropdown.Toggle>Click</Dropdown.Toggle>
+                <Dropdown.Menu class="card card-compact w-64 p-2 shadow bg-primary text-primary-content m-1">
+                  <Card.Body>
+                    <Card.Title tag="h3">Card title!</Card.Title>
+                    <p>you can use any element as a dropdown.</p>
+                  </Card.Body>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Flex>
+            <CodeBlock
+              code={`<Dropdown>
   <Dropdown.Toggle>Click</Dropdown.Toggle>
   <Dropdown.Menu class="card card-compact w-64 p-2 shadow bg-primary text-primary-content m-1">
     <Card.Body>
@@ -97,32 +100,34 @@ export default function DropdownShowcase() {
     </Card.Body>
   </Dropdown.Menu>
 </Dropdown>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="in-navbar" title="In Navbar">
-          <Navbar class="my-32 px-2 font-sans bg-base-300 rounded-box">
-            <Navbar.Start class="px-2 lg:flex-none">
-              <span class="text-lg font-bold">daisyUI</span>
-            </Navbar.Start>
-            <Navbar.End>
-              <Button color="ghost">Button</Button>
-              <Dropdown end>
-                <Dropdown.Toggle
-                  class="btn btn-ghost rounded-btn"
-                  button={false}
-                >
-                  Dropdown
-                </Dropdown.Toggle>
-                <Dropdown.Menu class="w-52 mt-4">
-                  <Dropdown.Item>Item 1</Dropdown.Item>
-                  <Dropdown.Item>Item 2</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Navbar.End>
-          </Navbar>
-          <CodeBlock
-            code={`<Navbar class="my-32 px-2 font-sans bg-base-300 rounded-box">
+          <Flex direction="col" gap="md">
+            <Navbar class="my-16 px-2 font-sans bg-base-300 rounded-box">
+              <Navbar.Start class="px-2 lg:flex-none">
+                <span class="text-lg font-bold">daisyUI</span>
+              </Navbar.Start>
+              <Navbar.End>
+                <Button color="ghost">Button</Button>
+                <Dropdown end>
+                  <Dropdown.Toggle
+                    class="btn btn-ghost rounded-btn"
+                    button={false}
+                  >
+                    Dropdown
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu class="w-52 mt-4">
+                    <Dropdown.Item>Item 1</Dropdown.Item>
+                    <Dropdown.Item>Item 2</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Navbar.End>
+            </Navbar>
+            <CodeBlock
+              code={`<Navbar class="my-16 px-2 font-sans bg-base-300 rounded-box">
   <Navbar.Start class="px-2 lg:flex-none">
     <span class="text-lg font-bold">daisyUI</span>
   </Navbar.Start>
@@ -139,41 +144,43 @@ export default function DropdownShowcase() {
     </Dropdown>
   </Navbar.End>
 </Navbar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="helper" title="Helper">
-          <div class="my-32 font-sans">
-            A normal text and a helper dropdown
-            <Dropdown end>
-              <Dropdown.Toggle
-                button={false}
-                class="btn btn-circle btn-ghost btn-xs text-info"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  class="w-4 h-4 stroke-current"
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" class="my-16">
+              A normal text and a helper dropdown
+              <Dropdown end>
+                <Dropdown.Toggle
+                  button={false}
+                  class="btn btn-circle btn-ghost btn-xs text-info"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-              </Dropdown.Toggle>
-              <Dropdown.Menu class="card compact w-64 !p-0 shadow bg-base-100 rounded-box">
-                <Card.Body>
-                  <Card.Title tag="h2">You needed more info?</Card.Title>
-                  <p>Here is a description!</p>
-                </Card.Body>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-          <CodeBlock
-            code={`<div class="my-32 font-sans">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    class="w-4 h-4 stroke-current"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                </Dropdown.Toggle>
+                <Dropdown.Menu class="card compact w-64 !p-0 shadow bg-base-100 rounded-box">
+                  <Card.Body>
+                    <Card.Title tag="h2">You needed more info?</Card.Title>
+                    <p>Here is a description!</p>
+                  </Card.Body>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Flex>
+            <CodeBlock
+              code={`<Flex justify="center" align="center" class="my-16">
   A normal text and a helper dropdown
   <Dropdown end>
     <Dropdown.Toggle
@@ -201,29 +208,32 @@ export default function DropdownShowcase() {
       </Card.Body>
     </Dropdown.Menu>
   </Dropdown>
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="details" title="Details">
-          <div class="my-32">
-            <Dropdown.Details>
-              <Dropdown.Details.Toggle>Click</Dropdown.Details.Toggle>
-              <Dropdown.Menu class="w-52">
-                <Dropdown.Item>Item 1</Dropdown.Item>
-                <Dropdown.Item>Item 2</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Details>
-          </div>
-          <CodeBlock
-            code={`<Dropdown.Details>
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" class="my-16">
+              <Dropdown.Details>
+                <Dropdown.Details.Toggle>Click</Dropdown.Details.Toggle>
+                <Dropdown.Menu class="w-52">
+                  <Dropdown.Item>Item 1</Dropdown.Item>
+                  <Dropdown.Item>Item 2</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown.Details>
+            </Flex>
+            <CodeBlock
+              code={`<Dropdown.Details>
   <Dropdown.Details.Toggle>Click</Dropdown.Details.Toggle>
   <Dropdown.Menu class="w-52">
     <Dropdown.Item>Item 1</Dropdown.Item>
     <Dropdown.Item>Item 2</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown.Details>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

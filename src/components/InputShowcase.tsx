@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { Input } from "@pathscale/ui";
+import { Input, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -97,89 +97,95 @@ export default function InputShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="basic" title="Basic Usage">
-          <div class="space-y-4">
-            <Input
-              value={value()}
-              onInput={(e) => setValue(e.currentTarget.value)}
-              placeholder="Type here"
-            />
-            <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
-              Current value: {value() || "(empty)"}
-            </div>
-          </div>
-          <CodeBlock
-            code={`const [value, setValue] = createSignal("");
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center">
+              <Input
+                value={value()}
+                onInput={(e) => setValue(e.currentTarget.value)}
+                placeholder="Type here"
+              />
+            </Flex>
+            <CodeBlock
+              code={`const [value, setValue] = createSignal("");
 
 <Input
   value={value()}
   onInput={(e) => setValue(e.currentTarget.value)}
   placeholder="Type here"
 />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Color Variants">
-          <div class="flex flex-col gap-4">
-            <Input placeholder="Default input" />
-            <Input color="success" placeholder="Success" />
-            <Input color="warning" placeholder="Warning" />
-            <Input color="danger" placeholder="Danger" />
-          </div>
-          <CodeBlock
-            code={`<Input placeholder="Default input" />
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
+              <Input placeholder="Default input" />
+              <Input color="success" placeholder="Success" />
+              <Input color="warning" placeholder="Warning" />
+              <Input color="danger" placeholder="Danger" />
+            </Flex>
+            <CodeBlock
+              code={`<Input placeholder="Default input" />
 <Input color="success" placeholder="Success" />
 <Input color="warning" placeholder="Warning" />
 <Input color="danger" placeholder="Danger" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="states" title="States">
-          <div class="flex flex-col gap-4">
-            <Input loading placeholder="Loading state" />
-            <Input disabled placeholder="Disabled state" />
-            <Input readonly value="Read-only value" />
-            <Input
-              type="password"
-              passwordReveal
-              placeholder="Password with reveal"
-            />
-          </div>
-          <CodeBlock
-            code={`<Input loading placeholder="Loading state" />
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
+              <Input loading placeholder="Loading state" />
+              <Input disabled placeholder="Disabled state" />
+              <Input readonly value="Read-only value" />
+              <Input
+                type="password"
+                passwordReveal
+                placeholder="Password with reveal"
+              />
+            </Flex>
+            <CodeBlock
+              code={`<Input loading placeholder="Loading state" />
 <Input disabled placeholder="Disabled state" />
 <Input readonly value="Read-only value" />
 <Input type="password" passwordReveal placeholder="Password with reveal" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="variants" title="Variants">
-          <div class="flex flex-col gap-4">
-            <Input rounded placeholder="Rounded input" />
-            <div class="w-48">
-              <Input expanded={false} placeholder="Not expanded" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<Input rounded placeholder="Rounded input" />
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
+              <Input rounded placeholder="Rounded input" />
+              <div class="w-48">
+                <Input expanded={false} placeholder="Not expanded" />
+              </div>
+            </Flex>
+            <CodeBlock
+              code={`<Input rounded placeholder="Rounded input" />
 <div class="w-48">
   <Input expanded={false} placeholder="Not expanded" />
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="icons" title="With Icons">
-          <div class="flex flex-col gap-4">
-            <Input leftIcon={<FiLock />} placeholder="With left icon" />
-            <Input
-              type="password"
-              passwordReveal
-              leftIcon={<FiLock />}
-              rightIcon={<FiEye />}
-              placeholder="Password with icons"
-            />
-          </div>
-          <CodeBlock
-            code={`<Input
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="center" align="center" gap="lg">
+              <Input leftIcon={<FiLock />} placeholder="With left icon" />
+              <Input
+                type="password"
+                passwordReveal
+                leftIcon={<FiLock />}
+                rightIcon={<FiEye />}
+                placeholder="Password with icons"
+              />
+            </Flex>
+            <CodeBlock
+              code={`<Input
   leftIcon={<FiLock />}
   placeholder="With left icon"
 />
@@ -191,7 +197,8 @@ export default function InputShowcase() {
   rightIcon={<FiEye />}
   placeholder="Password with icons"
 />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

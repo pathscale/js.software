@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Avatar, Mask } from "@pathscale/ui";
+import { Avatar, Mask, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -163,137 +163,160 @@ export default function AvatarShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Avatar src={sampleImage} innerClass="rounded" size="sm" />
-          <CodeBlock
-            code={`<Avatar src="user-image.jpg" innerClass="rounded" size="sm" />`}
-          />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Avatar src={sampleImage} innerClass="rounded" size="sm" />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar src="user-image.jpg" innerClass="rounded" size="sm" />`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="custom-size" title="Custom Size">
-          <Avatar src={sampleImage} shape="circle" size={30} />
-          <CodeBlock
-            code={`<Avatar src="user-image.jpg" shape="circle" size={30} />`}
-          />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Avatar src={sampleImage} shape="circle" size={30} />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar src="user-image.jpg" shape="circle" size={30} />`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
-          <div class="flex items-center gap-4">
-            <Avatar src={sampleImage} size="lg" />
-            <Avatar src={sampleImage} size="md" />
-            <Avatar src={sampleImage} size={80} />
-            <Avatar src={sampleImage} size={64} />
-            <Avatar src={sampleImage} size="sm" />
-            <Avatar src={sampleImage} size="xs" />
-          </div>
-          <CodeBlock
-            code={`<Avatar src="user-image.jpg" size="lg" />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Avatar src={sampleImage} size="lg" />
+              <Avatar src={sampleImage} size="md" />
+              <Avatar src={sampleImage} size={80} />
+              <Avatar src={sampleImage} size={64} />
+              <Avatar src={sampleImage} size="sm" />
+              <Avatar src={sampleImage} size="xs" />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar src="user-image.jpg" size="lg" />
 <Avatar src="user-image.jpg" size="md" />
 <Avatar src="user-image.jpg" size={80} />
 <Avatar src="user-image.jpg" size={64} />
 <Avatar src="user-image.jpg" size="sm" />
 <Avatar src="user-image.jpg" size="xs" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="rounded" title="Rounded">
-          <div class="flex items-center gap-4">
-            <Avatar src={sampleImage} innerClass="rounded-xl" size="sm" />
-            <Avatar src={sampleImage} shape="circle" size="sm" />
-          </div>
-          <CodeBlock
-            code={`<Avatar src="user-image.jpg" innerClass="rounded-xl" size="sm" />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="lg">
+              <Avatar src={sampleImage} innerClass="rounded-xl" size="sm" />
+              <Avatar src={sampleImage} shape="circle" size="sm" />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar src="user-image.jpg" innerClass="rounded-xl" size="sm" />
 <Avatar src="user-image.jpg" shape="circle" size="sm" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-mask" title="With Mask">
-          <div class="flex items-center gap-4">
-            <Avatar
-              src={sampleImage}
-              innerClass={Mask.className({ variant: "squircle" })}
-              size="sm"
-            />
-            <Avatar
-              src={sampleImage}
-              innerClass={Mask.className({ variant: "hexagon" })}
-              size="sm"
-            />
-            <Avatar
-              src={sampleImage}
-              innerClass={Mask.className({ variant: "triangle" })}
-              size="sm"
-            />
-          </div>
-          <CodeBlock
-            code={`<Avatar src="user-image.jpg" innerClass={Mask.className({ variant: "squircle" })} size="sm" />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Avatar
+                src={sampleImage}
+                innerClass={Mask.className({ variant: "squircle" })}
+                size="sm"
+              />
+              <Avatar
+                src={sampleImage}
+                innerClass={Mask.className({ variant: "hexagon" })}
+                size="sm"
+              />
+              <Avatar
+                src={sampleImage}
+                innerClass={Mask.className({ variant: "triangle" })}
+                size="sm"
+              />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar src="user-image.jpg" innerClass={Mask.className({ variant: "squircle" })} size="sm" />
 <Avatar src="user-image.jpg" innerClass={Mask.className({ variant: "hexagon" })} size="sm" />
 <Avatar src="user-image.jpg" innerClass={Mask.className({ variant: "triangle" })} size="sm" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="group" title="Group">
-          <Avatar.Group>
-            <Avatar src={sampleImage} size="sm" />
-            <Avatar src={sampleImage} size="sm" />
-            <Avatar src={sampleImage} size="sm" />
-            <Avatar src={sampleImage} size="sm" />
-          </Avatar.Group>
-          <CodeBlock
-            code={`<Avatar.Group>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Avatar.Group>
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+              </Avatar.Group>
+            </Flex>
+            <CodeBlock
+              code={`<Avatar.Group>
   <Avatar src="user-1.jpg" size="sm" />
   <Avatar src="user-2.jpg" size="sm" />
   <Avatar src="user-3.jpg" size="sm" />
   <Avatar src="user-4.jpg" size="sm" />
 </Avatar.Group>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="group-counter" title="Group with Counter">
-          <Avatar.Group>
-            <Avatar src={sampleImage} size="sm" />
-            <Avatar src={sampleImage} size="sm" />
-            <Avatar src={sampleImage} size="sm" />
-            <Avatar letters="+99" size="sm" />
-          </Avatar.Group>
-          <CodeBlock
-            code={`<Avatar.Group>
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Avatar.Group>
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar letters="+99" size="sm" />
+              </Avatar.Group>
+            </Flex>
+            <CodeBlock
+              code={`<Avatar.Group>
   <Avatar src="user-1.jpg" size="sm" />
   <Avatar src="user-2.jpg" size="sm" />
   <Avatar src="user-3.jpg" size="sm" />
   <Avatar letters="+99" size="sm" />
 </Avatar.Group>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="group-spacing" title="Group Spacing">
-          <div class="flex flex-col items-center gap-y-2">
-            <Avatar.Group class="space-x-4">
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar letters="+99" size="sm" />
-            </Avatar.Group>
-            <Avatar.Group class="space-x-0">
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar letters="+99" size="sm" />
-            </Avatar.Group>
-            <Avatar.Group class="-space-x-4">
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar letters="+99" size="sm" />
-            </Avatar.Group>
-            <Avatar.Group class="-space-x-8">
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar src={sampleImage} size="sm" />
-              <Avatar letters="+99" size="sm" />
-            </Avatar.Group>
-          </div>
-          <CodeBlock
-            code={`<Avatar.Group class="space-x-4">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" align="center" justify="center" gapY="sm">
+              <Avatar.Group class="space-x-4">
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar letters="+99" size="sm" />
+              </Avatar.Group>
+              <Avatar.Group class="space-x-0">
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar letters="+99" size="sm" />
+              </Avatar.Group>
+              <Avatar.Group class="-space-x-4">
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar letters="+99" size="sm" />
+              </Avatar.Group>
+              <Avatar.Group class="-space-x-8">
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar src={sampleImage} size="sm" />
+                <Avatar letters="+99" size="sm" />
+              </Avatar.Group>
+            </Flex>
+            <CodeBlock
+              code={`<Avatar.Group class="space-x-4">
   {/* Spaced avatars */}
 </Avatar.Group>
 <Avatar.Group class="space-x-0">
@@ -305,62 +328,75 @@ export default function AvatarShowcase() {
 <Avatar.Group class="-space-x-8">
   {/* More overlapping */}
 </Avatar.Group>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="ring" title="Ring">
-          <Avatar
-            src={sampleImage}
-            border
-            borderColor="primary"
-            shape="circle"
-            size="sm"
-          />
-          <CodeBlock
-            code={`<Avatar src="user-image.jpg" border borderColor="primary" shape="circle" size="sm" />`}
-          />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Avatar
+                src={sampleImage}
+                border
+                borderColor="primary"
+                shape="circle"
+                size="sm"
+              />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar src="user-image.jpg" border borderColor="primary" shape="circle" size="sm" />`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="presence" title="Presence Indicator">
-          <div class="flex items-center gap-4">
-            <Avatar src={sampleImage} shape="circle" online size="sm" />
-            <Avatar src={sampleImage} shape="circle" offline size="sm" />
-          </div>
-          <CodeBlock
-            code={`<Avatar src="user-image.jpg" shape="circle" online size="sm" />
-<Avatar src="user-image.jpg" shape="circle" offline size="sm" />`}
-          />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Avatar src={sampleImage} shape="circle" online size="sm" />
+              <Avatar src={sampleImage} shape="circle" offline size="sm" />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar src="user-image.jpg" shape="circle" online size="sm" />
+  <Avatar src="user-image.jpg" shape="circle" offline size="sm" />`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="placeholder" title="Placeholder">
-          <div class="flex items-center gap-4">
-            <Avatar letters="K" size="lg" shape="circle" />
-            <Avatar letters="JO" size="md" shape="circle" online />
-            <Avatar letters="MX" size="sm" shape="circle" />
-            <Avatar letters="AA" size="xs" shape="circle" />
-          </div>
-          <CodeBlock
-            code={`<Avatar letters="K" size="lg" shape="circle" />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
+              <Avatar letters="K" size="lg" shape="circle" />
+              <Avatar letters="JO" size="md" shape="circle" online />
+              <Avatar letters="MX" size="sm" shape="circle" />
+              <Avatar letters="AA" size="xs" shape="circle" />
+            </Flex>
+            <CodeBlock
+              code={`<Avatar letters="K" size="lg" shape="circle" />
 <Avatar letters="JO" size="md" shape="circle" online />
 <Avatar letters="MX" size="sm" shape="circle" />
 <Avatar letters="AA" size="xs" shape="circle" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-svg" title="With SVG">
-          <Avatar shape="circle" border size="sm">
-            {reactLogoSvg}
-          </Avatar>
-          <CodeBlock
-            code={`<Avatar shape="circle" border size="sm">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Avatar shape="circle" border size="sm">
+                {reactLogoSvg}
+              </Avatar>
+            </Flex>
+            <CodeBlock
+              code={`<Avatar shape="circle" border size="sm">
   {/* SVG content */}
 </Avatar>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
-          <div class="space-y-4">
-            <div class="flex gap-4">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center" gap="lg">
               <Avatar
                 src={sampleImage}
                 border
@@ -417,8 +453,8 @@ export default function AvatarShowcase() {
                 shape="circle"
                 size="sm"
               />
-            </div>
-            <div class="flex gap-4">
+            </Flex>
+            <Flex align="center" justify="center" gap="lg">
               <Avatar
                 letters="Y"
                 border
@@ -483,15 +519,15 @@ export default function AvatarShowcase() {
                 shape="circle"
                 size="sm"
               />
-            </div>
-          </div>
-          <CodeBlock
-            code={`// With image
+            </Flex>
+            <CodeBlock
+              code={`// With image
 <Avatar src="user.jpg" border borderColor="primary" shape="circle" size="sm" />
 
 // With letters and color
 <Avatar letters="Y" border borderColor="primary" color="primary" shape="circle" size="sm" />`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

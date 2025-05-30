@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Skeleton } from "@pathscale/ui";
+import { Skeleton, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -49,56 +49,62 @@ const SkeletonShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <Skeleton class="w-32 h-32" />
-          </div>
-          <CodeBlock code={`<Skeleton class="w-32 h-32" />`} />
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Skeleton class="w-32 h-32" />
+            </Flex>
+            <CodeBlock code={`<Skeleton class="w-32 h-32" />`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="circle" title="Circle With Content">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="flex flex-col gap-4 w-52">
-              <div class="flex gap-4 items-center">
-                <Skeleton class="w-16 h-16 rounded-full shrink-0" />
-                <div class="flex flex-col gap-4">
-                  <Skeleton class="h-4 w-20" />
-                  <Skeleton class="h-4 w-28" />
-                </div>
-              </div>
-              <Skeleton class="h-32 w-full" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="flex flex-col gap-4 w-52">
-  <div class="flex gap-4 items-center">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="lg" class="w-52">
+                <Flex gap="lg" align="center">
+                  <Skeleton class="w-16 h-16 rounded-full shrink-0" />
+                  <Flex direction="col" gap="lg">
+                    <Skeleton class="h-4 w-20" />
+                    <Skeleton class="h-4 w-28" />
+                  </Flex>
+                </Flex>
+                <Skeleton class="h-32 w-full" />
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Flex direction="col" gap="lg" class="w-52">
+  <Flex gap="lg" align="center">
     <Skeleton class="w-16 h-16 rounded-full shrink-0" />
-    <div class="flex flex-col gap-4">
+    <Flex direction="col" gap="lg">
       <Skeleton class="h-4 w-20" />
       <Skeleton class="h-4 w-28" />
-    </div>
-  </div>
+    </Flex>
+  </Flex>
   <Skeleton class="h-32 w-full" />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="rectangle" title="Rectangle With Content">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="flex flex-col gap-4 w-52">
-              <Skeleton class="h-32 w-full" />
-              <Skeleton class="h-4 w-28" />
-              <Skeleton class="h-4 w-full" />
-              <Skeleton class="h-4 w-full" />
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="flex flex-col gap-4 w-52">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="center">
+              <Flex direction="col" gap="lg" class="w-52">
+                <Skeleton class="h-32 w-full" />
+                <Skeleton class="h-4 w-28" />
+                <Skeleton class="h-4 w-full" />
+                <Skeleton class="h-4 w-full" />
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Flex direction="col" gap="lg" class="w-52">
   <Skeleton class="h-32 w-full" />
   <Skeleton class="h-4 w-28" />
   <Skeleton class="h-4 w-full" />
   <Skeleton class="h-4 w-full" />
-</div>`}
-          />
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

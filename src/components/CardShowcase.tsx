@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Card, Button } from "@pathscale/ui";
+import { Card, Button, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -72,21 +72,22 @@ export default function CardShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Card>
-            <Card.Image
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-              alt="Shoes"
-            />
-            <Card.Body class="items-center text-center">
-              <Card.Title tag="h2">Shoes!</Card.Title>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <Card.Actions class="justify-end">
-                <Button color="primary">Buy Now</Button>
-              </Card.Actions>
-            </Card.Body>
-          </Card>
-          <CodeBlock
-            code={`<Card>
+          <Flex direction="col" gap="md">
+            <Card>
+              <Card.Image
+                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                alt="Shoes"
+              />
+              <Card.Body class="items-center text-center">
+                <Card.Title tag="h2">Shoes!</Card.Title>
+                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <Card.Actions class="justify-end">
+                  <Button color="primary">Buy Now</Button>
+                </Card.Actions>
+              </Card.Body>
+            </Card>
+            <CodeBlock
+              code={`<Card>
   <Card.Image
     src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
     alt="Shoes"
@@ -99,25 +100,27 @@ export default function CardShowcase() {
     </Card.Actions>
   </Card.Body>
 </Card>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="image-overlay" title="Image Overlay">
-          <Card imageFull>
-            <Card.Image
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-              alt="Shoes"
-            />
-            <Card.Body>
-              <Card.Title tag="h2">Shoes!</Card.Title>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <Card.Actions class="justify-end">
-                <Button color="primary">Buy Now</Button>
-              </Card.Actions>
-            </Card.Body>
-          </Card>
-          <CodeBlock
-            code={`<Card imageFull>
+          <Flex direction="col" gap="md">
+            <Card imageFull>
+              <Card.Image
+                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                alt="Shoes"
+              />
+              <Card.Body>
+                <Card.Title tag="h2">Shoes!</Card.Title>
+                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <Card.Actions class="justify-end">
+                  <Button color="primary">Buy Now</Button>
+                </Card.Actions>
+              </Card.Body>
+            </Card>
+            <CodeBlock
+              code={`<Card imageFull>
   <Card.Image
     src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
     alt="Shoes"
@@ -130,26 +133,28 @@ export default function CardShowcase() {
     </Card.Actions>
   </Card.Body>
 </Card>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="side-image" title="Side Image">
-          <Card side>
-            <Card.Image
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-              alt="Shoes"
-              class="w-full max-w-sm"
-            />
-            <Card.Body>
-              <Card.Title tag="h2">Shoes!</Card.Title>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <Card.Actions class="justify-end">
-                <Button color="primary">Buy Now</Button>
-              </Card.Actions>
-            </Card.Body>
-          </Card>
-          <CodeBlock
-            code={`<Card side>
+          <Flex direction="col" gap="md">
+            <Card side>
+              <Card.Image
+                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                alt="Shoes"
+                class="w-full max-w-sm"
+              />
+              <Card.Body>
+                <Card.Title tag="h2">Shoes!</Card.Title>
+                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <Card.Actions class="justify-end">
+                  <Button color="primary">Buy Now</Button>
+                </Card.Actions>
+              </Card.Body>
+            </Card>
+            <CodeBlock
+              code={`<Card side>
   <Card.Image
     src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
     alt="Shoes"
@@ -163,21 +168,23 @@ export default function CardShowcase() {
     </Card.Actions>
   </Card.Body>
 </Card>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="bordered" title="Bordered">
-          <Card variant="border">
-            <Card.Body>
-              <Card.Title tag="h2">Bordered Card</Card.Title>
-              <p>A card with a border around it</p>
-              <Card.Actions class="justify-end">
-                <Button color="primary">Action</Button>
-              </Card.Actions>
-            </Card.Body>
-          </Card>
-          <CodeBlock
-            code={`<Card variant="border">
+          <Flex direction="col" gap="md">
+            <Card variant="border">
+              <Card.Body>
+                <Card.Title tag="h2">Bordered Card</Card.Title>
+                <p>A card with a border around it</p>
+                <Card.Actions class="justify-end">
+                  <Button color="primary">Action</Button>
+                </Card.Actions>
+              </Card.Body>
+            </Card>
+            <CodeBlock
+              code={`<Card variant="border">
   <Card.Body>
     <Card.Title tag="h2">Bordered Card</Card.Title>
     <p>A card with a border around it</p>
@@ -186,23 +193,25 @@ export default function CardShowcase() {
     </Card.Actions>
   </Card.Body>
 </Card>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="compact" title="Compact">
-          <Card size="sm">
-            <Card.Body>
-              <Card.Title tag="h2">Compact Card</Card.Title>
-              <p>A smaller, more compact card</p>
-              <Card.Actions class="justify-end">
-                <Button color="primary" size="sm">
-                  Action
-                </Button>
-              </Card.Actions>
-            </Card.Body>
-          </Card>
-          <CodeBlock
-            code={`<Card size="sm">
+          <Flex direction="col" gap="md">
+            <Card size="sm">
+              <Card.Body>
+                <Card.Title tag="h2">Compact Card</Card.Title>
+                <p>A smaller, more compact card</p>
+                <Card.Actions class="justify-end">
+                  <Button color="primary" size="sm">
+                    Action
+                  </Button>
+                </Card.Actions>
+              </Card.Body>
+            </Card>
+            <CodeBlock
+              code={`<Card size="sm">
   <Card.Body>
     <Card.Title tag="h2">Compact Card</Card.Title>
     <p>A smaller, more compact card</p>
@@ -211,7 +220,8 @@ export default function CardShowcase() {
     </Card.Actions>
   </Card.Body>
 </Card>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

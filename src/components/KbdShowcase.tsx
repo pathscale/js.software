@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Kbd } from "@pathscale/ui";
+import { Kbd, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -50,88 +50,105 @@ export default function KbdShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Kbd>A</Kbd>
-          <CodeBlock code={`<Kbd>A</Kbd>`} />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Kbd>A</Kbd>
+            </Flex>
+            <CodeBlock code={`<Kbd>A</Kbd>`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="in-text" title="In Text">
-          <div class="font-sans">
-            Press <Kbd>F</Kbd> to pay respects.
-          </div>
-          <CodeBlock
-            code={`<div class="font-sans">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <div class="font-sans">
+                Press <Kbd>F</Kbd> to pay respects.
+              </div>
+            </Flex>
+            <CodeBlock
+              code={`<div class="font-sans">
   Press <Kbd>F</Kbd> to pay respects.
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="key-combination" title="Key Combination">
-          <div class="flex items-center gap-1">
-            <Kbd>ctrl</Kbd>+<Kbd>shift</Kbd>+<Kbd>del</Kbd>
-          </div>
-          <CodeBlock
-            code={`<div class="flex items-center gap-1">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <div class="flex items-center gap-1">
+                <Kbd>ctrl</Kbd>+<Kbd>shift</Kbd>+<Kbd>del</Kbd>
+              </div>
+            </Flex>
+            <CodeBlock
+              code={`<div class="flex items-center gap-1">
   <Kbd>ctrl</Kbd>+<Kbd>shift</Kbd>+<Kbd>del</Kbd>
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="function-keys" title="Function Keys">
-          <div class="flex items-center gap-1">
-            <Kbd>⌘</Kbd>
-            <Kbd>⌥</Kbd>
-            <Kbd>⇧</Kbd>
-            <Kbd>⌃</Kbd>
-          </div>
-          <CodeBlock
-            code={`<div class="flex items-center gap-1">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <div class="flex items-center gap-1">
+                <Kbd>⌘</Kbd>
+                <Kbd>⌥</Kbd>
+                <Kbd>⇧</Kbd>
+                <Kbd>⌃</Kbd>
+              </div>
+            </Flex>
+            <CodeBlock
+              code={`<div class="flex items-center gap-1">
   <Kbd>⌘</Kbd>
   <Kbd>⌥</Kbd>
   <Kbd>⇧</Kbd>
   <Kbd>⌃</Kbd>
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="full-keyboard" title="Full Keyboard">
-          <div class="overflow-x-auto">
-            <div class="flex justify-center gap-1 w-full">
-              <Kbd>q</Kbd>
-              <Kbd>w</Kbd>
-              <Kbd>e</Kbd>
-              <Kbd>r</Kbd>
-              <Kbd>t</Kbd>
-              <Kbd>y</Kbd>
-              <Kbd>u</Kbd>
-              <Kbd>i</Kbd>
-              <Kbd>o</Kbd>
-              <Kbd>p</Kbd>
+          <Flex direction="col" gap="md">
+            <div class="overflow-x-auto">
+              <Flex justify="center" gap="xs" w="full">
+                <Kbd>q</Kbd>
+                <Kbd>w</Kbd>
+                <Kbd>e</Kbd>
+                <Kbd>r</Kbd>
+                <Kbd>t</Kbd>
+                <Kbd>y</Kbd>
+                <Kbd>u</Kbd>
+                <Kbd>i</Kbd>
+                <Kbd>o</Kbd>
+                <Kbd>p</Kbd>
+              </Flex>
+              <Flex justify="center" gap="xs" w="full" my="1">
+                <Kbd>a</Kbd>
+                <Kbd>s</Kbd>
+                <Kbd>d</Kbd>
+                <Kbd>f</Kbd>
+                <Kbd>g</Kbd>
+                <Kbd>h</Kbd>
+                <Kbd>j</Kbd>
+                <Kbd>k</Kbd>
+                <Kbd>l</Kbd>
+              </Flex>
+              <Flex justify="center" gap="xs" w="full" my="1">
+                <Kbd>z</Kbd>
+                <Kbd>x</Kbd>
+                <Kbd>c</Kbd>
+                <Kbd>v</Kbd>
+                <Kbd>b</Kbd>
+                <Kbd>n</Kbd>
+                <Kbd>m</Kbd>
+                <Kbd>/</Kbd>
+              </Flex>
             </div>
-            <div class="flex justify-center gap-1 my-1 w-full">
-              <Kbd>a</Kbd>
-              <Kbd>s</Kbd>
-              <Kbd>d</Kbd>
-              <Kbd>f</Kbd>
-              <Kbd>g</Kbd>
-              <Kbd>h</Kbd>
-              <Kbd>j</Kbd>
-              <Kbd>k</Kbd>
-              <Kbd>l</Kbd>
-            </div>
-            <div class="flex justify-center gap-1 my-1 w-full">
-              <Kbd>z</Kbd>
-              <Kbd>x</Kbd>
-              <Kbd>c</Kbd>
-              <Kbd>v</Kbd>
-              <Kbd>b</Kbd>
-              <Kbd>n</Kbd>
-              <Kbd>m</Kbd>
-              <Kbd>/</Kbd>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="overflow-x-auto">
-  <div class="flex justify-center gap-1 w-full">
+            <CodeBlock
+              code={`<div class="overflow-x-auto">
+  <Flex justify="center" gap="xs" w="full">
     <Kbd>q</Kbd>
     <Kbd>w</Kbd>
     <Kbd>e</Kbd>
@@ -142,8 +159,8 @@ export default function KbdShowcase() {
     <Kbd>i</Kbd>
     <Kbd>o</Kbd>
     <Kbd>p</Kbd>
-  </div>
-  <div class="flex justify-center gap-1 my-1 w-full">
+  </Flex>
+  <Flex justify="center" gap="xs" w="full" my="1">
     <Kbd>a</Kbd>
     <Kbd>s</Kbd>
     <Kbd>d</Kbd>
@@ -153,8 +170,8 @@ export default function KbdShowcase() {
     <Kbd>j</Kbd>
     <Kbd>k</Kbd>
     <Kbd>l</Kbd>
-  </div>
-  <div class="flex justify-center gap-1 my-1 w-full">
+  </Flex>
+  <Flex justify="center" gap="xs" w="full" my="1">
     <Kbd>z</Kbd>
     <Kbd>x</Kbd>
     <Kbd>c</Kbd>
@@ -163,38 +180,41 @@ export default function KbdShowcase() {
     <Kbd>n</Kbd>
     <Kbd>m</Kbd>
     <Kbd>/</Kbd>
-  </div>
+  </Flex>
 </div>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="arrow-keys" title="Arrow Keys">
-          <div>
-            <div class="flex justify-center w-full">
-              <Kbd>▲</Kbd>
-            </div>
-            <div class="flex justify-center gap-12 w-full">
-              <Kbd>◀︎</Kbd>
-              <Kbd>▶︎</Kbd>
-            </div>
-            <div class="flex justify-center w-full">
-              <Kbd>▼</Kbd>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div>
-  <div class="flex justify-center w-full">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" gap="sm">
+              <Flex justify="center" w="full">
+                <Kbd>▲</Kbd>
+              </Flex>
+              <Flex justify="center" gap="xl" w="full">
+                <Kbd>◀︎</Kbd>
+                <Kbd>▶︎</Kbd>
+              </Flex>
+              <Flex justify="center" w="full">
+                <Kbd>▼</Kbd>
+              </Flex>
+            </Flex>
+            <CodeBlock
+              code={`<Flex direction="col" gap="sm">
+  <Flex justify="center" w="full">
     <Kbd>▲</Kbd>
-  </div>
-  <div class="flex justify-center gap-12 w-full">
+  </Flex>
+  <Flex justify="center" gap="xl" w="full">
     <Kbd>◀︎</Kbd>
     <Kbd>▶︎</Kbd>
-  </div>
-  <div class="flex justify-center w-full">
+  </Flex>
+  <Flex justify="center" w="full">
     <Kbd>▼</Kbd>
-  </div>
-</div>`}
-          />
+  </Flex>
+</Flex>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

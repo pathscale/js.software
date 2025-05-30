@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Diff } from "@pathscale/ui";
+import { Diff, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -47,21 +47,22 @@ export default function DiffShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Diff
-            secondItem={
+          <Flex direction="col" gap="md">
+            <Diff
+              secondItem={
+                <img
+                  alt="daisy"
+                  src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp"
+                />
+              }
+            >
               <img
                 alt="daisy"
-                src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp"
+                src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp"
               />
-            }
-          >
-            <img
-              alt="daisy"
-              src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp"
-            />
-          </Diff>
-          <CodeBlock
-            code={`<Diff
+            </Diff>
+            <CodeBlock
+              code={`<Diff
   secondItem={
     <img
       alt="daisy"
@@ -74,23 +75,25 @@ export default function DiffShowcase() {
     src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp"
   />
 </Diff>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="text" title="Text">
-          <Diff
-            secondItem={
-              <div class="bg-base-200 text-9xl font-black grid place-content-center">
+          <Flex direction="col" gap="md">
+            <Diff
+              secondItem={
+                <div class="bg-base-200 text-9xl font-black grid place-content-center">
+                  DAISY
+                </div>
+              }
+            >
+              <div class="bg-primary text-primary-content text-9xl font-black grid place-content-center">
                 DAISY
               </div>
-            }
-          >
-            <div class="bg-primary text-primary-content text-9xl font-black grid place-content-center">
-              DAISY
-            </div>
-          </Diff>
-          <CodeBlock
-            code={`<Diff
+            </Diff>
+            <CodeBlock
+              code={`<Diff
   secondItem={
     <div class="bg-base-200 text-9xl font-black grid place-content-center">
       DAISY
@@ -101,7 +104,8 @@ export default function DiffShowcase() {
     DAISY
   </div>
 </Diff>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Countdown } from "@pathscale/ui";
+import { Countdown, Flex, Grid } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -86,105 +86,138 @@ export default function CountdownShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Countdown class="text-2xl" value={defaultValue()} />
-          <CodeBlock code={`<Countdown class="text-2xl" value={50} />`} />
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Countdown class="text-2xl" value={defaultValue()} />
+            </Flex>
+            <CodeBlock code={`<Countdown class="text-2xl" value={50} />`} />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="clock" title="Clock">
-          <span class="font-mono text-2xl">
-            <Countdown value={10} />:
-            <Countdown value={24} />:
-            <Countdown value={clockValue()} />
-          </span>
-          <CodeBlock
-            code={`<span class="font-mono text-2xl">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <span class="font-mono text-2xl">
+                <Countdown value={10} />:
+                <Countdown value={24} />:
+                <Countdown value={clockValue()} />
+              </span>
+            </Flex>
+            <CodeBlock
+              code={`<span class="font-mono text-2xl">
   <Countdown value={10} />:
   <Countdown value={24} />:
   <Countdown value={34} />
 </span>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-labels" title="With Labels">
-          <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-            <div class="flex flex-col">
-              <Countdown class="font-mono text-5xl" value={15} />
-              days
-            </div>
-            <div class="flex flex-col">
-              <Countdown class="font-mono text-5xl" value={10} />
-              hours
-            </div>
-            <div class="flex flex-col">
-              <Countdown class="font-mono text-5xl" value={24} />
-              min
-            </div>
-            <div class="flex flex-col">
-              <Countdown class="font-mono text-5xl" value={labelsValue()} />
-              sec
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-  <div class="flex flex-col">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Grid flow="col" gap="xl" textAlign="center" autoCols="max">
+                <Flex direction="col">
+                  <Countdown class="font-mono text-5xl" value={15} />
+                  days
+                </Flex>
+                <Flex direction="col">
+                  <Countdown class="font-mono text-5xl" value={10} />
+                  hours
+                </Flex>
+                <Flex direction="col">
+                  <Countdown class="font-mono text-5xl" value={24} />
+                  min
+                </Flex>
+                <Flex direction="col">
+                  <Countdown class="font-mono text-5xl" value={labelsValue()} />
+                  sec
+                </Flex>
+              </Grid>
+            </Flex>
+            <CodeBlock
+              code={`<Grid
+  flow="col"
+  gap="xl"
+  textAlign="center"
+  autoCols="max"
+>
+  <Flex direction="col">
     <Countdown class="font-mono text-5xl" value={15} />
     days
-  </div>
-  <div class="flex flex-col">
+  </Flex>
+  <Flex direction="col">
     <Countdown class="font-mono text-5xl" value={10} />
     hours
-  </div>
-  <div class="flex flex-col">
+  </Flex>
+  <Flex direction="col">
     <Countdown class="font-mono text-5xl" value={24} />
     min
-  </div>
-  <div class="flex flex-col">
+  </Flex>
+  <Flex direction="col">
     <Countdown class="font-mono text-5xl" value={37} />
     sec
-  </div>
-</div>`}
-          />
+  </Flex>
+</Grid>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-boxes" title="With Boxes">
-          <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-              <Countdown class="font-mono text-5xl" value={15} />
-              days
-            </div>
-            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-              <Countdown class="font-mono text-5xl" value={10} />
-              hours
-            </div>
-            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-              <Countdown class="font-mono text-5xl" value={24} />
-              min
-            </div>
-            <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-              <Countdown class="font-mono text-5xl" value={boxesValue()} />
-              sec
-            </div>
-          </div>
-          <CodeBlock
-            code={`<div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-  <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center">
+              <Grid flow="col" gap="xl" textAlign="center" autoCols="max">
+                <Flex
+                  direction="col"
+                  class="p-2 bg-neutral rounded-box text-neutral-content"
+                >
+                  <Countdown class="font-mono text-5xl" value={15} />
+                  days
+                </Flex>
+                <Flex
+                  direction="col"
+                  class="p-2 bg-neutral rounded-box text-neutral-content"
+                >
+                  <Countdown class="font-mono text-5xl" value={10} />
+                  hours
+                </Flex>
+                <Flex
+                  direction="col"
+                  class="p-2 bg-neutral rounded-box text-neutral-content"
+                >
+                  <Countdown class="font-mono text-5xl" value={24} />
+                  min
+                </Flex>
+                <Flex
+                  direction="col"
+                  class="p-2 bg-neutral rounded-box text-neutral-content"
+                >
+                  <Countdown class="font-mono text-5xl" value={boxesValue()} />
+                  sec
+                </Flex>
+              </Grid>
+            </Flex>
+            <CodeBlock
+              code={`<Grid flow="col" gap="xl" textAlign="center" autoCols="max">
+  <Flex direction="col" class="p-2 bg-neutral rounded-box text-neutral-content">
     <Countdown class="font-mono text-5xl" value={15} />
     days
-  </div>
-  <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+  </Flex>
+  <Flex direction="col" class="p-2 bg-neutral rounded-box text-neutral-content">
     <Countdown class="font-mono text-5xl" value={10} />
     hours
-  </div>
-  <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+  </Flex>
+  <Flex direction="col" class="p-2 bg-neutral rounded-box text-neutral-content">
     <Countdown class="font-mono text-5xl" value={24} />
     min
-  </div>
-  <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+  </Flex>
+  <Flex direction="col" class="p-2 bg-neutral rounded-box text-neutral-content">
     <Countdown class="font-mono text-5xl" value={26} />
     sec
-  </div>
-</div>`}
-          />
+  </Flex>
+</Grid>`}
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

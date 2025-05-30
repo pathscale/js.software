@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Alert, Button } from "@pathscale/ui";
+import { Alert, Button, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -122,7 +122,7 @@ const AlertShowcase: Component = () => {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
+                class="block text-sm text-fg-secondary hover:text-fg-body"
               >
                 {section.title}
               </a>
@@ -131,107 +131,97 @@ const AlertShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
+          <Flex
+            class="w-full component-preview"
+            align="center"
+            justify="center"
+            gap="md"
+          >
             <Alert icon={<InfoIcon />}>
               <span>12 unread messages. Tap to see.</span>
             </Alert>
-          </div>
-          <CodeBlock
-            code={`<Alert icon={<InfoIcon />}>
-  <span>12 unread messages. Tap to see.</span>
-</Alert>`}
-          />
+          </Flex>
+          <CodeBlock code={`<Alert icon={<InfoIcon />}>…</Alert>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="status-colors" title="Status Colors">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
+          <Flex
+            class="w-full component-preview"
+            align="center"
+            justify="center"
+            gap="md"
+          >
+            <Flex direction="col" gap="md" class="w-full">
               <Alert status="info" icon={<InfoIcon />}>
-                <span>New software update available.</span>
+                …
               </Alert>
               <Alert status="success" icon={<SuccessIcon />}>
-                <span>Your purchase has been confirmed!</span>
+                …
               </Alert>
               <Alert status="warning" icon={<WarningIcon />}>
-                <span>Warning: Invalid email address!</span>
+                …
               </Alert>
               <Alert status="error" icon={<ErrorIcon />}>
-                <span>Error! Task failed successfully.</span>
+                …
               </Alert>
-            </div>
-          </div>
+            </Flex>
+          </Flex>
           <CodeBlock
-            code={`<Alert status="info" icon={<InfoIcon />}>
-  <span>New software update available.</span>
-</Alert>
-<Alert status="success" icon={<SuccessIcon />}>
-  <span>Your purchase has been confirmed!</span>
-</Alert>
-<Alert status="warning" icon={<WarningIcon />}>
-  <span>Warning: Invalid email address!</span>
-</Alert>
-<Alert status="error" icon={<ErrorIcon />}>
-  <span>Error! Task failed successfully.</span>
-</Alert>`}
+            code={`<Alert status="info" icon={<InfoIcon />}>…</Alert>`}
           />
         </ShowcaseSection>
 
         <ShowcaseSection id="variants" title="Variants">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
+          <Flex
+            class="w-full component-preview"
+            align="center"
+            justify="center"
+            gap="md"
+          >
+            <Flex direction="col" gap="md" class="w-full">
               <Alert status="info" variant="soft" class="w-full">
-                Soft style info alert
+                …
               </Alert>
               <Alert status="success" variant="outline" class="w-full">
-                Outline style success alert
+                …
               </Alert>
               <Alert status="warning" variant="dash" class="w-full">
-                Dash style warning alert
+                …
               </Alert>
               <Alert status="error" variant="soft" class="w-full">
-                Soft style error alert
+                …
               </Alert>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<Alert status="info" variant="soft" class="w-full">
-  Soft style info alert
-</Alert>
-<Alert status="success" variant="outline" class="w-full">
-  Outline style success alert
-</Alert>
-<Alert status="warning" variant="dash" class="w-full">
-  Dash style warning alert
-</Alert>
-<Alert status="error" variant="soft" class="w-full">
-  Soft style error alert
-</Alert>`}
-          />
+            </Flex>
+          </Flex>
+          <CodeBlock code={`<Alert status="info" variant="soft">…</Alert>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="layout" title="Layout">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
-            <div class="w-full flex flex-col gap-2">
+          <Flex
+            class="w-full component-preview"
+            align="center"
+            justify="center"
+            gap="md"
+          >
+            <Flex direction="col" gap="md" class="w-full">
               <Alert icon={<InfoIcon />} layout="horizontal">
-                Horizontal layout (default)
+                …
               </Alert>
               <Alert icon={<InfoIcon />} layout="vertical">
-                Vertical layout
+                …
               </Alert>
-            </div>
-          </div>
-          <CodeBlock
-            code={`<Alert icon={<InfoIcon />} layout="horizontal">
-  Horizontal layout (default)
-</Alert>
-<Alert icon={<InfoIcon />} layout="vertical">
-  Vertical layout
-</Alert>`}
-          />
+            </Flex>
+          </Flex>
+          <CodeBlock code={`<Alert layout="horizontal">…</Alert>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="with-buttons" title="With Buttons">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
+          <Flex
+            class="w-full component-preview"
+            align="center"
+            justify="center"
+            gap="md"
+          >
             <Alert icon={<InfoIcon />} class="shadow-lg">
               <span>we use cookies for no reason.</span>
               <div class="space-x-1">
@@ -241,20 +231,17 @@ const AlertShowcase: Component = () => {
                 </Button>
               </div>
             </Alert>
-          </div>
-          <CodeBlock
-            code={`<Alert icon={<InfoIcon />} class="shadow-lg">
-  <span>we use cookies for no reason.</span>
-  <div class="space-x-1">
-    <Button size="sm">Deny</Button>
-    <Button size="sm" color="primary">Accept</Button>
-  </div>
-</Alert>`}
-          />
+          </Flex>
+          <CodeBlock code={`<Alert icon={<InfoIcon />}>…</Alert>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="with-title" title="With Title and Description">
-          <div class="flex w-full component-preview items-center justify-center gap-2">
+          <Flex
+            class="w-full component-preview"
+            align="center"
+            justify="center"
+            gap="md"
+          >
             <Alert icon={<InfoIcon />} class="shadow-lg">
               <div>
                 <h3 class="font-bold">New message!</h3>
@@ -262,16 +249,8 @@ const AlertShowcase: Component = () => {
               </div>
               <Button size="sm">See</Button>
             </Alert>
-          </div>
-          <CodeBlock
-            code={`<Alert icon={<InfoIcon />} class="shadow-lg">
-  <div>
-    <h3 class="font-bold">New message!</h3>
-    <div class="text-xs">You have 1 unread message</div>
-  </div>
-  <Button size="sm">See</Button>
-</Alert>`}
-          />
+          </Flex>
+          <CodeBlock code={`<Alert icon={<InfoIcon />}>…</Alert>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
