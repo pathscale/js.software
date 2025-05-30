@@ -37,6 +37,7 @@ export default function ChatBubbleShowcase() {
 
   return (
     <ShowcaseLayout>
+      <div class="chat chat-start chat-end chat-image hidden" />
       <div class="space-y-4">
         <ShowcaseSection id="contents" title="Contents">
           <nav class="space-y-1">
