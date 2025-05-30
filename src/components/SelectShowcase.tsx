@@ -139,7 +139,7 @@ export default function SelectShowcase() {
 
         <ShowcaseSection id="basic" title="Basic Usage">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="sm">
+            <Flex align="left" justify="left" gap="sm">
               <Select
                 placeholder="Select a fruit"
                 value={selected()}
@@ -180,7 +180,7 @@ const fruitOptions = [
 
         <ShowcaseSection id="colors" title="Color Variants">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="lg">
+            <Flex align="left" justify="left" gap="lg">
               <Select
                 placeholder="Select a color"
                 color="primary"
@@ -244,7 +244,7 @@ const fruitOptions = [
 
         <ShowcaseSection id="sizes" title="Size Variants">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="lg">
+            <Flex align="left" justify="left" gap="lg">
               <Select
                 size="sm"
                 placeholder="Small size"
@@ -288,7 +288,7 @@ const fruitOptions = [
 
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="lg">
+            <Flex align="left" justify="left" gap="lg">
               <Select disabled placeholder="Disabled state">
                 {fruitOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>
@@ -317,7 +317,7 @@ const fruitOptions = [
 
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="lg">
+            <Flex align="left" justify="left" gap="lg">
               <Select rounded placeholder="Rounded corners">
                 {colorOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>

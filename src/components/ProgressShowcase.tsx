@@ -76,7 +76,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} />
             </Flex>
             <CodeBlock
@@ -93,7 +93,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="primary" title="Primary Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} color="primary" />
             </Flex>
             <CodeBlock
@@ -110,7 +110,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="secondary" title="Secondary Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} color="secondary" />
             </Flex>
             <CodeBlock
@@ -127,7 +127,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="accent" title="Accent Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} color="accent" />
             </Flex>
             <CodeBlock
@@ -144,7 +144,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="success" title="Success Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} color="success" />
             </Flex>
             <CodeBlock
@@ -161,7 +161,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="info" title="Info Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} color="info" />
             </Flex>
             <CodeBlock
@@ -178,7 +178,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="warning" title="Warning Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} color="warning" />
             </Flex>
             <CodeBlock
@@ -195,7 +195,7 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="error" title="Error Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <ProgressTemplate max={100} color="error" />
             </Flex>
             <CodeBlock
@@ -212,11 +212,11 @@ const ProgressShowcase: Component = () => {
 
         <ShowcaseSection id="indeterminate" title="Indeterminate">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Progress class="w-56" />
             </Flex>
             <CodeBlock
-              code={`<Flex align="center" justify="center">
+              code={`<Flex align="left" justify="left">
   <Progress class="w-56" />
 </Flex>`}
             />

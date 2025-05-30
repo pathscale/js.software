@@ -83,7 +83,7 @@ export default function SwapShowcase() {
 
         <ShowcaseSection id="text" title="Text">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Swap onElement="ON" offElement="OFF" />
             </Flex>
             <CodeBlock code={`<Swap onElement="ON" offElement="OFF" />`} />
@@ -92,7 +92,7 @@ export default function SwapShowcase() {
 
         <ShowcaseSection id="volume" title="Volume">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Swap
                 onElement={
                   <svg
@@ -149,7 +149,7 @@ export default function SwapShowcase() {
 
         <ShowcaseSection id="hamburger" title="Hamburger">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Swap
                 rotate
                 onElement={
@@ -208,7 +208,7 @@ export default function SwapShowcase() {
 
         <ShowcaseSection id="rotate" title="Rotate Effect">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Swap
                 rotate
                 onElement={
@@ -259,7 +259,7 @@ export default function SwapShowcase() {
 
         <ShowcaseSection id="flip" title="Flip Effect">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Swap flip class="text-6xl" onElement="😈" offElement="😇" />
             </Flex>
             <CodeBlock

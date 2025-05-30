@@ -53,7 +53,7 @@ export default function ChatBubbleShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <ChatBubble>
                 <ChatBubble.Header>
                   Obi-Wan Kenobi <ChatBubble.Time>2 hours ago</ChatBubble.Time>
@@ -80,7 +80,7 @@ export default function ChatBubbleShowcase() {
 
         <ShowcaseSection id="side" title="Side">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
                   <ChatBubble.Message>
@@ -111,7 +111,7 @@ export default function ChatBubbleShowcase() {
 
         <ShowcaseSection id="with-image" title="With Image">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
                   <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -160,7 +160,7 @@ export default function ChatBubbleShowcase() {
 
         <ShowcaseSection id="with-header" title="With Header">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
                   <ChatBubble.Header>
@@ -203,7 +203,7 @@ export default function ChatBubbleShowcase() {
 
         <ShowcaseSection id="with-footer" title="With Footer">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
                   <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -238,7 +238,7 @@ export default function ChatBubbleShowcase() {
 
         <ShowcaseSection id="with-header-footer" title="With Header and Footer">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
                   <ChatBubble.Header>
@@ -281,7 +281,7 @@ export default function ChatBubbleShowcase() {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
                   <ChatBubble.Message color="primary">

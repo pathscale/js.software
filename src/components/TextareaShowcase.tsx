@@ -76,7 +76,7 @@ const TextareaShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="center" items="center" gap="sm">
+            <Flex justify="left" items="center" gap="sm">
               <Textarea
                 value={value()}
                 onInput={(e) => setValue(e.currentTarget.value)}
@@ -98,8 +98,8 @@ const TextareaShowcase: Component = () => {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
-              <Flex direction="col" gap="sm">
+            <Flex align="left" justify="left">
+              <Flex direction="col" gap="sm" class="w-full">
                 <Textarea color="primary" placeholder="Primary" />
                 <Textarea color="secondary" placeholder="Secondary" />
                 <Textarea color="accent" placeholder="Accent" />
@@ -125,7 +125,7 @@ const TextareaShowcase: Component = () => {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Flex direction="col" gap="sm">
                 <Textarea size="xs" placeholder="Extra small" />
                 <Textarea size="sm" placeholder="Small" />
@@ -146,7 +146,7 @@ const TextareaShowcase: Component = () => {
 
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
-            <Flex direction="col" align="center" justify="center" gap="sm">
+            <Flex direction="col" align="left" justify="left" gap="sm">
               <Textarea disabled placeholder="Disabled textarea" />
               <Textarea
                 class="textarea-disabled"

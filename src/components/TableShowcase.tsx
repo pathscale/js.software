@@ -633,7 +633,7 @@ export default function TableShowcase() {
 
         <ShowcaseSection id="pinned" title="Pinned Rows and Columns">
           <Flex direction="col" gap="md">
-            <Flex aligin="center" justify="center">
+            <Flex aligin="center" justify="left">
               <div class="overflow-x-auto max-w-lg max-h-80">
                 <Table pinRows pinCols zebra>
                   <Table.Head>

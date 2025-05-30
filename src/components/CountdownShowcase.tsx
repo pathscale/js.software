@@ -87,7 +87,7 @@ export default function CountdownShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Countdown class="text-2xl" value={defaultValue()} />
             </Flex>
             <CodeBlock code={`<Countdown class="text-2xl" value={50} />`} />
@@ -96,7 +96,7 @@ export default function CountdownShowcase() {
 
         <ShowcaseSection id="clock" title="Clock">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <span class="font-mono text-2xl">
                 <Countdown value={10} />:
                 <Countdown value={24} />:
@@ -115,8 +115,8 @@ export default function CountdownShowcase() {
 
         <ShowcaseSection id="with-labels" title="With Labels">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
-              <Grid flow="col" gap="xl" textAlign="center" autoCols="max">
+            <Flex justify="left" align="left">
+              <Grid flow="col" gap="xl" textalign="left" autoCols="max">
                 <Flex direction="col">
                   <Countdown class="font-mono text-5xl" value={15} />
                   days
@@ -139,7 +139,7 @@ export default function CountdownShowcase() {
               code={`<Grid
   flow="col"
   gap="xl"
-  textAlign="center"
+  textalign="left"
   autoCols="max"
 >
   <Flex direction="col">
@@ -165,8 +165,8 @@ export default function CountdownShowcase() {
 
         <ShowcaseSection id="with-boxes" title="With Boxes">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
-              <Grid flow="col" gap="xl" textAlign="center" autoCols="max">
+            <Flex justify="left" align="left">
+              <Grid flow="col" gap="xl" textalign="left" autoCols="max">
                 <Flex
                   direction="col"
                   class="p-2 bg-neutral rounded-box text-neutral-content"
@@ -198,7 +198,7 @@ export default function CountdownShowcase() {
               </Grid>
             </Flex>
             <CodeBlock
-              code={`<Grid flow="col" gap="xl" textAlign="center" autoCols="max">
+              code={`<Grid flow="col" gap="xl" textalign="left" autoCols="max">
   <Flex direction="col" class="p-2 bg-neutral rounded-box text-neutral-content">
     <Countdown class="font-mono text-5xl" value={15} />
     days

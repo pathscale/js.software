@@ -50,7 +50,7 @@ const SkeletonShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Skeleton class="w-32 h-32" />
             </Flex>
             <CodeBlock code={`<Skeleton class="w-32 h-32" />`} />
@@ -59,9 +59,9 @@ const SkeletonShowcase: Component = () => {
 
         <ShowcaseSection id="circle" title="Circle With Content">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Flex direction="col" gap="lg" class="w-52">
-                <Flex gap="lg" align="center">
+                <Flex gap="lg" align="left">
                   <Skeleton class="w-16 h-16 rounded-full shrink-0" />
                   <Flex direction="col" gap="lg">
                     <Skeleton class="h-4 w-20" />
@@ -73,7 +73,7 @@ const SkeletonShowcase: Component = () => {
             </Flex>
             <CodeBlock
               code={`<Flex direction="col" gap="lg" class="w-52">
-  <Flex gap="lg" align="center">
+  <Flex gap="lg" align="left">
     <Skeleton class="w-16 h-16 rounded-full shrink-0" />
     <Flex direction="col" gap="lg">
       <Skeleton class="h-4 w-20" />
@@ -88,7 +88,7 @@ const SkeletonShowcase: Component = () => {
 
         <ShowcaseSection id="rectangle" title="Rectangle With Content">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Flex direction="col" gap="lg" class="w-52">
                 <Skeleton class="h-32 w-full" />
                 <Skeleton class="h-4 w-28" />

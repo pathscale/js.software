@@ -99,7 +99,7 @@ const DockShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex w="full" align="center" justify="center" gap="sm">
+            <Flex w="full" align="left" justify="left" gap="sm">
               <Dock class="relative">
                 <Dock.Item active>
                   <svg
@@ -201,7 +201,7 @@ const DockShowcase: Component = () => {
               </Dock>
             </Flex>
             <CodeBlock
-              code={`<Flex w="full" align="center" justify="center" gap="sm">
+              code={`<Flex w="full" align="left" justify="left" gap="sm">
   <Dock class="relative">
     <Dock.Item active>
       <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

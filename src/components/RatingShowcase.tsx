@@ -83,7 +83,7 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Rating value={rating1()} onChange={setRating1}>
                 <Rating.Item name="rating-1" class="mask mask-star" />
                 <Rating.Item name="rating-1" class="mask mask-star" />
@@ -106,7 +106,7 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="star2-warning" title="Star 2 with Warning Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Rating value={rating2()} onChange={setRating2}>
                 <Rating.Item
                   name="rating-2"
@@ -147,7 +147,7 @@ const RatingShowcase: Component = () => {
           title="Heart with Multiple Colors"
         >
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Rating value={rating3()} onChange={setRating3}>
                 <Rating.Item
                   name="rating-3"
@@ -185,7 +185,7 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="star2-green" title="Star 2 with Green Color">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Rating value={rating4()} onChange={setRating4}>
                 <Rating.Item
                   name="rating-4"
@@ -223,7 +223,7 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="hidden" title="Hidden Rating">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Rating value={rating5()} onChange={setRating5} size="lg">
                 <Rating.Item name="rating-9" class="mask mask-star" />
                 <Rating.Item name="rating-9" class="mask mask-star" />
@@ -246,11 +246,7 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="half-stars" title="Half Stars">
           <Flex direction="col" gap="md">
-            <Flex
-              align="center"
-              justify="center"
-              class="w-full component-preview"
-            >
+            <Flex align="left" justify="left" class="w-full component-preview">
               <Rating value={rating6()} onChange={setRating6} half size="lg">
                 <Rating.Item
                   name="rating-10"

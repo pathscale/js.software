@@ -77,7 +77,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu>
                 <Menu.Item>
                   <a>Item 1</a>
@@ -102,7 +102,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="responsive" title="Responsive">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu responsive>
                 <Menu.Item>
                   <a>Item 1</a>
@@ -127,7 +127,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="icon-only" title="Icon Only">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu>
                 <Menu.Item>
                   <a>
@@ -202,7 +202,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="horizontal" title="Horizontal">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu horizontal>
                 <Menu.Item>
                   <a>Item 1</a>
@@ -227,7 +227,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Menu size="xs" class="w-56 bg-base-200 rounded-box">
                 <Menu.Item>
                   <a>xs item 1</a>
@@ -273,7 +273,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="disabled" title="Disabled Items">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu>
                 <Menu.Item>
                   <a>Enabled item</a>
@@ -298,7 +298,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="icons" title="With Icons">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu>
                 <Menu.Item>
                   <a>
@@ -339,7 +339,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="submenu" title="Submenu">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu>
                 <Menu.Item>
                   <a>Item 1</a>
@@ -396,7 +396,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="collapsible" title="Collapsible Submenu">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu>
                 <Menu.Item>
                   <a>Item 1</a>
@@ -449,7 +449,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="active" title="Active Item">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu>
                 <Menu.Item>
                   <a>Item 1</a>
@@ -474,7 +474,7 @@ export default function MenuShowcase() {
 
         <ShowcaseSection id="mega-menu" title="Mega Menu">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Menu responsive>
                 <Menu.Item>
                   <a>Solutions</a>

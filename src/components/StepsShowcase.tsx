@@ -92,7 +92,7 @@ export default function StepsShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Steps>
                 <Steps.Step color="primary">Register</Steps.Step>
                 <Steps.Step color="primary">Choose plan</Steps.Step>
@@ -114,7 +114,7 @@ export default function StepsShowcase() {
 
         <ShowcaseSection id="responsive" title="Responsive">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Steps class="lg:steps-horizontal" vertical>
                 <Steps.Step color="primary">Register</Steps.Step>
                 <Steps.Step color="primary">Choose plan</Steps.Step>
@@ -136,7 +136,7 @@ export default function StepsShowcase() {
 
         <ShowcaseSection id="data-content" title="With Data Content">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Steps>
                 <Steps.Step value="?" color="neutral">
                   Step 1
@@ -178,7 +178,7 @@ export default function StepsShowcase() {
 
         <ShowcaseSection id="custom-colors" title="Custom Colors">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Steps>
                 <Steps.Step color="info">Fly to moon</Steps.Step>
                 <Steps.Step color="info">Shrink the moon</Steps.Step>
@@ -202,7 +202,7 @@ export default function StepsShowcase() {
 
         <ShowcaseSection id="scrollable" title="Scrollable Steps">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <div class="overflow-x-auto">
                 <Steps>
                   <Steps.Step>start</Steps.Step>

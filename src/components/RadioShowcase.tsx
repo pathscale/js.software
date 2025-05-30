@@ -73,12 +73,12 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="sm">
+            <Flex align="left" justify="left" gap="sm">
               <Radio name="radio1" defaultChecked />
               <Radio name="radio1" />
             </Flex>
             <CodeBlock
-              code={`<Flex align="center" justify="center" gap="sm">
+              code={`<Flex align="left" justify="left" gap="sm">
   <Radio name="radio1" defaultChecked />
   <Radio name="radio1" />
 </Flex>`}
@@ -88,7 +88,7 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="sm">
+            <Flex align="left" justify="left" gap="sm">
               <Radio defaultChecked color="primary" name="radio2" />
               <Radio defaultChecked color="secondary" name="radio3" />
               <Radio defaultChecked color="accent" name="radio4" />
@@ -98,7 +98,7 @@ const RadioShowcase: Component = () => {
               <Radio defaultChecked color="error" name="radio8" />
             </Flex>
             <CodeBlock
-              code={`<Flex align="center" justify="center" gap="sm">
+              code={`<Flex align="left" justify="left" gap="sm">
   <Radio defaultChecked color="primary" name="radio2" />
   <Radio defaultChecked color="secondary" name="radio3" />
   <Radio defaultChecked color="accent" name="radio4" />
@@ -113,12 +113,12 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="sm">
+            <Flex align="left" justify="left" gap="sm">
               <Radio name="radio9" disabled />
               <Radio name="radio9" disabled />
             </Flex>
             <CodeBlock
-              code={`<Flex align="center" justify="center" gap="sm">
+              code={`<Flex align="left" justify="left" gap="sm">
   <Radio name="radio9" disabled />
   <Radio name="radio9" disabled />
 </Flex>`}
@@ -128,7 +128,7 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="with-labels" title="With Labels and Form">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Flex
                 gap="lg"
                 class="bg-[hsl(var(--color-bg-secondary)/1)] w-full max-w-sm p-4 rounded-lg shadow"

@@ -57,7 +57,7 @@ export default function PaginationShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Pagination>
                 <Button class="join-item">1</Button>
                 <Button class="join-item" active>
@@ -80,7 +80,7 @@ export default function PaginationShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex direction="col" align="center" justify="center" gap="lg">
+            <Flex direction="col" align="center" justify="left" gap="lg">
               <Pagination>
                 <Button size="xs" class="join-item">
                   1
@@ -175,7 +175,7 @@ export default function PaginationShowcase() {
 
         <ShowcaseSection id="disabled" title="With Disabled Button">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Pagination>
                 <Button class="join-item">1</Button>
                 <Button class="join-item">2</Button>
@@ -200,7 +200,7 @@ export default function PaginationShowcase() {
 
         <ShowcaseSection id="navigation" title="Navigation Buttons">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Pagination>
                 <Button class="join-item">«</Button>
                 <Button class="join-item">Page 22</Button>
@@ -219,7 +219,7 @@ export default function PaginationShowcase() {
 
         <ShowcaseSection id="outline" title="Outline Navigation">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Pagination>
                 <Grid cols="2">
                   <Button variant="outline" class="join-item">
@@ -244,7 +244,7 @@ export default function PaginationShowcase() {
 
         <ShowcaseSection id="radio" title="Radio Inputs">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Pagination>
                 <input
                   class="join-item btn btn-square"

@@ -82,7 +82,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Badge>Badge</Badge>
             </Flex>
             <CodeBlock code={`<Badge>Badge</Badge>`} />
@@ -91,7 +91,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="brand-colors" title="Brand Colors">
           <Flex direction="col" gap="md">
-            <Flex aligin="center" justify="center" gap="md">
+            <Flex aligin="center" justify="left" gap="md">
               <Badge>default</Badge>
               <Badge color="neutral">neutral</Badge>
               <Badge color="primary">primary</Badge>
@@ -112,7 +112,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="soft-style" title="Soft Style">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Badge variant="soft">default</Badge>
               <Badge variant="soft" color="primary">
                 primary
@@ -135,7 +135,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="outline-style" title="Outline Style">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Badge variant="outline">default</Badge>
               <Badge variant="outline" color="primary">
                 primary
@@ -158,7 +158,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="dash-style" title="Dash Style">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Badge variant="dash">default</Badge>
               <Badge variant="dash" color="primary">
                 primary
@@ -181,7 +181,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Badge size="lg">987,654</Badge>
               <Badge size="md">987,654</Badge>
               <Badge size="sm">987,654</Badge>
@@ -198,7 +198,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="empty" title="Empty Badges">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Badge size="lg" color="primary" />
               <Badge size="md" color="primary" />
               <Badge size="sm" color="primary" />
@@ -215,7 +215,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="state-colors" title="State Colors">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Badge color="info" class="gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +304,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="badge-in-text" title="Badge in Text">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <h2 class="text-xl">
                 Heading
                 <Badge size="lg">NEW</Badge>
@@ -345,7 +345,7 @@ export default function BadgeShowcase() {
 
         <ShowcaseSection id="badge-in-button" title="Badge in Button">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center" gap="lg">
+            <Flex justify="left" align="left" gap="lg">
               <Button>
                 Inbox
                 <Badge>+99</Badge>

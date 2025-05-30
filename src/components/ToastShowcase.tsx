@@ -115,7 +115,7 @@ const ToastShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Toast>Default toast message.</Toast>
             </Flex>
             <CodeBlock code={`<Toast>Default toast message.</Toast>`} />
@@ -124,7 +124,7 @@ const ToastShowcase: Component = () => {
 
         <ShowcaseSection id="with-alert" title="With Alert">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Toast>
                 <Alert status="info">
                   <span>New message arrived.</span>
@@ -143,7 +143,7 @@ const ToastShowcase: Component = () => {
 
         <ShowcaseSection id="multiple" title="Multiple Alerts">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Toast>
                 <Alert status="info">New message arrived.</Alert>
                 <Alert status="success">Message sent successfully.</Alert>
@@ -162,8 +162,8 @@ const ToastShowcase: Component = () => {
 
         <ShowcaseSection id="dynamic" title="Dynamic Alerts">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
-              <Flex direction="col" gap="md" align="center">
+            <Flex align="left" justify="left">
+              <Flex direction="col" gap="md" align="left">
                 <Button onClick={addAlert}>Add Toast</Button>
                 <Toast max={0}>
                   {alerts().map((alert, index) => (
@@ -230,8 +230,8 @@ return (
 
         <ShowcaseSection id="limited" title="Limited Dynamic Alerts">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
-              <Flex direction="col" gap="md" align="center">
+            <Flex align="left" justify="left">
+              <Flex direction="col" gap="md" align="left">
                 <Button onClick={addLimitedAlert}>Add Toast (Max 3)</Button>
                 <Toast max={3}>
                   {limitedAlerts().map((alert, index) => (
@@ -277,7 +277,7 @@ return (
 
         <ShowcaseSection id="positions" title="Positions">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Flex direction="col" gap="sm" class="w-full">
                 <Toast position="top">
                   <Alert status="info">Top position</Alert>

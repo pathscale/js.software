@@ -71,7 +71,7 @@ export default function LoadingShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Loading variant="spinner" />
             </Flex>
             <CodeBlock code={`<Loading variant="spinner" />`} />
@@ -80,7 +80,7 @@ export default function LoadingShowcase() {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center" gap="lg">
+            <Flex direction="col" justify="left" align="left" gap="lg">
               <Loading class="m-1" />
               <Loading class="m-1" color="primary" />
               <Loading class="m-1" color="secondary" />
@@ -107,7 +107,7 @@ export default function LoadingShowcase() {
 
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center" gap="lg">
+            <Flex direction="col" justify="left" align="left" gap="lg">
               <Loading variant="spinner" />
               <Loading variant="dots" />
               <Loading variant="ring" />
@@ -128,7 +128,7 @@ export default function LoadingShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center" gap="lg">
+            <Flex direction="col" justify="left" align="left" gap="lg">
               <Loading size="xs" />
               <Loading size="sm" />
               <Loading size="md" />

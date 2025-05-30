@@ -84,7 +84,7 @@ export default function ToggleShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="lg">
+            <Flex align="left" justify="left" gap="lg">
               <Toggle />
               <Toggle checked />
             </Flex>
@@ -97,7 +97,7 @@ export default function ToggleShowcase() {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex wrap="wrap" align="center" justify="center" gap="lg">
+            <Flex wrap="wrap" align="left" justify="left" gap="lg">
               <Toggle color="primary" checked />
               <Toggle color="secondary" checked />
               <Toggle color="accent" checked />
@@ -122,7 +122,7 @@ export default function ToggleShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="lg">
+            <Flex align="left" justify="left" gap="lg">
               <Toggle size="xs" />
               <Toggle size="sm" />
               <Toggle size="md" />
@@ -141,7 +141,7 @@ export default function ToggleShowcase() {
 
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center" gap="lg">
+            <Flex align="left" justify="left" gap="lg">
               <Toggle disabled />
               <Toggle disabled checked />
             </Flex>

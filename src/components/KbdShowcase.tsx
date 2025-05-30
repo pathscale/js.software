@@ -51,7 +51,7 @@ export default function KbdShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Kbd>A</Kbd>
             </Flex>
             <CodeBlock code={`<Kbd>A</Kbd>`} />
@@ -60,7 +60,7 @@ export default function KbdShowcase() {
 
         <ShowcaseSection id="in-text" title="In Text">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <div class="font-sans">
                 Press <Kbd>F</Kbd> to pay respects.
               </div>
@@ -75,7 +75,7 @@ export default function KbdShowcase() {
 
         <ShowcaseSection id="key-combination" title="Key Combination">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <div class="flex items-center gap-1">
                 <Kbd>ctrl</Kbd>+<Kbd>shift</Kbd>+<Kbd>del</Kbd>
               </div>
@@ -90,7 +90,7 @@ export default function KbdShowcase() {
 
         <ShowcaseSection id="function-keys" title="Function Keys">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <div class="flex items-center gap-1">
                 <Kbd>⌘</Kbd>
                 <Kbd>⌥</Kbd>

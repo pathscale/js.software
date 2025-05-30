@@ -98,7 +98,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="basic" title="Basic Usage">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center">
+            <Flex direction="col" justify="left" align="left">
               <Input
                 value={value()}
                 onInput={(e) => setValue(e.currentTarget.value)}
@@ -119,7 +119,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="colors" title="Color Variants">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center" gap="lg">
+            <Flex direction="col" justify="left" align="left" gap="lg">
               <Input placeholder="Default input" />
               <Input color="success" placeholder="Success" />
               <Input color="warning" placeholder="Warning" />
@@ -136,7 +136,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center" gap="lg">
+            <Flex direction="col" justify="left" align="left" gap="lg">
               <Input loading placeholder="Loading state" />
               <Input disabled placeholder="Disabled state" />
               <Input readonly value="Read-only value" />
@@ -157,7 +157,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center" gap="lg">
+            <Flex direction="col" justify="left" align="left" gap="lg">
               <Input rounded placeholder="Rounded input" />
               <div class="w-48">
                 <Input expanded={false} placeholder="Not expanded" />
@@ -174,7 +174,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="icons" title="With Icons">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="center" align="center" gap="lg">
+            <Flex direction="col" justify="left" align="left" gap="lg">
               <Input leftIcon={<FiLock />} placeholder="With left icon" />
               <Input
                 type="password"

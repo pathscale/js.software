@@ -133,8 +133,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="default" title="Default">
           <Flex
             class="w-full component-preview"
-            align="center"
-            justify="center"
+            align="left"
+            justify="left"
             gap="md"
           >
             <Alert icon={<InfoIcon />}>
@@ -147,8 +147,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="status-colors" title="Status Colors">
           <Flex
             class="w-full component-preview"
-            align="center"
-            justify="center"
+            align="left"
+            justify="left"
             gap="md"
           >
             <Flex direction="col" gap="md" class="w-full">
@@ -174,8 +174,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="variants" title="Variants">
           <Flex
             class="w-full component-preview"
-            align="center"
-            justify="center"
+            align="left"
+            justify="left"
             gap="md"
           >
             <Flex direction="col" gap="md" class="w-full">
@@ -199,11 +199,11 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="layout" title="Layout">
           <Flex
             class="w-full component-preview"
-            align="center"
-            justify="center"
+            align="left"
+            justify="left"
             gap="md"
           >
-            <Flex direction="col" gap="md" class="w-full">
+            <Flex direction="col" gap="md">
               <Alert icon={<InfoIcon />} layout="horizontal">
                 …
               </Alert>
@@ -212,14 +212,17 @@ const AlertShowcase: Component = () => {
               </Alert>
             </Flex>
           </Flex>
-          <CodeBlock code={`<Alert layout="horizontal">…</Alert>`} />
+          <CodeBlock
+            code={`<Alert layout="horizontal">…</Alert>
+<Alert layout="vertical">…</Alert>`}
+          />
         </ShowcaseSection>
 
         <ShowcaseSection id="with-buttons" title="With Buttons">
           <Flex
             class="w-full component-preview"
-            align="center"
-            justify="center"
+            align="left"
+            justify="left"
             gap="md"
           >
             <Alert icon={<InfoIcon />} class="shadow-lg">
@@ -238,8 +241,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="with-title" title="With Title and Description">
           <Flex
             class="w-full component-preview"
-            align="center"
-            justify="center"
+            align="left"
+            justify="left"
             gap="md"
           >
             <Alert icon={<InfoIcon />} class="shadow-lg">

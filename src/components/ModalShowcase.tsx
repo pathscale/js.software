@@ -85,7 +85,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Button onClick={() => setDefaultOpen(true)}>Open Modal</Button>
               <Modal open={defaultOpen()} backdrop position="middle">
                 <Modal.Header class="font-bold">Hello!</Modal.Header>
@@ -122,7 +122,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="clicked-outside" title="Clicked Outside">
           <Flex direction="col" gap="md">
-            <Flex justify="center" align="center">
+            <Flex justify="left" align="left">
               <Button onClick={() => setOutsideOpen(true)}>Open Modal</Button>
               <Modal open={outsideOpen()} backdrop position="middle">
                 <Modal.Header class="font-bold">Hello!</Modal.Header>
@@ -147,7 +147,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="close-button" title="Close Button">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Button onClick={() => setCloseButtonOpen(true)}>
                 Open Modal
               </Button>
@@ -196,7 +196,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="custom-width" title="Custom Width">
           <Flex direction="col" gap="md">
-            <Flex align="center" justify="center">
+            <Flex align="left" justify="left">
               <Button onClick={() => setCustomWidthOpen(true)}>
                 Open Modal
               </Button>
