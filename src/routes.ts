@@ -1,29 +1,49 @@
 import { Component } from "solid-js";
+
+import Home from "./pages/Home";
+import Theming from "./pages/Theming";
+
 import AccordionShowcase from "./components/AccordionShowcase";
 import AlertShowcase from "./components/AlertShowcase";
+import ArtboardShowcase from "./components/ArtboardShowcase";
 import AvatarShowcase from "./components/AvatarShowcase";
 import BadgeShowcase from "./components/BadgeShowcase";
-import DockShowcase from "./components/DockShowcase";
+import BackgroundShowcase from "./components/BackgroundShowcase";
 import BreadcrumbShowcase from "./components/BreadcrumbShowcase";
+import BrowserMockupShowcase from "./components/BrowserMockupShowcase";
 import ButtonShowcase from "./components/ButtonShowcase";
 import CardShowcase from "./components/CardShowcase";
 import CarouselShowcase from "./components/CarouselShowcase";
 import ChatBubbleShowcase from "./components/ChatBubbleShowcase";
 import CheckboxShowcase from "./components/CheckboxShowcase";
+import CodeMockupShowcase from "./components/CodeMockupShowcase";
 import CollapseShowcase from "./components/CollapseShowcase";
+import CopyButtonShowcase from "./components/CopyButtonShowcase";
 import CountdownShowcase from "./components/CountdownShowcase";
 import DiffShowcase from "./components/DiffShowcase";
+import DividerShowcase from "./components/DividerShowcase";
+import DockShowcase from "./components/DockShowcase";
+import DrawerShowcase from "./components/DrawerShowcase";
 import DropdownShowcase from "./components/DropdownShowcase";
 import FileInputShowcase from "./components/FileInputShowcase";
-import Home from "./pages/Home";
+import FlexShowcase from "./components/FlexShowcase";
+import FooterShowcase from "./components/FooterShowcase";
+import FormShowcase from "./components/FormShowcase";
+import GridShowcase from "./components/GridShowcase";
+import HeroShowcase from "./components/HeroShowcase";
+import IconShowcase from "./components/IconShowcase";
+import IndicatorShowcase from "./components/IndicatorShowcase";
 import InputShowcase from "./components/InputShowcase";
+import JoinShowcase from "./components/JoinShowcase";
 import KbdShowcase from "./components/KbdShowcase";
 import LinkShowcase from "./components/LinkShowcase";
 import LoadingShowcase from "./components/LoadingShowcase";
+import MaskShowcase from "./components/MaskShowcase";
 import MenuShowcase from "./components/MenuShowcase";
 import ModalShowcase from "./components/ModalShowcase";
 import NavbarShowcase from "./components/NavbarShowcase";
 import PaginationShowcase from "./components/PaginationShowcase";
+import PhonemockupShowcase from "./components/PhonemockupShowcase";
 import ProgressShowcase from "./components/ProgressShowcase";
 import RadialProgressShowcase from "./components/RadialProgressShowcase";
 import RadioShowcase from "./components/RadioShowcase";
@@ -31,19 +51,20 @@ import RangeShowcase from "./components/RangeShowcase";
 import RatingShowcase from "./components/RatingShowcase";
 import SelectShowcase from "./components/SelectShowcase";
 import SkeletonShowcase from "./components/SkeletonShowcase";
+import SidenavShowcase from "./components/SidenavShowcase";
+import StackShowcase from "./components/StackShowcase";
 import StatsShowcase from "./components/StatsShowcase";
+import StatusShowcase from "./components/StatusShowcase";
 import StepsShowcase from "./components/StepsShowcase";
 import SwapShowcase from "./components/SwapShowcase";
-import SwitchShowcase from "./components/SwitchShowcase";
 import TableShowcase from "./components/TableShowcase";
 import TabsShowcase from "./components/TabsShowcase";
 import TextareaShowcase from "./components/TextareaShowcase";
-import Theming from "./pages/Theming";
 import TimelineShowcase from "./components/TimelineShowcase";
 import ToastShowcase from "./components/ToastShowcase";
 import ToggleShowcase from "./components/ToggleShowcase";
 import TooltipShowcase from "./components/TooltipShowcase";
-import SidenavShowcase from "./components/SidenavShowcase";
+import WindowMockupShowcase from "./components/WindowMockupShowcase";
 
 export interface RouteConfig {
   name: string;
@@ -78,6 +99,12 @@ export const routes: RouteConfig[] = [
     description: "Displays important messages to the user.",
   },
   {
+    name: "Artboard",
+    path: "/artboard",
+    component: ArtboardShowcase,
+    description: "Simulates screen dimensions with mobile device framing.",
+  },
+  {
     name: "Avatar",
     path: "/avatar",
     component: AvatarShowcase,
@@ -91,10 +118,23 @@ export const routes: RouteConfig[] = [
     description: "Small count or label to indicate status or quantity.",
   },
   {
+    name: "Background",
+    path: "/background",
+    component: BackgroundShowcase,
+    description: "Container with customizable background colors.",
+  },
+
+  {
     name: "Breadcrumb",
     path: "/breadcrumb",
     component: BreadcrumbShowcase,
     description: "Hierarchical navigation showing the current path in the app.",
+  },
+  {
+    name: "Browser Mockup",
+    path: "/browsermockup",
+    component: BrowserMockupShowcase,
+    description: "Mockup browser frame for previewing web content.",
   },
   {
     name: "Button",
@@ -127,10 +167,22 @@ export const routes: RouteConfig[] = [
     description: "Checkboxes for selecting one or multiple options.",
   },
   {
+    name: "Code Mockup",
+    path: "/codemockup",
+    component: CodeMockupShowcase,
+    description: "Styled code block mockup for display purposes.",
+  },
+  {
     name: "Collapse",
     path: "/collapse",
     component: CollapseShowcase,
     description: "Expand and collapse content.",
+  },
+  {
+    name: "Copy Button",
+    path: "/copy-button",
+    component: CopyButtonShowcase,
+    description: "Button for copying content to the clipboard.",
   },
   {
     name: "Countdown",
@@ -145,10 +197,22 @@ export const routes: RouteConfig[] = [
     description: "Display differences between two pieces of content.",
   },
   {
+    name: "Divider",
+    path: "/divider",
+    component: DividerShowcase,
+    description: "Visual divider line between sections or content.",
+  },
+  {
     name: "Dock",
     path: "/dock",
     component: DockShowcase,
     description: "Navigation bar at the bottom of the screen.",
+  },
+  {
+    name: "Drawer",
+    path: "/drawer",
+    component: DrawerShowcase,
+    description: "Slide-in panel from the side of the screen.",
   },
   {
     name: "Dropdown",
@@ -163,10 +227,59 @@ export const routes: RouteConfig[] = [
     description: "Component for uploading files from the user's device.",
   },
   {
+    name: "Flex",
+    path: "/flex",
+    component: FlexShowcase,
+    description: "Flexible box layout wrapper for components.",
+  },
+  {
+    name: "Footer",
+    path: "/footer",
+    component: FooterShowcase,
+    description: "Footer layout component for pages.",
+  },
+  {
+    name: "Form",
+    path: "/form",
+    component: FormShowcase,
+    description:
+      "Form component showcasing various input fields and validation states.",
+  },
+  {
+    name: "Grid",
+    path: "/grid",
+    component: GridShowcase,
+    description: "Grid layout system for content.",
+  },
+  {
+    name: "Hero",
+    path: "/hero",
+    component: HeroShowcase,
+    description: "Hero section for headers, intros, or marketing.",
+  },
+  {
+    name: "Icon",
+    path: "/icon",
+    component: IconShowcase,
+    description: "SVG icon wrapper and manager.",
+  },
+  {
+    name: "Indicator",
+    path: "/indicator",
+    component: IndicatorShowcase,
+    description: "Notification dots and badges for elements.",
+  },
+  {
     name: "Input",
     path: "/input",
     component: InputShowcase,
     description: "Text input fields for forms and user data.",
+  },
+  {
+    name: "Join",
+    path: "/join",
+    component: JoinShowcase,
+    description: "Visual grouping of adjacent elements.",
   },
   {
     name: "Kbd",
@@ -185,6 +298,12 @@ export const routes: RouteConfig[] = [
     path: "/loading",
     component: LoadingShowcase,
     description: "Indicators for loading states.",
+  },
+  {
+    name: "Mask",
+    path: "/mask",
+    component: MaskShowcase,
+    description: "Shape masking utility for images or elements.",
   },
   {
     name: "Menu",
@@ -210,6 +329,12 @@ export const routes: RouteConfig[] = [
     component: PaginationShowcase,
     description:
       "Controls for navigating between pages of content or long lists.",
+  },
+  {
+    name: "Phonemockup",
+    path: "/phonemockup",
+    component: PhonemockupShowcase,
+    description: "Mobile phone mockup for content previews.",
   },
   {
     name: "Progress",
@@ -249,22 +374,34 @@ export const routes: RouteConfig[] = [
     description: "Dropdowns for selecting an option from a list.",
   },
   {
-    name: "Skeleton",
-    path: "/skeleton",
-    component: SkeletonShowcase,
-    description: "Placeholder content while loading.",
-  },
-  {
     name: "Sidenav",
     path: "/sidenav",
     component: SidenavShowcase,
     description: "Side navigation for app sections.",
   },
   {
+    name: "Skeleton",
+    path: "/skeleton",
+    component: SkeletonShowcase,
+    description: "Placeholder content while loading.",
+  },
+  {
+    name: "Stack",
+    path: "/stack",
+    component: StackShowcase,
+    description: "Layered stack of elements with overlap.",
+  },
+  {
     name: "Stats",
     path: "/stats",
     component: StatsShowcase,
     description: "Display statistics or data.",
+  },
+  {
+    name: "Status",
+    path: "/status",
+    component: StatusShowcase,
+    description: "Small status indicator for UI elements.",
   },
   {
     name: "Steps",
@@ -321,5 +458,11 @@ export const routes: RouteConfig[] = [
     path: "/tooltip",
     component: TooltipShowcase,
     description: "Informative messages that appear on hover or focus.",
+  },
+  {
+    name: "Window Mockup",
+    path: "/windowmockup",
+    component: WindowMockupShowcase,
+    description: "Window frame mockup for web content preview.",
   },
 ];
