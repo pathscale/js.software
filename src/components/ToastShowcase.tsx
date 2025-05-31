@@ -45,48 +45,40 @@ const ToastShowcase: Component = () => {
     },
   ];
 
-  // Dynamic alerts state
+  const [showDefault, setShowDefault] = createSignal(false);
+  const [showWithAlert, setShowWithAlert] = createSignal(false);
+  const [showMultiple, setShowMultiple] = createSignal(false);
+  const [showPositions, setShowPositions] = createSignal(false);
+
   const [alerts, setAlerts] = createSignal<AlertItem[]>([]);
-
   const [limitedAlerts, setLimitedAlerts] = createSignal<AlertItem[]>([]);
-
   const [alertCounter, setAlertCounter] = createSignal(0);
   const [limitedAlertCounter, setLimitedAlertCounter] = createSignal(0);
-
   const statuses: AlertStatus[] = ["info", "success", "warning", "error"];
 
   const addAlert = () => {
-    const currentCounter = alertCounter();
-    setAlertCounter(currentCounter + 1);
-
-    setAlerts((prev) => [
-      ...prev,
-      {
-        text: `Message #${currentCounter + 1}`,
-        status: statuses[Math.floor(Math.random() * statuses.length)]!,
-      },
-    ]);
+    const counter = alertCounter();
+    setAlertCounter(counter + 1);
+    const newAlert = {
+      text: `Message #${counter + 1}`,
+      status: statuses[Math.floor(Math.random() * statuses.length)]!,
+    };
+    setAlerts((prev) => [...prev, newAlert]);
+    setTimeout(() => removeAlert(0), 4000);
   };
 
   const addLimitedAlert = () => {
-    const currentCounter = limitedAlertCounter();
-    setLimitedAlertCounter(currentCounter + 1);
-
+    const counter = limitedAlertCounter();
+    setLimitedAlertCounter(counter + 1);
+    const newAlert = {
+      text: `Limited message #${counter + 1}`,
+      status: statuses[Math.floor(Math.random() * statuses.length)]!,
+    };
     setLimitedAlerts((prev) => {
-      const maxInMemory = 3;
-      const newAlert: AlertItem = {
-        text: `Limited message #${currentCounter + 1}`,
-        status: statuses[Math.floor(Math.random() * statuses.length)]!,
-      };
-
-      const newAlerts = [...prev, newAlert];
-
-      if (newAlerts.length > maxInMemory) {
-        return newAlerts.slice(-maxInMemory);
-      }
-
-      return newAlerts;
+      const next = [...prev, newAlert].slice(-3);
+      return next;
     });
+    setTimeout(() => removeLimitedAlert(0), 4000);
   };
 
   const removeAlert = (index: number) => {
@@ -115,156 +107,105 @@ const ToastShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
-              <Toast>Default toast message.</Toast>
-            </Flex>
-            <CodeBlock code={`<Toast>Default toast message.</Toast>`} />
+            <Button
+              onClick={() => {
+                setShowDefault(true);
+                setTimeout(() => setShowDefault(false), 4000);
+              }}
+            >
+              Show Default Toast
+            </Button>
+            {showDefault() && (
+              <Toast>
+                <Alert status="info">Default toast message.</Alert>
+              </Toast>
+            )}
+            <CodeBlock
+              code={`<Toast>\n  <Alert status="info">Default toast message.</Alert>\n</Toast>`}
+            />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-alert" title="With Alert">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Button
+              onClick={() => {
+                setShowWithAlert(true);
+                setTimeout(() => setShowWithAlert(false), 4000);
+              }}
+            >
+              Show Toast with Alert
+            </Button>
+            {showWithAlert() && (
               <Toast>
-                <Alert status="info">
+                <Alert status="success">
                   <span>New message arrived.</span>
                 </Alert>
               </Toast>
-            </Flex>
+            )}
             <CodeBlock
-              code={`<Toast>
-  <Alert status="info">
-    <span>New message arrived.</span>
-  </Alert>
-</Toast>`}
+              code={`<Toast>\n  <Alert status="success">\n    <span>New message arrived.</span>\n  </Alert>\n</Toast>`}
             />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="multiple" title="Multiple Alerts">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Button
+              onClick={() => {
+                setShowMultiple(true);
+                setTimeout(() => setShowMultiple(false), 4000);
+              }}
+            >
+              Show Multiple Alerts
+            </Button>
+            {showMultiple() && (
               <Toast>
                 <Alert status="info">New message arrived.</Alert>
                 <Alert status="success">Message sent successfully.</Alert>
                 <Alert status="warning">Connection unstable.</Alert>
               </Toast>
-            </Flex>
+            )}
             <CodeBlock
-              code={`<Toast>
-  <Alert status="info">New message arrived.</Alert>
-  <Alert status="success">Message sent successfully.</Alert>
-  <Alert status="warning">Connection unstable.</Alert>
-</Toast>`}
+              code={`<Toast>\n  <Alert status="info">New message arrived.</Alert>\n  <Alert status="success">Message sent successfully.</Alert>\n  <Alert status="warning">Connection unstable.</Alert>\n</Toast>`}
             />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="dynamic" title="Dynamic Alerts">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
-              <Flex direction="col" gap="md" align="left">
-                <Button onClick={addAlert}>Add Toast</Button>
-                <Toast max={0}>
-                  {alerts().map((alert, index) => (
-                    <Alert
-                      status={alert.status}
-                      class="flex justify-between gap-4"
-                      style="min-width: 16rem;"
-                    >
-                      <span>{alert.text}</span>
-                      <Button
-                        size="sm"
-                        color="ghost"
-                        onClick={() => removeAlert(index)}
-                      >
-                        ✕
-                      </Button>
-                    </Alert>
-                  ))}
-                </Toast>
-              </Flex>
-            </Flex>
+            <Button onClick={addAlert}>Add Toast</Button>
+            <Toast>
+              {alerts().map((alert, index) => (
+                <Alert
+                  status={alert.status}
+                  class="flex justify-between gap-4"
+                  style="min-width: 16rem;"
+                >
+                  <span>{alert.text}</span>
+                  <Button
+                    size="sm"
+                    color="ghost"
+                    onClick={() => removeAlert(index)}
+                  >
+                    ✕
+                  </Button>
+                </Alert>
+              ))}
+            </Toast>
             <CodeBlock
-              code={`const [alerts, setAlerts] = createSignal<AlertItem[]>([
-  { text: "This is a custom alert!", status: "info" },
-]);
-
-const addAlert = () => {
-  setAlerts(prev => [
-    ...prev,
-    {
-      text: \`Message #\${alerts().length + 1}\`,
-      status: // random status
-    }
-  ]);
-};
-
-const removeAlert = (index: number) => {
-  setAlerts(prev => prev.filter((_, i) => i !== index));
-};
-
-return (
-  <Toast max={0}>
-    {alerts().map((alert, index) => (
-      <Alert
-        status={alert.status}
-        class="flex justify-between gap-4"
-        style="min-width: 16rem;"
-      >
-        <span>{alert.text}</span>
-        <Button
-          size="sm"
-          color="ghost"
-          onClick={() => removeAlert(index)}
-        >
-          ✕
-        </Button>
-      </Alert>
-    ))}
-  </Toast>
-);`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="limited" title="Limited Dynamic Alerts">
-          <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
-              <Flex direction="col" gap="md" align="left">
-                <Button onClick={addLimitedAlert}>Add Toast (Max 3)</Button>
-                <Toast max={3}>
-                  {limitedAlerts().map((alert, index) => (
-                    <Alert
-                      status={alert.status}
-                      class="flex justify-between gap-4"
-                      style="min-width: 16rem;"
-                    >
-                      <span>{alert.text}</span>
-                      <Button
-                        size="sm"
-                        color="ghost"
-                        onClick={() => removeLimitedAlert(index)}
-                      >
-                        ✕
-                      </Button>
-                    </Alert>
-                  ))}
-                </Toast>
-              </Flex>
-            </Flex>
-            <CodeBlock
-              code={`<Toast max={3}>
-  {limitedAlerts().map((alert, index) => (
+              code={`<Toast>
+  {alerts().map((alert, index) => (
     <Alert
       status={alert.status}
       class="flex justify-between gap-4"
+      style="min-width: 16rem;"
     >
       <span>{alert.text}</span>
       <Button
         size="sm"
         color="ghost"
-        onClick={() => removeLimitedAlert(index)}
+        onClick={() => removeAlert(index)}
       >
         ✕
       </Button>
@@ -275,49 +216,103 @@ return (
           </Flex>
         </ShowcaseSection>
 
+        <ShowcaseSection id="limited" title="Limited Dynamic Alerts">
+          <Flex direction="col" gap="md">
+            <Button onClick={addLimitedAlert}>Add Toast (Max 3)</Button>
+            <Toast max={3}>
+              {limitedAlerts().map((alert, index) => (
+                <Alert
+                  status={alert.status}
+                  class="flex justify-between gap-4"
+                  style="min-width: 16rem;"
+                >
+                  <span>{alert.text}</span>
+                  <Button
+                    size="sm"
+                    color="ghost"
+                    onClick={() => removeLimitedAlert(index)}
+                  >
+                    ✕
+                  </Button>
+                </Alert>
+              ))}
+            </Toast>
+            <CodeBlock
+              code={`<Toast max={3}>
+{limitedAlerts().map((alert, index) => (
+  <Alert
+    status={alert.status}
+    class="flex justify-between gap-4"
+    style="min-width: 16rem;"
+  >
+    <span>{alert.text}</span>
+    <Button
+      size="sm"
+      color="ghost"
+      onClick={() => removeLimitedAlert(index)}
+    >
+      ✕
+    </Button>
+  </Alert>
+))}
+</Toast>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
         <ShowcaseSection id="positions" title="Positions">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
-              <Flex direction="col" gap="sm" class="w-full">
-                <Toast position="top">
-                  <Alert status="info">Top position</Alert>
+            <Button
+              onClick={() => {
+                setShowPositions(true);
+                setTimeout(() => setShowPositions(false), 4000);
+              }}
+            >
+              Show Toast in All Positions
+            </Button>
+            {showPositions() && (
+              <>
+                <Toast vertical="top">
+                  <Alert status="info">Top</Alert>
                 </Toast>
-                <Toast position="bottom">
-                  <Alert status="info">Bottom position</Alert>
+                <Toast vertical="bottom">
+                  <Alert status="info">Bottom</Alert>
                 </Toast>
-                <Toast position="top-left">
-                  <Alert status="info">Top-left position</Alert>
+                <Toast vertical="top" horizontal="start">
+                  <Alert status="info">Top-left</Alert>
                 </Toast>
-                <Toast position="top-right">
-                  <Alert status="info">Top-right position</Alert>
+                <Toast vertical="top" horizontal="end">
+                  <Alert status="info">Top-right</Alert>
                 </Toast>
-                <Toast position="bottom-left">
-                  <Alert status="info">Bottom-left position</Alert>
+                <Toast vertical="bottom" horizontal="start">
+                  <Alert status="info">Bottom-left</Alert>
                 </Toast>
-                <Toast position="bottom-right">
-                  <Alert status="info">Bottom-right position</Alert>
+                <Toast vertical="bottom" horizontal="end">
+                  <Alert status="info">Bottom-right</Alert>
                 </Toast>
-              </Flex>
-            </Flex>
+              </>
+            )}
             <CodeBlock
-              code={`<Toast position="top">
-  <Alert status="info">Top position</Alert>
-</Toast>
-<Toast position="bottom">
-  <Alert status="info">Bottom position</Alert>
-</Toast>
-<Toast position="top-left">
-  <Alert status="info">Top-left position</Alert>
-</Toast>
-<Toast position="top-right">
-  <Alert status="info">Top-right position</Alert>
-</Toast>
-<Toast position="bottom-left">
-  <Alert status="info">Bottom-left position</Alert>
-</Toast>
-<Toast position="bottom-right">
-  <Alert status="info">Bottom-right position</Alert>
-</Toast>`}
+              code={`<div>
+  <Toast vertical="top">
+    <Alert status="info">Top</Alert>
+  </Toast>
+  <Toast vertical="bottom">
+    <Alert status="info">Bottom</Alert>
+  </Toast>
+  <Toast vertical="top" horizontal="start">
+    <Alert status="info">Top-left</Alert>
+  </Toast>
+  <Toast vertical="top" horizontal="end">
+    <Alert status="info">Top-right</Alert>
+  </Toast>
+  <Toast vertical="bottom" horizontal="start">
+    <Alert status="info">Bottom-left</Alert>
+  </Toast>
+  <Toast vertical="bottom" horizontal="end">
+    <Alert status="info">Bottom-right</Alert>
+  </Toast>
+</div>`}
             />
           </Flex>
         </ShowcaseSection>

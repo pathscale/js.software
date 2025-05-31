@@ -54,7 +54,6 @@ import SkeletonShowcase from "./components/SkeletonShowcase";
 import SidenavShowcase from "./components/SidenavShowcase";
 import StackShowcase from "./components/StackShowcase";
 import StatsShowcase from "./components/StatsShowcase";
-import StatusShowcase from "./components/StatusShowcase";
 import StepsShowcase from "./components/StepsShowcase";
 import SwapShowcase from "./components/SwapShowcase";
 import TableShowcase from "./components/TableShowcase";
@@ -396,12 +395,6 @@ export const routes: RouteConfig[] = [
     path: "/stats",
     component: StatsShowcase,
     description: "Display statistics or data.",
-  },
-  {
-    name: "Status",
-    path: "/status",
-    component: StatusShowcase,
-    description: "Small status indicator for UI elements.",
   },
   {
     name: "Steps",
