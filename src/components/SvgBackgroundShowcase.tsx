@@ -13,7 +13,6 @@ export default function SvgBackgroundShowcase() {
 		{ id: "turbulence-effects", title: "Turbulence Effects" },
 		{ id: "animated", title: "Animated Backgrounds" },
 		{ id: "darkness-overlay", title: "Darkness Overlay" },
-		{ id: "preset-themes", title: "Preset Themes" },
 		{ id: "full-screen", title: "Full Screen Usage" },
 		{ id: "props", title: "Props" },
 	] as const;
