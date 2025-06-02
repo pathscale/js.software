@@ -101,18 +101,15 @@ export default function SvgBackgroundShowcase() {
 
 				<ShowcaseSection id="default" title="Default">
 					<Flex direction="col" gap="md">
-						<SvgBackground class="h-48 rounded-lg">
-							<div class="p-6 text-center">
+						<div>
+							<div class="mb-2 text-center">
 								<h3 class="text-fg-body text-xl font-semibold mb-2">Default SVG Background</h3>
 								<p class="text-fg-body/80">Green to blue gradient with default settings</p>
 							</div>
-						</SvgBackground>
+							<SvgBackground class="h-48 rounded-lg" />
+						</div>
 						<CodeBlock
-							code={`<SvgBackground class="h-48 rounded-lg">
-	<div class="p-6 text-center">
-		<h3 class="text-fg-body text-xl font-semibold">Content</h3>
-	</div>
-</SvgBackground>`}
+							code={`<SvgBackground class="h-48 rounded-lg" />`}
 						/>
 					</Flex>
 				</ShowcaseSection>
@@ -120,50 +117,45 @@ export default function SvgBackgroundShowcase() {
 				<ShowcaseSection id="custom-colors" title="Custom Colors">
 					<Flex direction="col" gap="md">
 						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-							<SvgBackground
-								colorStart="hsl(200, 100%, 60%)"
-								colorEnd="hsl(240, 100%, 40%)"
-								class="h-32 rounded-lg"
-							>
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">🌊 Ocean</h4>
-								</div>
-							</SvgBackground>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">🌊 Ocean</h4>
+								<SvgBackground
+									colorStart="hsl(200, 100%, 60%)"
+									colorEnd="hsl(240, 100%, 40%)"
+									class="h-32 rounded-lg"
+								/>
+							</div>
 
-							<SvgBackground
-								colorStart="hsl(30, 100%, 60%)"
-								colorEnd="hsl(350, 100%, 50%)"
-								class="h-32 rounded-lg"
-							>
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">🌅 Sunset</h4>
-								</div>
-							</SvgBackground>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">🌅 Sunset</h4>
+								<SvgBackground
+									colorStart="hsl(30, 100%, 60%)"
+									colorEnd="hsl(350, 100%, 50%)"
+									class="h-32 rounded-lg"
+								/>
+							</div>
 
-							<SvgBackground
-								colorStart="hsl(120, 80%, 40%)"
-								colorEnd="hsl(90, 60%, 30%)"
-								class="h-32 rounded-lg"
-							>
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">🌲 Forest</h4>
-								</div>
-							</SvgBackground>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">🌲 Forest</h4>
+								<SvgBackground
+									colorStart="hsl(120, 80%, 40%)"
+									colorEnd="hsl(90, 60%, 30%)"
+									class="h-32 rounded-lg"
+								/>
+							</div>
 						</div>
 						<CodeBlock
 							code={`<SvgBackground
 	colorStart="hsl(200, 100%, 60%)"
 	colorEnd="hsl(240, 100%, 40%)"
->
-	<div class="p-4 text-center text-fg-body">Ocean Theme</div>
-</SvgBackground>
+	class="h-32 rounded-lg"
+/>
 
 <SvgBackground
 	colorStart="hsl(30, 100%, 60%)"
 	colorEnd="hsl(350, 100%, 50%)"
->
-	<div class="p-4 text-center text-fg-body">Sunset Theme</div>
-</SvgBackground>`}
+	class="h-32 rounded-lg"
+/>`}
 						/>
 					</Flex>
 				</ShowcaseSection>
@@ -171,31 +163,27 @@ export default function SvgBackgroundShowcase() {
 				<ShowcaseSection id="opacity-variations" title="Opacity Variations">
 					<Flex direction="col" gap="md">
 						<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-							<SvgBackground opacity={0.3} class="h-24 rounded-lg">
-								<div class="p-3 text-center">
-									<span class="text-sm font-medium">30%</span>
-								</div>
-							</SvgBackground>
-							<SvgBackground opacity={0.5} class="h-24 rounded-lg">
-								<div class="p-3 text-center">
-									<span class="text-sm font-medium text-fg-body">50%</span>
-								</div>
-							</SvgBackground>
-							<SvgBackground opacity={0.8} class="h-24 rounded-lg">
-								<div class="p-3 text-center">
-									<span class="text-sm font-medium text-fg-body">80%</span>
-								</div>
-							</SvgBackground>
-							<SvgBackground opacity={1} class="h-24 rounded-lg">
-								<div class="p-3 text-center">
-									<span class="text-sm font-medium text-fg-body">100%</span>
-								</div>
-							</SvgBackground>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">30% Opacity</span>
+								<SvgBackground opacity={0.3} class="h-24 rounded-lg" />
+							</div>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">50% Opacity</span>
+								<SvgBackground opacity={0.5} class="h-24 rounded-lg" />
+							</div>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">80% Opacity</span>
+								<SvgBackground opacity={0.8} class="h-24 rounded-lg" />
+							</div>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">100% Opacity</span>
+								<SvgBackground opacity={1} class="h-24 rounded-lg" />
+							</div>
 						</div>
 						<CodeBlock
-							code={`<SvgBackground opacity={0.3}>Low opacity</SvgBackground>
-<SvgBackground opacity={0.8}>High opacity</SvgBackground>
-<SvgBackground opacity={1}>Full opacity</SvgBackground>`}
+							code={`<SvgBackground opacity={0.3} class="h-24 rounded-lg" />
+<SvgBackground opacity={0.8} class="h-24 rounded-lg" />
+<SvgBackground opacity={1} class="h-24 rounded-lg" />`}
 						/>
 					</Flex>
 				</ShowcaseSection>
@@ -203,26 +191,23 @@ export default function SvgBackgroundShowcase() {
 				<ShowcaseSection id="blur-intensity" title="Blur Intensity">
 					<Flex direction="col" gap="md">
 						<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-							<SvgBackground blurIntensity={10} class="h-32 rounded-lg">
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">Low Blur (10)</h4>
-								</div>
-							</SvgBackground>
-							<SvgBackground blurIntensity={36} class="h-32 rounded-lg">
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">Medium Blur (36)</h4>
-								</div>
-							</SvgBackground>
-							<SvgBackground blurIntensity={60} class="h-32 rounded-lg">
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">High Blur (60)</h4>
-								</div>
-							</SvgBackground>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">No Blur (0)</h4>
+								<SvgBackground blurIntensity={0} class="h-32 rounded-lg" />
+							</div>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">Medium Blur (36)</h4>
+								<SvgBackground blurIntensity={36} class="h-32 rounded-lg" />
+							</div>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">High Blur (60)</h4>
+								<SvgBackground blurIntensity={60} class="h-32 rounded-lg" />
+							</div>
 						</div>
 						<CodeBlock
-							code={`<SvgBackground blurIntensity={10}>Low blur</SvgBackground>
-<SvgBackground blurIntensity={36}>Medium blur</SvgBackground>
-<SvgBackground blurIntensity={60}>High blur</SvgBackground>`}
+							code={`<SvgBackground blurIntensity={0} class="h-32 rounded-lg" />
+<SvgBackground blurIntensity={36} class="h-32 rounded-lg" />
+<SvgBackground blurIntensity={60} class="h-32 rounded-lg" />`}
 						/>
 					</Flex>
 				</ShowcaseSection>
@@ -230,26 +215,23 @@ export default function SvgBackgroundShowcase() {
 				<ShowcaseSection id="turbulence-effects" title="Turbulence Effects">
 					<Flex direction="col" gap="md">
 						<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-							<SvgBackground turbulenceFrequency={0.003} class="h-32 rounded-lg">
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">Smooth (0.003)</h4>
-								</div>
-							</SvgBackground>
-							<SvgBackground turbulenceFrequency={0.007} class="h-32 rounded-lg">
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">Normal (0.007)</h4>
-								</div>
-							</SvgBackground>
-							<SvgBackground turbulenceFrequency={0.015} class="h-32 rounded-lg">
-								<div class="p-4 text-center text-fg-body">
-									<h4 class="font-semibold">Intense (0.015)</h4>
-								</div>
-							</SvgBackground>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">Smooth (0.003)</h4>
+								<SvgBackground turbulenceFrequency={0.003} class="h-32 rounded-lg" />
+							</div>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">Normal (0.007)</h4>
+								<SvgBackground turbulenceFrequency={0.007} class="h-32 rounded-lg" />
+							</div>
+							<div>
+								<h4 class="font-semibold mb-2 text-center">Intense (0.015)</h4>
+								<SvgBackground turbulenceFrequency={0.015} class="h-32 rounded-lg" />
+							</div>
 						</div>
 						<CodeBlock
-							code={`<SvgBackground turbulenceFrequency={0.003}>Smooth</SvgBackground>
-<SvgBackground turbulenceFrequency={0.007}>Normal</SvgBackground>
-<SvgBackground turbulenceFrequency={0.015}>Intense</SvgBackground>`}
+							code={`<SvgBackground turbulenceFrequency={0.003} class="h-32 rounded-lg" />
+<SvgBackground turbulenceFrequency={0.007} class="h-32 rounded-lg" />
+<SvgBackground turbulenceFrequency={0.015} class="h-32 rounded-lg" />`}
 						/>
 					</Flex>
 				</ShowcaseSection>
@@ -257,31 +239,35 @@ export default function SvgBackgroundShowcase() {
 				<ShowcaseSection id="animated" title="Animated Backgrounds">
 					<Flex direction="col" gap="md">
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<SvgBackground
-								animated={true}
-								animationSpeed={9}
-								colorStart="hsl(200, 100%, 60%)"
-								colorEnd="hsl(240, 100%, 40%)"
-								class="h-40 rounded-lg"
-							>
-								<div class="p-4 text-center text-fg-body">
+							<div>
+								<div class="mb-2 text-center">
 									<h4 class="font-semibold">🌊 Animated Ocean</h4>
 									<p class="text-sm opacity-80">Smooth flowing animation</p>
 								</div>
-							</SvgBackground>
+								<SvgBackground
+									animated={true}
+									animationSpeed={9}
+									blurIntensity={0}
+									colorStart="hsl(200, 100%, 60%)"
+									colorEnd="hsl(240, 100%, 40%)"
+									class="h-40 rounded-lg"
+								/>
+							</div>
 
-							<SvgBackground
-								animated={true}
-								animationSpeed={9}
-								colorStart="hsl(280, 100%, 70%)"
-								colorEnd="hsl(180, 100%, 60%)"
-								class="h-40 rounded-lg"
-							>
-								<div class="p-4 text-center text-fg-body">
+							<div>
+								<div class="mb-2 text-center">
 									<h4 class="font-semibold">🌌 Aurora</h4>
 									<p class="text-sm opacity-80">Mystical color shifts</p>
 								</div>
-							</SvgBackground>
+								<SvgBackground
+									animated={true}
+									animationSpeed={9}
+									blurIntensity={0}
+									colorStart="hsl(280, 100%, 70%)"
+									colorEnd="hsl(180, 100%, 60%)"
+									class="h-40 rounded-lg"
+								/>
+							</div>
 						</div>
 						<CodeBlock
 							code={`<SvgBackground
@@ -289,9 +275,9 @@ export default function SvgBackgroundShowcase() {
 	animationSpeed={9}
 	colorStart="hsl(200, 100%, 60%)"
 	colorEnd="hsl(240, 100%, 40%)"
->
-	<div class="text-fg-body">Animated content</div>
-</SvgBackground>`}
+	blurIntensity={0}
+	class="h-40 rounded-lg"
+/>`}
 						/>
 					</Flex>
 				</ShowcaseSection>
@@ -299,32 +285,28 @@ export default function SvgBackgroundShowcase() {
 				<ShowcaseSection id="darkness-overlay" title="Darkness Overlay">
 					<Flex direction="col" gap="md">
 						<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-							<SvgBackground darkness={0} class="h-28 rounded-lg">
-								<div class="p-3 text-center text-fg-body">
-									<span class="text-sm font-medium">No darkness</span>
-								</div>
-							</SvgBackground>
-							<SvgBackground darkness={0.3} class="h-28 rounded-lg">
-								<div class="p-3 text-center text-fg-body">
-									<span class="text-sm font-medium">30% dark</span>
-								</div>
-							</SvgBackground>
-							<SvgBackground darkness={0.6} class="h-28 rounded-lg">
-								<div class="p-3 text-center text-fg-body">
-									<span class="text-sm font-medium">60% dark</span>
-								</div>
-							</SvgBackground>
-							<SvgBackground darkness={0.9} class="h-28 rounded-lg">
-								<div class="p-3 text-center text-fg-body">
-									<span class="text-sm font-medium">90% dark</span>
-								</div>
-							</SvgBackground>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">No darkness</span>
+								<SvgBackground darkness={0} class="h-28 rounded-lg" />
+							</div>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">30% dark</span>
+								<SvgBackground darkness={0.3} class="h-28 rounded-lg" />
+							</div>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">60% dark</span>
+								<SvgBackground darkness={0.6} class="h-28 rounded-lg" />
+							</div>
+							<div>
+								<span class="text-sm font-medium mb-2 block text-center">90% dark</span>
+								<SvgBackground darkness={0.9} class="h-28 rounded-lg" />
+							</div>
 						</div>
 						<CodeBlock
-							code={`<SvgBackground darkness={0}>No darkness</SvgBackground>
-<SvgBackground darkness={0.3}>Light overlay</SvgBackground>
-<SvgBackground darkness={0.6}>Medium overlay</SvgBackground>
-<SvgBackground darkness={0.9}>Dark overlay</SvgBackground>`}
+							code={`<SvgBackground darkness={0} class="h-28 rounded-lg" />
+<SvgBackground darkness={0.3} class="h-28 rounded-lg" />
+<SvgBackground darkness={0.6} class="h-28 rounded-lg" />
+<SvgBackground darkness={0.9} class="h-28 rounded-lg" />`}
 						/>
 					</Flex>
 				</ShowcaseSection>
