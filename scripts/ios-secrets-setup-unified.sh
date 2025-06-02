@@ -1,0 +1,994 @@
+#!/bin/bash
+
+# iOS Secrets Setup - Unified Script
+# Combines development and distribution workflows with step-by-step clipboard support
+# Based on ios-secrets-setup-v2-old.sh, ios-secrets-setup-v2.sh, and android-secrets-setup.sh
+
+# Colors for better output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Title banner
+echo -e "${BLUE}==================================================================${NC}"
+echo -e "${BLUE}   iOS Secrets Setup - Unified Script (Development & Distribution) ${NC}"
+echo -e "${BLUE}==================================================================${NC}"
+echo
+echo -e "This script helps you generate all necessary secrets for iOS builds in GitHub Actions"
+echo -e "Supports both ${GREEN}development${NC} and ${CYAN}distribution${NC} workflows with step-by-step guidance"
+echo
+
+# Step 1: Choose workflow type
+echo -e "${YELLOW}Step 1: Choose Your Workflow Type${NC}"
+echo
+echo -e "${GREEN}Development Mode:${NC}"
+echo "• For personal testing and development"
+echo "• Uses iPhone Developer certificates"
+echo "• Simpler setup, automatic signing friendly"
+echo "• Limited to devices in your personal Apple ID"
+echo
+echo -e "${CYAN}Distribution Mode:${NC}"
+echo "• For sharing with external testers (OTA distribution)"
+echo "• Uses iPhone Distribution certificates"
+echo "• Requires ad-hoc provisioning profiles"
+echo "• Can distribute to multiple testers via Diawi/TestFlight"
+echo
+echo -e "${YELLOW}Choose your mode:${NC}"
+echo "1) Development Mode (easier, for personal use)"
+echo "2) Distribution Mode (for sharing with testers)"
+echo
+read -p "Enter your choice (1/2): " WORKFLOW_MODE
+
+if [[ $WORKFLOW_MODE == "1" ]]; then
+    WORKFLOW_TYPE="development"
+    CERT_PATTERN="iPhone Developer\|Apple Development"
+    SECRET_PREFIX="IOS_DEVELOPMENT"
+    WORKFLOW_NAME="Development"
+    echo -e "${GREEN}Selected: Development Mode${NC}"
+elif [[ $WORKFLOW_MODE == "2" ]]; then
+    WORKFLOW_TYPE="distribution"
+    CERT_PATTERN="iPhone Distribution\|Apple Distribution"
+    SECRET_PREFIX="IOS_DISTRIBUTION"
+    WORKFLOW_NAME="Distribution"
+    echo -e "${CYAN}Selected: Distribution Mode${NC}"
+else
+    echo -e "${RED}Invalid choice. Exiting.${NC}"
+    exit 1
+fi
+
+# Prerequisites Section
+echo -e "\n${YELLOW}Prerequisites for $WORKFLOW_NAME Mode:${NC}"
+echo "1. Xcode must be installed and set up"
+echo "2. Command Line Tools must be installed (xcode-select --install)"
+if [[ $WORKFLOW_TYPE == "development" ]]; then
+    echo "3. You must have an iOS development certificate"
+    echo "4. You must have a development provisioning profile"
+    echo "5. An Apple Developer account (free or paid)"
+else
+    echo "3. You must have an iPhone Distribution certificate"
+    echo "4. You must have an ad-hoc provisioning profile"
+    echo "5. A paid Apple Developer account (required for distribution)"
+    echo "6. Optional: Diawi account for OTA distribution"
+fi
+echo -e "7. The 'security' and 'openssl' commands must be available\n"
+
+read -p "Do you meet these prerequisites? (y/n): " PREREQ_OK
+if [[ $PREREQ_OK != "y" && $PREREQ_OK != "Y" ]]; then
+    echo -e "${RED}Please ensure you meet the prerequisites before running this script.${NC}"
+    exit 1
+fi
+
+# Create a temporary directory for outputs
+TEMP_DIR=$(mktemp -d)
+echo -e "${YELLOW}Creating temporary directory at ${TEMP_DIR}${NC}"
+
+# Step 2: Get Team ID
+echo -e "\n${GREEN}Step 2: Finding Apple Team ID${NC}"
+echo -e "Attempting to extract Team ID from existing certificates...\n"
+
+# Look for Team ID in certificate subject - prioritize based on workflow type
+if [[ $WORKFLOW_TYPE == "distribution" ]]; then
+    TEAM_ID=$(security find-certificate -c "iPhone Distribution" -p 2>/dev/null | openssl x509 -subject -noout 2>/dev/null | grep -o "OU=[A-Z0-9]*" | cut -d= -f2)
+    if [ -n "$TEAM_ID" ]; then
+        echo -e "Found Team ID from iPhone Distribution cert: ${GREEN}${TEAM_ID}${NC}"
+    else
+        TEAM_ID=$(security find-certificate -c "Apple Development" -p 2>/dev/null | openssl x509 -subject -noout 2>/dev/null | grep -o "OU=[A-Z0-9]*" | cut -d= -f2)
+        if [ -n "$TEAM_ID" ]; then
+            echo -e "Found Team ID from Apple Development cert: ${GREEN}${TEAM_ID}${NC}"
+        fi
+    fi
+else
+    TEAM_ID=$(security find-certificate -c "Apple Development" -p 2>/dev/null | openssl x509 -subject -noout 2>/dev/null | grep -o "OU=[A-Z0-9]*" | cut -d= -f2)
+    if [ -n "$TEAM_ID" ]; then
+        echo -e "Found Team ID from Apple Development cert: ${GREEN}${TEAM_ID}${NC}"
+    fi
+fi
+
+# If still no Team ID found, prompt user
+if [ -z "$TEAM_ID" ]; then
+    echo -e "${YELLOW}Could not automatically extract Team ID.${NC}"
+    read -p "Please enter your Apple Team ID (found in Xcode → Settings → Accounts): " TEAM_ID
+fi
+
+# Step 2.5: Certificate Installation (if needed)
+echo -e "\n${GREEN}Step 2.5: Certificate Setup${NC}"
+echo -e "Choose how to proceed with certificates:\n"
+
+# Check if we found any certificates in keychain
+EXISTING_CERTS_COUNT=$(security find-identity -p codesigning -v | grep "$CERT_PATTERN" | wc -l | tr -d ' ')
+
+if [[ $EXISTING_CERTS_COUNT -gt 0 ]]; then
+    echo -e "${GREEN}Found $EXISTING_CERTS_COUNT existing ${WORKFLOW_NAME} certificate(s) in your keychain.${NC}"
+    echo -e "1) Use existing certificates from keychain"
+    echo -e "2) Install a new certificate file (.p12) that I received"
+    read -p "Choose option (1/2): " CERT_SETUP_OPTION
+else
+    echo -e "${YELLOW}No ${WORKFLOW_NAME} certificates found in your keychain.${NC}"
+    echo -e "1) Install a certificate file (.p12) that I received"
+    echo -e "2) Skip - I'll install certificates manually later"
+    read -p "Choose option (1/2): " CERT_SETUP_OPTION
+    if [[ $CERT_SETUP_OPTION == "1" ]]; then
+        CERT_SETUP_OPTION="2"  # Adjust for the install option
+    else
+        echo -e "${YELLOW}Please install your certificates in Keychain Access and run this script again.${NC}"
+        exit 1
+    fi
+fi
+
+# Handle certificate installation if requested
+if [[ $CERT_SETUP_OPTION == "2" ]]; then
+    echo -e "\n${YELLOW}Certificate Installation Guide:${NC}"
+    echo -e "You'll need a .p12 certificate file (usually named something like 'distribution.p12' or 'ios_cert.p12')"
+    echo -e "\n${BLUE}You can install the certificate by:${NC}"
+    echo -e "1. Double-clicking the .p12 file (opens in Keychain Access)"
+    echo -e "2. Using Keychain Access: File → Import Items"
+    echo -e "3. Or provide the file path and we'll install it for you"
+    echo
+    
+    echo -e "${BLUE}What would you like to do?${NC}"
+    echo -e "1) I've already installed the certificate - re-scan for certificates"
+    echo -e "2) Install the certificate file for me (provide file path)"
+    echo -e "3) Skip certificate setup for now"
+    read -p "Choose option (1/2/3): " CERT_INSTALL_OPTION
+    
+    if [[ $CERT_INSTALL_OPTION == "1" ]]; then
+        # Re-scan for certificates after installation
+        echo -e "\n${YELLOW}Re-scanning for newly installed certificates...${NC}"
+        
+        # Check again for certificates
+        NEW_CERTS_COUNT=$(security find-identity -p codesigning -v | grep "$CERT_PATTERN" | wc -l | tr -d ' ')
+        
+        if [[ $NEW_CERTS_COUNT -gt 0 ]]; then
+            echo -e "${GREEN}✅ Found $NEW_CERTS_COUNT ${WORKFLOW_NAME} certificate(s) in your keychain!${NC}"
+            
+            # Update Team ID from newly found certificates if we didn't have one
+            if [ -z "$TEAM_ID" ]; then
+                if [[ $WORKFLOW_TYPE == "distribution" ]]; then
+                    TEAM_ID=$(security find-certificate -c "iPhone Distribution" -p 2>/dev/null | openssl x509 -subject -noout 2>/dev/null | grep -o "OU=[A-Z0-9]*" | cut -d= -f2)
+                else
+                    TEAM_ID=$(security find-certificate -c "Apple Development" -p 2>/dev/null | openssl x509 -subject -noout 2>/dev/null | grep -o "OU=[A-Z0-9]*" | cut -d= -f2)
+                fi
+                
+                if [ -n "$TEAM_ID" ]; then
+                    echo -e "Extracted Team ID from installed certificate: ${GREEN}$TEAM_ID${NC}"
+                fi
+            fi
+            
+            TEMP_CERT_INSTALLED=false  # User installed manually, so we don't need cleanup
+        else
+            echo -e "${YELLOW}⚠️ No ${WORKFLOW_NAME} certificates found after re-scan.${NC}"
+            echo -e "Make sure you installed the certificate correctly and it's the right type."
+            echo -e "\nYou can:"
+            echo -e "1. Try installing the certificate again"
+            echo -e "2. Check Keychain Access to verify the certificate is there"
+            echo -e "3. Continue without certificate (you'll need to add secrets manually)"
+            read -p "Would you like to continue anyway? (y/n): " CONTINUE_WITHOUT_CERT
+            
+            if [[ $CONTINUE_WITHOUT_CERT != "y" && $CONTINUE_WITHOUT_CERT != "Y" ]]; then
+                echo -e "${RED}Exiting. Please install your certificate and run the script again.${NC}"
+                exit 1
+            fi
+            
+            TEMP_CERT_INSTALLED=false
+        fi
+        
+    elif [[ $CERT_INSTALL_OPTION == "2" ]]; then
+        # Install certificate via file path (original flow)
+        echo -e "\n${YELLOW}Certificate File Installation:${NC}"
+        read -p "Enter the full path to your .p12 certificate file: " P12_PATH
+        
+        if [ ! -f "$P12_PATH" ]; then
+            echo -e "${RED}Certificate file not found at: $P12_PATH${NC}"
+            echo -e "${YELLOW}Skipping certificate setup. You can add certificate secrets manually later.${NC}"
+            TEMP_CERT_INSTALLED=false
+        else
+            echo -e "Certificate file found: ${GREEN}$(basename "$P12_PATH")${NC}"
+            echo -e "File size: $(wc -c < "$P12_PATH") bytes"
+            
+            read -sp "Enter the password for this .p12 file: " P12_IMPORT_PASSWORD
+            echo
+            
+            echo -e "\n${YELLOW}Installing certificate temporarily...${NC}"
+            
+            # Import the certificate
+            if security import "$P12_PATH" -k ~/Library/Keychains/login.keychain-db -P "$P12_IMPORT_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security 2>/dev/null; then
+                echo -e "${GREEN}✅ Certificate installed successfully!${NC}"
+                
+                # Store cleanup info for later
+                TEMP_CERT_INSTALLED=true
+                TEMP_CERT_NAME=$(security find-identity -p codesigning -v | grep "$CERT_PATTERN" | tail -1 | sed -n 's/.*"\(.*\)"/\1/p')
+                echo -e "Installed certificate: ${GREEN}$TEMP_CERT_NAME${NC}"
+                
+                # Update Team ID from newly installed cert if we didn't have one
+                if [ -z "$TEAM_ID" ]; then
+                    if [[ $WORKFLOW_TYPE == "distribution" ]]; then
+                        TEAM_ID=$(security find-certificate -c "iPhone Distribution" -p 2>/dev/null | openssl x509 -subject -noout 2>/dev/null | grep -o "OU=[A-Z0-9]*" | cut -d= -f2)
+                    else
+                        TEAM_ID=$(security find-certificate -c "Apple Development" -p 2>/dev/null | openssl x509 -subject -noout 2>/dev/null | grep -o "OU=[A-Z0-9]*" | cut -d= -f2)
+                    fi
+                    
+                    if [ -n "$TEAM_ID" ]; then
+                        echo -e "Extracted Team ID from installed certificate: ${GREEN}$TEAM_ID${NC}"
+                    fi
+                fi
+            else
+                echo -e "${RED}❌ Failed to install certificate. Please check the file and password.${NC}"
+                echo -e "${YELLOW}Skipping certificate setup. You can add certificate secrets manually later.${NC}"
+                TEMP_CERT_INSTALLED=false
+            fi
+        fi
+        
+    else
+        # Skip certificate setup
+        echo -e "${YELLOW}Skipping certificate setup.${NC}"
+        echo -e "${BLUE}You'll need to add certificate secrets manually later.${NC}"
+        TEMP_CERT_INSTALLED=false
+    fi
+else
+    TEMP_CERT_INSTALLED=false
+fi
+
+# Step 3: Certificate Selection and Export
+echo -e "\n${GREEN}Step 3: Certificate Selection and Export${NC}"
+echo -e "Finding and listing ${WORKFLOW_NAME} certificates...\n"
+
+# Clean up certificate list to show only unique certs
+CERTS=()
+CERT_NAMES=()
+COUNT=0
+
+while read -r line; do
+    CERT_HASH=$(echo "$line" | awk -F'"' '{print $1}' | awk '{print $2}')
+    CERT_NAME=$(echo "$line" | sed -n 's/.*"\(.*\)"/\1/p')
+    
+    # Skip if we've already processed this certificate name
+    SKIP=0
+    for name in "${CERT_NAMES[@]}"; do
+        if [[ "$name" == "$CERT_NAME" ]]; then
+            SKIP=1
+            break
+        fi
+    done
+    
+    if [[ $SKIP -eq 1 ]]; then
+        continue
+    fi
+    
+    # Store certificate info
+    CERTS+=("$line")
+    CERT_NAMES+=("$CERT_NAME")
+    
+    # Display certificate with proper dates
+    COUNT=$((COUNT+1))
+    echo "$COUNT) $CERT_NAME"
+    # Get certificate info from Keychain and display it
+    CERT_INFO=$(security find-certificate -c "$CERT_NAME" -p 2>/dev/null | openssl x509 -noout -startdate -enddate 2>/dev/null)
+    CREATED=$(echo "$CERT_INFO" | grep "notBefore" | sed 's/notBefore=//')
+    EXPIRES=$(echo "$CERT_INFO" | grep "notAfter" | sed 's/notAfter=//')
+    echo "   Created: $CREATED"
+    echo "   Expires: $EXPIRES"
+    echo "   Hash: $CERT_HASH"
+    echo
+done < <(security find-identity -p codesigning -v | grep "$CERT_PATTERN")
+
+if [[ $COUNT -eq 0 ]]; then
+    echo -e "${RED}No ${WORKFLOW_NAME} certificates found in your keychain.${NC}"
+    if [[ $WORKFLOW_TYPE == "development" ]]; then
+        echo "Please create a development certificate in Xcode before continuing."
+    else
+        echo "Please create a distribution certificate in your Apple Developer account before continuing."
+    fi
+    exit 1
+fi
+
+# Let user select certificate
+if [[ $WORKFLOW_TYPE == "distribution" ]]; then
+    read -p "Enter the certificate number (prefer iPhone Distribution for app distribution): " CERT_NUM
+else
+    read -p "Enter the certificate number: " CERT_NUM
+fi
+
+if [[ $CERT_NUM -gt $COUNT || $CERT_NUM -lt 1 ]]; then
+    echo -e "${RED}Invalid certificate number.${NC}"
+    exit 1
+fi
+
+CERT_NUM=$((CERT_NUM-1))
+SELECTED_CERT_NAME="${CERT_NAMES[$CERT_NUM]}"
+
+echo -e "${GREEN}Selected: ${SELECTED_CERT_NAME}${NC}"
+
+# Determine certificate type for validation
+ACTUAL_CERT_TYPE="development"
+if [[ "$SELECTED_CERT_NAME" == *"Distribution"* ]]; then
+    ACTUAL_CERT_TYPE="distribution"
+fi
+
+# Validate certificate type matches workflow
+if [[ $WORKFLOW_TYPE == "distribution" && $ACTUAL_CERT_TYPE == "development" ]]; then
+    echo -e "${YELLOW}Warning: You selected a development certificate for distribution workflow.${NC}"
+    echo -e "For distribution builds, an iPhone Distribution certificate is recommended."
+    read -p "Continue anyway? (y/n): " CONTINUE_CERT
+    if [[ $CONTINUE_CERT != "y" && $CONTINUE_CERT != "Y" ]]; then
+        echo -e "${RED}Exiting. Please select a distribution certificate.${NC}"
+        exit 1
+    fi
+elif [[ $WORKFLOW_TYPE == "development" && $ACTUAL_CERT_TYPE == "distribution" ]]; then
+    echo -e "${BLUE}Note: Using distribution certificate for development workflow.${NC}"
+    echo -e "This will work but development certificates are typically used for development."
+fi
+
+# Password setup
+DEFAULT_PASSWORD="ios123"
+echo -e "\n${YELLOW}Password selection for certificate:${NC}"
+echo -e "1) Use default simple password (${GREEN}$DEFAULT_PASSWORD${NC}) - recommended for GitHub Actions"
+echo -e "2) Enter a custom password"
+read -p "Choose an option (1/2): " PASSWORD_OPTION
+
+if [[ $PASSWORD_OPTION == "2" ]]; then
+    read -sp "Enter your custom password: " CERT_PASSWORD
+    echo
+    # Confirm password
+    read -sp "Confirm password: " CERT_PASSWORD_CONFIRM
+    echo
+    
+    if [[ "$CERT_PASSWORD" != "$CERT_PASSWORD_CONFIRM" ]]; then
+        echo -e "${RED}Passwords don't match. Exiting.${NC}"
+        exit 1
+    fi
+    
+    # Warn about special characters
+    if [[ "$CERT_PASSWORD" != "${CERT_PASSWORD//[^a-zA-Z0-9]/}" ]]; then
+        echo -e "${YELLOW}Warning: Your password contains special characters which might cause issues with GitHub Actions.${NC}"
+        read -p "Continue anyway? (y/n): " CONTINUE
+        if [[ $CONTINUE != "y" && $CONTINUE != "Y" ]]; then
+            echo -e "${RED}Exiting.${NC}"
+            exit 1
+        fi
+    fi
+else
+    CERT_PASSWORD="$DEFAULT_PASSWORD"
+fi
+
+# Export certificate
+P12_FILE="$TEMP_DIR/ios_${WORKFLOW_TYPE}.p12"
+
+echo -e "\nExporting certificate to P12 file with the selected password."
+echo -e "${YELLOW}REMEMBER THIS PASSWORD as you'll need it for GitHub secrets!${NC}"
+
+security export -t identities -f pkcs12 -k ~/Library/Keychains/login.keychain-db -P "$CERT_PASSWORD" -o "$P12_FILE" "$SELECTED_CERT_NAME"
+
+if [ ! -f "$P12_FILE" ]; then
+    echo -e "${RED}Failed to export certificate. Please try again.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}Certificate exported successfully to $P12_FILE${NC}"
+echo -e "Certificate size: $(wc -c < "$P12_FILE") bytes"
+
+# Step 4: Provisioning Profile Discovery and Selection
+echo -e "\n${GREEN}Step 4: Provisioning Profile Discovery${NC}"
+echo "Searching for iOS provisioning profiles in all standard locations..."
+
+# Create a list of possible profile locations
+PROFILES_FOUND=false
+ALL_PROFILES=()
+
+# Check standard locations
+SEARCH_LOCATIONS=(
+    "$HOME/Library/MobileDevice/Provisioning Profiles"
+    "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"
+    "$HOME/Downloads"
+    "$(pwd)"
+    "$(pwd)/ios-credentials"
+    "$(pwd)/credentials"
+    "$(pwd)/certificates"
+)
+
+echo -e "${BLUE}Searching in standard locations:${NC}"
+for location in "${SEARCH_LOCATIONS[@]}"; do
+    if [ -d "$location" ]; then
+        echo -e "  📁 Checking: $location"
+        
+        # Original loop with null check
+        while IFS= read -r profile; do
+            if [ -n "$profile" ]; then  # Keep null check
+                ALL_PROFILES+=("$profile")
+                PROFILES_FOUND=true
+            fi
+        done < <(find "$location" -name "*.mobileprovision" -type f 2>/dev/null)
+    fi
+done
+
+# Check DerivedData for embedded profiles
+echo -e "  📁 Checking Xcode DerivedData..."
+while IFS= read -r profile; do
+    ALL_PROFILES+=("$profile")
+    PROFILES_FOUND=true
+done < <(find ~/Library/Developer/Xcode/DerivedData -name "*.mobileprovision" -type f 2>/dev/null)
+
+# Option to skip local installation if user has files ready
+echo -e "\n${YELLOW}Provisioning Profile Options:${NC}"
+if [ "$PROFILES_FOUND" = true ]; then
+    echo "1) Use existing profiles found on this system"
+    echo "2) I have the profile file(s) ready to install"
+    echo "3) Skip - I'll add the profile manually later"
+    read -p "Choose option (1/2/3): " PROFILE_OPTION
+else
+    echo "No profiles found in standard locations."
+    echo "1) I have the profile file(s) ready to install"
+    echo "2) Skip - I'll add the profile manually later"
+    read -p "Choose option (1/2): " PROFILE_OPTION
+    PROFILE_OPTION=$((PROFILE_OPTION + 1))  # Adjust for missing option 1
+fi
+
+SELECTED_PROFILE=""
+SELECTED_PROFILE_NAME=""
+SELECTED_TEAM_ID=""
+
+if [[ $PROFILE_OPTION == "1" && "$PROFILES_FOUND" = true ]]; then
+    # Use existing profiles
+    echo -e "\n${GREEN}Available provisioning profiles:${NC}"
+    COUNT=1
+    declare -a PROFILE_PATHS
+    declare -a PROFILE_NAMES
+    declare -a PROFILE_TEAM_IDS
+
+    for profile_path in "${ALL_PROFILES[@]}"; do
+        # Extract profile info
+        PROFILE_CONTENT=$(security cms -D -i "$profile_path" 2>/dev/null)
+        PROFILE_NAME=$(echo "$PROFILE_CONTENT" | plutil -extract Name xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"')
+        
+        # Extract team ID from the profile
+        PROFILE_TEAM_ID=$(echo "$PROFILE_CONTENT" | plutil -extract TeamIdentifier.0 xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"')
+        
+        # Store in arrays
+        PROFILE_PATHS+=("$profile_path")
+        PROFILE_NAMES+=("$PROFILE_NAME")
+        PROFILE_TEAM_IDS+=("$PROFILE_TEAM_ID")
+        
+        # Extract app identifier (bundle ID)
+        APP_ID=$(echo "$PROFILE_CONTENT" | plutil -extract Entitlements.application-identifier xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"' | sed "s/^$PROFILE_TEAM_ID\\.//")
+        
+        # Determine profile type
+        PROFILE_TYPE="Unknown"
+        if echo "$PROFILE_CONTENT" | grep -q "<key>get-task-allow</key>"; then
+            PROFILE_TYPE="Development"
+        elif echo "$PROFILE_CONTENT" | grep -q "<key>ProvisionedDevices</key>"; then
+            PROFILE_TYPE="Ad-Hoc"
+        else
+            PROFILE_TYPE="App Store"
+        fi
+        
+        # Smart recommendation logic
+        RECOMMENDATION=""
+        MARKER=""
+        RECOMMENDATION_SCORE=0
+        
+        # Primary criteria: Profile type matches workflow
+        if [[ $WORKFLOW_TYPE == "distribution" && "$PROFILE_TYPE" == "Ad-Hoc" ]]; then
+            RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 10))
+        elif [[ $WORKFLOW_TYPE == "development" && "$PROFILE_TYPE" == "Development" ]]; then
+            RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 10))
+        fi
+        
+        # Secondary criteria: Team ID matches
+        if [[ "$PROFILE_TEAM_ID" == "$TEAM_ID" ]]; then
+            RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 5))
+        fi
+        
+        # Tertiary criteria: Specific bundle ID (not wildcard)
+        if [[ "$APP_ID" != "*" && -n "$APP_ID" ]]; then
+            RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 3))
+        fi
+        
+        # Quaternary criteria: Not in embedded/build locations (prefer system installed)
+        if [[ "$profile_path" == *"/Library/MobileDevice/Provisioning Profiles/"* ]]; then
+            RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 2))
+        elif [[ "$profile_path" == *"/DerivedData/"* || "$profile_path" == *"/build/"* || "$profile_path" == *"embedded.mobileprovision"* ]]; then
+            RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE - 2))
+        fi
+        
+        # Set recommendation markers based on score
+        if [[ $RECOMMENDATION_SCORE -ge 15 ]]; then
+            RECOMMENDATION=" 🌟 HIGHLY RECOMMENDED"
+            MARKER="🌟 "
+        elif [[ $RECOMMENDATION_SCORE -ge 10 ]]; then
+            RECOMMENDATION=" ⭐ RECOMMENDED"
+            MARKER="⭐ "
+        elif [[ $RECOMMENDATION_SCORE -ge 5 ]]; then
+            RECOMMENDATION=" ✓ SUITABLE"
+            MARKER="✓ "
+        fi
+        
+        echo "${MARKER}${COUNT}) $PROFILE_NAME${RECOMMENDATION}"
+        echo "   Type: $PROFILE_TYPE | Team ID: $PROFILE_TEAM_ID | App ID: $APP_ID"
+        echo "   Path: $profile_path"
+        echo
+        
+        COUNT=$((COUNT+1))
+    done
+
+    TOTAL_PROFILES=${#PROFILE_PATHS[@]}
+    
+    if [ $TOTAL_PROFILES -eq 0 ]; then
+        echo -e "${RED}No valid provisioning profiles could be processed.${NC}"
+        exit 1
+    fi
+
+    # User selection
+    if [[ $WORKFLOW_TYPE == "development" ]]; then
+        echo -e "${BLUE}For development workflow, select a Development profile.${NC}"
+    else
+        echo -e "${BLUE}For distribution workflow, select an Ad-Hoc profile.${NC}"
+    fi
+    
+    read -p "Select a provisioning profile (enter number 1-$TOTAL_PROFILES): " PROFILE_NUM
+
+    if [[ $PROFILE_NUM -gt $TOTAL_PROFILES || $PROFILE_NUM -lt 1 ]]; then
+        echo -e "${RED}Invalid profile number.${NC}"
+        exit 1
+    fi
+
+    # Get the selected profile info
+    PROFILE_INDEX=$((PROFILE_NUM-1))
+    SELECTED_PROFILE="${PROFILE_PATHS[$PROFILE_INDEX]}"
+    SELECTED_PROFILE_NAME="${PROFILE_NAMES[$PROFILE_INDEX]}"
+    SELECTED_TEAM_ID="${PROFILE_TEAM_IDS[$PROFILE_INDEX]}"
+
+elif [[ $PROFILE_OPTION == "2" || ($PROFILE_OPTION == "1" && "$PROFILES_FOUND" = false) ]]; then
+    # User has profile files ready
+    echo -e "\n${YELLOW}Profile Installation Guide:${NC}"
+    echo -e "If you have received the profile file (.mobileprovision), you can:"
+    echo -e "1. Double-click the .mobileprovision file (opens in Xcode/System and installs automatically)"
+    echo -e "2. Manually copy to: ~/Library/MobileDevice/Provisioning Profiles/"
+    echo -e "3. Or provide the file path and we'll read it directly"
+    echo
+    
+    echo -e "${BLUE}What would you like to do?${NC}"
+    echo -e "1) I've already installed the profile - re-scan for profiles"
+    echo -e "2) Specify the file path to read the profile directly"  
+    echo -e "3) Skip profile setup for now"
+    read -p "Choose option (1/2/3): " PROFILE_INSTALL_OPTION
+    
+    if [[ $PROFILE_INSTALL_OPTION == "1" ]]; then
+        # Re-scan for profiles after installation
+        echo -e "\n${YELLOW}Re-scanning for newly installed profiles...${NC}"
+        
+        # Clear previous results and re-scan
+        ALL_PROFILES=()
+        PROFILES_FOUND=false
+        
+        # Re-run the profile discovery logic
+        for location in "${SEARCH_LOCATIONS[@]}"; do
+            if [ -d "$location" ]; then
+                while IFS= read -r profile; do
+                    if [ -n "$profile" ]; then
+                        ALL_PROFILES+=("$profile")
+                        PROFILES_FOUND=true
+                    fi
+                done < <(find "$location" -name "*.mobileprovision" -type f 2>/dev/null)
+            fi
+        done
+        
+        # Check DerivedData again
+        while IFS= read -r profile; do
+            ALL_PROFILES+=("$profile")
+            PROFILES_FOUND=true
+        done < <(find ~/Library/Developer/Xcode/DerivedData -name "*.mobileprovision" -type f 2>/dev/null)
+        
+        if [ "$PROFILES_FOUND" = true ]; then
+            echo -e "${GREEN}Found profiles! Displaying updated list...${NC}"
+            
+            # Re-display the profile selection logic
+            echo -e "\n${GREEN}Available provisioning profiles:${NC}"
+            COUNT=1
+            declare -a PROFILE_PATHS
+            declare -a PROFILE_NAMES
+            declare -a PROFILE_TEAM_IDS
+
+            for profile_path in "${ALL_PROFILES[@]}"; do
+                # Extract profile info
+                PROFILE_CONTENT=$(security cms -D -i "$profile_path" 2>/dev/null)
+                PROFILE_NAME=$(echo "$PROFILE_CONTENT" | plutil -extract Name xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"')
+                
+                # Extract team ID from the profile
+                PROFILE_TEAM_ID=$(echo "$PROFILE_CONTENT" | plutil -extract TeamIdentifier.0 xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"')
+                
+                # Store in arrays
+                PROFILE_PATHS+=("$profile_path")
+                PROFILE_NAMES+=("$PROFILE_NAME")
+                PROFILE_TEAM_IDS+=("$PROFILE_TEAM_ID")
+                
+                # Extract app identifier (bundle ID)
+                APP_ID=$(echo "$PROFILE_CONTENT" | plutil -extract Entitlements.application-identifier xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"' | sed "s/^$PROFILE_TEAM_ID\\.//")
+                
+                # Determine profile type
+                PROFILE_TYPE="Unknown"
+                if echo "$PROFILE_CONTENT" | grep -q "<key>get-task-allow</key>"; then
+                    PROFILE_TYPE="Development"
+                elif echo "$PROFILE_CONTENT" | grep -q "<key>ProvisionedDevices</key>"; then
+                    PROFILE_TYPE="Ad-Hoc"
+                else
+                    PROFILE_TYPE="App Store"
+                fi
+                
+                # Smart recommendation logic
+                RECOMMENDATION=""
+                MARKER=""
+                RECOMMENDATION_SCORE=0
+                
+                # Primary criteria: Profile type matches workflow
+                if [[ $WORKFLOW_TYPE == "distribution" && "$PROFILE_TYPE" == "Ad-Hoc" ]]; then
+                    RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 10))
+                elif [[ $WORKFLOW_TYPE == "development" && "$PROFILE_TYPE" == "Development" ]]; then
+                    RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 10))
+                fi
+                
+                # Secondary criteria: Team ID matches
+                if [[ "$PROFILE_TEAM_ID" == "$TEAM_ID" ]]; then
+                    RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 5))
+                fi
+                
+                # Tertiary criteria: Specific bundle ID (not wildcard)
+                if [[ "$APP_ID" != "*" && -n "$APP_ID" ]]; then
+                    RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 3))
+                fi
+                
+                # Quaternary criteria: Not in embedded/build locations (prefer system installed)
+                if [[ "$profile_path" == *"/Library/MobileDevice/Provisioning Profiles/"* ]]; then
+                    RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE + 2))
+                elif [[ "$profile_path" == *"/DerivedData/"* || "$profile_path" == *"/build/"* || "$profile_path" == *"embedded.mobileprovision"* ]]; then
+                    RECOMMENDATION_SCORE=$((RECOMMENDATION_SCORE - 2))
+                fi
+                
+                # Set recommendation markers based on score
+                if [[ $RECOMMENDATION_SCORE -ge 15 ]]; then
+                    RECOMMENDATION=" 🌟 HIGHLY RECOMMENDED"
+                    MARKER="🌟 "
+                elif [[ $RECOMMENDATION_SCORE -ge 10 ]]; then
+                    RECOMMENDATION=" ⭐ RECOMMENDED"
+                    MARKER="⭐ "
+                elif [[ $RECOMMENDATION_SCORE -ge 5 ]]; then
+                    RECOMMENDATION=" ✓ SUITABLE"
+                    MARKER="✓ "
+                fi
+                
+                echo "${MARKER}${COUNT}) $PROFILE_NAME${RECOMMENDATION}"
+                echo "   Type: $PROFILE_TYPE | Team ID: $PROFILE_TEAM_ID | App ID: $APP_ID"
+                echo "   Path: $profile_path"
+                echo
+                
+                COUNT=$((COUNT+1))
+            done
+
+            TOTAL_PROFILES=${#PROFILE_PATHS[@]}
+            
+            if [ $TOTAL_PROFILES -eq 0 ]; then
+                echo -e "${RED}No valid provisioning profiles could be processed.${NC}"
+                SELECTED_PROFILE=""
+            else
+                # User selection
+                if [[ $WORKFLOW_TYPE == "development" ]]; then
+                    echo -e "${BLUE}For development workflow, select a Development profile.${NC}"
+                else
+                    echo -e "${BLUE}For distribution workflow, select an Ad-Hoc profile.${NC}"
+                fi
+                
+                read -p "Select a provisioning profile (enter number 1-$TOTAL_PROFILES): " PROFILE_NUM
+
+                if [[ $PROFILE_NUM -gt $TOTAL_PROFILES || $PROFILE_NUM -lt 1 ]]; then
+                    echo -e "${RED}Invalid profile number.${NC}"
+                    SELECTED_PROFILE=""
+                else
+                    # Get the selected profile info
+                    PROFILE_INDEX=$((PROFILE_NUM-1))
+                    SELECTED_PROFILE="${PROFILE_PATHS[$PROFILE_INDEX]}"
+                    SELECTED_PROFILE_NAME="${PROFILE_NAMES[$PROFILE_INDEX]}"
+                    SELECTED_TEAM_ID="${PROFILE_TEAM_IDS[$PROFILE_INDEX]}"
+                fi
+            fi
+        else
+            echo -e "${YELLOW}No profiles found after re-scan. You may need to install the profile first.${NC}"
+            SELECTED_PROFILE=""
+        fi
+        
+    elif [[ $PROFILE_INSTALL_OPTION == "2" ]]; then
+        # Specify file path directly
+        echo -e "\n${YELLOW}Direct File Path Option:${NC}"
+        read -p "Enter the full path to your provisioning profile: " PROVIDED_PROFILE
+        
+        if [ ! -f "$PROVIDED_PROFILE" ]; then
+            echo -e "${RED}Profile file not found at: $PROVIDED_PROFILE${NC}"
+            echo -e "${YELLOW}Skipping profile setup. You can add the profile secret manually later.${NC}"
+            SELECTED_PROFILE=""
+        else
+            SELECTED_PROFILE="$PROVIDED_PROFILE"
+            
+            # Extract profile info
+            PROFILE_CONTENT=$(security cms -D -i "$SELECTED_PROFILE" 2>/dev/null)
+            SELECTED_PROFILE_NAME=$(echo "$PROFILE_CONTENT" | plutil -extract Name xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"')
+            SELECTED_TEAM_ID=$(echo "$PROFILE_CONTENT" | plutil -extract TeamIdentifier.0 xml1 -o - - 2>/dev/null | plutil -p - 2>/dev/null | tr -d '"')
+            
+            echo -e "${GREEN}Profile loaded: $SELECTED_PROFILE_NAME${NC}"
+        fi
+        
+    else
+        # Skip profile setup
+        echo -e "${YELLOW}Skipping provisioning profile setup.${NC}"
+        echo -e "${BLUE}You'll need to add IOS_ADHOC_PROVISIONING_PROFILE secret manually later.${NC}"
+        SELECTED_PROFILE=""
+    fi
+    
+else
+    # Skip profile setup
+    echo -e "${YELLOW}Skipping provisioning profile setup.${NC}"
+    echo -e "${BLUE}You'll need to add IOS_ADHOC_PROVISIONING_PROFILE secret manually later.${NC}"
+    SELECTED_PROFILE=""
+fi
+
+# Update Team ID if found from profile
+if [ -n "$SELECTED_TEAM_ID" ]; then
+    TEAM_ID="$SELECTED_TEAM_ID"
+    echo -e "Using Team ID from selected profile: ${GREEN}${TEAM_ID}${NC}"
+fi
+
+# Display selection summary
+echo -e "\n${GREEN}Selection Summary:${NC}"
+echo -e "Workflow: ${CYAN}$WORKFLOW_NAME${NC}"
+echo -e "Certificate: ${GREEN}$SELECTED_CERT_NAME${NC}"
+if [ -n "$SELECTED_PROFILE_NAME" ]; then
+    echo -e "Profile: ${GREEN}$SELECTED_PROFILE_NAME${NC}"
+fi
+echo -e "Team ID: ${GREEN}$TEAM_ID${NC}"
+
+# Step 5: Convert files to base64
+echo -e "\n${GREEN}Step 5: Converting Files to Base64${NC}"
+
+# Convert certificate
+echo -e "Converting certificate to base64..."
+P12_BASE64=$(base64 -i "$P12_FILE" | tr -d '\n')
+if [ -z "$P12_BASE64" ]; then
+    echo -e "${RED}Error: Failed to create base64 for certificate.${NC}"
+    exit 1
+fi
+
+# Convert provisioning profile if available
+PROFILE_BASE64=""
+if [ -n "$SELECTED_PROFILE" ] && [ -f "$SELECTED_PROFILE" ]; then
+    echo -e "Converting provisioning profile to base64..."
+    PROFILE_BASE64=$(base64 -i "$SELECTED_PROFILE" | tr -d '\n')
+    if [ -z "$PROFILE_BASE64" ]; then
+        echo -e "${RED}Error: Failed to create base64 for profile.${NC}"
+        exit 1
+    fi
+fi
+
+# Verification
+P12_LEN=${#P12_BASE64}
+echo -e "${GREEN}Certificate base64 length: ${P12_LEN} characters${NC}"
+
+if [ -n "$PROFILE_BASE64" ]; then
+    PROFILE_LEN=${#PROFILE_BASE64}
+    echo -e "${GREEN}Profile base64 length: ${PROFILE_LEN} characters${NC}"
+fi
+
+# Step 6: Generate GitHub Secrets with Step-by-Step Clipboard Support
+echo -e "\n${GREEN}Step 6: GitHub Secrets Setup${NC}"
+
+# Generate the secrets
+SECRETS=()
+SECRET_NAMES=()
+SECRET_VALUES=()
+
+# Always add team ID and certificate
+SECRETS+=("APPLE_TEAM_ID")
+SECRET_NAMES+=("APPLE_TEAM_ID")
+SECRET_VALUES+=("$TEAM_ID")
+
+SECRETS+=("${SECRET_PREFIX}_CERTIFICATE")
+SECRET_NAMES+=("${SECRET_PREFIX}_CERTIFICATE")
+SECRET_VALUES+=("$P12_BASE64")
+
+SECRETS+=("${SECRET_PREFIX}_CERTIFICATE_PASSWORD")
+SECRET_NAMES+=("${SECRET_PREFIX}_CERTIFICATE_PASSWORD")
+SECRET_VALUES+=("$CERT_PASSWORD")
+
+# Add profile if available
+if [ -n "$PROFILE_BASE64" ]; then
+    SECRETS+=("IOS_ADHOC_PROVISIONING_PROFILE")
+    SECRET_NAMES+=("IOS_ADHOC_PROVISIONING_PROFILE")
+    SECRET_VALUES+=("$PROFILE_BASE64")
+fi
+
+# Optional Diawi token for distribution
+if [[ $WORKFLOW_TYPE == "distribution" ]]; then
+    echo -e "\n${YELLOW}Optional: Diawi Token for OTA Distribution${NC}"
+    echo -e "If you want automatic upload to Diawi for OTA testing:"
+    read -p "Enter your Diawi token (or press Enter to skip): " DIAWI_TOKEN
+    
+    if [ -n "$DIAWI_TOKEN" ]; then
+        SECRETS+=("DIAWI_TOKEN")
+        SECRET_NAMES+=("DIAWI_TOKEN")
+        SECRET_VALUES+=("$DIAWI_TOKEN")
+    fi
+fi
+
+# Step-by-step clipboard copying (macOS)
+if command -v pbcopy &> /dev/null; then
+    echo -e "\n${GREEN}Step-by-Step GitHub Secrets Setup (macOS)${NC}"
+    echo -e "${BLUE}We'll copy each secret to your clipboard one by one to avoid copy/paste errors${NC}"
+    echo -e "After each copy, go to GitHub and paste it immediately before continuing.\n"
+    
+    echo -e "${CYAN}GitHub Setup Instructions:${NC}"
+    echo -e "1. Go to your GitHub repository"
+    echo -e "2. Navigate to Settings → Secrets and variables → Actions"
+    echo -e "3. Click 'New repository secret' for each secret below"
+    echo
+    
+    read -p "Ready to start copying secrets to clipboard? Press Enter to continue..."
+    
+    # Copy each secret one by one
+    for i in "${!SECRETS[@]}"; do
+        SECRET_NAME="${SECRET_NAMES[$i]}"
+        SECRET_VALUE="${SECRET_VALUES[$i]}"
+        
+        echo -e "\n${YELLOW}$((i+1))/${#SECRETS[@]}: Copying $SECRET_NAME to clipboard...${NC}"
+        echo "$SECRET_VALUE" | pbcopy
+        
+        # Show preview for verification
+        if [[ ${#SECRET_VALUE} -gt 50 ]]; then
+            echo -e "${GREEN}✓ $SECRET_NAME copied to clipboard (${#SECRET_VALUE} characters)${NC}"
+            echo -e "${BLUE}Preview:${NC} ${SECRET_VALUE:0:30}...${SECRET_VALUE: -10}"
+        else
+            echo -e "${GREEN}✓ $SECRET_NAME copied to clipboard${NC}"
+            echo -e "${BLUE}Value:${NC} $SECRET_VALUE"
+        fi
+        
+        echo -e "Go to GitHub → Settings → Secrets → Actions → New repository secret"
+        echo -e "Name: ${YELLOW}$SECRET_NAME${NC}"
+        echo -e "Value: ${YELLOW}Paste from clipboard (Cmd+V)${NC}"
+        
+        if [[ $i -lt $((${#SECRETS[@]}-1)) ]]; then
+            read -p "Press Enter after you've added this secret in GitHub..."
+        else
+            read -p "Press Enter after you've added this final secret in GitHub..."
+        fi
+    done
+    
+    echo -e "\n${GREEN}🎉 All secrets should now be configured in GitHub Actions!${NC}"
+    
+else
+    # Fallback for non-macOS systems
+    echo -e "\n${YELLOW}Manual Setup Required (non-macOS system)${NC}"
+    echo -e "Since pbcopy is not available, you'll need to copy secrets manually:"
+    echo -e "\n${BLUE}Go to GitHub → Settings → Secrets → Actions and add these secrets:${NC}\n"
+    
+    for i in "${!SECRETS[@]}"; do
+        SECRET_NAME="${SECRET_NAMES[$i]}"
+        SECRET_VALUE="${SECRET_VALUES[$i]}"
+        
+        echo -e "${YELLOW}$((i+1)). $SECRET_NAME${NC}"
+        if [[ ${#SECRET_VALUE} -gt 100 ]]; then
+            echo -e "   Copy the entire line below:"
+            echo -e "   ${SECRET_VALUE}"
+        else
+            echo -e "   Value: ${SECRET_VALUE}"
+        fi
+        echo
+    done
+fi
+
+# Generate backup file for reference
+OUTPUT_FILE="$TEMP_DIR/github_secrets_${WORKFLOW_TYPE}.txt"
+{
+    echo "# GitHub Secrets for iOS $WORKFLOW_NAME Builds"
+    echo "# Generated on $(date)"
+    echo 
+    echo "# Add these secrets to your GitHub repository at:"
+    echo "# Settings > Secrets and variables > Actions > New repository secret"
+    echo
+    for i in "${!SECRETS[@]}"; do
+        SECRET_NAME="${SECRET_NAMES[$i]}"
+        SECRET_VALUE="${SECRET_VALUES[$i]}"
+        echo "# $SECRET_NAME"
+        echo "$SECRET_NAME=$SECRET_VALUE"
+        echo
+    done
+    echo "# Workflow Type: $WORKFLOW_NAME"
+    echo "# Certificate: $SELECTED_CERT_NAME"
+    if [ -n "$SELECTED_PROFILE_NAME" ]; then
+        echo "# Profile: $SELECTED_PROFILE_NAME"
+    fi
+    echo "# Team ID: $TEAM_ID"
+} > "$OUTPUT_FILE"
+
+# Final verification and cleanup
+echo -e "\n${BLUE}Final Verification Steps:${NC}"
+echo "1. Go to your GitHub repository"
+echo "2. Navigate to Settings → Secrets and variables → Actions"
+echo "3. Verify you have these secrets:"
+for SECRET_NAME in "${SECRET_NAMES[@]}"; do
+    echo "   - $SECRET_NAME"
+done
+
+if [[ $WORKFLOW_TYPE == "development" ]]; then
+    echo "4. Run your development iOS workflow to test"
+else
+    echo "4. Run your distribution iOS workflow to test"
+fi
+
+echo -e "\n${GREEN}Success! iOS $WORKFLOW_NAME secrets are ready for GitHub Actions.${NC}"
+
+# Cleanup options
+echo -e "\n${YELLOW}Cleanup:${NC}"
+echo -e "Generated files:"
+echo -e "• Secrets backup: ${BLUE}$OUTPUT_FILE${NC}"
+echo -e "• Certificate: ${BLUE}$P12_FILE${NC}"
+
+read -p "Would you like to view the complete secrets file for reference? (y/n): " VIEW_FILE
+if [[ $VIEW_FILE == "y" || $VIEW_FILE == "Y" ]]; then
+    echo -e "\n${YELLOW}=== COMPLETE SECRETS FILE ===${NC}"
+    cat "$OUTPUT_FILE"
+    echo -e "${YELLOW}=== END SECRETS FILE ===${NC}\n"
+fi
+
+read -p "Would you like to delete the temporary files now? (y/n): " CLEANUP
+if [[ $CLEANUP == "y" || $CLEANUP == "Y" ]]; then
+    rm -rf "$TEMP_DIR"
+    echo -e "${GREEN}Temporary files deleted.${NC}"
+else
+    echo -e "${YELLOW}Temporary files preserved at: $TEMP_DIR${NC}"
+fi
+
+# Certificate cleanup for temporarily installed certificates
+if [[ ${TEMP_CERT_INSTALLED:-false} == true ]]; then
+    echo -e "\n${YELLOW}Certificate Cleanup:${NC}"
+    echo -e "You installed a certificate temporarily for this process."
+    echo -e "Certificate: ${BLUE}$TEMP_CERT_NAME${NC}"
+    echo -e "\n${YELLOW}Options:${NC}"
+    echo -e "1) Remove the certificate from keychain (recommended for security)"
+    echo -e "2) Keep the certificate for future use"
+    read -p "Choose option (1/2): " CERT_CLEANUP_OPTION
+    
+    if [[ $CERT_CLEANUP_OPTION == "1" ]]; then
+        echo -e "\n${YELLOW}Removing certificate from keychain...${NC}"
+        if security delete-identity -c "$TEMP_CERT_NAME" ~/Library/Keychains/login.keychain-db 2>/dev/null; then
+            echo -e "${GREEN}✅ Certificate removed successfully.${NC}"
+            echo -e "${BLUE}Your GitHub secrets contain the certificate data, so this doesn't affect your builds.${NC}"
+        else
+            echo -e "${YELLOW}⚠️  Could not automatically remove certificate.${NC}"
+            echo -e "You can manually remove it from Keychain Access if desired."
+        fi
+    else
+        echo -e "${BLUE}Certificate kept in keychain for future use.${NC}"
+    fi
+fi
+
+echo -e "\n${BLUE}==================================================================${NC}"
+echo -e "${GREEN}iOS Secrets Setup Complete!${NC}"
+echo -e "${BLUE}Your $WORKFLOW_NAME workflow should now work with these secrets.${NC}"
+echo -e "${BLUE}==================================================================${NC}" 
