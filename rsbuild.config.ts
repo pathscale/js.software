@@ -4,7 +4,10 @@ import { pluginSolid } from "@rsbuild/plugin-solid";
 import CompressionPlugin from "compression-webpack-plugin";
 
 export default defineConfig({
-  plugins: [pluginBabel({ include: /\.(?:jsx|tsx)$/ }), pluginSolid()],
+  plugins: [
+    pluginBabel({ include: /\.(?:jsx|tsx|ts)$/ }),
+    pluginSolid()
+  ],
   source: {
     alias: { "~": "./src" },
     define: {
@@ -12,6 +15,13 @@ export default defineConfig({
         process.env.GITHUB_RUN_NUMBER || "0.0.1"
       ),
     },
+  },
+  dev: {
+    hmr: true,
+    liveReload: true,
+  },
+  server: {
+    port: 3000,
   },
   tools: {
     rspack: {
