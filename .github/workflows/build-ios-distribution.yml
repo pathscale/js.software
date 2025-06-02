@@ -1,0 +1,268 @@
+name: Build iOS Distribution (Clean)
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-ios-distribution:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install iOS Dependencies
+        run: rustup target add aarch64-apple-ios
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build frontend
+        run: bun run build
+
+      # Extract project configuration from Tauri config
+      - name: Extract project configuration
+        run: |
+          # Read bundle ID and app name from Tauri config
+          BUNDLE_ID=$(jq -r '.identifier' src-tauri/tauri.conf.json)
+          APP_NAME=$(jq -r '.productName' src-tauri/tauri.conf.json)
+
+          echo "BUNDLE_ID=$BUNDLE_ID" >> $GITHUB_ENV
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+
+          echo "📋 Detected Bundle ID: $BUNDLE_ID"
+          echo "📋 Detected App Name: $APP_NAME"
+
+      # Import distribution certificate
+      - name: Setup iOS distribution signing
+        id: ios-signing
+        uses: apple-actions/import-codesign-certs@v2
+        with:
+          p12-file-base64: ${{ secrets.IOS_DISTRIBUTION_CERTIFICATE }}
+          p12-password: ${{ secrets.IOS_DISTRIBUTION_CERTIFICATE_PASSWORD }}
+          keychain-password: ${{ github.run_id }}
+          create-keychain: true
+
+      # Install provisioning profile with correct UUID naming
+      - name: Install provisioning profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo -n "${{ secrets.IOS_ADHOC_PROVISIONING_PROFILE }}" | base64 --decode > adhoc.mobileprovision
+
+          # Extract UUID from provisioning profile for proper naming
+          PROFILE_UUID=$(security cms -D -i adhoc.mobileprovision | plutil -extract UUID xml1 - -o - | sed -n 's/.*<string>\(.*\)<\/string>.*/\1/p')
+          echo "PROFILE_UUID=$PROFILE_UUID" >> $GITHUB_ENV
+
+          # Install with proper UUID naming
+          cp adhoc.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$PROFILE_UUID.mobileprovision
+
+          # Clean up
+          rm adhoc.mobileprovision
+
+      # Add iOS team configuration to Tauri config
+      - name: Add iOS section with developmentTeam
+        run: |
+          if grep -q '"iOS": {' src-tauri/tauri.conf.json; then
+            sed -i '' 's/"developmentTeam": "[^"]*"/"developmentTeam": "${{ secrets.APPLE_TEAM_ID }}"/' src-tauri/tauri.conf.json
+          else
+            jq '.bundle.iOS = {"developmentTeam": "${{ secrets.APPLE_TEAM_ID }}"}' src-tauri/tauri.conf.json > tmp.json && mv tmp.json src-tauri/tauri.conf.json
+          fi
+
+      # Initialize Tauri iOS project
+      - name: Initialize Tauri iOS
+        run: bun run tauri ios init
+
+      # Apply distribution signing fixes
+      - name: Apply distribution signing fixes
+        run: |
+          PBXPROJ_FILE="src-tauri/gen/apple/app.xcodeproj/project.pbxproj"
+
+          # Fix bundle ID to match Tauri configuration
+          CURRENT_BUNDLE_ID=$(grep -o "PRODUCT_BUNDLE_IDENTIFIER = [^;]*" "$PBXPROJ_FILE" | head -1 | sed 's/PRODUCT_BUNDLE_IDENTIFIER = //')
+          if [ -n "$CURRENT_BUNDLE_ID" ] && [ "$CURRENT_BUNDLE_ID" != "${{ env.BUNDLE_ID }}" ]; then
+            ESCAPED_CURRENT=$(echo "$CURRENT_BUNDLE_ID" | sed 's/\./\\./g')
+            sed -i '' "s/$ESCAPED_CURRENT/${{ env.BUNDLE_ID }}/g" "$PBXPROJ_FILE"
+          fi
+
+          # Switch to manual signing
+          sed -i '' 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' "$PBXPROJ_FILE"
+          sed -i '' 's/"CODE_SIGN_STYLE\[sdk=iphoneos\*\]" = Automatic;/"CODE_SIGN_STYLE[sdk=iphoneos*]" = Manual;/g' "$PBXPROJ_FILE"
+          sed -i '' 's/ProvisioningStyle = Automatic;/ProvisioningStyle = Manual;/g' "$PBXPROJ_FILE"
+
+          # Set distribution code sign identity
+          sed -i '' 's/"CODE_SIGN_IDENTITY\[sdk=iphoneos\*\]" = "iPhone Developer";/"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";/g' "$PBXPROJ_FILE"
+          sed -i '' 's/CODE_SIGN_IDENTITY = "iPhone Developer";/CODE_SIGN_IDENTITY = "iPhone Distribution";/g' "$PBXPROJ_FILE"
+          sed -i '' 's/"iPhone Developer"/"iPhone Distribution"/g' "$PBXPROJ_FILE"
+
+          # Set development team
+          sed -i '' 's/DEVELOPMENT_TEAM = "";/DEVELOPMENT_TEAM = "${{ secrets.APPLE_TEAM_ID }}";/g' "$PBXPROJ_FILE"
+          if ! grep -q "DEVELOPMENT_TEAM" "$PBXPROJ_FILE"; then
+            sed -i '' '/CODE_SIGN_IDENTITY.*iPhone Distribution/a\
+          				DEVELOPMENT_TEAM = "${{ secrets.APPLE_TEAM_ID }}";' "$PBXPROJ_FILE"
+          fi
+
+          # Add provisioning profile specifier
+          sed -i '' '/PROVISIONING_PROFILE_SPECIFIER/d' "$PBXPROJ_FILE"
+          sed -i '' '/CODE_SIGN_IDENTITY.*iPhone Distribution/a\
+          				PROVISIONING_PROFILE_SPECIFIER = "'$PROFILE_UUID'";' "$PBXPROJ_FILE"
+
+          # Remove old provisioning profile settings
+          sed -i '' '/PROVISIONING_PROFILE = /d' "$PBXPROJ_FILE"
+
+      # Create export options
+      - name: Create exportOptions.plist
+        run: |
+          cat > exportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>ad-hoc</string>
+              <key>teamID</key>
+              <string>${{ secrets.APPLE_TEAM_ID }}</string>
+              <key>provisioningProfiles</key>
+              <dict>
+                  <key>${{ env.BUNDLE_ID }}</key>
+                  <string>${PROFILE_UUID}</string>
+              </dict>
+          </dict>
+          </plist>
+          EOF
+
+          # Copy to multiple locations where Tauri might look for it
+          cp exportOptions.plist src-tauri/
+          cp exportOptions.plist src-tauri/gen/apple/
+          mkdir -p src-tauri/gen/apple/app.xcodeproj
+          cp exportOptions.plist src-tauri/gen/apple/app.xcodeproj/
+
+      # Build for distribution
+      - name: Build iOS app for distribution
+        env:
+          DEVELOPER_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          cd src-tauri
+
+          # Try regular build first, if it fails due to export, we'll handle it
+          if bun tauri ios build --export-method release-testing; then
+            # Find the generated IPA
+            IPA_PATH=$(find . -name "*.ipa" -type f | head -n 1)
+            if [ -n "$IPA_PATH" ]; then
+              # Copy to workspace root with consistent name
+              IPA_NAME="${APP_NAME// /_}_Distribution.ipa"
+              cp "$IPA_PATH" "$GITHUB_WORKSPACE/$IPA_NAME"
+              echo "IPA_PATH=$GITHUB_WORKSPACE/$IPA_NAME" >> $GITHUB_ENV
+            fi
+          else
+            # Tauri export failed, creating IPA manually from built .app
+            APP_PATH=$(find gen/apple -name "*.app" -type d | head -n 1)
+            if [ -z "$APP_PATH" ]; then
+              echo "❌ No .app file found!"
+              exit 1
+            fi
+            
+            # Manually create IPA 
+            PAYLOAD_DIR=$(mktemp -d)/Payload
+            mkdir -p "$PAYLOAD_DIR"
+            cp -R "$APP_PATH" "$PAYLOAD_DIR/"
+            
+            # Create IPA
+            IPA_NAME="${APP_NAME// /_}_Distribution.ipa"
+            cd $(dirname "$PAYLOAD_DIR")
+            zip -r "$GITHUB_WORKSPACE/$IPA_NAME" Payload
+            
+            # Store IPA path for later steps
+            echo "IPA_PATH=$GITHUB_WORKSPACE/$IPA_NAME" >> $GITHUB_ENV
+          fi
+
+      # Upload to Diawi (Optional)
+      - name: Upload to Diawi (Optional)
+        run: |
+          # Use the manually created IPA
+          if [ -z "$IPA_PATH" ]; then
+            echo "❌ No IPA file created!"
+            exit 1
+          fi
+
+          # Check if Diawi token is configured
+          if [ -z "${{ secrets.DIAWI_TOKEN }}" ]; then
+            echo "ℹ️ No Diawi token configured - skipping OTA upload"
+            echo "💡 To enable OTA distribution, add DIAWI_TOKEN secret to your repository"
+            echo "🎉 Build completed successfully! IPA is available as artifact."
+          else
+            # Upload to Diawi
+            echo "🌐 Uploading to Diawi..."
+            RESPONSE=$(curl -w "%{http_code}" -s \
+              -F token="${{ secrets.DIAWI_TOKEN }}" \
+              -F file="@${IPA_PATH}" \
+              -F find_by_udid=1 \
+              -F wall_of_apps=1 \
+              "https://upload.diawi.com/")
+
+            HTTP_CODE="${RESPONSE: -3}"
+            RESPONSE_BODY="${RESPONSE%???}"
+
+            if [ "$HTTP_CODE" -eq 200 ]; then
+              JOB_ID=$(echo "$RESPONSE_BODY" | jq -r '.job')
+              
+              # Poll for completion
+              for i in {1..30}; do
+                sleep 10
+                STATUS_RESPONSE=$(curl -s "https://upload.diawi.com/status?token=${{ secrets.DIAWI_TOKEN }}&job=${JOB_ID}")
+                STATUS=$(echo "$STATUS_RESPONSE" | jq -r '.status')
+                
+                if [ "$STATUS" = "2000" ]; then
+                  HASH=$(echo "$STATUS_RESPONSE" | jq -r '.hash')
+                  echo "🔗 Diawi link: https://i.diawi.com/$HASH"
+                  echo "DIAWI_LINK=https://i.diawi.com/$HASH" >> $GITHUB_ENV
+                  break
+                elif [ "$STATUS" = "4000" ]; then
+                  echo "❌ Upload failed: $(echo "$STATUS_RESPONSE" | jq -r '.message')"
+                  exit 1
+                fi
+                
+                echo "⏳ Still processing... (attempt $i/30)"
+              done
+            else
+              echo "❌ Upload failed with HTTP $HTTP_CODE: $RESPONSE_BODY"
+              exit 1
+            fi
+          fi
+
+      # Upload IPA as artifact backup
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-distribution-ipa
+          path: ${{ env.IPA_PATH }}
+          retention-days: 7
+
+      # Summary
+      - name: Build Summary
+        run: |
+          echo "🎉 iOS Distribution Build Complete!"
+          echo "📱 Bundle ID: ${{ env.BUNDLE_ID }}"
+          echo "📱 App Name: ${{ env.APP_NAME }}"
+          echo "🔐 Signed with: iPhone Distribution (${{ secrets.APPLE_TEAM_ID }})"
+          if [ -n "${{ env.DIAWI_LINK }}" ]; then
+            echo "🌐 Diawi Link: ${{ env.DIAWI_LINK }}"
+          fi
