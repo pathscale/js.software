@@ -1,0 +1,454 @@
+name: Build and Sign Android App
+
+on:
+  # push:
+  #   branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Android SDK and NDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept SDK Licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Install Android NDK
+        run: sdkmanager --install "ndk;25.2.9519653"
+
+      - name: Install dependencies
+        run: bun install --frozen
+
+      - name: Set Version
+        shell: bash
+        run: |
+          echo "Version: 1.0.${GITHUB_RUN_NUMBER}"
+          sed -i "s/\"version\": \".*\"/\"version\": \"1.0.${GITHUB_RUN_NUMBER}\"/" package.json
+          sed -i "s/\"version\": \".*\"/\"version\": \"1.0.${GITHUB_RUN_NUMBER}\"/" src-tauri/tauri.conf.json
+
+      - name: Build frontend
+        run: bun run build:apps
+
+      # Extract project configuration from Tauri config
+      - name: Extract project configuration
+        run: |
+          # Read identifier and app name from Tauri config
+          BUNDLE_ID=$(jq -r '.identifier' src-tauri/tauri.conf.json)
+          APP_NAME=$(jq -r '.productName' src-tauri/tauri.conf.json)
+
+          echo "BUNDLE_ID=$BUNDLE_ID" >> $GITHUB_ENV
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+
+          echo "📋 Detected Bundle ID: $BUNDLE_ID"
+          echo "📋 Detected App Name: $APP_NAME"
+
+          # Generate keystore name from bundle ID (following android-secrets-setup.sh convention)
+          # Split bundle ID by dots and create meaningful keystore name
+          PART1=$(echo "$BUNDLE_ID" | cut -d'.' -f1)
+          PART2=$(echo "$BUNDLE_ID" | cut -d'.' -f2)  
+          PART3=$(echo "$BUNDLE_ID" | cut -d'.' -f3)
+          PART_COUNT=$(echo "$BUNDLE_ID" | tr '.' '\n' | wc -l)
+
+          if [ "$PART_COUNT" -eq 3 ]; then
+            # For formats like: com.company.app, software.js.ui, org.company.app
+            if [ "$PART1" = "com" ]; then
+              # com.company.app -> company-app-release.jks
+              KEYSTORE_NAME="${PART2}-${PART3}-release.jks"
+            else
+              # software.js.ui -> js-ui-release.jks, org.company.app -> company-app-release.jks
+              KEYSTORE_NAME="${PART2}-${PART3}-release.jks"
+            fi
+          elif [ "$PART_COUNT" -eq 4 ]; then
+            # For formats like: com.company.division.app
+            PART4=$(echo "$BUNDLE_ID" | cut -d'.' -f4)
+            KEYSTORE_NAME="${PART2}-${PART3}-${PART4}-release.jks"
+          else
+            # Fallback: use the full bundle ID with dots replaced by dashes
+            KEYSTORE_NAME="${BUNDLE_ID//\./-}-release.jks"
+          fi
+
+          echo "KEYSTORE_NAME=$KEYSTORE_NAME" >> $GITHUB_ENV
+          echo "📋 Generated Keystore Name: $KEYSTORE_NAME"
+
+          # Generate artifact name from app name
+          ARTIFACT_NAME=$(echo "$APP_NAME" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')-android-release
+          echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
+          echo "📋 Generated Artifact Name: $ARTIFACT_NAME"
+
+      - name: Initialize Android project
+        env:
+          ANDROID_NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+          NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+        run: bun run tauri android init
+
+      - name: Add signing configuration to build.gradle.kts
+        working-directory: src-tauri/gen/android/app
+        run: |
+          echo "Creating build.gradle.kts with signing configuration..."
+
+          # Create a complete build.gradle.kts with signing configuration
+          cat > build.gradle.kts << 'EOF'
+          import java.util.Properties
+          import java.io.FileInputStream
+
+          plugins {
+              id("com.android.application")
+              id("org.jetbrains.kotlin.android")
+              id("rust")
+          }
+
+          val tauriProperties = Properties().apply {
+              val propFile = file("tauri.properties")
+              if (propFile.exists()) {
+                  propFile.inputStream().use { load(it) }
+              }
+          }
+
+          android {
+              compileSdk = 34
+              namespace = "${{ env.BUNDLE_ID }}"
+              defaultConfig {
+                  manifestPlaceholders["usesCleartextTraffic"] = "false"
+                  applicationId = "${{ env.BUNDLE_ID }}"
+                  minSdk = 24
+                  targetSdk = 34
+                  versionCode = tauriProperties.getProperty("tauri.android.versionCode", "1").toInt()
+                  versionName = tauriProperties.getProperty("tauri.android.versionName", "1.0")
+              }
+
+              signingConfigs {
+                  create("release") {
+                      val keystorePropertiesFile = rootProject.file("keystore.properties")
+                      val keystoreProperties = Properties()
+                      if (keystorePropertiesFile.exists()) {
+                          keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+                          
+                          keyAlias = keystoreProperties["keyAlias"] as String
+                          keyPassword = keystoreProperties["keyPassword"] as String
+                          storeFile = file(keystoreProperties["storeFile"] as String)
+                          storePassword = keystoreProperties["storePassword"] as String
+                      }
+                  }
+              }
+
+              buildTypes {
+                  getByName("debug") {
+                      manifestPlaceholders["usesCleartextTraffic"] = "true"
+                      isDebuggable = true
+                      isJniDebuggable = true
+                      isMinifyEnabled = false
+                      packaging {                jniLibs.keepDebugSymbols.add("*/arm64-v8a/*.so")
+                          jniLibs.keepDebugSymbols.add("*/armeabi-v7a/*.so")
+                          jniLibs.keepDebugSymbols.add("*/x86/*.so")
+                          jniLibs.keepDebugSymbols.add("*/x86_64/*.so")
+                      }
+                  }
+                  getByName("release") {
+                      isMinifyEnabled = true
+                      proguardFiles(
+                          *fileTree(".") { include("**/*.pro") }
+                              .plus(getDefaultProguardFile("proguard-android-optimize.txt"))
+                              .toList().toTypedArray()
+                      )
+                      signingConfig = signingConfigs.getByName("release")
+                  }
+              }
+              kotlinOptions {
+                  jvmTarget = "1.8"
+              }
+              buildFeatures {
+                  buildConfig = true
+              }
+          }
+
+          rust {
+              rootDirRel = "../../../"
+          }
+
+          dependencies {
+              implementation("androidx.webkit:webkit:1.6.1")
+              implementation("androidx.appcompat:appcompat:1.6.1")
+              implementation("com.google.android.material:material:1.8.0")
+              testImplementation("junit:junit:4.13.2")
+              androidTestImplementation("androidx.test.ext:junit:1.1.4")
+              androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+          }
+
+          apply(from = "tauri.build.gradle.kts")
+          EOF
+
+          echo "✅ Created build.gradle.kts with signing configuration"
+          echo "=== Checking signingConfig reference ==="
+          grep "signingConfig = signingConfigs.getByName" build.gradle.kts && echo "✅ Found signing reference" || echo "❌ Missing signing reference"
+
+      - name: Setup Android signing (Official Tauri Method)
+        working-directory: src-tauri/gen/android
+        run: |
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" > keystore.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> keystore.properties
+          echo "storePassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> keystore.properties
+          base64 -d <<< "${{ secrets.ANDROID_KEY_BASE64 }}" > $RUNNER_TEMP/keystore.jks
+          echo "storeFile=./${{ env.KEYSTORE_NAME }}" >> keystore.properties
+
+          # Copy keystore to the app directory where Gradle expects it
+          cp $RUNNER_TEMP/keystore.jks ./app/${{ env.KEYSTORE_NAME }}
+
+          echo "=== Keystore Properties File ==="
+          cat keystore.properties
+          echo "=== Keystore File Info ==="
+          ls -la ./app/${{ env.KEYSTORE_NAME }}
+          echo "=== Keystore Content Verification ==="
+          keytool -list -keystore ./app/${{ env.KEYSTORE_NAME }} -storepass ${{ secrets.ANDROID_KEY_PASSWORD }} || echo "Failed to verify keystore"
+
+      # Build release APK using Tauri with explicit signing
+      - name: Build Android app
+        env:
+          ANDROID_NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+          NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
+        run: |
+          echo "=== Building signed APK ==="
+          bun run tauri android build --apk
+
+          echo "=== Checking build outputs ==="
+          find src-tauri/gen/android -name "*.apk" -type f -exec ls -la {} \;
+
+      - name: Find APK location
+        run: |
+          echo "Searching for APK files:"
+          find src-tauri -name "*.apk" -type f | tee apk-files.txt
+
+          # Look for release APK with multiple patterns
+          APK_PATH=$(find src-tauri -name "*release*.apk" -type f | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            # Fallback: look for any APK in release directory
+            APK_PATH=$(find src-tauri -path "*/release/*" -name "*.apk" -type f | head -n 1)
+          fi
+          if [ -z "$APK_PATH" ]; then
+            # Fallback: look for APK in build outputs
+            APK_PATH=$(find src-tauri/gen/android -name "*.apk" -type f | head -n 1)
+          fi
+
+          if [ -z "$APK_PATH" ]; then
+            echo "Error: No APK file found!"
+            echo "Found files:"
+            cat apk-files.txt
+            echo "Directory structure:"
+            find src-tauri -type d | head -20
+            exit 1
+          fi
+
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+          echo "Found release APK at: $APK_PATH"
+          ls -la "$APK_PATH"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.APK_PATH }}
+          if-no-files-found: error
+
+      # Firebase App Distribution
+      - name: Setup Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+          firebase --version
+
+      - name: Authenticate with Firebase
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 -d > $RUNNER_TEMP/firebase-service-account.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json" >> $GITHUB_ENV
+          export GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json
+          firebase projects:list
+
+      - name: Upload to Firebase App Distribution
+        continue-on-error: true
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        run: |
+          # Debug testers variable
+          echo "Debug: FIREBASE_TESTERS value: '${{ vars.FIREBASE_TESTERS }}'"
+          echo "Debug: Length of FIREBASE_TESTERS: ${#FIREBASE_TESTERS}"
+
+          # Use custom release notes if provided, otherwise generate default ones
+          CUSTOM_NOTES="${{ github.event.inputs.release_notes }}"
+          if [ -n "$CUSTOM_NOTES" ]; then
+            RELEASE_NOTES="$CUSTOM_NOTES"
+          else
+            RELEASE_NOTES="🚀 New ${{ env.APP_NAME }} Build - Version 1.0.${{ github.run_number }}
+
+          📱 Built from: ${{ github.ref_name }}
+          🔗 Commit: ${{ github.sha }}
+          👤 Author: ${{ github.actor }}
+
+          📝 Changes in this build:
+          ${{ github.event.head_commit.message }}
+
+          💾 Download and install to test the latest features!
+          "
+          fi
+
+          TESTERS_PARAM=""
+          if [ -n "${{ vars.FIREBASE_TESTERS }}" ]; then
+            TESTERS_PARAM="--testers ${{ vars.FIREBASE_TESTERS }}"
+            echo "Using testers: ${{ vars.FIREBASE_TESTERS }}"
+          else
+            echo "No testers specified"
+          fi
+
+          firebase appdistribution:distribute "${{ env.APK_PATH }}" \
+            --project "$FIREBASE_PROJECT_ID" \
+            --app "$FIREBASE_APP_ID" \
+            --release-notes "$RELEASE_NOTES" \
+            $TESTERS_PARAM
+
+      - name: Clean up Firebase credentials
+        if: always()
+        run: |
+          rm -f $RUNNER_TEMP/firebase-service-account.json
+
+      # Diawi App Distribution
+      - name: Debug APK Info
+        run: |
+          echo "🔍 APK Debug Information:"
+          echo "📁 File: ${{ env.APK_PATH }}"
+          echo "📏 Size: $(du -h "${{ env.APK_PATH }}" | cut -f1)"
+          echo "📏 Size (bytes): $(stat -c%s "${{ env.APK_PATH }}")"
+
+          # Add Android build-tools to PATH for aapt and apksigner
+          BUILD_TOOLS_PATH="$ANDROID_SDK_ROOT/build-tools"
+          if [ -d "$BUILD_TOOLS_PATH" ]; then
+            # Find the latest build-tools version
+            LATEST_BUILD_TOOLS=$(ls -1 "$BUILD_TOOLS_PATH" | sort -V | tail -n 1)
+            if [ -n "$LATEST_BUILD_TOOLS" ]; then
+              export PATH="$BUILD_TOOLS_PATH/$LATEST_BUILD_TOOLS:$PATH"
+              echo "📱 Using build-tools: $LATEST_BUILD_TOOLS"
+            fi
+          fi
+
+          # Check if APK is valid using aapt (if available)
+          if command -v aapt > /dev/null; then
+            echo "🔍 Validating APK structure with aapt..."
+            if aapt dump badging "${{ env.APK_PATH }}" | grep -q "application-label"; then
+              echo "✅ APK structure is valid"
+              
+              # Extract some useful info
+              PACKAGE_NAME=$(aapt dump badging "${{ env.APK_PATH }}" | grep package | sed "s/.*name='\([^']*\)'.*/\1/")
+              VERSION_NAME=$(aapt dump badging "${{ env.APK_PATH }}" | grep versionName | sed "s/.*versionName='\([^']*\)'.*/\1/")
+              echo "📦 Package: $PACKAGE_NAME"
+              echo "🏷️ Version: $VERSION_NAME"
+            else
+              echo "⚠️ APK structure validation failed"
+            fi
+          else
+            echo "⚠️ aapt not available - skipping APK structure validation"
+          fi
+
+          # Check APK signing using apksigner (if available)  
+          if command -v apksigner > /dev/null; then
+            echo "🔐 Verifying APK signature..."
+            if apksigner verify --verbose "${{ env.APK_PATH }}" 2>/dev/null; then
+              echo "✅ APK is properly signed"
+            else
+              echo "⚠️ APK signature verification failed"
+            fi
+          else
+            echo "⚠️ apksigner not available - skipping signature verification"
+          fi
+
+          # Basic file validation (always works)
+          if [ -f "${{ env.APK_PATH }}" ] && [ -s "${{ env.APK_PATH }}" ]; then
+            echo "✅ APK file exists and is not empty"
+            
+            # Check if it's a ZIP file (APKs are ZIP files)
+            if file "${{ env.APK_PATH }}" | grep -q "Zip archive"; then
+              echo "✅ APK has valid ZIP structure"
+            else
+              echo "⚠️ APK does not appear to be a valid ZIP archive"
+            fi
+          else
+            echo "❌ APK file is missing or empty"
+          fi
+
+      - name: Upload to Diawi
+        run: |
+          echo "📤 Uploading APK to Diawi..."
+
+          # Upload to Diawi API
+          UPLOAD_RESPONSE=$(curl -X POST "https://upload.diawi.com/" \
+            -F "token=${{ secrets.DIAWI_TOKEN }}" \
+            -F "file=@${{ env.APK_PATH }}" \
+            -F "comment=Build ${{ github.run_number }} from ${{ github.ref_name }}" \
+            --silent --show-error)
+
+          echo "Upload Response: $UPLOAD_RESPONSE"
+
+          # Extract job ID from response
+          JOB_ID=$(echo "$UPLOAD_RESPONSE" | grep -o '"job":"[^"]*"' | cut -d'"' -f4)
+
+          if [ -z "$JOB_ID" ]; then
+            echo "❌ Failed to get job ID from Diawi"
+            exit 0
+          fi
+
+          echo "📋 Job ID: $JOB_ID"
+          echo "⏳ Waiting for processing..."
+
+          # Save job ID for manual checking
+          echo "🔗 Manual status check: https://upload.diawi.com/status?token=${{ secrets.DIAWI_TOKEN }}&job=$JOB_ID"
+
+          # Poll for completion (max 5 minutes)
+          for i in {1..30}; do
+            sleep 10
+            STATUS_RESPONSE=$(curl -X GET "https://upload.diawi.com/status?token=${{ secrets.DIAWI_TOKEN }}&job=$JOB_ID" --silent)
+            echo "Status check $i: $STATUS_RESPONSE"
+            
+            if echo "$STATUS_RESPONSE" | grep -q '"status":2000'; then
+              # Success
+              DIAWI_HASH=$(echo "$STATUS_RESPONSE" | grep -o '"hash":"[^"]*"' | cut -d'"' -f4)
+              DIAWI_URL="https://i.diawi.com/$DIAWI_HASH"
+              echo "✅ Upload successful!"
+              echo "📱 Diawi URL: $DIAWI_URL"
+              echo "📱 QR Code: https://www.diawi.com/qrcode/link/$DIAWI_HASH"
+              break
+            elif echo "$STATUS_RESPONSE" | grep -q '"status":4000'; then
+              # Error
+              echo "❌ Diawi upload failed"
+              break
+            fi
+            
+            if [ $i -eq 30 ]; then
+              echo "⏰ Upload timed out after 5 minutes"
+            fi
+          done
+        continue-on-error: true
+
+      - name: Diawi Manual Upload Info
+        if: failure()
+        run: |
+          echo "⚠️ Diawi upload failed. You can manually upload at:"
+          echo "🔗 https://www.diawi.com/"
+          echo "📁 File: ${{ env.APK_PATH }}"
