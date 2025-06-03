@@ -37,7 +37,7 @@ jobs:
         run: bun install
 
       - name: Build frontend
-        run: bun run build
+        run: bun run build:apps
 
       # Extract project configuration from Tauri config
       - name: Extract project configuration
