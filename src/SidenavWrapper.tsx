@@ -24,11 +24,6 @@ export default function SidenavWrapper() {
 
   const toggleSidebar = () => setIsOpen(!isOpen());
 
-  const handleNavClick = (path: string) => () => {
-    navigate(path);
-    if (!isDesktop()) setIsOpen(false);
-  };
-
   const checkIfDesktop = () => {
     const width = window.innerWidth;
     setIsDesktop(width >= 1024);
@@ -70,7 +65,7 @@ export default function SidenavWrapper() {
         <SidenavMenu>
           <SidenavItem active={activePath() === "/"}>
             <SidenavLink asChild>
-              <A href="/" onClick={() => !isDesktop() && setIsOpen(false)}>
+              <A noScroll href="/" onClick={() => !isDesktop() && setIsOpen(false)}>
                 Home
               </A>
             </SidenavLink>
@@ -79,7 +74,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Utils">
             <SidenavItem active={activePath() === "/theming"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/theming"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -89,7 +84,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/svg-background"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/svg-background"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -102,7 +97,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Actions">
             <SidenavItem active={activePath() === "/button"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/button"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -112,7 +107,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/dropdown"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/dropdown"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -122,7 +117,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/modal"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/modal"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -132,7 +127,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/swap"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/swap"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -142,7 +137,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/copy-button"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/copy-button"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -155,7 +150,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Data Display">
             <SidenavItem active={activePath() === "/accordion"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/accordion"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -165,7 +160,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/avatar"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/avatar"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -175,7 +170,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/badge"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/badge"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -185,7 +180,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/card"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll 
                   href="/card"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -195,7 +190,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/carousel"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/carousel"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -205,7 +200,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/chat-bubble"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/chat-bubble"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -215,7 +210,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/collapse"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/collapse"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -225,7 +220,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/countdown"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/countdown"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -235,7 +230,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/diff"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/diff"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -245,14 +240,14 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/kbd"}>
               <SidenavLink asChild>
-                <A href="/kbd" onClick={() => !isDesktop() && setIsOpen(false)}>
+                <A noScroll href="/kbd" onClick={() => !isDesktop() && setIsOpen(false)}>
                   Kbd
                 </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/stats"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/stats"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -262,7 +257,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/table"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/table"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -272,7 +267,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/timeline"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/timeline"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -282,7 +277,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/codemockup"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/codemockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -292,7 +287,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/rating"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll 
                   href="/rating"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -305,7 +300,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Navigation">
             <SidenavItem active={activePath() === "/breadcrumb"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/breadcrumb"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -315,7 +310,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/dock"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/dock"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -325,7 +320,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/link"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/link"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -335,7 +330,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/menu"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/menu"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -345,7 +340,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/navbar"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/navbar"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -355,7 +350,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/pagination"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/pagination"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -365,7 +360,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/steps"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/steps"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -375,7 +370,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/tabs"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/tabs"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -385,7 +380,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/sidenav"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/sidenav"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -398,7 +393,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Feedback">
             <SidenavItem active={activePath() === "/alert"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/alert"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -408,7 +403,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/loading"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll 
                   href="/loading"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -418,7 +413,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/progress"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/progress"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -428,7 +423,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/radial-progress"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/radial-progress"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -438,7 +433,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/skeleton"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/skeleton"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -448,7 +443,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/toast"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/toast"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -458,7 +453,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/tooltip"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/tooltip"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -471,7 +466,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Data Input">
             <SidenavItem active={activePath() === "/checkbox"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/checkbox"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -481,7 +476,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/file-input"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/file-input"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -491,7 +486,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/form"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/form"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -501,7 +496,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/input"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/input"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -511,7 +506,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/radio"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/radio"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -521,7 +516,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/range"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll 
                   href="/range"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -531,7 +526,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/select"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/select"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -541,7 +536,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/textarea"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/textarea"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -551,7 +546,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/toggle"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/toggle"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -561,7 +556,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/join"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/join"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -574,7 +569,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Layout">
             <SidenavItem active={activePath() === "/divider"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/divider"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -584,7 +579,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/drawer"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/drawer"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -594,7 +589,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/flex"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/flex"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -604,7 +599,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/footer"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/footer"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -614,7 +609,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/grid"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/grid"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -624,7 +619,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/hero"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/hero"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -634,7 +629,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/indicator"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll 
                   href="/indicator"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -644,7 +639,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/join"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/join"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -654,7 +649,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/mask"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/mask"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -664,7 +659,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/stack"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/stack"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -674,7 +669,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/background"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/background"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -687,7 +682,7 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Mockup">
             <SidenavItem active={activePath() === "/artboard"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/artboard"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -697,7 +692,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/browsermockup"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/browsermockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -707,7 +702,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/codemockup"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/codemockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -717,7 +712,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/phonemockup"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/phonemockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
@@ -727,7 +722,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/windowmockup"}>
               <SidenavLink asChild>
-                <A
+                <A noScroll
                   href="/windowmockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
                 >
