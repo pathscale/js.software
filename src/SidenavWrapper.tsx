@@ -1,7 +1,7 @@
 import { A } from "@solidjs/router";
 import { FiMenu, FiX } from "solid-icons/fi";
 import { useLocation, useNavigate } from "@solidjs/router";
-import { createSignal, onCleanup, onMount, Show } from "solid-js";
+import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 
 import {
   Button,
@@ -18,9 +18,11 @@ export default function SidenavWrapper() {
   const [isOpen, setIsOpen] = createSignal(true);
   const [isDesktop, setIsDesktop] = createSignal(true);
   const location = useLocation();
-  const navigate = useNavigate();
+  const [activePath, setActivePath] = createSignal(location.pathname);
 
-  const activePath = () => location.pathname;
+  createEffect(() => {
+    setActivePath(location.pathname);
+  });
 
   const toggleSidebar = () => setIsOpen(!isOpen());
 
@@ -65,7 +67,7 @@ export default function SidenavWrapper() {
         <SidenavMenu>
           <SidenavItem active={activePath() === "/"}>
             <SidenavLink asChild>
-              <A noScroll href="/" onClick={() => !isDesktop() && setIsOpen(false)}>
+              <A noScroll href="/" onClick={() => !isDesktop() && setIsOpen(false)} class="sidenav-item-link">
                 Home
               </A>
             </SidenavLink>
@@ -77,6 +79,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/theming"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Theming
                 </A>
@@ -87,6 +90,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/svg-background"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   SVG Background
                 </A>
@@ -100,6 +104,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/button"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Button
                 </A>
@@ -110,6 +115,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/dropdown"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Dropdown
                 </A>
@@ -120,6 +126,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/modal"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Modal
                 </A>
@@ -130,6 +137,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/swap"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Swap
                 </A>
@@ -140,6 +148,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/copy-button"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Copy Button
                 </A>
@@ -153,6 +162,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/accordion"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Accordion
                 </A>
@@ -163,6 +173,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/avatar"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Avatar
                 </A>
@@ -173,6 +184,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/badge"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Badge
                 </A>
@@ -183,6 +195,7 @@ export default function SidenavWrapper() {
                 <A noScroll 
                   href="/card"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Card
                 </A>
@@ -193,6 +206,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/carousel"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Carousel
                 </A>
@@ -203,6 +217,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/chat-bubble"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Chat Bubble
                 </A>
@@ -213,6 +228,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/collapse"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Collapse
                 </A>
@@ -223,6 +239,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/countdown"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Countdown
                 </A>
@@ -233,6 +250,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/diff"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Diff
                 </A>
@@ -240,7 +258,7 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/kbd"}>
               <SidenavLink asChild>
-                <A noScroll href="/kbd" onClick={() => !isDesktop() && setIsOpen(false)}>
+                <A noScroll href="/kbd" onClick={() => !isDesktop() && setIsOpen(false)} class="sidenav-item-link">
                   Kbd
                 </A>
               </SidenavLink>
@@ -250,6 +268,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/stats"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Stats
                 </A>
@@ -260,6 +279,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/table"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Table
                 </A>
@@ -267,9 +287,11 @@ export default function SidenavWrapper() {
             </SidenavItem>
             <SidenavItem active={activePath() === "/timeline"}>
               <SidenavLink asChild>
+
                 <A noScroll
                   href="/timeline"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Timeline
                 </A>
@@ -280,6 +302,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/codemockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Code Mockup
                 </A>
@@ -290,6 +313,7 @@ export default function SidenavWrapper() {
                 <A noScroll 
                   href="/rating"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Rating
                 </A>
@@ -303,6 +327,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/breadcrumb"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Breadcrumb
                 </A>
@@ -313,6 +338,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/dock"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Dock
                 </A>
@@ -323,6 +349,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/link"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Link
                 </A>
@@ -333,6 +360,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/menu"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Menu
                 </A>
@@ -343,6 +371,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/navbar"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Navbar
                 </A>
@@ -353,6 +382,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/pagination"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Pagination
                 </A>
@@ -363,6 +393,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/steps"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Steps
                 </A>
@@ -373,6 +404,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/tabs"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Tabs
                 </A>
@@ -383,6 +415,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/sidenav"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Sidenav
                 </A>
@@ -396,6 +429,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/alert"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Alert
                 </A>
@@ -406,6 +440,7 @@ export default function SidenavWrapper() {
                 <A noScroll 
                   href="/loading"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Loading
                 </A>
@@ -416,6 +451,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/progress"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Progress
                 </A>
@@ -426,6 +462,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/radial-progress"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Radial Progress
                 </A>
@@ -436,6 +473,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/skeleton"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Skeleton
                 </A>
@@ -446,6 +484,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/toast"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Toast
                 </A>
@@ -456,6 +495,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/tooltip"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Tooltip
                 </A>
@@ -469,6 +509,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/checkbox"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Checkbox
                 </A>
@@ -479,6 +520,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/file-input"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   File Input
                 </A>
@@ -489,6 +531,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/form"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Form
                 </A>
@@ -499,6 +542,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/input"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Input
                 </A>
@@ -509,6 +553,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/radio"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Radio
                 </A>
@@ -519,6 +564,7 @@ export default function SidenavWrapper() {
                 <A noScroll 
                   href="/range"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Range
                 </A>
@@ -529,6 +575,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/select"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Select
                 </A>
@@ -539,6 +586,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/textarea"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Textarea
                 </A>
@@ -549,6 +597,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/toggle"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Toggle
                 </A>
@@ -559,6 +608,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/join"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Join
                 </A>
@@ -572,6 +622,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/divider"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Divider
                 </A>
@@ -582,6 +633,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/drawer"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Drawer
                 </A>
@@ -592,6 +644,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/flex"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Flex
                 </A>
@@ -602,6 +655,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/footer"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Footer
                 </A>
@@ -612,6 +666,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/grid"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Grid
                 </A>
@@ -622,6 +677,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/hero"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Hero
                 </A>
@@ -632,6 +688,7 @@ export default function SidenavWrapper() {
                 <A noScroll 
                   href="/indicator"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Indicator
                 </A>
@@ -642,6 +699,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/join"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Join
                 </A>
@@ -652,6 +710,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/mask"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Mask
                 </A>
@@ -662,6 +721,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/stack"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Stack
                 </A>
@@ -672,6 +732,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/background"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Background
                 </A>
@@ -685,6 +746,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/artboard"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Artboard
                 </A>
@@ -695,6 +757,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/browsermockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Browser Mockup
                 </A>
@@ -705,6 +768,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/codemockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Code Mockup
                 </A>
@@ -715,6 +779,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/phonemockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Phone Mockup
                 </A>
@@ -725,6 +790,7 @@ export default function SidenavWrapper() {
                 <A noScroll
                   href="/windowmockup"
                   onClick={() => !isDesktop() && setIsOpen(false)}
+                  class="sidenav-item-link"
                 >
                   Window Mockup
                 </A>
