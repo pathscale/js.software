@@ -11,6 +11,7 @@ import { createSignal, For } from "solid-js";
 
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
+import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function TableShowcase() {
@@ -25,6 +26,90 @@ export default function TableShowcase() {
   const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
   const [size, setSize] = createSignal<(typeof sizes)[number]>("md");
   const sizeOptions = sizes.map((s) => ({ value: s, label: s }));
+
+  const tableProps = [
+    {
+      name: "size",
+      type: `"xs" | "sm" | "md" | "lg" | "xl"`,
+      default: `"md"`,
+      description: "Define el tamaño de la tabla.",
+    },
+    {
+      name: "zebra",
+      type: "boolean",
+      default: "false",
+      description: "Activa el estilo de filas alternas (table-zebra).",
+    },
+    {
+      name: "pinRows",
+      type: "boolean",
+      default: "false",
+      description: "Fija las filas del encabezado al hacer scroll.",
+    },
+    {
+      name: "pinCols",
+      type: "boolean",
+      default: "false",
+      description: "Fija las columnas al hacer scroll horizontal.",
+    },
+    {
+      name: "dataTheme",
+      type: "string",
+      default: "—",
+      description: "Aplica un tema específico al componente.",
+    },
+  ];
+
+  const headProps = [
+    {
+      name: "children",
+      type: "JSX.Element | JSX.Element[]",
+      default: "—",
+      description: "Contenido del encabezado, típicamente celdas `<th>`.",
+    },
+  ];
+
+  const bodyProps = [
+    {
+      name: "children",
+      type: "JSX.Element | JSX.Element[]",
+      default: "—",
+      description:
+        "Contenido del cuerpo de la tabla: uno o varios `Table.Row`.",
+    },
+  ];
+
+  const footerProps = [
+    {
+      name: "children",
+      type: "JSX.Element | JSX.Element[]",
+      default: "—",
+      description: "Contenido del pie de tabla, típicamente celdas `<td>`.",
+    },
+  ];
+
+  const rowProps = [
+    {
+      name: "active",
+      type: "boolean",
+      default: "false",
+      description: "Marca la fila como activa, resaltándola visualmente.",
+    },
+    {
+      name: "noCell",
+      type: "boolean",
+      default: "false",
+      description:
+        "Evita envolver automáticamente los hijos en `<td>` o `<th>`.",
+    },
+    {
+      name: "children",
+      type: "JSX.Element | JSX.Element[]",
+      default: "—",
+      description:
+        "Contenido de la fila. Puede ser texto o cualquier componente.",
+    },
+  ];
 
   return (
     <ShowcaseLayout>
@@ -588,6 +673,25 @@ export default function TableShowcase() {
   </Table.Body>
 </Table>`}
             />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="table-props" title="Props">
+          <Flex direction="col" gap="md">
+            <h3 class="text-lg font-semibold">Table</h3>
+            <PropsTable props={tableProps} />
+
+            <h3 class="text-lg font-semibold mt-4">Table.Head</h3>
+            <PropsTable props={headProps} />
+
+            <h3 class="text-lg font-semibold mt-4">Table.Body</h3>
+            <PropsTable props={bodyProps} />
+
+            <h3 class="text-lg font-semibold mt-4">Table.Footer</h3>
+            <PropsTable props={footerProps} />
+
+            <h3 class="text-lg font-semibold mt-4">Table.Row</h3>
+            <PropsTable props={rowProps} />
           </Flex>
         </ShowcaseSection>
       </div>
