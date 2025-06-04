@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import { FiMenu, FiX } from "solid-icons/fi";
 import { useLocation, useNavigate } from "@solidjs/router";
 import { createSignal, onCleanup, onMount, Show } from "solid-js";
@@ -69,25 +70,31 @@ export default function SidenavWrapper() {
         <SidenavMenu>
           <SidenavItem active={activePath() === "/"}>
             <SidenavLink asChild>
-              <a href="#" onClick={handleNavClick("/")}>
+              <A href="/" onClick={() => !isDesktop() && setIsOpen(false)}>
                 Home
-              </a>
+              </A>
             </SidenavLink>
           </SidenavItem>
 
           <SidenavGroup label="Utils">
             <SidenavItem active={activePath() === "/theming"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/theming")}>
+                <A
+                  href="/theming"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Theming
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/svg-background"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/svg-background")}>
+                <A
+                  href="/svg-background"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   SVG Background
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
@@ -95,37 +102,52 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Actions">
             <SidenavItem active={activePath() === "/button"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/button")}>
+                <A
+                  href="/button"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Button
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/dropdown"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/dropdown")}>
+                <A
+                  href="/dropdown"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Dropdown
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/modal"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/modal")}>
+                <A
+                  href="/modal"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Modal
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/swap"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/swap")}>
+                <A
+                  href="/swap"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Swap
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/copy-button"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/copy-button")}>
+                <A
+                  href="/copy-button"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Copy Button
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
@@ -133,114 +155,149 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Data Display">
             <SidenavItem active={activePath() === "/accordion"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/accordion")}>
+                <A
+                  href="/accordion"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Accordion
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/avatar"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/avatar")}>
+                <A
+                  href="/avatar"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Avatar
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/badge"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/badge")}>
+                <A
+                  href="/badge"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Badge
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/card"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/card")}>
+                <A
+                  href="/card"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Card
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/carousel"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/carousel")}>
+                <A
+                  href="/carousel"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Carousel
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/chat-bubble"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/chat-bubble")}>
+                <A
+                  href="/chat-bubble"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Chat Bubble
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/collapse"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/collapse")}>
+                <A
+                  href="/collapse"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Collapse
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/countdown"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/countdown")}>
+                <A
+                  href="/countdown"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Countdown
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/diff"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/diff")}>
+                <A
+                  href="/diff"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Diff
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/kbd"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/kbd")}>
+                <A href="/kbd" onClick={() => !isDesktop() && setIsOpen(false)}>
                   Kbd
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/stats"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/stats")}>
+                <A
+                  href="/stats"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Stats
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/table"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/table")}>
+                <A
+                  href="/table"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Table
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/timeline"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/timeline")}>
+                <A
+                  href="/timeline"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Timeline
-                </a>
-              </SidenavLink>
-            </SidenavItem>
-            <SidenavItem active={activePath() === "/steps"}>
-              <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/steps")}>
-                  Steps
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/codemockup"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/codemockup")}>
+                <A
+                  href="/codemockup"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Code Mockup
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/rating"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/rating")}>
+                <A
+                  href="/rating"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Rating
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
@@ -248,65 +305,92 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Navigation">
             <SidenavItem active={activePath() === "/breadcrumb"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/breadcrumb")}>
+                <A
+                  href="/breadcrumb"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Breadcrumb
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/dock"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/dock")}>
+                <A
+                  href="/dock"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Dock
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/link"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/link")}>
+                <A
+                  href="/link"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Link
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/menu"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/menu")}>
+                <A
+                  href="/menu"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Menu
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/navbar"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/navbar")}>
+                <A
+                  href="/navbar"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Navbar
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/pagination"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/pagination")}>
+                <A
+                  href="/pagination"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Pagination
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/steps"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/steps")}>
+                <A
+                  href="/steps"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Steps
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/tabs"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/tabs")}>
+                <A
+                  href="/tabs"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Tabs
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/sidenav"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/sidenav")}>
+                <A
+                  href="/sidenav"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Sidenav
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
@@ -314,51 +398,72 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Feedback">
             <SidenavItem active={activePath() === "/alert"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/alert")}>
+                <A
+                  href="/alert"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Alert
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/loading"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/loading")}>
+                <A
+                  href="/loading"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Loading
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/progress"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/progress")}>
+                <A
+                  href="/progress"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Progress
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/radial-progress"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/radial-progress")}>
+                <A
+                  href="/radial-progress"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Radial Progress
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/skeleton"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/skeleton")}>
+                <A
+                  href="/skeleton"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Skeleton
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/toast"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/toast")}>
+                <A
+                  href="/toast"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Toast
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/tooltip"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/tooltip")}>
+                <A
+                  href="/tooltip"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Tooltip
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
@@ -366,79 +471,102 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Data Input">
             <SidenavItem active={activePath() === "/checkbox"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/checkbox")}>
+                <A
+                  href="/checkbox"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Checkbox
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/file-input"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/file-input")}>
+                <A
+                  href="/file-input"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   File Input
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/form"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/form")}>
+                <A
+                  href="/form"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Form
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/input"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/input")}>
+                <A
+                  href="/input"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Input
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/radio"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/radio")}>
+                <A
+                  href="/radio"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Radio
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/range"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/range")}>
+                <A
+                  href="/range"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Range
-                </a>
-              </SidenavLink>
-            </SidenavItem>
-            <SidenavItem active={activePath() === "/rating"}>
-              <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/rating")}>
-                  Rating
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/select"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/select")}>
+                <A
+                  href="/select"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Select
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/textarea"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/textarea")}>
+                <A
+                  href="/textarea"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Textarea
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/toggle"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/toggle")}>
+                <A
+                  href="/toggle"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Toggle
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/join"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/join")}>
+                <A
+                  href="/join"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Join
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
@@ -446,79 +574,112 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Layout">
             <SidenavItem active={activePath() === "/divider"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/divider")}>
+                <A
+                  href="/divider"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Divider
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/drawer"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/drawer")}>
+                <A
+                  href="/drawer"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Drawer
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/flex"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/flex")}>
+                <A
+                  href="/flex"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Flex
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/footer"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/footer")}>
+                <A
+                  href="/footer"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Footer
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/grid"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/grid")}>
+                <A
+                  href="/grid"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Grid
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/hero"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/hero")}>
+                <A
+                  href="/hero"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Hero
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/indicator"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/indicator")}>
+                <A
+                  href="/indicator"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Indicator
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/join"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/join")}>
+                <A
+                  href="/join"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Join
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/mask"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/mask")}>
+                <A
+                  href="/mask"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Mask
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/stack"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/stack")}>
+                <A
+                  href="/stack"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Stack
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/background"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/background")}>
+                <A
+                  href="/background"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Background
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
@@ -526,37 +687,52 @@ export default function SidenavWrapper() {
           <SidenavGroup label="Mockup">
             <SidenavItem active={activePath() === "/artboard"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/artboard")}>
+                <A
+                  href="/artboard"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Artboard
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/browsermockup"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/browsermockup")}>
+                <A
+                  href="/browsermockup"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Browser Mockup
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/codemockup"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/codemockup")}>
+                <A
+                  href="/codemockup"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Code Mockup
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/phonemockup"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/phonemockup")}>
+                <A
+                  href="/phonemockup"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Phone Mockup
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/windowmockup"}>
               <SidenavLink asChild>
-                <a href="#" onClick={handleNavClick("/windowmockup")}>
+                <A
+                  href="/windowmockup"
+                  onClick={() => !isDesktop() && setIsOpen(false)}
+                >
                   Window Mockup
-                </a>
+                </A>
               </SidenavLink>
             </SidenavItem>
           </SidenavGroup>
