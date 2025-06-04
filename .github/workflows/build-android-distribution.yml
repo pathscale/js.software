@@ -355,9 +355,9 @@ jobs:
             if aapt dump badging "${{ env.APK_PATH }}" | grep -q "application-label"; then
               echo "✅ APK structure is valid"
               
-              # Extract some useful info
-              PACKAGE_NAME=$(aapt dump badging "${{ env.APK_PATH }}" | grep package | sed "s/.*name='\([^']*\)'.*/\1/")
-              VERSION_NAME=$(aapt dump badging "${{ env.APK_PATH }}" | grep versionName | sed "s/.*versionName='\([^']*\)'.*/\1/")
+              # Extract some useful info with improved regex
+              PACKAGE_NAME=$(aapt dump badging "${{ env.APK_PATH }}" | grep "^package:" | sed -n "s/package: name='\([^']*\)'.*/\1/p")
+              VERSION_NAME=$(aapt dump badging "${{ env.APK_PATH }}" | grep "^package:" | sed -n "s/.*versionName='\([^']*\)'.*/\1/p")
               echo "📦 Package: $PACKAGE_NAME"
               echo "🏷️ Version: $VERSION_NAME"
             else
@@ -383,11 +383,13 @@ jobs:
           if [ -f "${{ env.APK_PATH }}" ] && [ -s "${{ env.APK_PATH }}" ]; then
             echo "✅ APK file exists and is not empty"
             
-            # Check if it's a ZIP file (APKs are ZIP files)
-            if file "${{ env.APK_PATH }}" | grep -q "Zip archive"; then
+            # Check if it's a ZIP file (APKs are ZIP files) - improved detection
+            if file "${{ env.APK_PATH }}" | grep -q -E "(Zip archive|Android application package|APK)"; then
               echo "✅ APK has valid ZIP structure"
+            elif unzip -t "${{ env.APK_PATH }}" > /dev/null 2>&1; then
+              echo "✅ APK has valid ZIP structure (verified with unzip)"
             else
-              echo "⚠️ APK does not appear to be a valid ZIP archive"
+              echo "⚠️ APK structure validation failed"
             fi
           else
             echo "❌ APK file is missing or empty"
