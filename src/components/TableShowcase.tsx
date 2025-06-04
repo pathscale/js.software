@@ -32,31 +32,31 @@ export default function TableShowcase() {
       name: "size",
       type: `"xs" | "sm" | "md" | "lg" | "xl"`,
       default: `"md"`,
-      description: "Define el tamaño de la tabla.",
+      description: "Sets the size of the table.",
     },
     {
       name: "zebra",
       type: "boolean",
       default: "false",
-      description: "Activa el estilo de filas alternas (table-zebra).",
+      description: "Enables zebra-striping for alternate rows (table-zebra).",
     },
     {
       name: "pinRows",
       type: "boolean",
       default: "false",
-      description: "Fija las filas del encabezado al hacer scroll.",
+      description: "Pins the table header rows when scrolling.",
     },
     {
       name: "pinCols",
       type: "boolean",
       default: "false",
-      description: "Fija las columnas al hacer scroll horizontal.",
+      description: "Pins the table columns on horizontal scroll.",
     },
     {
       name: "dataTheme",
       type: "string",
       default: "—",
-      description: "Aplica un tema específico al componente.",
+      description: "Applies a specific theme to the table.",
     },
   ];
 
@@ -65,7 +65,7 @@ export default function TableShowcase() {
       name: "children",
       type: "JSX.Element | JSX.Element[]",
       default: "—",
-      description: "Contenido del encabezado, típicamente celdas `<th>`.",
+      description: "Content of the table head, typically <th> cells.",
     },
   ];
 
@@ -75,7 +75,7 @@ export default function TableShowcase() {
       type: "JSX.Element | JSX.Element[]",
       default: "—",
       description:
-        "Contenido del cuerpo de la tabla: uno o varios `Table.Row`.",
+        "Content of the table body, typically one or more <Table.Row>.",
     },
   ];
 
@@ -84,7 +84,7 @@ export default function TableShowcase() {
       name: "children",
       type: "JSX.Element | JSX.Element[]",
       default: "—",
-      description: "Contenido del pie de tabla, típicamente celdas `<td>`.",
+      description: "Content of the table footer, typically <td> cells.",
     },
   ];
 
@@ -93,21 +93,20 @@ export default function TableShowcase() {
       name: "active",
       type: "boolean",
       default: "false",
-      description: "Marca la fila como activa, resaltándola visualmente.",
+      description: "Highlights the row visually as active.",
     },
     {
       name: "noCell",
       type: "boolean",
       default: "false",
       description:
-        "Evita envolver automáticamente los hijos en `<td>` o `<th>`.",
+        "Prevents children from being automatically wrapped in <td> or <th>.",
     },
     {
       name: "children",
       type: "JSX.Element | JSX.Element[]",
       default: "—",
-      description:
-        "Contenido de la fila. Puede ser texto o cualquier componente.",
+      description: "Row content. Can include text or any components.",
     },
   ];
 
