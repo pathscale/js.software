@@ -194,6 +194,68 @@ jobs:
             echo "IPA_PATH=$GITHUB_WORKSPACE/$IPA_NAME" >> $GITHUB_ENV
           fi
 
+      # Firebase App Distribution
+      - name: Setup Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+          firebase --version
+
+      - name: Authenticate with Firebase
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 -d > $RUNNER_TEMP/firebase-service-account.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json" >> $GITHUB_ENV
+          export GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json
+          firebase projects:list
+
+      - name: Upload to Firebase App Distribution
+        continue-on-error: true
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
+        run: |
+          # Debug testers variable
+          echo "Debug: FIREBASE_TESTERS value: '${{ vars.FIREBASE_TESTERS }}'"
+          echo "Debug: Length of FIREBASE_TESTERS: ${#FIREBASE_TESTERS}"
+
+          # Use custom release notes if provided, otherwise generate default ones
+          CUSTOM_NOTES="${{ github.event.inputs.release_notes }}"
+          if [ -n "$CUSTOM_NOTES" ]; then
+            RELEASE_NOTES="$CUSTOM_NOTES"
+          else
+            RELEASE_NOTES="🚀 New ${{ env.APP_NAME }} iOS Build - Version 1.0.${{ github.run_number }}
+
+          📱 Built from: ${{ github.ref_name }}
+          🔗 Commit: ${{ github.sha }}
+          👤 Author: ${{ github.actor }}
+
+          📝 Changes in this build:
+          ${{ github.event.head_commit.message }}
+
+          💾 Download and install to test the latest features!
+          "
+          fi
+
+          TESTERS_PARAM=""
+          if [ -n "${{ vars.FIREBASE_TESTERS }}" ]; then
+            TESTERS_PARAM="--testers ${{ vars.FIREBASE_TESTERS }}"
+            echo "Using testers: ${{ vars.FIREBASE_TESTERS }}"
+          else
+            echo "No testers specified"
+          fi
+
+          firebase appdistribution:distribute "${{ env.IPA_PATH }}" \
+            --project "$FIREBASE_PROJECT_ID" \
+            --app "$FIREBASE_APP_ID_IOS" \
+            --release-notes "$RELEASE_NOTES" \
+            $TESTERS_PARAM
+
+      - name: Clean up Firebase credentials
+        if: always()
+        run: |
+          rm -f $RUNNER_TEMP/firebase-service-account.json
+
       # Upload to Diawi (Optional)
       - name: Upload to Diawi (Optional)
         run: |
