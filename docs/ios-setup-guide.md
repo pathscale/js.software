@@ -320,3 +320,190 @@ After completing this setup:
 5. **Other projects** can reuse the same workflow files
 
 The workflow automatically detects your project configuration and works across any Tauri iOS project 🚀
+
+## Firebase App Distribution (Optional)
+
+After successfully building signed IPAs, you can distribute them to testers using Firebase App Distribution. The iOS workflow includes integration with **Firebase App Distribution** for seamless distribution to your testing team.
+
+### Overview
+
+Firebase App Distribution is Google's service for distributing pre-release versions of your iOS apps to trusted testers. It provides:
+
+- ✅ **Automatic email notifications** to testers when new builds are available
+- ✅ **Centralized tester management** with groups and permissions
+- ✅ **Release notes and version tracking**
+- ✅ **Deep integration** with other Firebase services
+- ✅ **Free tier** with generous limits
+
+### Prerequisites
+
+- **Google account** with access to Firebase Console
+- **Firebase project** (can be existing or new)
+- **Service account** with App Distribution permissions
+
+### Step 1: Create/Configure Firebase Project
+
+1. **Go to Firebase Console**: https://console.firebase.google.com/
+
+2. **Create or select a project**:
+
+   - Click "Add project" for new project
+   - Or select existing project from the list
+
+3. **Configure project settings**:
+   - Enter project name (e.g., "JS Software UI")
+   - Choose whether to enable Google Analytics (optional)
+   - Complete project creation
+
+### Step 2: Add iOS App to Firebase
+
+1. **In Firebase Console**, click "Add app" → iOS icon
+
+2. **Register your app**:
+
+   - **iOS bundle ID**: Enter your app's identifier from `tauri.conf.json`
+     - Example: `software.js.ui`
+   - **App nickname**: Optional descriptive name (e.g., "JS Software UI iOS")
+   - **App Store ID**: Skip this for now (only needed for App Store apps)
+
+3. **Download GoogleService-Info.plist** (optional):
+
+   - This step can be skipped if you're only using App Distribution
+   - The file is only required if you want to integrate Firebase SDK features
+
+4. **Skip "Add Firebase SDK" section**:
+
+   - ✅ **For App Distribution only**: You can skip this entirely
+   - ❌ **Only needed if**: You want Firebase features inside your app (Analytics, Crashlytics, etc.)
+
+5. **Complete setup** by clicking "Continue to console"
+
+### Step 3: Set Up App Distribution
+
+1. **In Firebase Console**, go to your project
+
+2. **Navigate to App Distribution**:
+
+   - Left sidebar → "Release & Monitor" → "App Distribution"
+
+3. **Get your App ID**:
+   - Click on your iOS app in App Distribution
+   - Copy the **App ID** (format: `1:123456789:ios:abcdef123456`)
+   - **Save this** - you'll need it for GitHub secrets
+
+### Step 4: Create Service Account
+
+1. **Go to Google Cloud Console**: https://console.cloud.google.com/
+
+2. **Select your Firebase project** from the project dropdown
+
+3. **Navigate to Service Accounts**:
+
+   - Left menu → "IAM & Admin" → "Service Accounts"
+
+4. **Create service account**:
+
+   - Click "Create Service Account"
+   - **Name**: `ios-app-distribution`
+   - **Description**: `Service account for iOS App Distribution CI/CD`
+   - Click "Create and Continue"
+
+5. **Assign roles**:
+   - Click "Select a role"
+   - Search for and select: **"Firebase App Distribution Admin"**
+   - Click "Continue" → "Done"
+
+### Step 5: Generate Service Account Key
+
+1. **In Service Accounts list**, click on your new service account
+
+2. **Go to Keys tab** → "Add Key" → "Create new key"
+
+3. **Choose JSON format** and click "Create"
+
+4. **Download the JSON file** - this contains your service account credentials
+
+5. **Convert to base64** for GitHub Secrets:
+
+   ```bash
+   # macOS/Linux
+   base64 -i path/to/your-service-account.json | tr -d '\n'
+
+   # Copy the output - this is your FIREBASE_SERVICE_ACCOUNT_KEY
+   ```
+
+### Step 6: Configure GitHub Secrets
+
+Add these secrets to your GitHub repository (**Settings** → **Secrets and variables** → **Actions**):
+
+1. **FIREBASE_SERVICE_ACCOUNT_KEY**:
+
+   - Value: The base64-encoded service account JSON from Step 5
+
+2. **FIREBASE_PROJECT_ID**:
+
+   - Value: Your Firebase project ID (found in Firebase Console → Project Settings)
+
+3. **FIREBASE_APP_ID_IOS**:
+   - Value: The iOS App ID from Step 3 (format: `1:123456789:ios:abcdef123456`)
+
+### Step 7: Add Testers (Optional)
+
+To automatically distribute to specific testers, add this **repository variable**:
+
+1. **Go to GitHub repository** → **Settings** → **Secrets and variables** → **Actions** → **Variables tab**
+
+2. **Add new variable**:
+   - **Name**: `FIREBASE_TESTERS`
+   - **Value**: Comma-separated email list (e.g., `tester1@example.com,tester2@example.com`)
+
+### Step 8: Test Distribution
+
+1. **Run your iOS workflow** (`build-ios-distribution-clean.yml`)
+
+2. **Check Firebase Console** → **App Distribution** → **Releases**:
+   - You should see your new IPA release listed
+   - Testers will receive email notifications with download links
+
+### Firebase Features
+
+- ✅ **Email notifications**: Testers automatically notified of new builds
+- ✅ **Release notes**: Automatic generation with build info and commit messages
+- ✅ **Tester groups**: Organize testers into teams/departments
+- ✅ **Download analytics**: Track who downloaded which versions
+- ✅ **Device compatibility**: Automatic device compatibility checking
+- ✅ **Security**: 1-hour security hold for iOS apps (normal Apple security measure)
+
+### Usage Tips
+
+- **Security hold**: iOS apps have a 1-hour hold before installation (this is normal)
+- **Tester management**: Use Firebase Console to add/remove testers and create groups
+- **Release notes**: Customize in workflow or let it auto-generate from commit messages
+- **Version tracking**: Firebase tracks all your releases with download statistics
+
+### Troubleshooting Firebase Issues
+
+**"App not found"**:
+
+- Verify `FIREBASE_APP_ID_IOS` matches your Firebase Console iOS app
+- Ensure you're using the iOS App ID, not the Android one
+
+**"Permission denied"**:
+
+- Check service account has "Firebase App Distribution Admin" role
+- Verify the service account is for the correct Firebase project
+
+**"Invalid service account"**:
+
+- Verify base64 encoding of service account JSON is correct
+- Ensure the JSON file was downloaded completely
+
+**"No testers specified"**:
+
+- Add `FIREBASE_TESTERS` repository variable or use Firebase Console to add testers manually
+- Testers must accept the invitation email before they can download builds
+
+**"Upload failed"**:
+
+- Check that the IPA file was built successfully
+- Verify Firebase project is properly configured for iOS apps
