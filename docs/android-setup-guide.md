@@ -1,6 +1,56 @@
 # Android Build Setup Guide
 
+## Table of Contents
+
+**🚀 Quick Start**
+
+- [Prerequisites](#prerequisites)
+- [Step-by-Step Setup](#step-1-set-up-android-development-environment)
+- [Generate Keystore & Secrets](#step-5-generate-release-keystore-and-credentials)
+
+**📖 Reference**
+
+- [Using in Other Projects](#-using-in-other-projects)
+- [Distribution Services](#distribution-services-optional)
+- [Troubleshooting](#troubleshooting)
+- [Verification Checklist](#verification-checklist)
+
+**⚙️ Advanced**
+
+- [Script Features](#script-features)
+- [Security Best Practices](#security-best-practices)
+
+---
+
 This guide walks you through the preparation steps needed before setting up GitHub Actions for Android release builds.
+
+**Important note**
+The Android CI/CD workflow features **automatic project detection** - it dynamically extracts all configuration from your `tauri.conf.json` file, making it reusable across different projects with zero configuration changes.
+
+### **What's Automatically Detected:**
+
+- ✅ **Bundle ID** (`identifier` from tauri.conf.json)
+- ✅ **App Name** (`productName` from tauri.conf.json)
+- ✅ **Keystore Name** (generated from Bundle ID using naming convention)
+- ✅ **Artifact Name** (generated from App Name)
+- ✅ **Release Notes** (uses dynamic App Name)
+
+### **⚠️ CRITICAL: Do Not Modify After Setup**
+
+Once you've run the `android-secrets-setup.sh` script and generated your GitHub secrets:
+
+**DO NOT CHANGE** the following in your `tauri.conf.json`:
+
+- **`identifier`** field - changing this will break keystore detection
+- **`productName`** field - changing this will break artifact naming
+
+The workflow **automatically generates keystore names** from your bundle identifier. If you change the identifier after setup, the workflow won't find your keystore file.
+
+### **Example: Automatic Keystore Detection**
+
+- **Bundle ID**: `software.js.ui` → **Keystore**: `js-ui-release.jks`
+- **Bundle ID**: `com.mycompany.myapp` → **Keystore**: `mycompany-myapp-release.jks`
+- **Bundle ID**: `org.example.app` → **Keystore**: `example-app-release.jks`
 
 ## Overview
 
@@ -178,13 +228,16 @@ The script automatically searches for existing keystores in common locations:
 - Android-specific directories (`~/Android/keystores/`, `~/keystores/`)
 - Project directories (`./keystores/`, `./signing/`)
 
-### **Automatic Naming**
+### **🎯 Automatic Naming (Workflow Compatible)**
 
-Generates meaningful keystore names based on your package name:
+Generates keystore names that match the CI/CD workflow's detection logic:
 
 - `com.jssoftware.ui` → `jssoftware-ui-release.jks`
 - `com.company.myapp` → `company-myapp-release.jks`
 - `org.example.app` → `example-app-release.jks`
+- `software.js.ui` → `js-ui-release.jks`
+
+**⚠️ Important**: The generated keystore name **must match** your `tauri.conf.json` identifier. The script asks for your package name specifically to ensure compatibility.
 
 ### **Certificate Metadata Options**
 
@@ -199,6 +252,27 @@ Certificate details (organization name, country, etc.) are **optional metadata**
 On macOS, secrets are copied to clipboard one by one to prevent copy/paste errors.
 
 ## Troubleshooting
+
+### **Dynamic Detection Issues**
+
+**"Keystore not found in CI"**:
+
+- Verify your `tauri.conf.json` has the correct `identifier`
+- Ensure the identifier matches the package name you used in `android-secrets-setup.sh`
+- Check that your keystore was generated with the correct naming convention
+
+**"Generated keystore name doesn't match"**:
+
+- The workflow generates keystore names from your bundle ID
+- If you changed the `identifier` in `tauri.conf.json` after running the setup script, regenerate your secrets
+- Use the exact same package name in both `tauri.conf.json` and the setup script
+
+**"APK artifact has wrong name"**:
+
+- Artifact names are generated from the `productName` in `tauri.conf.json`
+- Changing `productName` after setup is safe but will change artifact names
+
+### **Traditional Issues**
 
 ### "Android SDK not found"
 
@@ -270,6 +344,48 @@ After completing this setup:
 3. **You can distribute** these APKs directly to testers or upload to app stores
 4. **Your keystore** is safely stored with a descriptive name for easy identification
 
+## 🔄 **Using in Other Projects**
+
+The workflow is now **fully reusable**! To use it in another Tauri project:
+
+### **Step 1: Copy Workflow File**
+
+```bash
+# Copy the workflow to your new project
+cp .github/workflows/build-android-release.yml /path/to/new-project/.github/workflows/
+```
+
+### **Step 2: Generate New Keystore & Secrets**
+
+```bash
+# In your new project directory
+cd /path/to/new-project
+./scripts/android-secrets-setup.sh
+```
+
+### **Step 3: Set Up Distribution Services** (Optional)
+
+- Follow the Firebase App Distribution setup for your new Firebase project
+- Add the same GitHub secrets with new values for your new project
+
+### **Step 4: Update Build Command** (If Different)
+
+If your new project uses different build commands, update line ~52:
+
+```yaml
+- name: Build frontend
+  run: npm run build # or yarn build, pnpm build, etc.
+```
+
+**That's it!** The workflow will automatically:
+
+- ✅ Detect your project's bundle ID and app name
+- ✅ Generate the correct keystore filename
+- ✅ Create properly named artifacts
+- ✅ Use your app name in release notes
+
+## Next Steps
+
 For Google Play Store distribution:
 
 - Create a Google Play Developer account ($25 one-time fee)
@@ -285,18 +401,265 @@ For Google Play Store distribution:
 - **CI/CD Security**: GitHub secrets are encrypted and only accessible during builds
 - **Key Rotation**: Plan for eventual key updates (advanced topic)
 
+## Distribution Services (Optional)
+
+After successfully building signed APKs, you can distribute them to testers using various services. The workflow includes integration with **Firebase App Distribution** and **Diawi** for seamless distribution.
+
+### Firebase App Distribution Setup
+
+Firebase App Distribution is Google's service for distributing pre-release versions of your Android apps to trusted testers.
+
+#### Prerequisites
+
+- **Google account** with access to Firebase Console
+- **Firebase project** (can be existing or new)
+- **Service account** with App Distribution permissions
+
+#### Step 1: Create/Configure Firebase Project
+
+1. **Go to Firebase Console**: https://console.firebase.google.com/
+
+2. **Create or select a project**:
+
+   - Click "Add project" for new project
+   - Or select existing project from the list
+
+3. **Configure project settings**:
+   - Enter project name (e.g., "JS Software UI")
+   - Choose whether to enable Google Analytics (optional)
+   - Complete project creation
+
+#### Step 2: Add Android App to Firebase
+
+1. **In Firebase Console**, click "Add app" → Android icon
+
+2. **Register your app**:
+
+   - **Android package name**: Enter your app's identifier from `tauri.conf.json`
+     - Example: `software.js.ui`
+   - **App nickname**: Optional descriptive name (e.g., "JS Software UI Android")
+   - **Debug signing certificate**: Skip this for now
+
+3. **Download google-services.json** (optional):
+
+   - This step can be skipped if you're only using App Distribution
+   - The file is only required if you want to integrate Firebase SDK features
+
+4. **Skip "Add Firebase SDK" section**:
+
+   - ✅ **For App Distribution only**: You can skip this entirely
+   - ❌ **Only needed if**: You want Firebase features inside your app (Analytics, Crashlytics, etc.)
+
+5. **Complete setup** by clicking "Continue to console"
+
+#### Step 3: Set Up App Distribution
+
+1. **In Firebase Console**, go to your project
+
+2. **Navigate to App Distribution**:
+
+   - Left sidebar → "Release & Monitor" → "App Distribution"
+
+3. **Get your App ID**:
+   - Click on your Android app in App Distribution
+   - Copy the **App ID** (format: `1:123456789:android:abcdef123456`)
+   - **Save this** - you'll need it for GitHub secrets
+
+#### Step 4: Create Service Account
+
+1. **Go to Google Cloud Console**: https://console.cloud.google.com/
+
+2. **Select your Firebase project** from the project dropdown
+
+3. **Navigate to Service Accounts**:
+
+   - Left menu → "IAM & Admin" → "Service Accounts"
+
+4. **Create service account**:
+
+   - Click "Create Service Account"
+   - **Name**: `android-app-distribution`
+   - **Description**: `Service account for Android App Distribution CI/CD`
+   - Click "Create and Continue"
+
+5. **Assign roles**:
+   - Click "Select a role"
+   - Search for and select: **"Firebase App Distribution Admin"**
+   - Click "Continue" → "Done"
+
+#### Step 5: Generate Service Account Key
+
+1. **In Service Accounts list**, click on your new service account
+
+2. **Go to Keys tab** → "Add Key" → "Create new key"
+
+3. **Choose JSON format** and click "Create"
+
+4. **Download the JSON file** - this contains your service account credentials
+
+5. **Convert to base64** for GitHub Secrets:
+
+   ```bash
+   # macOS/Linux
+   base64 -i path/to/your-service-account.json | tr -d '\n'
+
+   # Copy the output - this is your FIREBASE_SERVICE_ACCOUNT_KEY
+   ```
+
+#### Step 6: Configure GitHub Secrets
+
+Add these secrets to your GitHub repository (**Settings** → **Secrets and variables** → **Actions**):
+
+1. **FIREBASE_SERVICE_ACCOUNT_KEY**:
+
+   - Value: The base64-encoded service account JSON from Step 5
+
+2. **FIREBASE_PROJECT_ID**:
+
+   - Value: Your Firebase project ID (found in Firebase Console → Project Settings)
+
+3. **FIREBASE_APP_ID**:
+   - Value: The App ID from Step 3 (format: `1:123456789:android:abcdef123456`)
+
+#### Step 7: Add Testers (Optional)
+
+To automatically distribute to specific testers, add this **repository variable**:
+
+1. **Go to GitHub repository** → **Settings** → **Secrets and variables** → **Actions** → **Variables tab**
+
+2. **Add new variable**:
+   - **Name**: `FIREBASE_TESTERS`
+   - **Value**: Comma-separated email list (e.g., `tester1@example.com,tester2@example.com`)
+
+#### Step 8: Test Distribution
+
+1. **Run your workflow** (`build-android-release.yml`)
+
+2. **Check Firebase Console** → **App Distribution** → **Releases**:
+   - You should see your new release listed
+   - Testers will receive email notifications
+
+### Diawi Setup
+
+Diawi is a simple service for distributing iOS and Android apps directly via download links. Perfect for quick testing and bypassing app store restrictions.
+
+#### Prerequisites
+
+- **Diawi account** (free tier available)
+- **API token** from Diawi
+
+#### Step 1: Create Diawi Account
+
+1. **Go to Diawi**: https://www.diawi.com/
+
+2. **Sign up** for a free account or log in
+
+3. **Verify your email** if required
+
+#### Step 2: Get API Token
+
+1. **In Diawi dashboard**, go to **Account** → **API Access**
+
+2. **Generate or copy your API token**
+
+3. **Save the token** - you'll need it for GitHub secrets
+
+#### Step 3: Configure GitHub Secrets
+
+Add this secret to your GitHub repository (**Settings** → **Secrets and variables** → **Actions**):
+
+1. **DIAWI_TOKEN**:
+   - Value: Your Diawi API token from Step 2
+
+#### Step 4: Test Upload
+
+1. **Run your workflow** (`build-android-release.yml`)
+
+2. **Check workflow logs** for Diawi section:
+   - Look for the download URL (format: `https://i.diawi.com/HASH`)
+   - Share this URL with testers
+
+#### Diawi Features
+
+- ✅ **Direct download links**: No app store needed
+- ✅ **QR codes**: Easy mobile scanning
+- ✅ **Install instructions**: Automatic per-device
+- ✅ **Access control**: Password protection available
+- ✅ **Analytics**: Download tracking
+- ✅ **Cross-platform**: Works for both Android and iOS
+
+#### Usage Tips
+
+- **Free tier limitations**: Limited uploads per month, consider paid plans for heavy usage
+- **Download expiration**: Links expire after set time (configurable)
+- **Device compatibility**: Automatically detects device type and provides appropriate instructions
+- **Testing workflow**: Perfect for internal testing before store submission
+
+### Distribution Comparison
+
+| Feature               | Firebase App Distribution          | Diawi                      |
+| --------------------- | ---------------------------------- | -------------------------- |
+| **Cost**              | Free (part of Firebase)            | Free tier + paid plans     |
+| **Setup complexity**  | Medium (requires Firebase project) | Simple (just API token)    |
+| **Tester management** | Advanced (groups, permissions)     | Basic (link sharing)       |
+| **Analytics**         | Comprehensive                      | Basic                      |
+| **Integration**       | Deep Google ecosystem              | Standalone service         |
+| **Notifications**     | Email + in-app                     | Email only                 |
+| **Best for**          | Professional team testing          | Quick sharing & prototypes |
+
+### Troubleshooting Distribution
+
+#### Firebase Issues
+
+- **"App not found"**: Verify `FIREBASE_APP_ID` matches your Firebase Console
+- **"Permission denied"**: Check service account has "Firebase App Distribution Admin" role
+- **"Invalid service account"**: Verify base64 encoding of service account JSON
+- **"No testers specified"**: Add `FIREBASE_TESTERS` variable or use Firebase Console to add testers
+
+#### Diawi Issues
+
+- **"Invalid token"**: Check `DIAWI_TOKEN` secret is correct
+- **"Upload failed"**: Verify APK is signed and under size limits
+- **"Processing timeout"**: Large APKs may take time, check manually using job ID URL
+- **"Download not working"**: Some corporate networks block Diawi, try mobile data
+
 ## Verification Checklist
 
 Before running your GitHub Actions workflow, ensure:
+
+### **Core Setup Requirements**
 
 - ✅ Android SDK and NDK are properly installed
 - ✅ Rust Android targets are installed
 - ✅ `bun run tauri android init` completed successfully
 - ✅ Debug build works: `bun run tauri android build --debug`
-- ✅ Keystore is generated and backed up securely
-- ✅ GitHub secrets are configured correctly (3 secrets):
+- ✅ Release build works locally: `bun run tauri android build`
+
+### **🎯 Dynamic Configuration Requirements**
+
+- ✅ `src-tauri/tauri.conf.json` has valid `identifier` (e.g., `software.js.ui`)
+- ✅ `src-tauri/tauri.conf.json` has valid `productName` (e.g., `JS Software UI`)
+- ✅ Package name in `android-secrets-setup.sh` **exactly matches** the `identifier`
+- ✅ Generated keystore name follows convention (e.g., `js-ui-release.jks`)
+
+### **GitHub Secrets**
+
+- ✅ GitHub secrets are configured correctly (3 required secrets):
   - `ANDROID_KEY_BASE64`
   - `ANDROID_KEY_PASSWORD`
   - `ANDROID_KEY_ALIAS`
-- ✅ Release build works locally: `bun run tauri android build`
+
+### **Storage & Backup**
+
+- ✅ Keystore is generated and backed up securely
 - ✅ Your keystore file is saved with a meaningful name (e.g., `yourapp-release.jks`)
+
+**Optional - Distribution Services:**
+
+- ✅ Firebase App Distribution (if using):
+  - `FIREBASE_SERVICE_ACCOUNT_KEY`
+  - `FIREBASE_PROJECT_ID`
+  - `FIREBASE_APP_ID`
+  - `FIREBASE_TESTERS` (repository variable, optional)
+- ✅ Diawi (if using):
+  - `DIAWI_TOKEN`

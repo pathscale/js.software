@@ -416,8 +416,148 @@ else
     exit 1
 fi
 
-# Step 4: Generate GitHub secrets file
-echo -e "\n${GREEN}Step 4: Generating GitHub Secrets${NC}"
+# Step 4: Optional Distribution Services Setup
+echo -e "\n${GREEN}Step 4: Optional Distribution Services Setup${NC}"
+echo -e "${BLUE}The following distribution services are optional and can be skipped:${NC}"
+echo -e "• ${CYAN}Firebase App Distribution${NC}: Professional distribution with tester management"
+echo -e "• ${CYAN}Diawi${NC}: Simple OTA distribution with direct download links"
+echo
+
+# Initialize optional secrets arrays
+OPTIONAL_SECRETS=()
+OPTIONAL_SECRET_NAMES=()
+OPTIONAL_SECRET_VALUES=()
+
+# Firebase App Distribution Setup (Optional)
+echo -e "${YELLOW}Firebase App Distribution Setup (Optional)${NC}"
+echo -e "${BLUE}Firebase App Distribution provides:${NC}"
+echo -e "• Automatic email notifications to testers"
+echo -e "• Centralized tester management with groups"
+echo -e "• Release notes and version tracking"
+echo -e "• Integration with other Firebase services"
+echo -e "• Free tier with generous limits"
+echo
+read -p "Would you like to set up Firebase App Distribution? (y/n): " SETUP_FIREBASE
+
+if [[ $SETUP_FIREBASE == "y" || $SETUP_FIREBASE == "Y" ]]; then
+    echo -e "\n${GREEN}Firebase App Distribution Configuration${NC}"
+    echo -e "${BLUE}You'll need to have a Firebase project set up first.${NC}"
+    echo -e "${BLUE}Visit https://console.firebase.google.com/ to create or access your project.${NC}"
+    echo
+    
+    # Firebase Project ID
+    echo -e "${YELLOW}Step 4.1: Firebase Project ID${NC}"
+    echo -e "You can find your Project ID in Firebase Console → Project Settings"
+    read -p "Enter your Firebase Project ID (or press Enter to skip): " FIREBASE_PROJECT_ID
+    
+    if [ -n "$FIREBASE_PROJECT_ID" ]; then
+        OPTIONAL_SECRETS+=("FIREBASE_PROJECT_ID")
+        OPTIONAL_SECRET_NAMES+=("FIREBASE_PROJECT_ID")
+        OPTIONAL_SECRET_VALUES+=("$FIREBASE_PROJECT_ID")
+        echo -e "${GREEN}✓ Firebase Project ID: $FIREBASE_PROJECT_ID${NC}"
+    else
+        echo -e "${YELLOW}Skipped Firebase Project ID${NC}"
+    fi
+    
+    # Firebase App ID
+    echo -e "\n${YELLOW}Step 4.2: Firebase App ID${NC}"
+    echo -e "You need to register your Android app in Firebase Console:"
+    echo -e "1. Go to Firebase Console → Add app → Android"
+    echo -e "2. Enter package name: ${BLUE}${PACKAGE_NAME:-your.app.package.name}${NC}"
+    echo -e "3. Copy the App ID (format: 1:123456789:android:abcdef123456)"
+    read -p "Enter your Firebase App ID (or press Enter to skip): " FIREBASE_APP_ID
+    
+    if [ -n "$FIREBASE_APP_ID" ]; then
+        OPTIONAL_SECRETS+=("FIREBASE_APP_ID")
+        OPTIONAL_SECRET_NAMES+=("FIREBASE_APP_ID")
+        OPTIONAL_SECRET_VALUES+=("$FIREBASE_APP_ID")
+        echo -e "${GREEN}✓ Firebase App ID: $FIREBASE_APP_ID${NC}"
+    else
+        echo -e "${YELLOW}Skipped Firebase App ID${NC}"
+    fi
+    
+    # Firebase Service Account
+    echo -e "\n${YELLOW}Step 4.3: Firebase Service Account${NC}"
+    echo -e "You need to create a service account with Firebase App Distribution Admin role:"
+    echo -e "1. Go to Google Cloud Console → IAM & Admin → Service Accounts"
+    echo -e "2. Create service account with 'Firebase App Distribution Admin' role"
+    echo -e "3. Create and download a JSON key file"
+    echo
+    read -p "Do you have a service account JSON file ready? (y/n): " HAS_SERVICE_ACCOUNT
+    
+    if [[ $HAS_SERVICE_ACCOUNT == "y" || $HAS_SERVICE_ACCOUNT == "Y" ]]; then
+        read -p "Enter the full path to your service account JSON file: " SERVICE_ACCOUNT_PATH
+        
+        if [ -f "$SERVICE_ACCOUNT_PATH" ]; then
+            echo -e "${YELLOW}Converting service account to base64...${NC}"
+            SERVICE_ACCOUNT_BASE64=$(base64 -i "$SERVICE_ACCOUNT_PATH" | tr -d '\n')
+            
+            if [ -n "$SERVICE_ACCOUNT_BASE64" ]; then
+                OPTIONAL_SECRETS+=("FIREBASE_SERVICE_ACCOUNT_KEY")
+                OPTIONAL_SECRET_NAMES+=("FIREBASE_SERVICE_ACCOUNT_KEY")
+                OPTIONAL_SECRET_VALUES+=("$SERVICE_ACCOUNT_BASE64")
+                echo -e "${GREEN}✓ Service account converted to base64 (${#SERVICE_ACCOUNT_BASE64} characters)${NC}"
+            else
+                echo -e "${RED}Failed to convert service account to base64${NC}"
+            fi
+        else
+            echo -e "${RED}Service account file not found: $SERVICE_ACCOUNT_PATH${NC}"
+        fi
+    else
+        echo -e "${YELLOW}Skipped Firebase Service Account${NC}"
+        echo -e "${BLUE}You can add FIREBASE_SERVICE_ACCOUNT_KEY manually later${NC}"
+    fi
+    
+    # Firebase Testers
+    echo -e "\n${YELLOW}Step 4.4: Firebase Testers (Optional)${NC}"
+    echo -e "You can specify default testers as a repository variable (not a secret)"
+    echo -e "Format: comma-separated emails (e.g., tester1@example.com,tester2@example.com)"
+    read -p "Enter tester emails (or press Enter to skip): " FIREBASE_TESTERS
+    
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo -e "${GREEN}✓ Firebase Testers: $FIREBASE_TESTERS${NC}"
+        echo -e "${BLUE}Note: Add this as a repository VARIABLE (not secret) named 'FIREBASE_TESTERS'${NC}"
+    else
+        echo -e "${YELLOW}Skipped Firebase Testers - you can add them in Firebase Console${NC}"
+    fi
+    
+else
+    echo -e "${YELLOW}Skipped Firebase App Distribution setup${NC}"
+fi
+
+# Diawi Setup (Optional)
+echo -e "\n${YELLOW}Diawi Setup (Optional)${NC}"
+echo -e "${BLUE}Diawi provides:${NC}"
+echo -e "• Simple OTA distribution with direct download links"
+echo -e "• QR codes for easy mobile scanning"
+echo -e "• No complex setup required"
+echo -e "• Perfect for quick testing and prototypes"
+echo
+read -p "Would you like to set up Diawi distribution? (y/n): " SETUP_DIAWI
+
+if [[ $SETUP_DIAWI == "y" || $SETUP_DIAWI == "Y" ]]; then
+    echo -e "\n${GREEN}Diawi Configuration${NC}"
+    echo -e "You need a Diawi account and API token:"
+    echo -e "1. Go to https://www.diawi.com/"
+    echo -e "2. Create account or log in"
+    echo -e "3. Go to Account → API Access to get your token"
+    echo
+    read -p "Enter your Diawi API token (or press Enter to skip): " DIAWI_TOKEN
+    
+    if [ -n "$DIAWI_TOKEN" ]; then
+        OPTIONAL_SECRETS+=("DIAWI_TOKEN")
+        OPTIONAL_SECRET_NAMES+=("DIAWI_TOKEN")
+        OPTIONAL_SECRET_VALUES+=("$DIAWI_TOKEN")
+        echo -e "${GREEN}✓ Diawi token configured${NC}"
+    else
+        echo -e "${YELLOW}Skipped Diawi token${NC}"
+    fi
+else
+    echo -e "${YELLOW}Skipped Diawi setup${NC}"
+fi
+
+# Step 5: Generate GitHub secrets file
+echo -e "\n${GREEN}Step 5: Generating GitHub Secrets${NC}"
 
 OUTPUT_FILE="$TEMP_DIR/github_android_secrets.txt"
 {
@@ -428,6 +568,7 @@ OUTPUT_FILE="$TEMP_DIR/github_android_secrets.txt"
     echo "# Add these secrets to your GitHub repository at:"
     echo "# Settings > Secrets and variables > Actions > New repository secret"
     echo
+    echo "# === REQUIRED ANDROID SIGNING SECRETS ==="
     echo "# Android Keystore (Base64 encoded - COPY AS ONE CONTINUOUS LINE)"
     echo "ANDROID_KEY_BASE64=$KEYSTORE_BASE64"
     echo
@@ -437,6 +578,28 @@ OUTPUT_FILE="$TEMP_DIR/github_android_secrets.txt"
     echo "# Key Alias"
     echo "ANDROID_KEY_ALIAS=$KEY_ALIAS"
     echo
+    
+    # Add optional distribution secrets if any were configured
+    if [ ${#OPTIONAL_SECRETS[@]} -gt 0 ]; then
+        echo "# === OPTIONAL DISTRIBUTION SECRETS ==="
+        for i in "${!OPTIONAL_SECRETS[@]}"; do
+            SECRET_NAME="${OPTIONAL_SECRET_NAMES[$i]}"
+            SECRET_VALUE="${OPTIONAL_SECRET_VALUES[$i]}"
+            echo "# $SECRET_NAME"
+            echo "$SECRET_NAME=$SECRET_VALUE"
+            echo
+        done
+    fi
+    
+    # Add Firebase Testers as a note if provided
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo "# === REPOSITORY VARIABLE (NOT A SECRET) ==="
+        echo "# Add this as a repository VARIABLE at:"
+        echo "# Settings > Secrets and variables > Actions > Variables tab"
+        echo "FIREBASE_TESTERS=$FIREBASE_TESTERS"
+        echo
+    fi
+    
     echo "# Optional: Package name for reference"
     echo "# ANDROID_PACKAGE_NAME=$PACKAGE_NAME"
     echo
@@ -448,8 +611,8 @@ OUTPUT_FILE="$TEMP_DIR/github_android_secrets.txt"
     echo
 } > "$OUTPUT_FILE"
 
-# Step 5: Security recommendations
-echo -e "\n${GREEN}Step 5: Security Recommendations${NC}"
+# Step 6: Security recommendations
+echo -e "\n${GREEN}Step 6: Security Recommendations${NC}"
 echo -e "${YELLOW}Important Security Notes:${NC}"
 echo "• Keep your keystore file safe - you'll need it for all future app updates"
 echo "• Store the keystore password in a secure location"
@@ -479,10 +642,17 @@ if command -v pbcopy &> /dev/null; then
     echo -e "${BLUE}We'll copy each secret to your clipboard one by one to avoid copy/paste errors${NC}"
     echo -e "After each copy, go to GitHub and paste it immediately before continuing.\n"
     
+    # Calculate total secrets
+    TOTAL_SECRETS=$((3 + ${#OPTIONAL_SECRETS[@]}))
+    CURRENT_SECRET=1
+    
     read -p "Ready to start? Press Enter to continue..."
     
+    # Required Android secrets first
+    echo -e "\n${CYAN}=== REQUIRED ANDROID SIGNING SECRETS ===${NC}"
+    
     # 1. Android Keystore
-    echo -e "\n${YELLOW}1/3: Copying ANDROID_KEY_BASE64 to clipboard...${NC}"
+    echo -e "\n${YELLOW}$CURRENT_SECRET/$TOTAL_SECRETS: Copying ANDROID_KEY_BASE64 to clipboard...${NC}"
     echo "$KEYSTORE_BASE64" | pbcopy
     echo -e "${GREEN}✓ ANDROID_KEY_BASE64 copied to clipboard (${KEYSTORE_BASE64_LENGTH} characters)${NC}"
     echo -e "${BLUE}Preview:${NC} ${KEYSTORE_BASE64:0:50}...${KEYSTORE_BASE64: -10}"
@@ -490,32 +660,78 @@ if command -v pbcopy &> /dev/null; then
     echo -e "Name: ${YELLOW}ANDROID_KEY_BASE64${NC}"
     echo -e "Value: ${YELLOW}Paste from clipboard (Cmd+V)${NC}"
     read -p "Press Enter after you've added this secret in GitHub..."
+    CURRENT_SECRET=$((CURRENT_SECRET + 1))
     
     # 2. Key Password
-    echo -e "\n${YELLOW}2/3: Copying ANDROID_KEY_PASSWORD to clipboard...${NC}"
+    echo -e "\n${YELLOW}$CURRENT_SECRET/$TOTAL_SECRETS: Copying ANDROID_KEY_PASSWORD to clipboard...${NC}"
     echo "$KEY_PASSWORD" | pbcopy
     echo -e "${GREEN}✓ ANDROID_KEY_PASSWORD copied to clipboard${NC}"
     echo -e "${BLUE}Value:${NC} $KEY_PASSWORD"
     echo -e "Name: ${YELLOW}ANDROID_KEY_PASSWORD${NC}"
     echo -e "Value: ${YELLOW}Paste from clipboard (Cmd+V)${NC}"
     read -p "Press Enter after you've added this secret in GitHub..."
+    CURRENT_SECRET=$((CURRENT_SECRET + 1))
     
     # 3. Key Alias
-    echo -e "\n${YELLOW}3/3: Copying ANDROID_KEY_ALIAS to clipboard...${NC}"
+    echo -e "\n${YELLOW}$CURRENT_SECRET/$TOTAL_SECRETS: Copying ANDROID_KEY_ALIAS to clipboard...${NC}"
     echo "$KEY_ALIAS" | pbcopy
     echo -e "${GREEN}✓ ANDROID_KEY_ALIAS copied to clipboard${NC}"
     echo -e "${BLUE}Value:${NC} $KEY_ALIAS"
     echo -e "Name: ${YELLOW}ANDROID_KEY_ALIAS${NC}"
     echo -e "Value: ${YELLOW}Paste from clipboard (Cmd+V)${NC}"
     read -p "Press Enter after you've added this secret in GitHub..."
+    CURRENT_SECRET=$((CURRENT_SECRET + 1))
+    
+    # Optional distribution secrets
+    if [ ${#OPTIONAL_SECRETS[@]} -gt 0 ]; then
+        echo -e "\n${CYAN}=== OPTIONAL DISTRIBUTION SECRETS ===${NC}"
+        
+        for i in "${!OPTIONAL_SECRETS[@]}"; do
+            SECRET_NAME="${OPTIONAL_SECRET_NAMES[$i]}"
+            SECRET_VALUE="${OPTIONAL_SECRET_VALUES[$i]}"
+            
+            echo -e "\n${YELLOW}$CURRENT_SECRET/$TOTAL_SECRETS: Copying $SECRET_NAME to clipboard...${NC}"
+            echo "$SECRET_VALUE" | pbcopy
+            
+            # Show preview for verification
+            if [[ ${#SECRET_VALUE} -gt 50 ]]; then
+                echo -e "${GREEN}✓ $SECRET_NAME copied to clipboard (${#SECRET_VALUE} characters)${NC}"
+                echo -e "${BLUE}Preview:${NC} ${SECRET_VALUE:0:30}...${SECRET_VALUE: -10}"
+            else
+                echo -e "${GREEN}✓ $SECRET_NAME copied to clipboard${NC}"
+                echo -e "${BLUE}Value:${NC} $SECRET_VALUE"
+            fi
+            
+            echo -e "Name: ${YELLOW}$SECRET_NAME${NC}"
+            echo -e "Value: ${YELLOW}Paste from clipboard (Cmd+V)${NC}"
+            
+            if [[ $CURRENT_SECRET -lt $TOTAL_SECRETS ]]; then
+                read -p "Press Enter after you've added this secret in GitHub..."
+            else
+                read -p "Press Enter after you've added this final secret in GitHub..."
+            fi
+            CURRENT_SECRET=$((CURRENT_SECRET + 1))
+        done
+    fi
     
     echo -e "\n${GREEN}🎉 All secrets should now be configured in GitHub Actions!${NC}"
+    
+    # Show Firebase Testers variable reminder if provided
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo -e "\n${YELLOW}📝 Don't forget to add the repository VARIABLE:${NC}"
+        echo -e "Go to GitHub → Settings → Secrets and variables → Actions → Variables tab"
+        echo -e "Name: ${YELLOW}FIREBASE_TESTERS${NC}"
+        echo -e "Value: ${YELLOW}$FIREBASE_TESTERS${NC}"
+        echo -e "${BLUE}(This is a variable, not a secret, so it goes in the Variables tab)${NC}"
+    fi
     
 else
     # Fallback for non-macOS systems
     echo -e "\n${YELLOW}Manual Setup Required (non-macOS system)${NC}"
     echo -e "Since pbcopy is not available, you'll need to copy secrets manually:"
     echo -e "\n${BLUE}Go to GitHub → Settings → Secrets → Actions and add these secrets:${NC}\n"
+    
+    echo -e "${CYAN}=== REQUIRED ANDROID SIGNING SECRETS ===${NC}"
     
     echo -e "${YELLOW}1. ANDROID_KEY_BASE64${NC}"
     echo -e "   Copy the entire line below (without the name part):"
@@ -529,16 +745,57 @@ else
     echo -e "${YELLOW}3. ANDROID_KEY_ALIAS${NC}"
     echo -e "   Value: ${KEY_ALIAS}"
     echo
+    
+    # Optional distribution secrets
+    if [ ${#OPTIONAL_SECRETS[@]} -gt 0 ]; then
+        echo -e "${CYAN}=== OPTIONAL DISTRIBUTION SECRETS ===${NC}"
+        
+        SECRET_NUM=4
+        for i in "${!OPTIONAL_SECRETS[@]}"; do
+            SECRET_NAME="${OPTIONAL_SECRET_NAMES[$i]}"
+            SECRET_VALUE="${OPTIONAL_SECRET_VALUES[$i]}"
+            
+            echo -e "${YELLOW}$SECRET_NUM. $SECRET_NAME${NC}"
+            if [[ ${#SECRET_VALUE} -gt 100 ]]; then
+                echo -e "   Copy the entire line below:"
+                echo -e "   ${SECRET_VALUE}"
+            else
+                echo -e "   Value: ${SECRET_VALUE}"
+            fi
+            echo
+            SECRET_NUM=$((SECRET_NUM + 1))
+        done
+    fi
+    
+    # Show Firebase Testers variable reminder if provided
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo -e "${CYAN}=== REPOSITORY VARIABLE (NOT A SECRET) ===${NC}"
+        echo -e "${YELLOW}FIREBASE_TESTERS${NC} (add as repository variable)"
+        echo -e "   Go to: Settings → Secrets and variables → Actions → Variables tab"
+        echo -e "   Value: $FIREBASE_TESTERS"
+        echo
+    fi
 fi
 
 echo -e "\n${BLUE}Verification Steps:${NC}"
 echo "1. Go to your GitHub repository"
 echo "2. Navigate to Settings → Secrets and variables → Actions"
-echo "3. Verify you have these 3 secrets:"
+echo "3. Verify you have these secrets:"
 echo "   - ANDROID_KEY_BASE64"
 echo "   - ANDROID_KEY_PASSWORD"
 echo "   - ANDROID_KEY_ALIAS"
-echo "4. Run your build-android-release.yml workflow to test"
+if [ ${#OPTIONAL_SECRETS[@]} -gt 0 ]; then
+    echo "   Optional distribution secrets:"
+    for SECRET_NAME in "${OPTIONAL_SECRET_NAMES[@]}"; do
+        echo "   - $SECRET_NAME"
+    done
+fi
+if [ -n "$FIREBASE_TESTERS" ]; then
+    echo "4. Add repository variable: FIREBASE_TESTERS (in Variables tab, not Secrets)"
+    echo "5. Run your build-android-release.yml workflow to test"
+else
+    echo "4. Run your build-android-release.yml workflow to test"
+fi
 
 echo -e "\n${RED}CRITICAL REMINDERS:${NC}"
 echo "• Save your keystore file in a secure location"
