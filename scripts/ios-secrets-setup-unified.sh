@@ -824,9 +824,112 @@ if [ -n "$PROFILE_BASE64" ]; then
     SECRET_VALUES+=("$PROFILE_BASE64")
 fi
 
-# Optional Diawi token for distribution
+# Firebase App Distribution Setup (Optional)
+echo -e "\n${YELLOW}Optional: Firebase App Distribution Setup${NC}"
+echo -e "${BLUE}Firebase App Distribution provides:${NC}"
+echo -e "• Automatic email notifications to testers"
+echo -e "• Centralized tester management with groups"
+echo -e "• Release notes and version tracking"
+echo -e "• Integration with other Firebase services"
+echo -e "• Free tier with generous limits"
+echo
+read -p "Would you like to set up Firebase App Distribution? (y/n): " SETUP_FIREBASE
+
+if [[ $SETUP_FIREBASE == "y" || $SETUP_FIREBASE == "Y" ]]; then
+    echo -e "\n${GREEN}Firebase App Distribution Configuration${NC}"
+    echo -e "${BLUE}You'll need to have a Firebase project set up first.${NC}"
+    echo -e "${BLUE}Visit https://console.firebase.google.com/ to create or access your project.${NC}"
+    echo
+    
+    # Firebase Project ID
+    echo -e "${YELLOW}Firebase Project ID${NC}"
+    echo -e "You can find your Project ID in Firebase Console → Project Settings"
+    read -p "Enter your Firebase Project ID (or press Enter to skip): " FIREBASE_PROJECT_ID
+    
+    if [ -n "$FIREBASE_PROJECT_ID" ]; then
+        SECRETS+=("FIREBASE_PROJECT_ID")
+        SECRET_NAMES+=("FIREBASE_PROJECT_ID")
+        SECRET_VALUES+=("$FIREBASE_PROJECT_ID")
+        echo -e "${GREEN}✓ Firebase Project ID: $FIREBASE_PROJECT_ID${NC}"
+    else
+        echo -e "${YELLOW}Skipped Firebase Project ID${NC}"
+    fi
+    
+    # Firebase App ID (iOS)
+    echo -e "\n${YELLOW}Firebase App ID (iOS)${NC}"
+    echo -e "You need to register your iOS app in Firebase Console:"
+    echo -e "1. Go to Firebase Console → Add app → iOS"
+    echo -e "2. Enter bundle ID from your tauri.conf.json"
+    echo -e "3. Copy the App ID (format: 1:123456789:ios:abcdef123456)"
+    read -p "Enter your Firebase iOS App ID (or press Enter to skip): " FIREBASE_APP_ID_IOS
+    
+    if [ -n "$FIREBASE_APP_ID_IOS" ]; then
+        SECRETS+=("FIREBASE_APP_ID_IOS")
+        SECRET_NAMES+=("FIREBASE_APP_ID_IOS")
+        SECRET_VALUES+=("$FIREBASE_APP_ID_IOS")
+        echo -e "${GREEN}✓ Firebase iOS App ID: $FIREBASE_APP_ID_IOS${NC}"
+    else
+        echo -e "${YELLOW}Skipped Firebase iOS App ID${NC}"
+    fi
+    
+    # Firebase Service Account
+    echo -e "\n${YELLOW}Firebase Service Account${NC}"
+    echo -e "You need to create a service account with Firebase App Distribution Admin role:"
+    echo -e "1. Go to Google Cloud Console → IAM & Admin → Service Accounts"
+    echo -e "2. Create service account with 'Firebase App Distribution Admin' role"
+    echo -e "3. Create and download a JSON key file"
+    echo
+    read -p "Do you have a service account JSON file ready? (y/n): " HAS_SERVICE_ACCOUNT
+    
+    if [[ $HAS_SERVICE_ACCOUNT == "y" || $HAS_SERVICE_ACCOUNT == "Y" ]]; then
+        read -p "Enter the full path to your service account JSON file: " SERVICE_ACCOUNT_PATH
+        
+        if [ -f "$SERVICE_ACCOUNT_PATH" ]; then
+            echo -e "${YELLOW}Converting service account to base64...${NC}"
+            SERVICE_ACCOUNT_BASE64=$(base64 -i "$SERVICE_ACCOUNT_PATH" | tr -d '\n')
+            
+            if [ -n "$SERVICE_ACCOUNT_BASE64" ]; then
+                SECRETS+=("FIREBASE_SERVICE_ACCOUNT_KEY")
+                SECRET_NAMES+=("FIREBASE_SERVICE_ACCOUNT_KEY")
+                SECRET_VALUES+=("$SERVICE_ACCOUNT_BASE64")
+                echo -e "${GREEN}✓ Service account converted to base64 (${#SERVICE_ACCOUNT_BASE64} characters)${NC}"
+            else
+                echo -e "${RED}Failed to convert service account to base64${NC}"
+            fi
+        else
+            echo -e "${RED}Service account file not found: $SERVICE_ACCOUNT_PATH${NC}"
+        fi
+    else
+        echo -e "${YELLOW}Skipped Firebase Service Account${NC}"
+        echo -e "${BLUE}You can add FIREBASE_SERVICE_ACCOUNT_KEY manually later${NC}"
+    fi
+    
+    # Firebase Testers
+    echo -e "\n${YELLOW}Firebase Testers (Optional)${NC}"
+    echo -e "You can specify default testers as a repository variable (not a secret)"
+    echo -e "Format: comma-separated emails (e.g., tester1@example.com,tester2@example.com)"
+    read -p "Enter tester emails (or press Enter to skip): " FIREBASE_TESTERS
+    
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo -e "${GREEN}✓ Firebase Testers: $FIREBASE_TESTERS${NC}"
+        echo -e "${BLUE}Note: Add this as a repository VARIABLE (not secret) named 'FIREBASE_TESTERS'${NC}"
+    else
+        echo -e "${YELLOW}Skipped Firebase Testers - you can add them in Firebase Console${NC}"
+    fi
+    
+else
+    echo -e "${YELLOW}Skipped Firebase App Distribution setup${NC}"
+fi
+
+# Diawi Token for OTA Distribution (Optional)
 if [[ $WORKFLOW_TYPE == "distribution" ]]; then
     echo -e "\n${YELLOW}Optional: Diawi Token for OTA Distribution${NC}"
+    echo -e "${BLUE}Diawi provides:${NC}"
+    echo -e "• Simple OTA distribution with direct download links"
+    echo -e "• QR codes for easy mobile scanning" 
+    echo -e "• No complex setup required"
+    echo -e "• Perfect for quick testing and prototypes"
+    echo
     echo -e "If you want automatic upload to Diawi for OTA testing:"
     read -p "Enter your Diawi token (or press Enter to skip): " DIAWI_TOKEN
     
@@ -834,6 +937,9 @@ if [[ $WORKFLOW_TYPE == "distribution" ]]; then
         SECRETS+=("DIAWI_TOKEN")
         SECRET_NAMES+=("DIAWI_TOKEN")
         SECRET_VALUES+=("$DIAWI_TOKEN")
+        echo -e "${GREEN}✓ Diawi token configured${NC}"
+    else
+        echo -e "${YELLOW}Skipped Diawi token${NC}"
     fi
 fi
 
@@ -881,15 +987,44 @@ if command -v pbcopy &> /dev/null; then
     
     echo -e "\n${GREEN}🎉 All secrets should now be configured in GitHub Actions!${NC}"
     
+    # Show Firebase Testers variable reminder if provided
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo -e "\n${YELLOW}📝 Don't forget to add the repository VARIABLE:${NC}"
+        echo -e "Go to GitHub → Settings → Secrets and variables → Actions → Variables tab"
+        echo -e "Name: ${YELLOW}FIREBASE_TESTERS${NC}"
+        echo -e "Value: ${YELLOW}$FIREBASE_TESTERS${NC}"
+        echo -e "${BLUE}(This is a variable, not a secret, so it goes in the Variables tab)${NC}"
+    fi
+    
 else
     # Fallback for non-macOS systems
     echo -e "\n${YELLOW}Manual Setup Required (non-macOS system)${NC}"
     echo -e "Since pbcopy is not available, you'll need to copy secrets manually:"
     echo -e "\n${BLUE}Go to GitHub → Settings → Secrets → Actions and add these secrets:${NC}\n"
     
+    # Separate required and optional secrets for manual setup
+    REQUIRED_SECRETS=()
+    REQUIRED_SECRET_VALUES=()
+    OPTIONAL_SECRETS_MANUAL=()
+    OPTIONAL_SECRET_VALUES_MANUAL=()
+    
     for i in "${!SECRETS[@]}"; do
         SECRET_NAME="${SECRET_NAMES[$i]}"
         SECRET_VALUE="${SECRET_VALUES[$i]}"
+        
+        if [[ "$SECRET_NAME" == "FIREBASE_"* || "$SECRET_NAME" == "DIAWI_TOKEN" ]]; then
+            OPTIONAL_SECRETS_MANUAL+=("$SECRET_NAME")
+            OPTIONAL_SECRET_VALUES_MANUAL+=("$SECRET_VALUE")
+        else
+            REQUIRED_SECRETS+=("$SECRET_NAME")
+            REQUIRED_SECRET_VALUES+=("$SECRET_VALUE")
+        fi
+    done
+    
+    echo -e "${CYAN}=== REQUIRED iOS SIGNING SECRETS ===${NC}"
+    for i in "${!REQUIRED_SECRETS[@]}"; do
+        SECRET_NAME="${REQUIRED_SECRETS[$i]}"
+        SECRET_VALUE="${REQUIRED_SECRET_VALUES[$i]}"
         
         echo -e "${YELLOW}$((i+1)). $SECRET_NAME${NC}"
         if [[ ${#SECRET_VALUE} -gt 100 ]]; then
@@ -900,6 +1035,36 @@ else
         fi
         echo
     done
+    
+    # Optional distribution secrets
+    if [ ${#OPTIONAL_SECRETS_MANUAL[@]} -gt 0 ]; then
+        echo -e "${CYAN}=== OPTIONAL DISTRIBUTION SECRETS ===${NC}"
+        
+        SECRET_NUM=$((${#REQUIRED_SECRETS[@]} + 1))
+        for i in "${!OPTIONAL_SECRETS_MANUAL[@]}"; do
+            SECRET_NAME="${OPTIONAL_SECRETS_MANUAL[$i]}"
+            SECRET_VALUE="${OPTIONAL_SECRET_VALUES_MANUAL[$i]}"
+            
+            echo -e "${YELLOW}$SECRET_NUM. $SECRET_NAME${NC}"
+            if [[ ${#SECRET_VALUE} -gt 100 ]]; then
+                echo -e "   Copy the entire line below:"
+                echo -e "   ${SECRET_VALUE}"
+            else
+                echo -e "   Value: ${SECRET_VALUE}"
+            fi
+            echo
+            SECRET_NUM=$((SECRET_NUM + 1))
+        done
+    fi
+    
+    # Show Firebase Testers variable reminder if provided
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo -e "${CYAN}=== REPOSITORY VARIABLE (NOT A SECRET) ===${NC}"
+        echo -e "${YELLOW}FIREBASE_TESTERS${NC} (add as repository variable)"
+        echo -e "   Go to: Settings → Secrets and variables → Actions → Variables tab"
+        echo -e "   Value: $FIREBASE_TESTERS"
+        echo
+    fi
 fi
 
 # Generate backup file for reference
@@ -911,13 +1076,55 @@ OUTPUT_FILE="$TEMP_DIR/github_secrets_${WORKFLOW_TYPE}.txt"
     echo "# Add these secrets to your GitHub repository at:"
     echo "# Settings > Secrets and variables > Actions > New repository secret"
     echo
+    echo "# === REQUIRED iOS SIGNING SECRETS ==="
     for i in "${!SECRETS[@]}"; do
         SECRET_NAME="${SECRET_NAMES[$i]}"
         SECRET_VALUE="${SECRET_VALUES[$i]}"
+        
+        # Skip Firebase secrets for the required section
+        if [[ "$SECRET_NAME" == "FIREBASE_"* ]]; then
+            continue
+        fi
+        
         echo "# $SECRET_NAME"
         echo "$SECRET_NAME=$SECRET_VALUE"
         echo
     done
+    
+    # Add Firebase secrets if any were configured
+    HAS_FIREBASE_SECRETS=false
+    for i in "${!SECRETS[@]}"; do
+        SECRET_NAME="${SECRET_NAMES[$i]}"
+        if [[ "$SECRET_NAME" == "FIREBASE_"* ]]; then
+            HAS_FIREBASE_SECRETS=true
+            break
+        fi
+    done
+    
+    if [ "$HAS_FIREBASE_SECRETS" = true ]; then
+        echo "# === OPTIONAL FIREBASE APP DISTRIBUTION SECRETS ==="
+        for i in "${!SECRETS[@]}"; do
+            SECRET_NAME="${SECRET_NAMES[$i]}"
+            SECRET_VALUE="${SECRET_VALUES[$i]}"
+            
+            # Only include Firebase secrets
+            if [[ "$SECRET_NAME" == "FIREBASE_"* ]]; then
+                echo "# $SECRET_NAME"
+                echo "$SECRET_NAME=$SECRET_VALUE"
+                echo
+            fi
+        done
+    fi
+    
+    # Add Firebase Testers as a note if provided
+    if [ -n "$FIREBASE_TESTERS" ]; then
+        echo "# === REPOSITORY VARIABLE (NOT A SECRET) ==="
+        echo "# Add this as a repository VARIABLE at:"
+        echo "# Settings > Secrets and variables → Actions → Variables tab"
+        echo "FIREBASE_TESTERS=$FIREBASE_TESTERS"
+        echo
+    fi
+    
     echo "# Workflow Type: $WORKFLOW_NAME"
     echo "# Certificate: $SELECTED_CERT_NAME"
     if [ -n "$SELECTED_PROFILE_NAME" ]; then
@@ -932,13 +1139,42 @@ echo "1. Go to your GitHub repository"
 echo "2. Navigate to Settings → Secrets and variables → Actions"
 echo "3. Verify you have these secrets:"
 for SECRET_NAME in "${SECRET_NAMES[@]}"; do
-    echo "   - $SECRET_NAME"
+    if [[ "$SECRET_NAME" != "FIREBASE_"* && "$SECRET_NAME" != "DIAWI_TOKEN" ]]; then
+        echo "   - $SECRET_NAME"
+    fi
 done
 
-if [[ $WORKFLOW_TYPE == "development" ]]; then
-    echo "4. Run your development iOS workflow to test"
+# Show optional secrets if any were configured
+HAS_OPTIONAL_SECRETS=false
+for SECRET_NAME in "${SECRET_NAMES[@]}"; do
+    if [[ "$SECRET_NAME" == "FIREBASE_"* || "$SECRET_NAME" == "DIAWI_TOKEN" ]]; then
+        HAS_OPTIONAL_SECRETS=true
+        break
+    fi
+done
+
+if [ "$HAS_OPTIONAL_SECRETS" = true ]; then
+    echo "   Optional distribution secrets:"
+    for SECRET_NAME in "${SECRET_NAMES[@]}"; do
+        if [[ "$SECRET_NAME" == "FIREBASE_"* || "$SECRET_NAME" == "DIAWI_TOKEN" ]]; then
+            echo "   - $SECRET_NAME"
+        fi
+    done
+fi
+
+if [ -n "$FIREBASE_TESTERS" ]; then
+    echo "4. Add repository variable: FIREBASE_TESTERS (in Variables tab, not Secrets)"
+    if [[ $WORKFLOW_TYPE == "development" ]]; then
+        echo "5. Run your development iOS workflow to test"
+    else
+        echo "5. Run your distribution iOS workflow to test"
+    fi
 else
-    echo "4. Run your distribution iOS workflow to test"
+    if [[ $WORKFLOW_TYPE == "development" ]]; then
+        echo "4. Run your development iOS workflow to test"
+    else
+        echo "4. Run your distribution iOS workflow to test"
+    fi
 fi
 
 echo -e "\n${GREEN}Success! iOS $WORKFLOW_NAME secrets are ready for GitHub Actions.${NC}"
