@@ -12,6 +12,7 @@ import BadgeShowcase from "./components/BadgeShowcase";
 import BreadcrumbShowcase from "./components/BreadcrumbShowcase";
 import BrowserMockupShowcase from "./components/BrowserMockupShowcase";
 import ButtonShowcase from "./components/ButtonShowcase";
+import CalendarShowcase from "./components/CalendarShowcase";
 import CardShowcase from "./components/CardShowcase";
 import CarouselShowcase from "./components/CarouselShowcase";
 import ChatBubbleShowcase from "./components/ChatBubbleShowcase";
@@ -55,7 +56,7 @@ import SkeletonShowcase from "./components/SkeletonShowcase";
 import StackShowcase from "./components/StackShowcase";
 import StatsShowcase from "./components/StatsShowcase";
 import StepsShowcase from "./components/StepsShowcase";
-import SvgBackgroundShowcase from './components/SvgBackgroundShowcase';
+import SvgBackgroundShowcase from "./components/SvgBackgroundShowcase";
 import SwapShowcase from "./components/SwapShowcase";
 import TableShowcase from "./components/TableShowcase";
 import TabsShowcase from "./components/TabsShowcase";
@@ -141,6 +142,12 @@ export const routes: RouteConfig[] = [
     path: "/button",
     component: ButtonShowcase,
     description: "Customizable buttons for actions and forms.",
+  },
+  {
+    name: "Calendar",
+    path: "/calendar",
+    component: CalendarShowcase,
+    description: "Date picker with optional input and embedded display.",
   },
   {
     name: "Card",
