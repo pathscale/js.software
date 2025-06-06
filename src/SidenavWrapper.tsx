@@ -363,6 +363,13 @@ export default function SidenavWrapper() {
           </SidenavGroup>
 
           <SidenavGroup label="Data Input">
+            <SidenavItem active={activePath() === "/calendar"}>
+              <SidenavLink asChild>
+                <A noScroll href="/calendar" class="sidenav-item-link">
+                  Calendar
+                </A>
+              </SidenavLink>
+            </SidenavItem>
             <SidenavItem active={activePath() === "/checkbox"}>
               <SidenavLink asChild>
                 <A noScroll href="/checkbox" class="sidenav-item-link">
