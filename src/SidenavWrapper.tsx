@@ -35,6 +35,10 @@ export default function SidenavWrapper() {
   });
 
   createEffect(() => {
+    setActivePath(location.pathname);
+  });
+
+  createEffect(() => {
     if (isDesktop()) {
       setIsOpen(true);
     } else {
