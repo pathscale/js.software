@@ -62,34 +62,35 @@ export default function AccordionShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
-          <Flex wrap="wrap" gap="md">
-            <Accordion class="bg-base-200" checked>
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="bg-base-200">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="bg-base-200">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-          </Flex>
-          <CodeBlock
-            code={`<Accordion class="bg-base-200" checked>
+          <Flex direction="col" gap="md">
+            <Flex wrap="wrap" gap="md">
+              <Accordion class="bg-base-200" checked>
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="bg-base-200">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="bg-base-200">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+            </Flex>
+            <CodeBlock
+              code={`<Accordion class="bg-base-200" checked>
   <Accordion.Title class="text-xl font-medium">
     Click to open this one and close others
   </Accordion.Title>
@@ -97,38 +98,40 @@ export default function AccordionShowcase() {
     <p>hello</p>
   </Accordion.Content>
 </Accordion>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-arrow" title="With Arrow">
-          <Flex wrap="wrap" gap="md">
-            <Accordion class="bg-base-200" icon="arrow" checked>
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="bg-base-200" icon="arrow">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="bg-base-200" icon="arrow">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-          </Flex>
-          <CodeBlock
-            code={`<Accordion class="bg-base-200" icon="arrow" checked>
+          <Flex direction="col" gap="md">
+            <Flex wrap="wrap" gap="md">
+              <Accordion class="bg-base-200" icon="arrow" checked>
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="bg-base-200" icon="arrow">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="bg-base-200" icon="arrow">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+            </Flex>
+            <CodeBlock
+              code={`<Accordion class="bg-base-200" icon="arrow" checked>
   <Accordion.Title class="text-xl font-medium">
     Click to open this one and close others
   </Accordion.Title>
@@ -136,38 +139,40 @@ export default function AccordionShowcase() {
     <p>hello</p>
   </Accordion.Content>
 </Accordion>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="with-plus" title="With Plus/Minus">
-          <Flex wrap="wrap" gap="md">
-            <Accordion class="bg-base-200" icon="plus" checked>
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="bg-base-200" icon="plus">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="bg-base-200" icon="plus">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-          </Flex>
-          <CodeBlock
-            code={`<Accordion class="bg-base-200" icon="plus" checked>
+          <Flex direction="col" gap="md">
+            <Flex wrap="wrap" gap="md">
+              <Accordion class="bg-base-200" icon="plus" checked>
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="bg-base-200" icon="plus">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="bg-base-200" icon="plus">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+            </Flex>
+            <CodeBlock
+              code={`<Accordion class="bg-base-200" icon="plus" checked>
   <Accordion.Title class="text-xl font-medium">
     Click to open this one and close others
   </Accordion.Title>
@@ -175,42 +180,44 @@ export default function AccordionShowcase() {
     <p>hello</p>
   </Accordion.Content>
 </Accordion>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="joined" title="Joined Together">
-          <Join class="w-full" vertical>
-            <Accordion
-              class="border border-base-300 join-item"
-              icon="arrow"
-              checked
-            >
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="border border-base-300 join-item" icon="arrow">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-            <Accordion class="border border-base-300 join-item" icon="arrow">
-              <Accordion.Title class="text-xl font-medium">
-                Click to open this one and close others
-              </Accordion.Title>
-              <Accordion.Content>
-                <p>hello</p>
-              </Accordion.Content>
-            </Accordion>
-          </Join>
-          <CodeBlock
-            code={`<Join class="w-full" vertical>
+          <Flex direction="col" gap="md">
+            <Join class="w-full" vertical>
+              <Accordion
+                class="border border-base-300 join-item"
+                icon="arrow"
+                checked
+              >
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="border border-base-300 join-item" icon="arrow">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+              <Accordion class="border border-base-300 join-item" icon="arrow">
+                <Accordion.Title class="text-xl font-medium">
+                  Click to open this one and close others
+                </Accordion.Title>
+                <Accordion.Content>
+                  <p>hello</p>
+                </Accordion.Content>
+              </Accordion>
+            </Join>
+            <CodeBlock
+              code={`<Join class="w-full" vertical>
   <Accordion class="border border-base-300 join-item" icon="arrow" checked>
     <Accordion.Title class="text-xl font-medium">
       Click to open this one and close others
@@ -221,11 +228,12 @@ export default function AccordionShowcase() {
   </Accordion>
   {/* ... other accordions ... */}
 </Join>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="multiple" title="Multiple Groups">
-          <div class="space-y-4">
+          <Flex direction="col" gap="md">
             <Flex wrap="wrap" gap="md">
               <Accordion class="bg-base-200" name="groupA" checked>
                 <Accordion.Title class="text-xl font-medium">
@@ -279,9 +287,8 @@ export default function AccordionShowcase() {
                 </Accordion.Content>
               </Accordion>
             </Flex>
-          </div>
-          <CodeBlock
-            code={`{/* Group A */}
+            <CodeBlock
+              code={`{/* Group A */}
 <Accordion class="bg-base-200" name="groupA" checked>
   <Accordion.Title class="text-xl font-medium">Group A</Accordion.Title>
   <Accordion.Content>
@@ -296,7 +303,8 @@ export default function AccordionShowcase() {
     <p>hello</p>
   </Accordion.Content>
 </Accordion>`}
-          />
+            />
+          </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

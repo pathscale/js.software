@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { Component, createSignal, Show } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import {
   Navbar,
@@ -29,6 +29,7 @@ const NavbarShowcase: Component = () => {
     },
     { id: "responsive", title: "Responsive" },
     { id: "colors", title: "Colors" },
+    { id: "multilevel", title: "Multilevel" },
     { id: "props", title: "Props" },
   ] as const;
 
@@ -140,6 +141,27 @@ const NavbarShowcase: Component = () => {
       />
     </svg>
   );
+
+  const [activeMain, setActiveMain] = createSignal("Strategies");
+  const [activeStrategy, setActiveStrategy] = createSignal<string | null>(null);
+
+  const strategies = ["Strategy 1", "Strategy 2", "Strategy 3", "Strategy 4"];
+  const strategyDetails: Record<string, string[]> = {
+    "Strategy 1": [
+      "Signals",
+      "Events",
+      "Events Debug",
+      "Orders",
+      "Ledger",
+      "Slippage",
+      "Live Position",
+      "Event Catch",
+      "Event Catch Stats",
+    ],
+    "Strategy 2": ["Overview", "Orders", "Positions"],
+    "Strategy 3": ["Live Monitor", "Audit Logs"],
+    "Strategy 4": ["Metrics", "Settings"],
+  };
 
   return (
     <ShowcaseLayout>
@@ -684,6 +706,133 @@ const NavbarShowcase: Component = () => {
     daisyUI
   </Button>
 </Navbar>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="multilevel" title="Multilevel">
+          <Flex direction="col" gap="md">
+            <Navbar.Stack sticky>
+              <Navbar.Row color="primary" padded>
+                <Navbar.Start>
+                  <Button class="text-xl font-bold text-white" color="ghost">
+                    Trading Platform
+                  </Button>
+                </Navbar.Start>
+                <Navbar.End>
+                  <Flex gap="md" class="text-white">
+                    {[
+                      "Dashboard",
+                      "Strategies",
+                      "Live Positions",
+                      "Trading Terminal",
+                      "Performance",
+                      "Funding Comparison",
+                    ].map((item) => (
+                      <button
+                        onClick={() => {
+                          setActiveMain(item);
+                          setActiveStrategy(null);
+                        }}
+                        class="hover:underline"
+                        classList={{
+                          "font-bold underline": activeMain() === item,
+                        }}
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </Flex>
+                </Navbar.End>
+              </Navbar.Row>
+
+              <Show when={activeMain() === "Strategies"}>
+                <Navbar.Row class="bg-pink-500 text-white" padded>
+                  <Flex gap="md">
+                    {strategies.map((s) => (
+                      <button
+                        class="relative pb-1"
+                        onClick={() => setActiveStrategy(s)}
+                        classList={{
+                          "border-b-2 border-green-300": activeStrategy() === s,
+                        }}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </Flex>
+                </Navbar.Row>
+              </Show>
+
+              <Show when={activeStrategy()}>
+                <Navbar.Row class="bg-neutral text-neutral-content" padded>
+                  <Flex wrap gap="sm">
+                    {strategyDetails[activeStrategy()!].map((item) => (
+                      <a href="#" class="hover:underline">
+                        {item}
+                      </a>
+                    ))}
+                  </Flex>
+                </Navbar.Row>
+              </Show>
+            </Navbar.Stack>
+
+            <CodeBlock
+              code={`<Navbar.Stack sticky>
+  <Navbar.Row color="primary" padded>
+    <Navbar.Start>
+      <Button class="text-xl font-bold text-white" color="ghost">
+        Trading Platform
+      </Button>
+    </Navbar.Start>
+    <Navbar.End>
+      <Flex gap="lg" class="text-white">
+        {["Dashboard", "Strategies", ...].map((item) => (
+          <button
+            onClick={() => {
+              setActiveMain(item);
+              setActiveStrategy(null);
+            }}
+            class="hover:underline"
+            classList={{ "font-bold underline": activeMain() === item }}
+          >
+            {item}
+          </button>
+        ))}
+      </Flex>
+    </Navbar.End>
+  </Navbar.Row>
+
+  <Show when={activeMain() === "Strategies"}>
+    <Navbar.Row class="bg-pink-500 text-white" padded>
+      <Flex gap="md">
+        {strategies.map((s) => (
+          <button
+            class="relative pb-1"
+            onClick={() => setActiveStrategy(s)}
+            classList={{
+              "border-b-2 border-green-300": activeStrategy() === s,
+            }}
+          >
+            {s}
+          </button>
+        ))}
+      </Flex>
+    </Navbar.Row>
+  </Show>
+
+  <Show when={activeStrategy()}>
+    <Navbar.Row class="bg-neutral text-neutral-content" padded>
+      <Flex wrap gap="sm">
+        {strategyDetails[activeStrategy()!].map((item) => (
+          <a href="#" class="hover:underline">
+            {item}
+          </a>
+        ))}
+      </Flex>
+    </Navbar.Row>
+  </Show>
+</Navbar.Stack>`}
             />
           </Flex>
         </ShowcaseSection>

@@ -7,8 +7,8 @@ import AccordionShowcase from "./components/AccordionShowcase";
 import AlertShowcase from "./components/AlertShowcase";
 import ArtboardShowcase from "./components/ArtboardShowcase";
 import AvatarShowcase from "./components/AvatarShowcase";
-import BadgeShowcase from "./components/BadgeShowcase";
 import BackgroundShowcase from "./components/BackgroundShowcase";
+import BadgeShowcase from "./components/BadgeShowcase";
 import BreadcrumbShowcase from "./components/BreadcrumbShowcase";
 import BrowserMockupShowcase from "./components/BrowserMockupShowcase";
 import ButtonShowcase from "./components/ButtonShowcase";
@@ -50,11 +50,12 @@ import RadioShowcase from "./components/RadioShowcase";
 import RangeShowcase from "./components/RangeShowcase";
 import RatingShowcase from "./components/RatingShowcase";
 import SelectShowcase from "./components/SelectShowcase";
-import SkeletonShowcase from "./components/SkeletonShowcase";
 import SidenavShowcase from "./components/SidenavShowcase";
+import SkeletonShowcase from "./components/SkeletonShowcase";
 import StackShowcase from "./components/StackShowcase";
 import StatsShowcase from "./components/StatsShowcase";
 import StepsShowcase from "./components/StepsShowcase";
+import SvgBackgroundShowcase from './components/SvgBackgroundShowcase';
 import SwapShowcase from "./components/SwapShowcase";
 import TableShowcase from "./components/TableShowcase";
 import TabsShowcase from "./components/TabsShowcase";
@@ -371,6 +372,12 @@ export const routes: RouteConfig[] = [
     path: "/select",
     component: SelectShowcase,
     description: "Dropdowns for selecting an option from a list.",
+  },
+  {
+    name: "SvgBackground",
+    path: "/svg-background",
+    component: SvgBackgroundShowcase,
+    description: "SVG background for the page.",
   },
   {
     name: "Sidenav",
