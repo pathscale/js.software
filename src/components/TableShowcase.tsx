@@ -131,29 +131,29 @@ export default function TableShowcase() {
             <div class="overflow-x-auto">
               <Table>
                 <Table.Head>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Favorite Color</span>
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body>
                   <Table.Row>
-                    <span>1</span>
-                    <span>Cy Ganderton</span>
-                    <span>Quality Control Specialist</span>
-                    <span>Blue</span>
+                    <Table.Cell>1</Table.Cell>
+                    <Table.Cell>Cy Ganderton</Table.Cell>
+                    <Table.Cell>Quality Control Specialist</Table.Cell>
+                    <Table.Cell>Blue</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>2</span>
-                    <span>Hart Hagerty</span>
-                    <span>Desktop Support Technician</span>
-                    <span>Purple</span>
+                    <Table.Cell>2</Table.Cell>
+                    <Table.Cell>Hart Hagerty</Table.Cell>
+                    <Table.Cell>Desktop Support Technician</Table.Cell>
+                    <Table.Cell>Purple</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>3</span>
-                    <span>Brice Swyre</span>
-                    <span>Tax Accountant</span>
-                    <span>Red</span>
+                    <Table.Cell>3</Table.Cell>
+                    <Table.Cell>Brice Swyre</Table.Cell>
+                    <Table.Cell>Tax Accountant</Table.Cell>
+                    <Table.Cell>Red</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>
@@ -161,17 +161,29 @@ export default function TableShowcase() {
             <CodeBlock
               code={`<Table>
   <Table.Head>
-    <span />
-    <span>Name</span>
-    <span>Job</span>
-    <span>Favorite Color</span>
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
   </Table.Head>
   <Table.Body>
     <Table.Row>
-      <span>1</span>
-      <span>Cy Ganderton</span>
-      <span>Quality Control Specialist</span>
-      <span>Blue</span>
+      <Table.Cell>1</Table.Cell>
+      <Table.Cell>Cy Ganderton</Table.Cell>
+      <Table.Cell>Quality Control Specialist</Table.Cell>
+      <Table.Cell>Blue</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>2</Table.Cell>
+      <Table.Cell>Hart Hagerty</Table.Cell>
+      <Table.Cell>Desktop Support Technician</Table.Cell>
+      <Table.Cell>Purple</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>3</Table.Cell>
+      <Table.Cell>Brice Swyre</Table.Cell>
+      <Table.Cell>Tax Accountant</Table.Cell>
+      <Table.Cell>Red</Table.Cell>
     </Table.Row>
   </Table.Body>
 </Table>`}
@@ -184,29 +196,29 @@ export default function TableShowcase() {
             <div class="overflow-x-auto">
               <Table>
                 <Table.Head>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Favorite Color</span>
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body>
                   <Table.Row active>
-                    <span>1</span>
-                    <span>Cy Ganderton</span>
-                    <span>Quality Control Specialist</span>
-                    <span>Blue</span>
+                    <Table.Cell>1</Table.Cell>
+                    <Table.Cell>Cy Ganderton</Table.Cell>
+                    <Table.Cell>Quality Control Specialist</Table.Cell>
+                    <Table.Cell>Blue</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>2</span>
-                    <span>Hart Hagerty</span>
-                    <span>Desktop Support Technician</span>
-                    <span>Purple</span>
+                    <Table.Cell>2</Table.Cell>
+                    <Table.Cell>Hart Hagerty</Table.Cell>
+                    <Table.Cell>Desktop Support Technician</Table.Cell>
+                    <Table.Cell>Purple</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>3</span>
-                    <span>Brice Swyre</span>
-                    <span>Tax Accountant</span>
-                    <span>Red</span>
+                    <Table.Cell>3</Table.Cell>
+                    <Table.Cell>Brice Swyre</Table.Cell>
+                    <Table.Cell>Tax Accountant</Table.Cell>
+                    <Table.Cell>Red</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>
@@ -214,17 +226,29 @@ export default function TableShowcase() {
             <CodeBlock
               code={`<Table>
   <Table.Head>
-    <span />
-    <span>Name</span>
-    <span>Job</span>
-    <span>Favorite Color</span>
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
   </Table.Head>
   <Table.Body>
     <Table.Row active>
-      <span>1</span>
-      <span>Cy Ganderton</span>
-      <span>Quality Control Specialist</span>
-      <span>Blue</span>
+      <Table.Cell>1</Table.Cell>
+      <Table.Cell>Cy Ganderton</Table.Cell>
+      <Table.Cell>Quality Control Specialist</Table.Cell>
+      <Table.Cell>Blue</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>2</Table.Cell>
+      <Table.Cell>Hart Hagerty</Table.Cell>
+      <Table.Cell>Desktop Support Technician</Table.Cell>
+      <Table.Cell>Purple</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>3</Table.Cell>
+      <Table.Cell>Brice Swyre</Table.Cell>
+      <Table.Cell>Tax Accountant</Table.Cell>
+      <Table.Cell>Red</Table.Cell>
     </Table.Row>
   </Table.Body>
 </Table>`}
@@ -237,29 +261,29 @@ export default function TableShowcase() {
             <div class="overflow-x-auto">
               <Table zebra>
                 <Table.Head>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Favorite Color</span>
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body>
                   <Table.Row>
-                    <span>1</span>
-                    <span>Cy Ganderton</span>
-                    <span>Quality Control Specialist</span>
-                    <span>Blue</span>
+                    <Table.Cell>1</Table.Cell>
+                    <Table.Cell>Cy Ganderton</Table.Cell>
+                    <Table.Cell>Quality Control Specialist</Table.Cell>
+                    <Table.Cell>Blue</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>2</span>
-                    <span>Hart Hagerty</span>
-                    <span>Desktop Support Technician</span>
-                    <span>Purple</span>
+                    <Table.Cell>2</Table.Cell>
+                    <Table.Cell>Hart Hagerty</Table.Cell>
+                    <Table.Cell>Desktop Support Technician</Table.Cell>
+                    <Table.Cell>Purple</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>3</span>
-                    <span>Brice Swyre</span>
-                    <span>Tax Accountant</span>
-                    <span>Red</span>
+                    <Table.Cell>3</Table.Cell>
+                    <Table.Cell>Brice Swyre</Table.Cell>
+                    <Table.Cell>Tax Accountant</Table.Cell>
+                    <Table.Cell>Red</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>
@@ -267,20 +291,33 @@ export default function TableShowcase() {
             <CodeBlock
               code={`<Table zebra>
   <Table.Head>
-    <span />
-    <span>Name</span>
-    <span>Job</span>
-    <span>Favorite Color</span>
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
   </Table.Head>
   <Table.Body>
     <Table.Row>
-      <span>1</span>
-      <span>Cy Ganderton</span>
-      <span>Quality Control Specialist</span>
-      <span>Blue</span>
+      <Table.Cell>1</Table.Cell>
+      <Table.Cell>Cy Ganderton</Table.Cell>
+      <Table.Cell>Quality Control Specialist</Table.Cell>
+      <Table.Cell>Blue</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>2</Table.Cell>
+      <Table.Cell>Hart Hagerty</Table.Cell>
+      <Table.Cell>Desktop Support Technician</Table.Cell>
+      <Table.Cell>Purple</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>3</Table.Cell>
+      <Table.Cell>Brice Swyre</Table.Cell>
+      <Table.Cell>Tax Accountant</Table.Cell>
+      <Table.Cell>Red</Table.Cell>
     </Table.Row>
   </Table.Body>
-</Table>`}
+</Table>
+`}
             />
           </Flex>
         </ShowcaseSection>
@@ -290,29 +327,29 @@ export default function TableShowcase() {
             <div class="overflow-x-auto">
               <Table hover>
                 <Table.Head>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Favorite Color</span>
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body>
                   <Table.Row>
-                    <span>1</span>
-                    <span>Cy Ganderton</span>
-                    <span>Quality Control Specialist</span>
-                    <span>Blue</span>
+                    <Table.Cell>1</Table.Cell>
+                    <Table.Cell>Cy Ganderton</Table.Cell>
+                    <Table.Cell>Quality Control Specialist</Table.Cell>
+                    <Table.Cell>Blue</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>2</span>
-                    <span>Hart Hagerty</span>
-                    <span>Desktop Support Technician</span>
-                    <span>Purple</span>
+                    <Table.Cell>2</Table.Cell>
+                    <Table.Cell>Hart Hagerty</Table.Cell>
+                    <Table.Cell>Desktop Support Technician</Table.Cell>
+                    <Table.Cell>Purple</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>3</span>
-                    <span>Brice Swyre</span>
-                    <span>Tax Accountant</span>
-                    <span>Red</span>
+                    <Table.Cell>3</Table.Cell>
+                    <Table.Cell>Brice Swyre</Table.Cell>
+                    <Table.Cell>Tax Accountant</Table.Cell>
+                    <Table.Cell>Red</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>
@@ -320,32 +357,33 @@ export default function TableShowcase() {
             <CodeBlock
               code={`<Table hover>
   <Table.Head>
-    <span />
-    <span>Name</span>
-    <span>Job</span>
-    <span>Favorite Color</span>
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
   </Table.Head>
   <Table.Body>
     <Table.Row>
-      <span>1</span>
-      <span>Cy Ganderton</span>
-      <span>Quality Control Specialist</span>
-      <span>Blue</span>
+      <Table.Cell>1</Table.Cell>
+      <Table.Cell>Cy Ganderton</Table.Cell>
+      <Table.Cell>Quality Control Specialist</Table.Cell>
+      <Table.Cell>Blue</Table.Cell>
     </Table.Row>
     <Table.Row>
-      <span>2</span>
-      <span>Hart Hagerty</span>
-      <span>Desktop Support Technician</span>
-      <span>Purple</span>
+      <Table.Cell>2</Table.Cell>
+      <Table.Cell>Hart Hagerty</Table.Cell>
+      <Table.Cell>Desktop Support Technician</Table.Cell>
+      <Table.Cell>Purple</Table.Cell>
     </Table.Row>
     <Table.Row>
-      <span>3</span>
-      <span>Brice Swyre</span>
-      <span>Tax Accountant</span>
-      <span>Red</span>
+      <Table.Cell>3</Table.Cell>
+      <Table.Cell>Brice Swyre</Table.Cell>
+      <Table.Cell>Tax Accountant</Table.Cell>
+      <Table.Cell>Red</Table.Cell>
     </Table.Row>
   </Table.Body>
-</Table>`}
+</Table>
+`}
             />
           </Flex>
         </ShowcaseSection>
@@ -356,16 +394,16 @@ export default function TableShowcase() {
               <Table class="rounded-box">
                 <Table.Head>
                   <Checkbox />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Favorite Color</span>
-                  <span />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
+                  <Table.HeadCell />
                 </Table.Head>
 
                 <Table.Body>
                   <Table.Row>
                     <Checkbox />
-                    <div class="flex items-center gap-3 truncate">
+                    <Flex align="center" gap="md" class="truncate">
                       <Mask
                         variant="squircle"
                         src="https://img.daisyui.com/images/profile/demo/2@94.webp"
@@ -375,7 +413,7 @@ export default function TableShowcase() {
                         <div class="font-bold">Hart Hagerty</div>
                         <div class="text-sm opacity-50">United States</div>
                       </div>
-                    </div>
+                    </Flex>
                     <div>
                       Zemlak, Daniel and Leannon
                       <br />
@@ -391,7 +429,7 @@ export default function TableShowcase() {
 
                   <Table.Row>
                     <Checkbox />
-                    <div class="flex items-center gap-3 truncate">
+                    <Flex align="center" gap="md" class="truncate">
                       <Mask
                         variant="squircle"
                         src="https://img.daisyui.com/images/profile/demo/3@94.webp"
@@ -401,7 +439,7 @@ export default function TableShowcase() {
                         <div class="font-bold">Brice Swyre</div>
                         <div class="text-sm opacity-50">China</div>
                       </div>
-                    </div>
+                    </Flex>
                     <div>
                       Carrol Group
                       <br />
@@ -417,7 +455,7 @@ export default function TableShowcase() {
 
                   <Table.Row>
                     <Checkbox />
-                    <div class="flex items-center gap-3 truncate">
+                    <Flex align="center" gap="md" class="truncate">
                       <Mask
                         variant="squircle"
                         src="https://img.daisyui.com/images/profile/demo/4@94.webp"
@@ -427,7 +465,7 @@ export default function TableShowcase() {
                         <div class="font-bold">Marjy Ferencz</div>
                         <div class="text-sm opacity-50">Russia</div>
                       </div>
-                    </div>
+                    </Flex>
                     <div>
                       Rowe-Schoen
                       <br />
@@ -443,7 +481,7 @@ export default function TableShowcase() {
 
                   <Table.Row>
                     <Checkbox />
-                    <div class="flex items-center gap-3 truncate">
+                    <Flex align="center" gap="md" class="truncate">
                       <Mask
                         variant="squircle"
                         src="https://img.daisyui.com/images/profile/demo/5@94.webp"
@@ -453,7 +491,7 @@ export default function TableShowcase() {
                         <div class="font-bold">Yancy Tear</div>
                         <div class="text-sm opacity-50">Brazil</div>
                       </div>
-                    </div>
+                    </Flex>
                     <div>
                       Wyman-Ledner
                       <br />
@@ -469,11 +507,11 @@ export default function TableShowcase() {
                 </Table.Body>
 
                 <Table.Footer>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Favorite Color</span>
-                  <span />
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
+                  <Table.HeadCell />
                 </Table.Footer>
               </Table>
             </div>
@@ -482,20 +520,108 @@ export default function TableShowcase() {
               code={`<Table class="rounded-box">
   <Table.Head>
     <Checkbox />
-    <span>Name</span>
-    <span>Job</span>
-    <span>Favorite Color</span>
-    <span />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
+    <Table.HeadCell />
   </Table.Head>
+
   <Table.Body>
-    {/* ...Rows... */}
+    <Table.Row>
+      <Checkbox />
+      <Flex align="center" gap="md" class="truncate">
+        <Mask
+          variant="squircle"
+          src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+          class="w-12 h-12"
+        />
+        <div>
+          <div class="font-bold">Hart Hagerty</div>
+          <div class="text-sm opacity-50">United States</div>
+        </div>
+      </Flex>
+      <div>
+        Zemlak, Daniel and Leannon
+        <br />
+        <Badge color="ghost" size="sm">Desktop Support Technician</Badge>
+      </div>
+      <div>Purple</div>
+      <Button color="ghost" size="xs">details</Button>
+    </Table.Row>
+
+    <Table.Row>
+      <Checkbox />
+      <Flex align="center" gap="md" class="truncate">
+        <Mask
+          variant="squircle"
+          src="https://img.daisyui.com/images/profile/demo/3@94.webp"
+          class="w-12 h-12"
+        />
+        <div>
+          <div class="font-bold">Brice Swyre</div>
+          <div class="text-sm opacity-50">China</div>
+        </div>
+      </Flex>
+      <div>
+        Carrol Group
+        <br />
+        <Badge color="ghost" size="sm">Tax Accountant</Badge>
+      </div>
+      <div>Red</div>
+      <Button color="ghost" size="xs">details</Button>
+    </Table.Row>
+
+    <Table.Row>
+      <Checkbox />
+      <Flex align="center" gap="md" class="truncate">
+        <Mask
+          variant="squircle"
+          src="https://img.daisyui.com/images/profile/demo/4@94.webp"
+          class="w-12 h-12"
+        />
+        <div>
+          <div class="font-bold">Marjy Ferencz</div>
+          <div class="text-sm opacity-50">Russia</div>
+        </div>
+      </Flex>
+      <div>
+        Rowe-Schoen
+        <br />
+        <Badge color="ghost" size="sm">Office Assistant I</Badge>
+      </div>
+      <div>Crimson</div>
+      <Button color="ghost" size="xs">details</Button>
+    </Table.Row>
+
+    <Table.Row>
+      <Checkbox />
+      <Flex align="center" gap="md" class="truncate">
+        <Mask
+          variant="squircle"
+          src="https://img.daisyui.com/images/profile/demo/5@94.webp"
+          class="w-12 h-12"
+        />
+        <div>
+          <div class="font-bold">Yancy Tear</div>
+          <div class="text-sm opacity-50">Brazil</div>
+        </div>
+      </Flex>
+      <div>
+        Wyman-Ledner
+        <br />
+        <Badge color="ghost" size="sm">Community Outreach Specialist</Badge>
+      </div>
+      <div>Indigo</div>
+      <Button color="ghost" size="xs">details</Button>
+    </Table.Row>
   </Table.Body>
+
   <Table.Footer>
-    <span />
-    <span>Name</span>
-    <span>Job</span>
-    <span>Favorite Color</span>
-    <span />
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
+    <Table.HeadCell />
   </Table.Footer>
 </Table>`}
             />
@@ -524,105 +650,106 @@ export default function TableShowcase() {
             <div class="overflow-x-auto">
               <Table size={size()}>
                 <Table.Head>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Company</span>
-                  <span>Location</span>
-                  <span>Last Login</span>
-                  <span>Favorite Color</span>
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Company</Table.HeadCell>
+                  <Table.HeadCell>Location</Table.HeadCell>
+                  <Table.HeadCell>Last Login</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body>
                   <Table.Row>
-                    <span>1</span>
-                    <span>Cy Ganderton</span>
-                    <span>Quality Control Specialist</span>
-                    <span>Littel, Schaden and Vandervort</span>
-                    <span>Canada</span>
-                    <span>12/16/2020</span>
-                    <span>Blue</span>
+                    <Table.Cell>1</Table.Cell>
+                    <Table.Cell>Cy Ganderton</Table.Cell>
+                    <Table.Cell>Quality Control Specialist</Table.Cell>
+                    <Table.Cell>Littel, Schaden and Vandervort</Table.Cell>
+                    <Table.Cell>Canada</Table.Cell>
+                    <Table.Cell>12/16/2020</Table.Cell>
+                    <Table.Cell>Blue</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>2</span>
-                    <span>Hart Hagerty</span>
-                    <span>Desktop Support Technician</span>
-                    <span>Zemlak, Daniel and Leannon</span>
-                    <span>United States</span>
-                    <span>12/5/2020</span>
-                    <span>Purple</span>
+                    <Table.Cell>2</Table.Cell>
+                    <Table.Cell>Hart Hagerty</Table.Cell>
+                    <Table.Cell>Desktop Support Technician</Table.Cell>
+                    <Table.Cell>Zemlak, Daniel and Leannon</Table.Cell>
+                    <Table.Cell>United States</Table.Cell>
+                    <Table.Cell>12/5/2020</Table.Cell>
+                    <Table.Cell>Purple</Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <span>3</span>
-                    <span>Brice Swyre</span>
-                    <span>Tax Accountant</span>
-                    <span>Carroll Group</span>
-                    <span>China</span>
-                    <span>8/15/2020</span>
-                    <span>Red</span>
+                    <Table.Cell>3</Table.Cell>
+                    <Table.Cell>Brice Swyre</Table.Cell>
+                    <Table.Cell>Tax Accountant</Table.Cell>
+                    <Table.Cell>Carroll Group</Table.Cell>
+                    <Table.Cell>China</Table.Cell>
+                    <Table.Cell>8/15/2020</Table.Cell>
+                    <Table.Cell>Red</Table.Cell>
                   </Table.Row>
                 </Table.Body>
                 <Table.Footer>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Company</span>
-                  <span>Location</span>
-                  <span>Last Login</span>
-                  <span>Favorite Color</span>
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Company</Table.HeadCell>
+                  <Table.HeadCell>Location</Table.HeadCell>
+                  <Table.HeadCell>Last Login</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
                 </Table.Footer>
               </Table>
             </div>
 
             <CodeBlock
-              code={`<Table size="md">
-    <Table.Head>
-      <span />
-      <span>Name</span>
-      <span>Job</span>
-      <span>Company</span>
-      <span>Location</span>
-      <span>Last Login</span>
-      <span>Favorite Color</span>
-    </Table.Head>
-    <Table.Body>
-      <Table.Row>
-        <span>1</span>
-        <span>Cy Ganderton</span>
-        <span>Quality Control Specialist</span>
-        <span>Littel, Schaden and Vandervort</span>
-        <span>Canada</span>
-        <span>12/16/2020</span>
-        <span>Blue</span>
-      </Table.Row>
-      <Table.Row>
-        <span>2</span>
-        <span>Hart Hagerty</span>
-        <span>Desktop Support Technician</span>
-        <span>Zemlak, Daniel and Leannon</span>
-        <span>United States</span>
-        <span>12/5/2020</span>
-        <span>Purple</span>
-      </Table.Row>
-      <Table.Row>
-        <span>3</span>
-        <span>Brice Swyre</span>
-        <span>Tax Accountant</span>
-        <span>Carroll Group</span>
-        <span>China</span>
-        <span>8/15/2020</span>
-        <span>Red</span>
-      </Table.Row>
-    </Table.Body>
-    <Table.Footer>
-      <span />
-      <span>Name</span>
-      <span>Job</span>
-      <span>Company</span>
-      <span>Location</span>
-      <span>Last Login</span>
-      <span>Favorite Color</span>
-    </Table.Footer>
-  </Table>`}
+              code={`<Table size={size()}>
+  <Table.Head>
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Company</Table.HeadCell>
+    <Table.HeadCell>Location</Table.HeadCell>
+    <Table.HeadCell>Last Login</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
+  </Table.Head>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>1</Table.Cell>
+      <Table.Cell>Cy Ganderton</Table.Cell>
+      <Table.Cell>Quality Control Specialist</Table.Cell>
+      <Table.Cell>Littel, Schaden and Vandervort</Table.Cell>
+      <Table.Cell>Canada</Table.Cell>
+      <Table.Cell>12/16/2020</Table.Cell>
+      <Table.Cell>Blue</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>2</Table.Cell>
+      <Table.Cell>Hart Hagerty</Table.Cell>
+      <Table.Cell>Desktop Support Technician</Table.Cell>
+      <Table.Cell>Zemlak, Daniel and Leannon</Table.Cell>
+      <Table.Cell>United States</Table.Cell>
+      <Table.Cell>12/5/2020</Table.Cell>
+      <Table.Cell>Purple</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>3</Table.Cell>
+      <Table.Cell>Brice Swyre</Table.Cell>
+      <Table.Cell>Tax Accountant</Table.Cell>
+      <Table.Cell>Carroll Group</Table.Cell>
+      <Table.Cell>China</Table.Cell>
+      <Table.Cell>8/15/2020</Table.Cell>
+      <Table.Cell>Red</Table.Cell>
+    </Table.Row>
+  </Table.Body>
+  <Table.Footer>
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Company</Table.HeadCell>
+    <Table.HeadCell>Location</Table.HeadCell>
+    <Table.HeadCell>Last Login</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
+  </Table.Footer>
+</Table>
+`}
             />
           </Flex>
         </ShowcaseSection>
@@ -631,19 +758,19 @@ export default function TableShowcase() {
             <div class="overflow-x-auto max-h-96">
               <Table pinRows pinCols>
                 <Table.Head>
-                  <span />
-                  <span>Name</span>
-                  <span>Job</span>
-                  <span>Favorite Color</span>
+                  <Table.HeadCell />
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Job</Table.HeadCell>
+                  <Table.HeadCell>Favorite Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body>
                   <For each={Array.from({ length: 10 })}>
                     {(_, i) => (
-                      <Table.Row noCell>
-                        <th>{i() + 1}</th>
-                        <td>Cy Ganderton</td>
-                        <td>Quality Control Specialist</td>
-                        <td>Blue</td>
+                      <Table.Row>
+                        <Table.Cell>{i() + 1}</Table.Cell>
+                        <Table.Cell>Cy Ganderton</Table.Cell>
+                        <Table.Cell>Quality Control Specialist</Table.Cell>
+                        <Table.Cell>Blue</Table.Cell>
                       </Table.Row>
                     )}
                   </For>
@@ -653,24 +780,72 @@ export default function TableShowcase() {
             <CodeBlock
               code={`<Table pinRows pinCols>
   <Table.Head>
-    <span />
-    <span>Name</span>
-    <span>Job</span>
-    <span>Favorite Color</span>
+    <Table.HeadCell />
+    <Table.HeadCell>Name</Table.HeadCell>
+    <Table.HeadCell>Job</Table.HeadCell>
+    <Table.HeadCell>Favorite Color</Table.HeadCell>
   </Table.Head>
   <Table.Body>
      <Table.Row>
-        <span>1</span>
-        <span>Cy Ganderton</span>
-        <span>Quality Control Specialist</span>
-        <span>Littel, Schaden and Vandervort</span>
-        <span>Canada</span>
-        <span>12/16/2020</span>
-        <span>Blue</span>
+        <Table.Cell>{1}</Table.Cell>
+        <Table.Cell>Cy Ganderton</Table.Cell>
+        <Table.Cell>Quality Control Specialist</Table.Cell>
+        <Table.Cell>Blue</Table.Cell>
      </Table.Row>
      {/* ...more rows... */}
   </Table.Body>
 </Table>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="enhanced-table" title="Enhanced Table">
+          <Flex direction="col" gap="md">
+            <div class="overflow-x-auto">
+              <Table.Enhanced
+                columns={[
+                  { accessorKey: "id", header: "ID" },
+                  { accessorKey: "name", header: "Name" },
+                  { accessorKey: "job", header: "Job Title" },
+                  { accessorKey: "color", header: "Favorite Color" },
+                ]}
+                data={[
+                  {
+                    id: 1,
+                    name: "Cy Ganderton",
+                    job: "Quality Control Specialist",
+                    color: "Blue",
+                  },
+                  {
+                    id: 2,
+                    name: "Hart Hagerty",
+                    job: "Desktop Support Technician",
+                    color: "Purple",
+                  },
+                  {
+                    id: 3,
+                    name: "Brice Swyre",
+                    job: "Tax Accountant",
+                    color: "Red",
+                  },
+                ]}
+              />
+            </div>
+
+            <CodeBlock
+              code={`<EnhancedTable
+  columns={[
+    { accessorKey: "id", header: "ID" },
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "job", header: "Job Title" },
+    { accessorKey: "color", header: "Favorite Color" },
+  ]}
+  data={[
+    { id: 1, name: "Cy Ganderton", job: "Quality Control Specialist", color: "Blue" },
+    { id: 2, name: "Hart Hagerty", job: "Desktop Support Technician", color: "Purple" },
+    { id: 3, name: "Brice Swyre", job: "Tax Accountant", color: "Red" },
+  ]}
+/>`}
             />
           </Flex>
         </ShowcaseSection>
