@@ -15,3 +15,13 @@
     background: oklch(var(--color-primary));
   }
 }
+
+@layer components {
+  .table tr.active {
+    background-color: var(--b2);
+  }
+
+  .table.table-hover tbody tr:hover {
+    background-color: var(--b2);
+  }
+}
