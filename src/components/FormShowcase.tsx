@@ -1,8 +1,17 @@
-import { Form, Input, Button, Flex, Grid } from "@pathscale/ui";
+import {
+  Form,
+  Input,
+  Button,
+  Flex,
+  Grid,
+  useFormValidation,
+} from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
+import { Show } from "solid-js";
+import { z } from "zod";
 
 export default function FormShowcase() {
   const sections = [
@@ -28,10 +37,35 @@ export default function FormShowcase() {
     { name: "children", type: "JSX.Element", description: "Input/control" },
   ];
 
+  function UsernameField() {
+    const { errors, touched } = useFormValidation();
+    return (
+      <Flex direction="col" gap="sm">
+        <Form.Label title="Username" />
+        <Input name="username" class="input-bordered w-full" />
+        <Show when={touched("username") && errors("username")}>
+          <span class="text-error text-sm">{errors("username")}</span>
+        </Show>
+      </Flex>
+    );
+  }
+
+  function EmailField() {
+    const { errors, touched } = useFormValidation();
+    return (
+      <Flex direction="col" gap="sm">
+        <Form.Label title="Email" />
+        <Input name="email" type="email" class="input-bordered w-full" />
+        <Show when={touched("email") && errors("email")}>
+          <span class="text-error text-sm">{errors("email")}</span>
+        </Show>
+      </Flex>
+    );
+  }
+
   return (
     <ShowcaseLayout>
       <div class="space-y-8">
-        {/* Contents */}
         <ShowcaseSection id="contents" title="Contents">
           <nav class="space-y-1">
             {sections.map((section) => (
@@ -173,41 +207,60 @@ export default function FormShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="validation" title="With Validation Styles">
+        <ShowcaseSection
+          id="validation"
+          title="Validated Form using Felte and Zod"
+        >
           <Flex direction="col" gap="md">
-            <Form class="bg-base-100 p-6 rounded-lg shadow-md max-w-md w-full mx-auto space-y-4">
-              <Flex direction="col" gap="sm">
-                <Form.Label title="Username" />
-                <Input
-                  value="diego123"
-                  class="input-bordered input-success w-full"
-                />
-              </Flex>
-              <Flex direction="col" gap="sm">
-                <Form.Label title="Email" />
-                <Input
-                  type="email"
-                  placeholder="Enter a valid email"
-                  class="input-bordered input-error w-full"
-                />
-              </Flex>
-              <Button type="submit" class="w-full">
+            <Form.Validated
+              class="bg-base-100 p-6 rounded-lg shadow-md max-w-md w-full mx-auto space-y-4"
+              schema={z.object({
+                username: z.string().min(1, "Username is required"),
+                email: z.string().email("Invalid email"),
+              })}
+              onSubmit={(values) => {
+                console.log("Submitted:", values);
+              }}
+            >
+              <UsernameField />
+              <EmailField />
+              <Button type="submit" class="w-full" color="primary">
                 Submit
               </Button>
-            </Form>
+            </Form.Validated>
 
             <CodeBlock
-              code={`<Form class="...">
+              code={`<Form.Validated
+  schema={z.object({
+    username: z.string().min(1, "Username is required"),
+    email: z.string().email("Invalid email"),
+  })}
+  class="bg-base-100 p-6 rounded-lg shadow-md max-w-md w-full mx-auto space-y-4"
+>
   <Flex direction="col" gap="sm">
     <Form.Label title="Username" />
-    <Input value="diego123" class="input-bordered input-success w-full" />
+    <Input name="username" class="input-bordered w-full" />
+    <Show when={useFormValidation().touched("username") && useFormValidation().errors("username")}>
+      <span class="text-error text-sm">
+        {useFormValidation().errors("username")}
+      </span>
+    </Show>
   </Flex>
+
   <Flex direction="col" gap="sm">
     <Form.Label title="Email" />
-    <Input class="input-bordered input-error w-full" />
+    <Input name="email" type="email" class="input-bordered w-full" />
+    <Show when={useFormValidation().touched("email") && useFormValidation().errors("email")}>
+      <span class="text-error text-sm">
+        {useFormValidation().errors("email")}
+      </span>
+    </Show>
   </Flex>
-  <Button class="w-full">Submit</Button>
-</Form>`}
+
+  <Button type="submit" class="w-full">
+    Submit
+  </Button>
+</Form.Validated>`}
             />
           </Flex>
         </ShowcaseSection>

@@ -199,6 +199,13 @@ export default function SidenavWrapper() {
                   Diff
                 </A>
               </SidenavLink>
+              <SidenavItem active={activePath() === "/icon"}>
+                <SidenavLink asChild>
+                  <A noScroll href="/icon" class="sidenav-item-link">
+                    Icon
+                  </A>
+                </SidenavLink>
+              </SidenavItem>
             </SidenavItem>
             <SidenavItem active={activePath() === "/kbd"}>
               <SidenavLink asChild>
@@ -363,6 +370,13 @@ export default function SidenavWrapper() {
           </SidenavGroup>
 
           <SidenavGroup label="Data Input">
+            <SidenavItem active={activePath() === "/calendar"}>
+              <SidenavLink asChild>
+                <A noScroll href="/calendar" class="sidenav-item-link">
+                  Calendar
+                </A>
+              </SidenavLink>
+            </SidenavItem>
             <SidenavItem active={activePath() === "/checkbox"}>
               <SidenavLink asChild>
                 <A noScroll href="/checkbox" class="sidenav-item-link">
