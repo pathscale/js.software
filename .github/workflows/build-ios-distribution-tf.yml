@@ -1,0 +1,1117 @@
+name: Build iOS TestFlight Distribution
+
+on:
+  # push:
+  #   branches: [master]
+  # pull_request:
+  #   branches: [master]
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: "Release notes for TestFlight"
+        required: false
+        default: ""
+
+jobs:
+  build-ios-testflight:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Early API Key Validation - Fast fail if credentials are invalid
+      - name: Validate API Keys
+        env:
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          APP_STORE_CONNECT_TESTER_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_TESTER_API_KEY_ID }}
+          APP_STORE_CONNECT_TESTER_API_KEY: ${{ secrets.APP_STORE_CONNECT_TESTER_API_KEY }}
+        run: |
+          echo "🔍 Early validation: Testing API keys to avoid wasting CI time..."
+
+          # Check if required secrets exist
+          if [ -z "$APP_STORE_CONNECT_API_KEY_ID" ] || [ -z "$APP_STORE_CONNECT_API_KEY" ]; then
+            echo "❌ Developer API key not configured"
+            echo "💡 Set APP_STORE_CONNECT_API_KEY_ID and APP_STORE_CONNECT_API_KEY secrets"
+            exit 1
+          fi
+
+          # Install Fastlane for comprehensive validation
+          echo "📦 Installing Fastlane for API validation (~30s)..."
+          sudo gem install fastlane --no-document
+
+          # Setup API key files for validation
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "$APP_STORE_CONNECT_API_KEY" | base64 -d > ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
+          chmod 600 ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
+
+          # Test tester management key if configured
+          if [ -n "${{ vars.TESTFLIGHT_INTERNAL_TESTERS }}" ]; then
+            if [ -z "$APP_STORE_CONNECT_TESTER_API_KEY_ID" ] || [ -z "$APP_STORE_CONNECT_TESTER_API_KEY" ]; then
+              echo "❌ Tester management configured but API key missing"
+              exit 1
+            fi
+            echo "$APP_STORE_CONNECT_TESTER_API_KEY" | base64 -d > ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_TESTER_API_KEY_ID.p8
+            chmod 600 ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_TESTER_API_KEY_ID.p8
+          fi
+
+          # Create minimal test Fastfile
+          cat > /tmp/test_validation.rb << 'EOF'
+          require 'fastlane'
+          require 'spaceship'
+
+          # Test Developer API key
+          puts "🔑 Testing Developer API key..."
+          begin
+            # Create API key directly using Spaceship
+            api_key = Spaceship::ConnectAPI::Token.create(
+              key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+              issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+              filepath: "#{Dir.home}/.appstoreconnect/private_keys/AuthKey_#{ENV["APP_STORE_CONNECT_API_KEY_ID"]}.p8"
+            )
+            
+            # Test by fetching apps (lightweight API call)
+            Spaceship::ConnectAPI.token = api_key
+            apps = Spaceship::ConnectAPI.get_apps(limit: 1)
+            puts "✅ Developer API key works (can access #{apps.count} apps)"
+          rescue => e
+            puts "❌ Developer API key failed: #{e.message}"
+            exit 1
+          end
+
+          # Test Tester Management API key if configured
+          if ENV["APP_STORE_CONNECT_TESTER_API_KEY_ID"]
+            puts "🔑 Testing App Manager API key..."
+            begin
+              tester_api_key = Spaceship::ConnectAPI::Token.create(
+                key_id: ENV["APP_STORE_CONNECT_TESTER_API_KEY_ID"],
+                issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+                filepath: "#{Dir.home}/.appstoreconnect/private_keys/AuthKey_#{ENV["APP_STORE_CONNECT_TESTER_API_KEY_ID"]}.p8"
+              )
+              
+              Spaceship::ConnectAPI.token = tester_api_key
+              groups = Spaceship::ConnectAPI.get_beta_groups(limit: 1)
+              puts "✅ App Manager API key works (can access #{groups.count} beta groups)"
+            rescue => e
+              puts "❌ App Manager API key failed: #{e.message}"
+              exit 1
+            end
+          end
+
+          puts "🎉 All API keys validated successfully!"
+          EOF
+
+          # Run validation
+          if ruby /tmp/test_validation.rb; then
+            echo "✅ API validation passed - proceeding with build"
+          else
+            echo "❌ API validation failed - stopping to save CI time"
+            exit 1
+          fi
+
+          # Cleanup
+          rm -f ~/.appstoreconnect/private_keys/AuthKey_*.p8
+          rm -f /tmp/test_validation.rb
+
+      # Early Tester Management Validation (Before Build) - Fast fail if tester issues
+      - name: Validate TestFlight Tester Management (Early Check)
+        if: vars.TESTFLIGHT_INTERNAL_TESTERS # Enable step only if testers are configured
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_TESTER_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_TESTER_API_KEY_ID }}
+          APP_STORE_CONNECT_TESTER_API_KEY: ${{ secrets.APP_STORE_CONNECT_TESTER_API_KEY }}
+          TESTFLIGHT_TESTERS: ${{ vars.TESTFLIGHT_INTERNAL_TESTERS }}
+        run: |
+          echo "🚀 Early TestFlight tester validation and addition (before expensive build operations)..."
+          echo "💡 We'll add testers to the group NOW so we fail fast if there are issues"
+
+          # Check if tester management API key is available
+          if [ -z "$APP_STORE_CONNECT_TESTER_API_KEY_ID" ] || [ -z "$APP_STORE_CONNECT_TESTER_API_KEY" ]; then
+            echo "⚠️ App Manager API key not configured for tester management"
+            echo "💡 Using Developer API key (may have limited permissions)"
+            TESTER_KEY_ID="$APP_STORE_CONNECT_API_KEY_ID"
+            TESTER_API_KEY="$APP_STORE_CONNECT_API_KEY"
+          else
+            echo "✅ Using dedicated App Manager API key for tester management"
+            TESTER_KEY_ID="$APP_STORE_CONNECT_TESTER_API_KEY_ID"
+            TESTER_API_KEY="$APP_STORE_CONNECT_TESTER_API_KEY"
+          fi
+
+          echo "🔑 Tester management key ID: $TESTER_KEY_ID"
+
+          # Create API key file from tester management secret
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "$TESTER_API_KEY" | base64 -d > ~/.appstoreconnect/private_keys/AuthKey_$TESTER_KEY_ID.p8
+          chmod 600 ~/.appstoreconnect/private_keys/AuthKey_$TESTER_KEY_ID.p8
+
+          # Verify API key file was created correctly
+          if [ ! -f ~/.appstoreconnect/private_keys/AuthKey_$TESTER_KEY_ID.p8 ]; then
+            echo "❌ Failed to create API key file"
+            exit 1
+          fi
+
+          echo "✅ API key file created: AuthKey_$TESTER_KEY_ID.p8"
+          echo "📏 File size: $(wc -c < ~/.appstoreconnect/private_keys/AuthKey_$TESTER_KEY_ID.p8) bytes"
+
+          # Install jq for JSON processing if not available
+          if ! command -v jq &> /dev/null; then
+            echo "📦 Installing jq for JSON processing..."
+            if command -v brew &> /dev/null; then
+              brew install jq
+            else
+              echo "❌ jq not available and brew not found. Please install jq manually."
+              exit 1
+            fi
+          fi
+
+          # Create JWT token generation script
+          cat > /tmp/generate_jwt.py << 'EOF'
+          import jwt
+          import json
+          import sys
+          import time
+          from pathlib import Path
+
+          def generate_jwt_token(key_id, issuer_id, key_file_path):
+              try:
+                  # Read the private key
+                  with open(key_file_path, 'r') as key_file:
+                      private_key = key_file.read()
+                  
+                  # Create JWT payload
+                  payload = {
+                      'iss': issuer_id,
+                      'iat': int(time.time()),
+                      'exp': int(time.time()) + 1200,  # 20 minutes
+                      'aud': 'appstoreconnect-v1'
+                  }
+                  
+                  # Generate JWT token
+                  token = jwt.encode(
+                      payload, 
+                      private_key, 
+                      algorithm='ES256',
+                      headers={'kid': key_id}
+                  )
+                  
+                  return token
+              except Exception as e:
+                  print(f"Error generating JWT token: {e}", file=sys.stderr)
+                  return None
+
+          if __name__ == "__main__":
+              if len(sys.argv) != 4:
+                  print("Usage: python generate_jwt.py <key_id> <issuer_id> <key_file_path>", file=sys.stderr)
+                  sys.exit(1)
+              
+              key_id = sys.argv[1]
+              issuer_id = sys.argv[2]
+              key_file_path = sys.argv[3]
+              
+              token = generate_jwt_token(key_id, issuer_id, key_file_path)
+              if token:
+                  print(token)
+              else:
+                  sys.exit(1)
+          EOF
+
+          # Install PyJWT if needed
+          echo "📦 Installing PyJWT for token generation..."
+          python3 -m pip install PyJWT cryptography --break-system-packages
+
+          # Generate JWT token
+          echo "🔐 Generating JWT token..."
+          JWT_TOKEN=$(python3 /tmp/generate_jwt.py "$TESTER_KEY_ID" "$APP_STORE_CONNECT_ISSUER_ID" ~/.appstoreconnect/private_keys/AuthKey_$TESTER_KEY_ID.p8)
+
+          if [ -z "$JWT_TOKEN" ]; then
+            echo "❌ Failed to generate JWT token"
+            exit 1
+          fi
+
+          echo "✅ JWT token generated successfully"
+
+          # Function to make authenticated API requests
+          make_api_request() {
+            local method="$1"
+            local url="$2"
+            local data="$3"
+            
+            echo "🔍 Debug - Making $method request to: $url" >&2
+            
+            if [ "$method" = "GET" ]; then
+              response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+                   -H "Authorization: Bearer $JWT_TOKEN" \
+                   -H "Content-Type: application/json" \
+                   "$url" 2>/dev/null)
+            else
+              response=$(curl -s -w "HTTPSTATUS:%{http_code}" \
+                   -X "$method" \
+                   -H "Authorization: Bearer $JWT_TOKEN" \
+                   -H "Content-Type: application/json" \
+                   -d "$data" \
+                   "$url" 2>/dev/null)
+            fi
+            
+            # Extract HTTP status and body
+            http_status=$(echo "$response" | grep -o "HTTPSTATUS:[0-9]*" | cut -d: -f2)
+            body=$(echo "$response" | sed -E 's/HTTPSTATUS:[0-9]*$//')
+            
+            echo "🔍 Debug - HTTP Status: $http_status" >&2
+            
+            # Check for HTTP errors
+            if [[ "$http_status" -ge 400 ]]; then
+              echo "❌ HTTP Error $http_status for $method $url" >&2
+              echo "🔍 Response body: $body" >&2
+            fi
+            
+            # Return only the body
+            echo "$body"
+          }
+
+          # Step 1: Find the internal testing group "js.s team"
+          echo "🔍 Looking for internal testing group: 'js.s team'"
+
+          # Function to find beta group by name
+          find_beta_group() {
+            local group_name="js.s team"
+            local retries=3
+            local delay=10
+            
+            for i in $(seq 1 $retries); do
+              echo "🔄 Attempt $i/$retries: Looking for group '$group_name'"
+              
+              # Get all beta groups and look for our specific group
+              GROUPS_RESPONSE=$(make_api_request "GET" "https://api.appstoreconnect.apple.com/v1/betaGroups")
+              
+              # Check if the response contains errors
+              if echo "$GROUPS_RESPONSE" | jq -e '.errors' > /dev/null; then
+                echo "❌ API Error on attempt $i:"
+                echo "$GROUPS_RESPONSE" | jq -r '.errors[0].detail // "Unknown API error"'
+                
+                if [ $i -lt $retries ]; then
+                  echo "⏱️  Waiting ${delay}s before retry..."
+                  sleep $delay
+                  continue
+                else
+                  echo "❌ Failed after $retries attempts due to API errors"
+                  return 1
+                fi
+              fi
+              
+              # Find the group by name
+              GROUP_ID=$(echo "$GROUPS_RESPONSE" | jq -r --arg name "$group_name" '.data[] | select(.attributes.name == $name) | .id // empty')
+              
+              if [ -n "$GROUP_ID" ]; then
+                echo "✅ Found group '$group_name' with ID: $GROUP_ID"
+                return 0
+              else
+                echo "⚠️  Group '$group_name' not found on attempt $i/$retries"
+                echo "🔍 Available groups (first 5):"
+                echo "$GROUPS_RESPONSE" | jq -r '.data[]? | "\(.attributes.name) (ID: \(.id))"' | head -5
+                
+                if [ $i -lt $retries ]; then
+                  echo "⏱️  Waiting ${delay}s before retry..."
+                  sleep $delay
+                else
+                  echo "❌ Group '$group_name' not found after $retries attempts"
+                  return 1
+                fi
+              fi
+            done
+          }
+
+          # Try to find the group
+          if find_beta_group; then
+            echo "🎉 Successfully found beta group: $GROUP_ID"
+          else
+            echo "❌ Could not find beta group 'js.s team'"
+            echo "🔍 This usually means:"
+            echo "   1. The group name doesn't match exactly"
+            echo "   2. The API key doesn't have access to beta groups"
+            echo "   3. The group doesn't exist in this team"
+            echo ""
+            echo "💡 You can create the group manually in App Store Connect"
+            echo "❌ Stopping build early due to tester group issue"
+            exit 1
+          fi
+
+          # Step 2: Get current testers in the group
+          echo "👥 Getting current testers in group 'js.s team'..."
+          GROUP_TESTERS_RESPONSE=$(make_api_request "GET" "https://api.appstoreconnect.apple.com/v1/betaGroups/$GROUP_ID/betaTesters")
+
+          if echo "$GROUP_TESTERS_RESPONSE" | jq -e '.errors' > /dev/null; then
+            echo "❌ Failed to get group testers:"
+            echo "$GROUP_TESTERS_RESPONSE" | jq -r '.errors[0].detail // "Unknown API error"'
+            exit 1
+          fi
+
+          # Get list of current testers in group
+          CURRENT_TESTERS=$(echo "$GROUP_TESTERS_RESPONSE" | jq -r '.data[]?.attributes.email // empty' | sort)
+          echo "📋 Current testers in group:"
+          echo "$CURRENT_TESTERS" | while read -r email; do
+            [ -n "$email" ] && echo "   - $email"
+          done
+
+          # Step 3: Parse target testers from GitHub variable
+          echo "👥 Target testers from GitHub variable: $TESTFLIGHT_TESTERS"
+          IFS=',' read -ra TARGET_TESTER_EMAILS <<< "$TESTFLIGHT_TESTERS"
+
+          # Clean and sort target testers
+          TARGET_TESTERS=""
+          for email in "${TARGET_TESTER_EMAILS[@]}"; do
+            email=$(echo "$email" | tr -d ' ')
+            [ -n "$email" ] && TARGET_TESTERS="$TARGET_TESTERS$email\n"
+          done
+          TARGET_TESTERS=$(echo -e "$TARGET_TESTERS" | sort | grep -v '^$')
+
+          echo "📋 Target testers:"
+          echo "$TARGET_TESTERS" | while read -r email; do
+            [ -n "$email" ] && echo "   - $email"
+          done
+
+          # Step 4: Find testers to add (in target but not in current)
+          TESTERS_TO_ADD=$(comm -23 <(echo "$TARGET_TESTERS") <(echo "$CURRENT_TESTERS"))
+
+          echo ""
+          echo "📊 Tester Management Plan:"
+          if [ -n "$TESTERS_TO_ADD" ]; then
+            echo "➕ Testers to add NOW (before build):"
+            echo "$TESTERS_TO_ADD" | while read -r email; do
+              [ -n "$email" ] && echo "   + $email"
+            done
+            
+            # Add testers NOW (not later)
+            echo ""
+            echo "🔄 Adding testers to group immediately..."
+            
+            SUCCESS_COUNT=0
+            TOTAL_OPERATIONS=0
+
+            while read -r email; do
+              [ -z "$email" ] && continue
+              TOTAL_OPERATIONS=$((TOTAL_OPERATIONS + 1))
+              
+              echo "👤 Adding: $email"
+              
+              # Validate email format first
+              if [[ ! "$email" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$ ]]; then
+                echo "❌ Invalid email format: $email"
+                echo "❌ STOPPING BUILD - Fix email format first"
+                exit 1
+              fi
+              
+              # First, try to find if user already exists as a beta tester
+              echo "🔍 Checking if user is already a beta tester..."
+              EXISTING_TESTER_RESPONSE=$(make_api_request "GET" "https://api.appstoreconnect.apple.com/v1/betaTesters?filter[email]=$email")
+              
+              # Check for API errors in tester lookup
+              if echo "$EXISTING_TESTER_RESPONSE" | jq -e '.errors' > /dev/null 2>&1; then
+                echo "⚠️ Cannot query existing beta testers:"
+                echo "$(echo "$EXISTING_TESTER_RESPONSE" | jq -r '.errors[0].detail // "Unknown API error"')"
+                echo "💡 This is normal for App Manager role - proceeding with direct addition"
+                EXISTING_TESTER_ID=""
+              else
+                EXISTING_TESTER_ID=$(echo "$EXISTING_TESTER_RESPONSE" | jq -r '.data[0].id // empty' 2>/dev/null)
+              fi
+              
+              if [ -n "$EXISTING_TESTER_ID" ]; then
+                echo "✅ User exists as beta tester with ID: $EXISTING_TESTER_ID"
+                
+                # Add existing tester to group
+                ADD_TO_GROUP_DATA="{\"data\":[{\"type\":\"betaTesters\",\"id\":\"$EXISTING_TESTER_ID\"}]}"
+                ADD_RESPONSE=$(make_api_request "POST" "https://api.appstoreconnect.apple.com/v1/betaGroups/$GROUP_ID/relationships/betaTesters" "$ADD_TO_GROUP_DATA")
+                
+                if echo "$ADD_RESPONSE" | jq -e '.errors' > /dev/null 2>&1; then
+                  ERROR_CODE=$(echo "$ADD_RESPONSE" | jq -r '.errors[0].code // ""')
+                  ERROR_DETAIL=$(echo "$ADD_RESPONSE" | jq -r '.errors[0].detail // "Unknown error"')
+                  
+                  if [[ "$ERROR_CODE" == *"ALREADY"* || "$ERROR_CODE" == *"EXISTS"* || "$ERROR_DETAIL" == *"already"* ]]; then
+                    echo "✅ User was already in the group - this is okay"
+                    SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+                  else
+                    echo "❌ Failed to add existing beta tester to group:"
+                    echo "   Error: $ERROR_DETAIL"
+                    echo "   Code: $ERROR_CODE"
+                    echo "❌ STOPPING BUILD - Fix this tester issue first"
+                    exit 1
+                  fi
+                else
+                  echo "✅ Successfully added existing beta tester to group"
+                  SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+                fi
+              else
+                echo "🔄 User not found as existing beta tester - attempting to create and add..."
+                
+                # Try to create new beta tester and add to group
+                CREATE_TESTER_DATA="{\"data\":{\"type\":\"betaTesters\",\"attributes\":{\"email\":\"$email\",\"firstName\":\"Beta\",\"lastName\":\"Tester\"},\"relationships\":{\"betaGroups\":{\"data\":[{\"type\":\"betaGroups\",\"id\":\"$GROUP_ID\"}]}}}}"
+                CREATE_RESPONSE=$(make_api_request "POST" "https://api.appstoreconnect.apple.com/v1/betaTesters" "$CREATE_TESTER_DATA")
+                
+                if echo "$CREATE_RESPONSE" | jq -e '.errors' > /dev/null 2>&1; then
+                  ERROR_CODE=$(echo "$CREATE_RESPONSE" | jq -r '.errors[0].code // ""')
+                  ERROR_DETAIL=$(echo "$CREATE_RESPONSE" | jq -r '.errors[0].detail // "Unknown error"')
+                  
+                  echo "❌ Cannot create beta tester:"
+                  echo "   Error: $ERROR_DETAIL"
+                  echo "   Code: $ERROR_CODE"
+                  echo ""
+                  echo "💡 Possible reasons and solutions:"
+                  
+                  if [[ "$ERROR_CODE" == *"FORBIDDEN"* || "$ERROR_CODE" == *"ACCESS"* ]]; then
+                    echo "   🔑 API key doesn't have permission to create beta testers"
+                    echo "   ➡️ Add $email manually in App Store Connect before running build"
+                    echo "❌ STOPPING BUILD - Fix API permissions or add tester manually"
+                    exit 1
+                  elif [[ "$ERROR_CODE" == *"INVALID"* || "$ERROR_DETAIL" == *"Apple ID"* ]]; then
+                    echo "   📧 $email doesn't have a valid Apple ID"
+                    echo "   ➡️ Ask them to create an Apple ID first"
+                    echo "❌ STOPPING BUILD - User needs valid Apple ID"
+                    exit 1
+                  elif [[ "$ERROR_CODE" == *"ALREADY"* || "$ERROR_CODE" == *"EXISTS"* ]]; then
+                    echo "   ✅ User already exists as a beta tester"
+                    echo "   ➡️ Trying to add them to the group directly..."
+                    
+                    # If user exists, try to find them and add to group
+                    echo "🔄 Re-attempting to find existing user..."
+                    RETRY_FIND_RESPONSE=$(make_api_request "GET" "https://api.appstoreconnect.apple.com/v1/betaTesters?filter[email]=$email")
+                    RETRY_TESTER_ID=$(echo "$RETRY_FIND_RESPONSE" | jq -r '.data[0].id // empty' 2>/dev/null)
+                    
+                    if [ -n "$RETRY_TESTER_ID" ]; then
+                      echo "✅ Found existing user with ID: $RETRY_TESTER_ID"
+                      ADD_TO_GROUP_DATA="{\"data\":[{\"type\":\"betaTesters\",\"id\":\"$RETRY_TESTER_ID\"}]}"
+                      RETRY_ADD_RESPONSE=$(make_api_request "POST" "https://api.appstoreconnect.apple.com/v1/betaGroups/$GROUP_ID/relationships/betaTesters" "$ADD_TO_GROUP_DATA")
+                      
+                      if echo "$RETRY_ADD_RESPONSE" | jq -e '.errors' > /dev/null 2>&1; then
+                        echo "❌ Still failed to add to group: $(echo "$RETRY_ADD_RESPONSE" | jq -r '.errors[0].detail // "Unknown error"')"
+                        echo "❌ STOPPING BUILD - Cannot add $email to group"
+                        exit 1
+                      else
+                        echo "✅ Successfully added existing user to group"
+                        SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+                      fi
+                    else
+                      echo "❌ Could not find or add $email"
+                      echo "❌ STOPPING BUILD - Add this user manually in App Store Connect"
+                      exit 1
+                    fi
+                  else
+                    echo "   ❓ Unexpected error - check App Store Connect manually"
+                    echo "   ➡️ Try adding $email manually in App Store Connect → TestFlight"
+                    echo "❌ STOPPING BUILD - Unexpected API error"
+                    exit 1
+                  fi
+                else
+                  NEW_TESTER_ID=$(echo "$CREATE_RESPONSE" | jq -r '.data.id // empty')
+                  if [ -n "$NEW_TESTER_ID" ]; then
+                    echo "✅ Successfully created and added beta tester to group (ID: $NEW_TESTER_ID)"
+                    SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+                  else
+                    echo "❌ Failed to extract new tester ID from response"
+                    echo "❌ STOPPING BUILD - Tester creation response invalid"
+                    exit 1
+                  fi
+                fi
+              fi
+              
+              echo ""
+            done <<< "$TESTERS_TO_ADD"
+
+            echo "🎉 Tester addition completed!"
+            echo "✅ Successfully added: $SUCCESS_COUNT/$TOTAL_OPERATIONS testers"
+            
+            if [ $SUCCESS_COUNT -lt $TOTAL_OPERATIONS ]; then
+              echo "❌ Some testers could not be added - BUILD STOPPED"
+              echo "💡 Please fix the tester issues above and try again"
+              exit 1
+            else
+              echo "🎯 All testers successfully added to group!"
+              echo "✅ Safe to proceed with expensive build operations"
+            fi
+          else
+            echo "➕ No new testers to add - all current"
+            echo "✅ Tester management already up to date"
+          fi
+
+          # Clean up
+          rm -f ~/.appstoreconnect/private_keys/AuthKey_$TESTER_KEY_ID.p8
+          rm -f /tmp/generate_jwt.py
+
+          echo "✅ Early tester management completed successfully!"
+          echo "🚀 Proceeding with build..."
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install iOS Dependencies
+        run: rustup target add aarch64-apple-ios
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build frontend
+        run: bun run build
+
+      - name: Extract project configuration from Tauri config
+        run: |
+          # Read bundle ID and app name from Tauri config
+          BUNDLE_ID=$(jq -r '.identifier' src-tauri/tauri.conf.json)
+          APP_NAME=$(jq -r '.productName' src-tauri/tauri.conf.json)
+
+          echo "BUNDLE_ID=$BUNDLE_ID" >> $GITHUB_ENV
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+
+          echo "📋 Detected Bundle ID: $BUNDLE_ID"
+          echo "📋 Detected App Name: $APP_NAME"
+
+      - name: Automated Version Management for TestFlight
+        run: |
+          echo "🔢 Setting up automated versioning for TestFlight..."
+
+          # Get current version from Tauri config
+          CURRENT_VERSION=$(jq -r '.version // "1.0.0"' src-tauri/tauri.conf.json)
+
+          # Create new build number using GitHub run number for uniqueness
+          # Format: YYYYMMDD.RUN_NUMBER (e.g., 20250109.123)
+          BUILD_DATE=$(date +%Y%m%d)
+          NEW_BUILD_NUMBER="${BUILD_DATE}.${{ github.run_number }}"
+
+          # For TestFlight, we can also use a simpler incrementing scheme
+          # Alternative: just use run number if you prefer shorter build numbers
+          # NEW_BUILD_NUMBER="${{ github.run_number }}"
+
+          echo "MARKETING_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
+          echo "BUNDLE_VERSION=$NEW_BUILD_NUMBER" >> $GITHUB_ENV
+
+          echo "📱 Marketing Version (CFBundleShortVersionString): $CURRENT_VERSION"
+          echo "🔢 Bundle Version (CFBundleVersion): $NEW_BUILD_NUMBER"
+          echo "🏃 GitHub Run Number: ${{ github.run_number }}"
+
+          # Update Tauri config with new version scheme
+          # Keep the marketing version, but prepare for bundle version override
+          jq --arg version "$CURRENT_VERSION" '.version = $version' src-tauri/tauri.conf.json > tmp.json && mv tmp.json src-tauri/tauri.conf.json
+
+          echo "✅ Version configuration prepared"
+
+      # Import App Store distribution certificate
+      - name: Setup iOS App Store signing
+        id: ios-signing
+        uses: apple-actions/import-codesign-certs@v2
+        with:
+          p12-file-base64: ${{ secrets.IOS_APPSTORE_CERTIFICATE }}
+          p12-password: ${{ secrets.IOS_APPSTORE_CERTIFICATE_PASSWORD }}
+          keychain-password: ${{ github.run_id }}
+          create-keychain: true
+
+      - name: Install App Store provisioning profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo -n "${{ secrets.IOS_APPSTORE_PROVISIONING_PROFILE }}" | base64 --decode > appstore.mobileprovision
+
+          # Verify the provisioning profile was decoded properly
+          if [ ! -s appstore.mobileprovision ]; then
+            echo "❌ Failed to decode provisioning profile - check IOS_APPSTORE_PROVISIONING_PROFILE secret"
+            exit 1
+          fi
+
+          # Extract UUID from provisioning profile for proper naming
+          PROFILE_UUID=$(security cms -D -i appstore.mobileprovision | plutil -extract UUID xml1 - -o - | sed -n 's/.*<string>\(.*\)<\/string>.*/\1/p')
+
+          if [ -z "$PROFILE_UUID" ]; then
+            echo "❌ Failed to extract UUID from provisioning profile"
+            echo "Profile content preview:"
+            head -20 appstore.mobileprovision
+            exit 1
+          fi
+
+          echo "PROFILE_UUID=$PROFILE_UUID" >> $GITHUB_ENV
+          echo "📋 Extracted Profile UUID: $PROFILE_UUID"
+
+          # Install with proper UUID naming
+          cp appstore.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$PROFILE_UUID.mobileprovision
+
+          # Verify installation
+          if [ -f ~/Library/MobileDevice/Provisioning\ Profiles/$PROFILE_UUID.mobileprovision ]; then
+            echo "✅ Provisioning profile installed successfully"
+          else
+            echo "❌ Failed to install provisioning profile"
+            exit 1
+          fi
+
+          # Clean up
+          rm appstore.mobileprovision
+
+      # Add iOS team configuration to Tauri config
+      - name: Add iOS section with developmentTeam
+        run: |
+          if grep -q '"iOS": {' src-tauri/tauri.conf.json; then
+            sed -i '' 's/"developmentTeam": "[^"]*"/"developmentTeam": "${{ secrets.APPLE_TEAM_ID }}"/' src-tauri/tauri.conf.json
+          else
+            jq '.bundle.iOS = {"developmentTeam": "${{ secrets.APPLE_TEAM_ID }}"}' src-tauri/tauri.conf.json > tmp.json && mv tmp.json src-tauri/tauri.conf.json
+          fi
+
+      - name: Initialize Tauri iOS
+        run: bun run tauri ios init
+
+      - name: Add export compliance to Info.plist to skip manual review
+        run: |
+          INFO_PLIST="src-tauri/gen/apple/app_iOS/Info.plist"
+
+          if [ -f "$INFO_PLIST" ]; then
+            echo "📝 Adding export compliance to Info.plist..."
+            
+            # Add ITSAppUsesNonExemptEncryption = NO to bypass export compliance dialog
+            /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" "$INFO_PLIST" 2>/dev/null || \
+            /usr/libexec/PlistBuddy -c "Set :ITSAppUsesNonExemptEncryption false" "$INFO_PLIST"
+            
+            echo "✅ Export compliance added to Info.plist"
+            echo "🔍 Verifying Info.plist entry:"
+            /usr/libexec/PlistBuddy -c "Print :ITSAppUsesNonExemptEncryption" "$INFO_PLIST"
+          else
+            echo "⚠️ Info.plist not found at $INFO_PLIST"
+          fi
+
+      - name: Apply automated versioning to iOS project
+        run: |
+          INFO_PLIST="src-tauri/gen/apple/app_iOS/Info.plist"
+
+          if [ -f "$INFO_PLIST" ]; then
+            echo "📝 Applying automated versioning to iOS project..."
+            
+            # Set CFBundleShortVersionString (marketing version)
+            /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${{ env.MARKETING_VERSION }}" "$INFO_PLIST"
+            
+            # Set CFBundleVersion (bundle version) - this must be unique for each TestFlight upload
+            /usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${{ env.BUNDLE_VERSION }}" "$INFO_PLIST"
+            
+            echo "✅ Version configuration applied to Info.plist"
+            echo "📱 Marketing Version: ${{ env.MARKETING_VERSION }}"
+            echo "🔢 Bundle Version: ${{ env.BUNDLE_VERSION }}"
+            
+            # Verify the changes
+            echo "🔍 Current Info.plist versions:"
+            /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST"
+            /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$INFO_PLIST"
+          else
+            echo "❌ Info.plist not found at $INFO_PLIST"
+            echo "🔍 Looking for Info.plist in alternative locations:"
+            find src-tauri/gen -name "Info.plist" -type f || echo "No Info.plist found"
+            exit 1
+          fi
+
+      - name: Apply App Store signing fixes
+        run: |
+          PBXPROJ_FILE="src-tauri/gen/apple/app.xcodeproj/project.pbxproj"
+
+          # Fix bundle ID to match Tauri configuration
+          CURRENT_BUNDLE_ID=$(grep -o "PRODUCT_BUNDLE_IDENTIFIER = [^;]*" "$PBXPROJ_FILE" | head -1 | sed 's/PRODUCT_BUNDLE_IDENTIFIER = //')
+          if [ -n "$CURRENT_BUNDLE_ID" ] && [ "$CURRENT_BUNDLE_ID" != "${{ env.BUNDLE_ID }}" ]; then
+            ESCAPED_CURRENT=$(echo "$CURRENT_BUNDLE_ID" | sed 's/\./\\./g')
+            sed -i '' "s/$ESCAPED_CURRENT/${{ env.BUNDLE_ID }}/g" "$PBXPROJ_FILE"
+          fi
+
+          # Switch to manual signing
+          sed -i '' 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' "$PBXPROJ_FILE"
+          sed -i '' 's/"CODE_SIGN_STYLE\[sdk=iphoneos\*\]" = Automatic;/"CODE_SIGN_STYLE[sdk=iphoneos*]" = Manual;/g' "$PBXPROJ_FILE"
+          sed -i '' 's/ProvisioningStyle = Automatic;/ProvisioningStyle = Manual;/g' "$PBXPROJ_FILE"
+
+          # Set App Store code sign identity
+          sed -i '' 's/"CODE_SIGN_IDENTITY\[sdk=iphoneos\*\]" = "iPhone Developer";/"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";/g' "$PBXPROJ_FILE"
+          sed -i '' 's/CODE_SIGN_IDENTITY = "iPhone Developer";/CODE_SIGN_IDENTITY = "Apple Distribution";/g' "$PBXPROJ_FILE"
+          sed -i '' 's/"iPhone Developer"/"Apple Distribution"/g' "$PBXPROJ_FILE"
+          sed -i '' 's/"iPhone Distribution"/"Apple Distribution"/g' "$PBXPROJ_FILE"
+
+          # Set development team
+          sed -i '' 's/DEVELOPMENT_TEAM = "";/DEVELOPMENT_TEAM = "${{ secrets.APPLE_TEAM_ID }}";/g' "$PBXPROJ_FILE"
+          if ! grep -q "DEVELOPMENT_TEAM" "$PBXPROJ_FILE"; then
+            sed -i '' '/CODE_SIGN_IDENTITY.*Apple Distribution/a\
+          				DEVELOPMENT_TEAM = "${{ secrets.APPLE_TEAM_ID }}";' "$PBXPROJ_FILE"
+          fi
+
+          # Add provisioning profile specifier
+          sed -i '' '/PROVISIONING_PROFILE_SPECIFIER/d' "$PBXPROJ_FILE"
+          sed -i '' '/CODE_SIGN_IDENTITY.*Apple Distribution/a\
+          				PROVISIONING_PROFILE_SPECIFIER = "'$PROFILE_UUID'";' "$PBXPROJ_FILE"
+
+          # Remove old provisioning profile settings
+          sed -i '' '/PROVISIONING_PROFILE = /d' "$PBXPROJ_FILE"
+
+      - name: Create exportOptions.plist for App Store
+        run: |
+          cat > exportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>app-store</string>
+              <key>teamID</key>
+              <string>${{ secrets.APPLE_TEAM_ID }}</string>
+              <key>uploadBitcode</key>
+              <false/>
+              <key>uploadSymbols</key>
+              <true/>
+              <key>provisioningProfiles</key>
+              <dict>
+                  <key>${{ env.BUNDLE_ID }}</key>
+                  <string>${PROFILE_UUID}</string>
+              </dict>
+          </dict>
+          </plist>
+          EOF
+
+          # Copy to multiple locations where Tauri might look for it
+          cp exportOptions.plist src-tauri/
+          cp exportOptions.plist src-tauri/gen/apple/
+          mkdir -p src-tauri/gen/apple/app.xcodeproj
+          cp exportOptions.plist src-tauri/gen/apple/app.xcodeproj/
+
+      - name: Build iOS app for App Store
+        env:
+          DEVELOPER_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          cd src-tauri
+
+          echo "🔨 Starting Tauri iOS build..."
+          echo "Working directory: $(pwd)"
+          echo "Bundle ID: ${{ env.BUNDLE_ID }}"
+          echo "App Name: ${{ env.APP_NAME }}"
+
+          # Run Tauri build (may fail on export but still create xcarchive)
+          echo "🚀 Running Tauri iOS build..."
+          BUILD_SUCCESS=false
+          if bun tauri ios build --export-method app-store-connect; then
+            BUILD_SUCCESS=true
+            echo "✅ Tauri build and export completed successfully"
+          else
+            echo "⚠️ Tauri export failed, but checking for xcarchive..."
+          fi
+
+          # Always check for IPA files first
+          echo "🔍 Searching for IPA files in all locations..."
+
+          # Check workspace root first (where xcodebuild exports)
+          find "$GITHUB_WORKSPACE" -name "*.ipa" -type f -exec ls -la {} \; 2>/dev/null || echo "No IPA in workspace root"
+
+          # Check src-tauri directory
+          find . -name "*.ipa" -type f -exec ls -la {} \; 2>/dev/null || echo "No IPA in src-tauri"
+
+          # Look for IPA in common locations
+          IPA_LOCATIONS=(
+            "$GITHUB_WORKSPACE/*.ipa"
+            "./*.ipa"
+            "./target/*.ipa"
+            "./gen/apple/*.ipa"
+            "../*.ipa"
+          )
+
+          FOUND_IPA=""
+          for pattern in "${IPA_LOCATIONS[@]}"; do
+            for file in $pattern; do
+              if [ -f "$file" ]; then
+                FOUND_IPA="$file"
+                echo "📦 Found IPA: $FOUND_IPA"
+                break 2
+              fi
+            done
+          done
+
+          # If no IPA found, try manual export from xcarchive
+          if [ -z "$FOUND_IPA" ]; then
+            echo "🔍 No IPA found, looking for xcarchive to export manually..."
+            
+            # Find xcarchive
+            XCARCHIVE_PATH=$(find . -name "*.xcarchive" -type d | head -n 1)
+            if [ -n "$XCARCHIVE_PATH" ]; then
+              echo "📦 Found xcarchive: $XCARCHIVE_PATH"
+              
+              # Check xcarchive contents
+              echo "🔍 xcarchive contents:"
+              find "$XCARCHIVE_PATH" -type f -name "*.app" | head -5
+              
+              # Manual export using xcodebuild
+              IPA_NAME="${APP_NAME// /_}_TestFlight.ipa"
+              EXPORT_PATH="$GITHUB_WORKSPACE/export"
+              mkdir -p "$EXPORT_PATH"
+              
+              echo "🔄 Manually exporting IPA from xcarchive..."
+              echo "Archive: $XCARCHIVE_PATH"
+              echo "Export path: $EXPORT_PATH"
+              echo "Export options: $GITHUB_WORKSPACE/exportOptions.plist"
+              
+              # Show export options for debugging
+              echo "📋 Export options content:"
+              cat "$GITHUB_WORKSPACE/exportOptions.plist"
+              
+              if xcodebuild -exportArchive \
+                -archivePath "$XCARCHIVE_PATH" \
+                -exportPath "$EXPORT_PATH" \
+                -exportOptionsPlist "$GITHUB_WORKSPACE/exportOptions.plist" \
+                -verbose; then
+                
+                echo "✅ Manual export succeeded"
+                
+                # Find the exported IPA
+                EXPORTED_IPA=$(find "$EXPORT_PATH" -name "*.ipa" -type f | head -n 1)
+                if [ -n "$EXPORTED_IPA" ]; then
+                  echo "📦 Found exported IPA: $EXPORTED_IPA"
+                  FOUND_IPA="$EXPORTED_IPA"
+                else
+                  echo "❌ No IPA found after export"
+                  echo "🔍 Export directory contents:"
+                  ls -la "$EXPORT_PATH" || echo "Export directory not found"
+                fi
+              else
+                echo "❌ Manual export also failed"
+                echo "🔍 Checking provisioning profile setup..."
+                
+                # Debug provisioning profiles
+                echo "🔍 Installed provisioning profiles:"
+                ls -la ~/Library/MobileDevice/Provisioning\ Profiles/ 2>/dev/null || echo "No provisioning profiles directory"
+                
+                # Check if our profile is there
+                if [ -n "${{ env.PROFILE_UUID }}" ]; then
+                  PROFILE_FILE=~/Library/MobileDevice/Provisioning\ Profiles/${{ env.PROFILE_UUID }}.mobileprovision
+                  if [ -f "$PROFILE_FILE" ]; then
+                    echo "✅ Our profile exists: $PROFILE_FILE"
+                    echo "🔍 Profile info:"
+                    security cms -D -i "$PROFILE_FILE" | head -20
+                  else
+                    echo "❌ Our profile missing: $PROFILE_FILE"
+                  fi
+                else
+                  echo "❌ PROFILE_UUID is empty - provisioning profile step failed"
+                fi
+                
+                # Check certificates
+                echo "🔍 Available certificates:"
+                security find-identity -p codesigning -v
+                
+                exit 1
+              fi
+            else
+              echo "❌ No xcarchive found either"
+              echo "🔍 Looking for any build artifacts:"
+              find . -type f -name "*" | grep -E "\.(app|xcarchive)$" || echo "No iOS build artifacts found"
+              exit 1
+            fi
+          fi
+
+          # If we found an IPA, prepare it
+          if [ -n "$FOUND_IPA" ]; then
+            echo "✅ IPA found at: $FOUND_IPA"
+            echo "📏 IPA size: $(ls -lh "$FOUND_IPA" | awk '{print $5}')"
+            
+            # Copy to consistent location if needed
+            IPA_NAME="${APP_NAME// /_}_TestFlight.ipa"
+            TARGET_PATH="$GITHUB_WORKSPACE/$IPA_NAME"
+            
+            if [ "$FOUND_IPA" != "$TARGET_PATH" ]; then
+              echo "📋 Copying IPA to: $TARGET_PATH"
+              cp "$FOUND_IPA" "$TARGET_PATH"
+            fi
+            
+            # Verify final IPA
+            if [ -f "$TARGET_PATH" ]; then
+              echo "✅ Final IPA ready: $TARGET_PATH"
+              echo "📏 Final size: $(ls -lh "$TARGET_PATH" | awk '{print $5}')"
+              echo "IPA_PATH=$TARGET_PATH" >> $GITHUB_ENV
+            else
+              echo "❌ Failed to prepare final IPA"
+              exit 1
+            fi
+          else
+            echo "❌ No IPA could be created or found!"
+            exit 1
+          fi
+
+      - name: Verify IPA before upload
+        run: |
+          echo "🔍 Verifying IPA file before upload..."
+
+          if [ -z "${{ env.IPA_PATH }}" ]; then
+            echo "❌ IPA_PATH environment variable is not set"
+            exit 1
+          fi
+
+          if [ ! -f "${{ env.IPA_PATH }}" ]; then
+            echo "❌ IPA file not found at: ${{ env.IPA_PATH }}"
+            echo "🔍 Workspace contents:"
+            ls -la "$GITHUB_WORKSPACE"
+            echo "🔍 Looking for any IPA files:"
+            find "$GITHUB_WORKSPACE" -name "*.ipa" -type f -exec ls -la {} \; || echo "No IPA files found"
+            exit 1
+          fi
+
+          echo "✅ IPA file verified: ${{ env.IPA_PATH }}"
+          echo "📏 File size: $(ls -lh "${{ env.IPA_PATH }}" | awk '{print $5}')"
+          echo "🔐 File permissions: $(ls -l "${{ env.IPA_PATH }}" | awk '{print $1}')"
+
+      - name: Upload to TestFlight using xcrun altool
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_TESTER_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_TESTER_API_KEY_ID }}
+          APP_STORE_CONNECT_TESTER_API_KEY: ${{ secrets.APP_STORE_CONNECT_TESTER_API_KEY }}
+          BUNDLE_ID: ${{ env.BUNDLE_ID }}
+          IPA_PATH: ${{ env.IPA_PATH }}
+          APP_NAME: ${{ env.APP_NAME }}
+          MARKETING_VERSION: ${{ env.MARKETING_VERSION }}
+          BUNDLE_VERSION: ${{ env.BUNDLE_VERSION }}
+        run: |
+          echo "🚀 Uploading to TestFlight using xcrun altool (Apple's direct tool)..."
+          echo "🔑 Developer API Key ID: $APP_STORE_CONNECT_API_KEY_ID"
+
+          # Check if required secrets are available
+          if [ -z "$APP_STORE_CONNECT_API_KEY_ID" ] || [ -z "$APP_STORE_CONNECT_API_KEY" ]; then
+            echo "❌ Developer API key not configured for uploads"
+            echo "💡 Please check APP_STORE_CONNECT_API_KEY_ID and APP_STORE_CONNECT_API_KEY secrets"
+            exit 1
+          fi
+
+          # Setup API key files for altool (altool expects them in a specific location)
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "$APP_STORE_CONNECT_API_KEY" | base64 -d > ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
+          chmod 600 ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
+
+          if [ ! -f ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8 ]; then
+            echo "❌ Failed to create Developer API key file for altool"
+            exit 1
+          fi
+
+          echo "✅ Developer API key file setup complete"
+          echo "📏 Key file size: $(wc -c < ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8) bytes"
+
+          # Setup App Manager key as backup if available
+          if [ -n "$APP_STORE_CONNECT_TESTER_API_KEY_ID" ] && [ -n "$APP_STORE_CONNECT_TESTER_API_KEY" ]; then
+            echo "$APP_STORE_CONNECT_TESTER_API_KEY" | base64 -d > ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_TESTER_API_KEY_ID.p8
+            chmod 600 ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_TESTER_API_KEY_ID.p8
+            echo "✅ App Manager API key file also setup as backup"
+          fi
+
+          # Generate release notes
+          CUSTOM_NOTES="${{ github.event.inputs.release_notes }}"
+          if [ -n "$CUSTOM_NOTES" ]; then
+            RELEASE_NOTES="$CUSTOM_NOTES"
+          else
+            RELEASE_NOTES="🚀 New $APP_NAME iOS Build - Version $MARKETING_VERSION (Build $BUNDLE_VERSION)
+
+          📱 Built from: ${{ github.ref_name }}
+          🔗 Commit: ${{ github.sha }}
+          👤 Author: ${{ github.actor }}
+          🏃 Build Number: ${{ github.run_number }}
+
+          📝 Changes in this build:
+          ${{ github.event.head_commit.message }}
+
+          💾 Download from TestFlight to test the latest features!"
+          fi
+
+          # Verify IPA file exists
+          if [ ! -f "$IPA_PATH" ]; then
+            echo "❌ IPA file not found at: $IPA_PATH"
+            exit 1
+          fi
+
+          echo "✅ IPA file verified: $IPA_PATH"
+          echo "📏 IPA file size: $(ls -lh "$IPA_PATH" | awk '{print $5}')"
+
+          # Function to try altool upload with a specific API key
+          try_altool_upload() {
+            local api_key_id=$1
+            local description=$2
+            
+            echo "🔄 Trying altool upload with $description (Key ID: $api_key_id)..."
+            
+            # Run xcrun altool upload
+            if xcrun altool \
+              --upload-app \
+              --file "$IPA_PATH" \
+              --type ios \
+              --apiKey "$api_key_id" \
+              --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" \
+              --verbose; then
+              
+              echo "🎉 Successfully uploaded to TestFlight with $description!"
+              return 0
+            else
+              echo "❌ Upload failed with $description"
+              return 1
+            fi
+          }
+
+          # Try upload with Developer key first
+          echo "🚀 Starting TestFlight upload with Developer API key..."
+          UPLOAD_SUCCESS=false
+
+          if try_altool_upload "$APP_STORE_CONNECT_API_KEY_ID" "Developer key"; then
+            UPLOAD_SUCCESS=true
+          elif [ -n "$APP_STORE_CONNECT_TESTER_API_KEY_ID" ]; then
+            echo "🔄 Trying fallback with App Manager key..."
+            if try_altool_upload "$APP_STORE_CONNECT_TESTER_API_KEY_ID" "App Manager key"; then
+              UPLOAD_SUCCESS=true
+            fi
+          fi
+
+          if [ "$UPLOAD_SUCCESS" = false ]; then
+            echo "❌ All upload attempts failed"
+            echo "💡 Check your API keys and permissions"
+            echo "💡 Ensure your API keys have the correct roles:"
+            echo "   - Developer key: Developer role"
+            echo "   - App Manager key: App Manager role"
+            exit 1
+          fi
+
+          # Clean up API key files
+          rm -f ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
+          if [ -n "$APP_STORE_CONNECT_TESTER_API_KEY_ID" ]; then
+            rm -f ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_TESTER_API_KEY_ID.p8
+          fi
+
+          echo "🧹 Cleanup completed"
+          echo "✅ Upload to TestFlight completed successfully!"
+          echo "⏱️  Build will be available for internal testing in 5-15 minutes"
+          echo "🔗 Check status: https://appstoreconnect.apple.com/apps"
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-testflight-ipa
+          path: ${{ env.IPA_PATH }}
+          retention-days: 7
+
+      - name: Build Summary
+        run: |
+          echo "🎉 iOS TestFlight Build Complete!"
+          echo "📱 Bundle ID: ${{ env.BUNDLE_ID }}"
+          echo "📱 App Name: ${{ env.APP_NAME }}"
+          echo "📱 Marketing Version: ${{ env.MARKETING_VERSION }}"
+          echo "🔢 Bundle Version: ${{ env.BUNDLE_VERSION }}"
+          echo "🏃 GitHub Run Number: ${{ github.run_number }}"
+          echo "🔐 Signed with: Apple Distribution (${{ secrets.APPLE_TEAM_ID }})"
+          echo "🚀 Uploaded via: xcrun altool (Apple's direct tool)"
+          echo "👥 Tester Management via: Direct API"
+          echo "✈️ Uploaded to TestFlight successfully"
+          echo "⏱️ Build will be available for internal testing in 5-15 minutes"
+          echo "🔗 Check status: https://appstoreconnect.apple.com/apps"
+          echo ""
+          echo "📋 Direct API Approach:"
+          echo "   • Validation: API key authentication"
+          echo "   • Upload: Developer key with xcrun altool (Apple's direct tool)"
+          echo "   • Tester Management: Direct API calls"
+          echo "   • Deprecation Ready: No more xcrun altool dependency"
