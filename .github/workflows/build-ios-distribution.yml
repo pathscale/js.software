@@ -1,3 +1,7 @@
+# This workflow needs to have certificate and provisioning profile generated for specific devices
+# Those devices UUIDs should be registered in Apple Developer Portal
+# Otherwise it could not be installed on the devices
+
 name: Build iOS Distribution (Clean)
 
 on:
