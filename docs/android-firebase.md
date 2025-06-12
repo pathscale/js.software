@@ -57,3 +57,28 @@ Go to GitHub repository → Settings → Secrets and variables → Actions → *
 # Value: comma-separated emails
 # Example: tester1@example.com,tester2@example.com
 ```
+
+## Run Distribution Workflow
+
+**Automatic (Recommended):**
+
+- Runs automatically after successful "Build Signed Android APK"
+- No user action needed
+
+**Manual:**
+
+1. Go to GitHub → Actions → "Distribute Android to Firebase"
+2. Click "Run workflow"
+3. Leave "Build workflow run ID" empty (uses latest build)
+4. Add custom release notes (optional)
+
+**Manual with specific build:**
+
+1. Find build run ID from "Build Signed Android APK" workflow
+2. Enter run ID in "Build workflow run ID" field
+
+**Requirements:**
+
+- Must have a successful Android build first
+- Build creates APK artifact that distribution downloads
+- Distribution fails if no build artifact found

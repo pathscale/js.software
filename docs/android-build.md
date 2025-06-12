@@ -68,3 +68,16 @@ Value: your keystore password
 **ANDROID_KEY_ALIAS**
 
 Value: your key alias
+
+## Run Build Workflow
+
+**Manual trigger:**
+
+1. Go to GitHub → Actions → "Build Signed Android APK"
+2. Click "Run workflow"
+3. APK will be available as artifact: `{app-name}-android-{run-number}`
+
+**Output:**
+
+- Signed release APK
+- Auto-triggers Firebase distribution (if configured)
