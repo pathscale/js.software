@@ -1,0 +1,206 @@
+name: Distribute Android to Firebase
+
+on:
+  workflow_run:
+    workflows: ["Build Signed Android APK"]
+    types: [completed]
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: "Build workflow run ID (optional - will use latest successful build if empty)"
+        required: false
+      release_notes:
+        description: "Custom release notes (optional)"
+        required: false
+
+jobs:
+  distribute-firebase:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find latest successful build (if needed)
+        if: ${{ github.event_name == 'workflow_dispatch' && !inputs.build_run_id }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('🔍 No build_run_id provided, searching for latest successful Android build...');
+
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'android-build.yml',
+              status: 'completed',
+              conclusion: 'success',
+              per_page: 10
+            });
+
+            if (runs.data.workflow_runs.length === 0) {
+              core.setFailed('❌ No successful Android build runs found');
+              return;
+            }
+
+            const latestRun = runs.data.workflow_runs[0];
+            console.log(`✅ Found latest successful build: Run #${latestRun.run_number} (ID: ${latestRun.id})`);
+            console.log(`📅 Created: ${latestRun.created_at}`);
+            console.log(`🔗 Commit: ${latestRun.head_sha.substring(0, 7)}`);
+
+            core.exportVariable('AUTO_BUILD_RUN_ID', latestRun.id);
+            core.exportVariable('AUTO_BUILD_RUN_NUMBER', latestRun.run_number);
+
+      - name: Extract project configuration
+        id: config
+        run: |
+          # Read identifier and app name from Tauri config for release notes
+          BUNDLE_ID=$(jq -r '.identifier' src-tauri/tauri.conf.json)
+          APP_NAME=$(jq -r '.productName' src-tauri/tauri.conf.json)
+
+          echo "BUNDLE_ID=$BUNDLE_ID" >> $GITHUB_ENV
+          echo "APP_NAME=$APP_NAME" >> $GITHUB_ENV
+
+          echo "📋 App Bundle ID: $BUNDLE_ID"
+          echo "📋 App Name: $APP_NAME"
+
+          # Generate artifact name to download
+          ARTIFACT_NAME=$(echo "$APP_NAME" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')-android
+
+          # Determine run number for artifact
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.build_run_id }}" ]; then
+            # Manual trigger with specific run ID
+            RUN_NUMBER="${{ inputs.build_run_id }}"
+            echo "📋 Using provided build run ID: $RUN_NUMBER"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "$AUTO_BUILD_RUN_NUMBER" ]; then
+            # Manual trigger with auto-discovered run ID
+            RUN_NUMBER="$AUTO_BUILD_RUN_NUMBER"
+            echo "📋 Using auto-discovered build run #: $RUN_NUMBER (ID: $AUTO_BUILD_RUN_ID)"
+          elif [ "${{ github.event_name }}" = "workflow_run" ]; then
+            # Auto trigger from build workflow
+            RUN_NUMBER="${{ github.event.workflow_run.run_number }}"
+            echo "📋 Using workflow_run build run #: $RUN_NUMBER"
+          else
+            echo "❌ Cannot determine build run number"
+            exit 1
+          fi
+
+          FULL_ARTIFACT_NAME="${ARTIFACT_NAME}-${RUN_NUMBER}"
+          echo "ARTIFACT_NAME=$FULL_ARTIFACT_NAME" >> $GITHUB_ENV
+          echo "📦 Looking for artifact: $FULL_ARTIFACT_NAME"
+
+      - name: Download APK from Build Workflow
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ./apk/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ inputs.build_run_id || env.AUTO_BUILD_RUN_ID || github.event.workflow_run.id }}
+
+      - name: Find downloaded APK
+        run: |
+          echo "=== Downloaded APK files ==="
+          find ./apk -name "*.apk" -type f -exec ls -la {} \;
+
+          APK_PATH=$(find ./apk -name "*.apk" -type f | head -n 1)
+
+          if [ -z "$APK_PATH" ]; then
+            echo "❌ No APK file found in downloaded artifact"
+            echo "Contents of ./apk directory:"
+            ls -la ./apk/ || echo "Directory not found"
+            exit 1
+          fi
+
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+          echo "📱 Found APK: $APK_PATH"
+          echo "📏 APK Size: $(du -h "$APK_PATH" | cut -f1)"
+
+      - name: Setup Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+          firebase --version
+
+      - name: Authenticate with Firebase
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT_KEY" | base64 -d > $RUNNER_TEMP/firebase-service-account.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json" >> $GITHUB_ENV
+          export GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/firebase-service-account.json
+          firebase projects:list
+
+      - name: Upload to Firebase App Distribution
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        run: |
+          # Debug testers variable
+          echo "Debug: FIREBASE_TESTERS value: '${{ vars.FIREBASE_TESTERS }}'"
+
+          # Use custom release notes if provided, otherwise generate default ones
+          CUSTOM_NOTES="${{ inputs.release_notes }}"
+          if [ -n "$CUSTOM_NOTES" ]; then
+            RELEASE_NOTES="$CUSTOM_NOTES"
+          else
+            # Determine version info
+            if [ "${{ github.event_name }}" = "workflow_run" ]; then
+              VERSION="1.0.${{ github.event.workflow_run.run_number }}"
+              COMMIT="${{ github.event.workflow_run.head_sha }}"
+              BRANCH="${{ github.event.workflow_run.head_branch }}"
+              AUTHOR="${{ github.event.workflow_run.head_commit.author.name }}"
+              COMMIT_MSG="${{ github.event.workflow_run.head_commit.message }}"
+            else
+              VERSION="1.0.${{ github.run_number }}"
+              COMMIT="${{ github.sha }}"
+              BRANCH="${{ github.ref_name }}"
+              AUTHOR="${{ github.actor }}"
+              COMMIT_MSG="Manual distribution trigger"
+            fi
+            
+            RELEASE_NOTES="🚀 New ${{ env.APP_NAME }} Build - Version $VERSION
+
+          📱 Built from: $BRANCH
+          🔗 Commit: $COMMIT
+          👤 Author: $AUTHOR
+
+          📝 Changes in this build:
+          $COMMIT_MSG
+
+          💾 Download and install to test the latest features!"
+          fi
+
+          echo "📝 Release Notes:"
+          echo "$RELEASE_NOTES"
+
+          # Setup testers parameter
+          TESTERS_PARAM=""
+          if [ -n "${{ vars.FIREBASE_TESTERS }}" ]; then
+            TESTERS_PARAM="--testers ${{ vars.FIREBASE_TESTERS }}"
+            echo "🧑‍💻 Using testers: ${{ vars.FIREBASE_TESTERS }}"
+          else
+            echo "ℹ️ No testers specified - use Firebase Console to add testers"
+          fi
+
+          # Upload to Firebase
+          echo "📤 Uploading to Firebase App Distribution..."
+          firebase appdistribution:distribute "${{ env.APK_PATH }}" \
+            --project "$FIREBASE_PROJECT_ID" \
+            --app "$FIREBASE_APP_ID" \
+            --release-notes "$RELEASE_NOTES" \
+            $TESTERS_PARAM
+
+      - name: Clean up Firebase credentials
+        if: always()
+        run: |
+          rm -f $RUNNER_TEMP/firebase-service-account.json
+
+      - name: Distribution Summary
+        run: |
+          echo "🎉 Firebase Distribution Complete!"
+          echo "📱 App: ${{ env.APP_NAME }}"
+          echo "📦 APK: ${{ env.APK_PATH }}"
+          echo "🔥 Firebase Project: ${{ secrets.FIREBASE_PROJECT_ID }}"
+          echo "📱 Firebase App ID: ${{ secrets.FIREBASE_APP_ID }}"
+          if [ -n "${{ vars.FIREBASE_TESTERS }}" ]; then
+            echo "🧑‍💻 Notified testers: ${{ vars.FIREBASE_TESTERS }}"
+          fi
+          echo "✅ Testers will receive email notifications with download links"
