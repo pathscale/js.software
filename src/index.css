@@ -7,7 +7,6 @@
 @plugin "@iconify/tailwind4";
 
 @import "./styles/themes/generated.css";
-@import "./styles/base/index.css";
 
 @layer base {
   html {
