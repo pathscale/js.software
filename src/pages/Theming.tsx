@@ -56,14 +56,25 @@ const TAILWIND_COLORS = {
   "purple-400": "oklch(71% 0.203 305.504)",
   "purple-500": "oklch(62% 0.265 303.9)",
   "purple-600": "oklch(55% 0.288 302.321)",
-  "white": "oklch(100% 0 0)",
-  "black": "oklch(0% 0 0)"
+  white: "oklch(100% 0 0)",
+  black: "oklch(0% 0 0)",
 };
 
 const COLOR_GROUPS = [
-  { name: "base", colors: ["--color-base-100", "--color-base-200", "--color-base-300", "--color-base-content"] },
+  {
+    name: "base",
+    colors: [
+      "--color-base-100",
+      "--color-base-200",
+      "--color-base-300",
+      "--color-base-content",
+    ],
+  },
   { name: "primary", colors: ["--color-primary", "--color-primary-content"] },
-  { name: "secondary", colors: ["--color-secondary", "--color-secondary-content"] },
+  {
+    name: "secondary",
+    colors: ["--color-secondary", "--color-secondary-content"],
+  },
   { name: "accent", colors: ["--color-accent", "--color-accent-content"] },
   { name: "neutral", colors: ["--color-neutral", "--color-neutral-content"] },
   { name: "info", colors: ["--color-info", "--color-info-content"] },
@@ -72,16 +83,14 @@ const COLOR_GROUPS = [
   { name: "error", colors: ["--color-error", "--color-error-content"] },
 ];
 
-
-
 // Calculate contrast color based on main color lightness
 const getContrastColor = (baseColor: string): string => {
   // Extract lightness from OKLCH color
   const oklchMatch = baseColor.match(/oklch\((\d+(?:\.\d+)?)%/);
   if (!oklchMatch) return "oklch(100% 0 0)"; // default to white
-  
+
   const lightness = parseFloat(oklchMatch[1]);
-  
+
   // If the base color is light (> 50%), use dark content
   // If the base color is dark (≤ 50%), use light content
   if (lightness > 50) {
@@ -95,22 +104,35 @@ const getContrastColor = (baseColor: string): string => {
 const getSmartContentColor = (colorName: string, baseColor: string): string => {
   // Special cases for specific color names
   if (colorName.includes("base")) {
-    return theme() === "dark" ? "oklch(87% 0.01 258.338)" : "oklch(21% 0.034 264.665)";
+    return theme() === "dark"
+      ? "oklch(87% 0.01 258.338)"
+      : "oklch(21% 0.034 264.665)";
   }
-  
+
   return getContrastColor(baseColor);
 };
 
 const generateRandomTheme = () => {
   const colorKeys = Object.keys(TAILWIND_COLORS);
-  const getRandomColor = () => TAILWIND_COLORS[colorKeys[Math.floor(Math.random() * colorKeys.length)]];
-  
+  const getRandomColor = () =>
+    TAILWIND_COLORS[colorKeys[Math.floor(Math.random() * colorKeys.length)]];
+
   const baseTheme = {
     name: `theme-${Date.now()}`,
-    "--color-base-100": theme() === "dark" ? "oklch(13% 0.028 261.692)" : "oklch(100% 0 0)",
-    "--color-base-200": theme() === "dark" ? "oklch(21% 0.034 264.665)" : "oklch(96% 0.003 264.542)",
-    "--color-base-300": theme() === "dark" ? "oklch(27% 0.033 256.848)" : "oklch(87% 0.01 258.338)",
-    "--color-base-content": theme() === "dark" ? "oklch(87% 0.01 258.338)" : "oklch(21% 0.034 264.665)",
+    "--color-base-100":
+      theme() === "dark" ? "oklch(13% 0.028 261.692)" : "oklch(100% 0 0)",
+    "--color-base-200":
+      theme() === "dark"
+        ? "oklch(21% 0.034 264.665)"
+        : "oklch(96% 0.003 264.542)",
+    "--color-base-300":
+      theme() === "dark"
+        ? "oklch(27% 0.033 256.848)"
+        : "oklch(87% 0.01 258.338)",
+    "--color-base-content":
+      theme() === "dark"
+        ? "oklch(87% 0.01 258.338)"
+        : "oklch(21% 0.034 264.665)",
     "--color-primary": getRandomColor(),
     "--color-secondary": getRandomColor(),
     "--color-accent": getRandomColor(),
@@ -120,21 +142,21 @@ const generateRandomTheme = () => {
     "--color-warning": getRandomColor(),
     "--color-error": getRandomColor(),
   };
-  
+
   // Calculate content colors automatically
   const themeWithContent = { ...baseTheme };
-  
+
   // For each color, calculate its content color
-  Object.keys(baseTheme).forEach(key => {
+  Object.keys(baseTheme).forEach((key) => {
     if (!key.includes("-content") && key !== "--color-base-content") {
       const contentKey = key + "-content";
       const baseColor = baseTheme[key];
-      if (baseColor && typeof baseColor === 'string') {
+      if (baseColor && typeof baseColor === "string") {
         themeWithContent[contentKey] = getSmartContentColor(key, baseColor);
       }
     }
   });
-  
+
   return themeWithContent;
 };
 
@@ -149,66 +171,84 @@ export default function Theming() {
     // Apply theme colors
     const themeData = currentTheme();
     Object.entries(themeData).forEach(([key, value]) => {
-      if (key.startsWith('--color-')) {
+      if (key.startsWith("--color-")) {
         document.documentElement.style.setProperty(key, value);
       }
     });
   };
-  
+
   const randomizeTheme = () => {
     const newTheme = generateRandomTheme();
     setCurrentTheme(newTheme);
-    
+
     // Update the theme in the custom themes list too
-    setCustomThemes(prev => prev.map(theme => 
-      theme.name === currentTheme().name ? newTheme : theme
-    ));
+    setCustomThemes((prev) =>
+      prev.map((theme) =>
+        theme.name === currentTheme().name ? newTheme : theme
+      )
+    );
   };
-  
+
   const createNewTheme = () => {
     const newTheme = generateRandomTheme();
-    setCustomThemes(prev => [newTheme, ...prev]);
+    setCustomThemes((prev) => [newTheme, ...prev]);
     setCurrentTheme(newTheme);
   };
-  
+
   const loadTheme = (theme: any) => {
     setCurrentTheme(theme);
   };
-  
+
   const removeTheme = (themeToRemove: any) => {
-    setCustomThemes(prev => prev.filter(t => t.name !== themeToRemove.name));
+    setCustomThemes((prev) =>
+      prev.filter((t) => t.name !== themeToRemove.name)
+    );
     if (currentTheme().name === themeToRemove.name) {
-      const remaining = customThemes().filter(t => t.name !== themeToRemove.name);
-      setCurrentTheme(remaining.length > 0 ? remaining[0] : generateRandomTheme());
+      const remaining = customThemes().filter(
+        (t) => t.name !== themeToRemove.name
+      );
+      setCurrentTheme(
+        remaining.length > 0 ? remaining[0] : generateRandomTheme()
+      );
     }
   };
-  
+
   const openColorPicker = (colorKey: string) => {
     setSelectedColorKey(colorKey);
     setShowColorPicker(true);
   };
-  
+
   const selectColor = (colorValue: string) => {
     const key = selectedColorKey();
     if (key) {
-      setCurrentTheme(prev => {
+      setCurrentTheme((prev) => {
         const newTheme = { ...prev, [key]: colorValue };
-        
+
         // If we're setting a main color, automatically update its content color
         if (!key.includes("-content")) {
           const contentKey = key + "-content";
           newTheme[contentKey] = getSmartContentColor(key, colorValue);
         }
-        
+
         return newTheme;
       });
-      
+
       // Also update the custom themes list
-      setCustomThemes(prev => prev.map(theme => 
-        theme.name === currentTheme().name 
-          ? { ...theme, [key]: colorValue, ...(key.includes("-content") ? {} : { [key + "-content"]: getSmartContentColor(key, colorValue) }) }
-          : theme
-      ));
+      setCustomThemes((prev) =>
+        prev.map((theme) =>
+          theme.name === currentTheme().name
+            ? {
+                ...theme,
+                [key]: colorValue,
+                ...(key.includes("-content")
+                  ? {}
+                  : {
+                      [key + "-content"]: getSmartContentColor(key, colorValue),
+                    }),
+              }
+            : theme
+        )
+      );
     }
     setShowColorPicker(false);
   };
@@ -232,17 +272,46 @@ export default function Theming() {
         <div class="mb-4 flex items-center justify-between gap-2">
           <h2 class="font-title ms-2 font-semibold">Themes</h2>
           <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-square btn-sm m-1">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+            <div
+              tabindex="0"
+              role="button"
+              class="btn btn-ghost btn-square btn-sm m-1"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                />
               </svg>
             </div>
-            <ul tabindex="0" class="dropdown-content menu bg-base-100 border-base-300 rounded-box z-1 w-48 border p-2 shadow-xl">
+            <ul
+              tabindex="0"
+              class="dropdown-content menu bg-base-100 border-base-300 rounded-box z-1 w-48 border p-2 shadow-xl"
+            >
               <li class="menu-title">Options</li>
               <li>
                 <button class="text-xs" onClick={() => setCustomThemes([])}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-error size-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="text-error size-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
                   </svg>
                   Remove my themes
                 </button>
@@ -253,10 +322,32 @@ export default function Theming() {
 
         <ul class="menu w-full min-w-40 p-0">
           <li>
-            <button class="btn group theme-generator-btn bg-auto px-2" onClick={createNewTheme}>
-              <svg class="size-5 origin-[40%_60%] [transition:rotate_.2s_ease] group-hover:-rotate-12" width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20.1005 8.1005L24.3431 12.3431M30 4V10V4ZM39.8995 8.1005L35.6569 12.3431L39.8995 8.1005ZM44 18H38H44ZM39.8995 27.8995L35.6569 23.6569L39.8995 27.8995ZM30 32V26V32ZM20.1005 27.8995L24.3431 23.6569L20.1005 27.8995ZM16 18H22H16Z" stroke="currentColor" stroke-width="4" stroke-linecap="butt" stroke-linejoin="bevel"></path>
-                <path d="M29.5856 18.4143L5.54395 42.4559" stroke="currentColor" stroke-width="4" stroke-linecap="butt" stroke-linejoin="bevel"></path>
+            <button
+              class="btn group theme-generator-btn bg-auto px-2"
+              onClick={createNewTheme}
+            >
+              <svg
+                class="size-5 origin-[40%_60%] [transition:rotate_.2s_ease] group-hover:-rotate-12"
+                width="18"
+                height="18"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20.1005 8.1005L24.3431 12.3431M30 4V10V4ZM39.8995 8.1005L35.6569 12.3431L39.8995 8.1005ZM44 18H38H44ZM39.8995 27.8995L35.6569 23.6569L39.8995 27.8995ZM30 32V26V32ZM20.1005 27.8995L24.3431 23.6569L20.1005 27.8995ZM16 18H22H16Z"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linecap="butt"
+                  stroke-linejoin="bevel"
+                ></path>
+                <path
+                  d="M29.5856 18.4143L5.54395 42.4559"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linecap="butt"
+                  stroke-linejoin="bevel"
+                ></path>
               </svg>
               <span class="font-normal">Add new theme</span>
             </button>
@@ -265,13 +356,17 @@ export default function Theming() {
           <For each={customThemes()}>
             {(themeItem) => (
               <li>
-                <div 
-                  class="flex items-center justify-between cursor-pointer hover:bg-base-200 rounded p-2" 
-                  classList={{ "bg-base-200": currentTheme().name === themeItem.name }}
+                <div
+                  class="flex items-center justify-between cursor-pointer hover:bg-base-200 rounded p-2"
+                  classList={{
+                    "bg-base-200": currentTheme().name === themeItem.name,
+                  }}
                   onClick={() => loadTheme(themeItem)}
                 >
-                  <span class="flex-1 text-left truncate">{themeItem.name}</span>
-                  <button 
+                  <span class="flex-1 text-left truncate">
+                    {themeItem.name}
+                  </span>
+                  <button
                     class="btn btn-ghost btn-xs text-error"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -302,28 +397,57 @@ export default function Theming() {
             onInput={(e) => {
               const newName = e.currentTarget.value;
               const oldName = currentTheme().name;
-              setCurrentTheme(prev => ({ ...prev, name: newName }));
-              setCustomThemes(prev => prev.map(theme => 
-                theme.name === oldName ? { ...theme, name: newName } : theme
-              ));
+              setCurrentTheme((prev) => ({ ...prev, name: newName }));
+              setCustomThemes((prev) =>
+                prev.map((theme) =>
+                  theme.name === oldName ? { ...theme, name: newName } : theme
+                )
+              );
             }}
             placeholder="mytheme"
           />
-          <svg class="justify-self-end opacity-40" width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 20.0001H20M4 20.0001V16.0001L12 8.00012M4 20.0001L8 20.0001L16 12.0001M12 8.00012L14.8686 5.13146L14.8704 5.12976C15.2652 4.73488 15.463 4.53709 15.691 4.46301C15.8919 4.39775 16.1082 4.39775 16.3091 4.46301C16.5369 4.53704 16.7345 4.7346 17.1288 5.12892L18.8686 6.86872C19.2646 7.26474 19.4627 7.46284 19.5369 7.69117C19.6022 7.89201 19.6021 8.10835 19.5369 8.3092C19.4628 8.53736 19.265 8.73516 18.8695 9.13061L18.8686 9.13146L16 12.0001M12 8.00012L16 12.0001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <svg
+            class="justify-self-end opacity-40"
+            width="16px"
+            height="16px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 20.0001H20M4 20.0001V16.0001L12 8.00012M4 20.0001L8 20.0001L16 12.0001M12 8.00012L14.8686 5.13146L14.8704 5.12976C15.2652 4.73488 15.463 4.53709 15.691 4.46301C15.8919 4.39775 16.1082 4.39775 16.3091 4.46301C16.5369 4.53704 16.7345 4.7346 17.1288 5.12892L18.8686 6.86872C19.2646 7.26474 19.4627 7.46284 19.5369 7.69117C19.6022 7.89201 19.6021 8.10835 19.5369 8.3092C19.4628 8.53736 19.265 8.73516 18.8695 9.13061L18.8686 9.13146L16 12.0001M12 8.00012L16 12.0001"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </label>
 
         {/* Action Buttons */}
         <div class="grid w-full grid-cols-2 gap-2">
           <button class="btn group" onClick={randomizeTheme}>
-            <svg class="shrink-0 group-active:scale-95" fill="currentColor" width="16" height="16" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              class="shrink-0 group-active:scale-95"
+              fill="currentColor"
+              width="16"
+              height="16"
+              viewBox="0 0 256 256"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path d="M192,28H64A36.04061,36.04061,0,0,0,28,64V192a36.04061,36.04061,0,0,0,36,36H192a36.04061,36.04061,0,0,0,36-36V64A36.04061,36.04061,0,0,0,192,28Zm12,164a12.01312,12.01312,0,0,1-12,12H64a12.01312,12.01312,0,0,1-12-12V64A12.01312,12.01312,0,0,1,64,52H192a12.01312,12.01312,0,0,1,12,12ZM104,88A16,16,0,1,1,88,72,16.01833,16.01833,0,0,1,104,88Zm80,0a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,184,88Zm-80,80a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,104,168Zm80,0a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,184,168Zm-40-40a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,144,128Z" />
             </svg>
             Random
           </button>
           <button class="btn btn-neutral">
-            <svg class="shrink-0" fill="currentColor" width="16px" height="16px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              class="shrink-0"
+              fill="currentColor"
+              width="16px"
+              height="16px"
+              viewBox="0 0 256 256"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path d="M54.79785,119.48535A34.95033,34.95033,0,0,1,49.05078,128a34.95033,34.95033,0,0,1,5.74707,8.51465C60,147.24414,60,159.8291,60,172c0,25.93652,1.84424,32,20,32a12,12,0,0,1,0,24c-19.14453,0-32.19775-6.90234-38.79785-20.51465C36,196.75586,36,184.1709,36,172c0-25.93652-1.84424-32-20-32a12,12,0,0,1,0-24c18.15576,0,20-6.06348,20-32,0-12.1709,0-24.75586,5.20215-35.48535C47.80225,34.90234,60.85547,28,80,28a12,12,0,0,1,0,24c-18.15576,0-20,6.06348-20,32C60,96.1709,60,108.75586,54.79785,119.48535ZM240,116c-18.15576,0-20-6.06348-20-32,0-12.1709,0-24.75586-5.20215-35.48535C208.19775,34.90234,195.14453,28,176,28a12,12,0,0,0,0,24c18.15576,0,20,6.06348,20,32,0,12.1709,0,24.75586,5.20215,35.48535A34.95033,34.95033,0,0,0,206.94922,128a34.95033,34.95033,0,0,0-5.74707,8.51465C196,147.24414,196,159.8291,196,172c0,25.93652-1.84424,32-20,32a12,12,0,0,0,0,24c19.14453,0,32.19775-6.90234,38.79785-20.51465C220,196.75586,220,184.1709,220,172c0-25.93652,1.84424-32,20-32a12,12,0,0,0,0-24Z" />
             </svg>
             CSS
@@ -333,11 +457,38 @@ export default function Theming() {
         {/* Change Colors Section */}
         <h3 class="divider divider-start text-xs">
           <span class="flex gap-1.5">
-            <svg class="opacity-40" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M37 37C39.2091 37 41 35.2091 41 33C41 31.5272 39.6667 29.5272 37 27C34.3333 29.5272 33 31.5272 33 33C33 35.2091 34.7909 37 37 37Z" fill="currentColor" />
-              <path d="M20.8535 5.50439L24.389 9.03993" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
-              <path d="M23.6818 8.33281L8.12549 23.8892L19.4392 35.2029L34.9955 19.6465L23.6818 8.33281Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round" />
-              <path d="M12 20.0732L28.961 25.6496" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+            <svg
+              class="opacity-40"
+              width="16"
+              height="16"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M37 37C39.2091 37 41 35.2091 41 33C41 31.5272 39.6667 29.5272 37 27C34.3333 29.5272 33 31.5272 33 33C33 35.2091 34.7909 37 37 37Z"
+                fill="currentColor"
+              />
+              <path
+                d="M20.8535 5.50439L24.389 9.03993"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+              <path
+                d="M23.6818 8.33281L8.12549 23.8892L19.4392 35.2029L34.9955 19.6465L23.6818 8.33281Z"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 20.0732L28.961 25.6496"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
             </svg>
             Change Colors
           </span>
@@ -345,39 +496,61 @@ export default function Theming() {
         <div class="grid w-fit grid-cols-4 gap-4">
           <For each={COLOR_GROUPS}>
             {(group) => (
-              <div class="flex flex-col gap-1" classList={{ "col-span-4": group.name === "base", "col-span-2": group.name !== "base" }}>
+              <div
+                class="flex flex-col gap-1"
+                classList={{
+                  "col-span-4": group.name === "base",
+                  "col-span-2": group.name !== "base",
+                }}
+              >
                 <div class="flex gap-4">
                   <For each={group.colors}>
                     {(colorKey) => {
                       const isContentColor = colorKey.endsWith("-content");
-                      
+
                       // FUNCIONES REACTIVAS - se recalculan cuando currentTheme() cambia
                       const backgroundColor = () => {
                         if (group.name === "base") {
                           if (isContentColor) {
                             // base-content box: fondo base-100
-                            return currentTheme()["--color-base-100"] || "oklch(100% 0 0)";
+                            return (
+                              currentTheme()["--color-base-100"] ||
+                              "oklch(100% 0 0)"
+                            );
                           } else {
                             // base-100, base-200, base-300: fondo propio
-                            return currentTheme()[colorKey] || "oklch(50% 0.1 180)";
+                            return (
+                              currentTheme()[colorKey] || "oklch(50% 0.1 180)"
+                            );
                           }
                         } else {
                           // Para otros colores (primary, secondary, etc.)
-                          const mainColorKey = isContentColor ? colorKey.replace("-content", "") : colorKey;
-                          return currentTheme()[mainColorKey] || "oklch(50% 0.1 180)";
+                          const mainColorKey = isContentColor
+                            ? colorKey.replace("-content", "")
+                            : colorKey;
+                          return (
+                            currentTheme()[mainColorKey] || "oklch(50% 0.1 180)"
+                          );
                         }
                       };
-                      
+
                       const textColor = () => {
                         if (group.name === "base") {
-                          return currentTheme()["--color-base-content"] || "oklch(0% 0 0)";
+                          return (
+                            currentTheme()["--color-base-content"] ||
+                            "oklch(0% 0 0)"
+                          );
                         } else {
-                          const mainColorKey = isContentColor ? colorKey.replace("-content", "") : colorKey;
+                          const mainColorKey = isContentColor
+                            ? colorKey.replace("-content", "")
+                            : colorKey;
                           const contentColorKey = mainColorKey + "-content";
-                          return currentTheme()[contentColorKey] || "oklch(100% 0 0)";
+                          return (
+                            currentTheme()[contentColorKey] || "oklch(100% 0 0)"
+                          );
                         }
                       };
-                      
+
                       const getLabel = (key: string) => {
                         if (key.endsWith("-content")) {
                           return "A";
@@ -388,18 +561,21 @@ export default function Theming() {
                         return "";
                       };
                       const label = getLabel(colorKey);
-                      
+
                       return (
                         <button
                           onClick={() => openColorPicker(colorKey)}
                           class="w-8 h-8 rounded border border-gray-300 hover:border-gray-400 transition-colors relative group flex items-center justify-center"
-                          style={{ "background": backgroundColor() }}
+                          style={{ background: backgroundColor() }}
                           title={colorKey}
                         >
-                          <div class="absolute inset-0 opacity-0 group-hover:opacity-10 rounded transition-opacity" style="background-color: rgba(0,0,0,0.1)" />
-                          <span 
+                          <div
+                            class="absolute inset-0 opacity-0 group-hover:opacity-10 rounded transition-opacity"
+                            style="background-color: rgba(0,0,0,0.1)"
+                          />
+                          <span
                             class="text-xs font-semibold relative z-10"
-                            style={{ "color": textColor() }}
+                            style={{ color: textColor() }}
                           >
                             {label}
                           </span>
@@ -414,38 +590,206 @@ export default function Theming() {
           </For>
         </div>
 
-        {/* Placeholder Sections */}
-        <h3 class="divider divider-start text-xs">📐 Radius</h3>
-        <div class="text-sm opacity-60 italic">Coming soon...</div>
+        {/* Radius Section - falta implementar */}
+        <h3 class="divider divider-start text-xs">
+          <span class="flex gap-1.5">
+            <svg
+              class="opacity-40"
+              width="16"
+              height="16"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M24 42V27M42 24H27"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle
+                cx="24"
+                cy="24"
+                r="3"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M42 6H24C14.0589 6 6 14.0589 6 24V42"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Radius
+          </span>
+        </h3>
+        <div class="text-sm opacity-60 italic">
+          Need to implement: box, field, selector radius controls
+        </div>
 
-        <h3 class="divider divider-start text-xs">✨ Effects</h3>
-        <div class="text-sm opacity-60 italic">Coming soon...</div>
+        {/* Effects Section - falta implementar */}
+        <h3 class="divider divider-start text-xs">
+          <span class="flex gap-1.5">
+            <svg
+              class="opacity-40"
+              width="16"
+              height="16"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M24.9507 42.3603L30.4164 30.3695L43.1046 26.6501L33.3383 17.7699L33.7059 4.60732L22.2044 11.1099L9.74329 6.69439L12.4013 19.5934L4.33228 30.027L17.4766 31.4965L24.9507 42.3603Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M36.1777 36.0537L44.1777 44.0179"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Effects
+          </span>
+        </h3>
+        <div class="text-sm opacity-60 italic">
+          Need to implement: depth and noise toggles
+        </div>
 
-        <h3 class="divider divider-start text-xs">📏 Sizes</h3>
-        <div class="text-sm opacity-60 italic">Coming soon...</div>
+        {/* Sizes Section - falta implementar */}
+        <h3 class="divider divider-start text-xs">
+          <span class="flex gap-1.5">
+            <svg
+              class="opacity-40"
+              width="16"
+              height="16"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M44 14L34 4L30.25 7.75L26.5 11.5L19 19L11.5 26.5L7.75 30.25L4 34L14 44L44 14Z"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M30.25 7.75L7.75 30.25"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9 29L13 33"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M14 24L20 30"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M19 19L23 23"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M24 14L30 20"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M29 9L33 13"
+                stroke="currentColor"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Sizes
+          </span>
+        </h3>
+        <div class="text-sm opacity-60 italic">
+          Need to implement: field and selector size controls
+        </div>
 
-        <h3 class="divider divider-start text-xs">⚙️ Options</h3>
-        <div class="text-sm opacity-60 italic">Coming soon...</div>
+        <h3 class="divider divider-start text-xs">
+          <span class="flex gap-1.5">
+            <svg
+              class="opacity-40"
+              width="16"
+              height="16"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18.2838 43.1713C14.9327 42.1736 11.9498 40.3213 9.58787 37.867C10.469 36.8227 11 35.4734 11 34.0001C11 30.6864 8.31371 28.0001 5 28.0001C4.79955 28.0001 4.60139 28.01 4.40599 28.0292C4.13979 26.7277 4 25.3803 4 24.0001C4 21.9095 4.32077 19.8938 4.91579 17.9995C4.94381 17.9999 4.97188 18.0001 5 18.0001C8.31371 18.0001 11 15.3138 11 12.0001C11 11.0488 10.7786 10.1493 10.3846 9.35011C12.6975 7.1995 15.5205 5.59002 18.6521 4.72314C19.6444 6.66819 21.6667 8.00013 24 8.00013C26.3333 8.00013 28.3556 6.66819 29.3479 4.72314C32.4795 5.59002 35.3025 7.1995 37.6154 9.35011C37.2214 10.1493 37 11.0488 37 12.0001C37 15.3138 39.6863 18.0001 43 18.0001C43.0281 18.0001 43.0562 17.9999 43.0842 17.9995C43.6792 19.8938 44 21.9095 44 24.0001C44 25.3803 43.8602 26.7277 43.594 28.0292C43.3986 28.01 43.2005 28.0001 43 28.0001C39.6863 28.0001 37 30.6864 37 34.0001C37 35.4734 37.531 36.8227 38.4121 37.867C36.0502 40.3213 33.0673 42.1736 29.7162 43.1713C28.9428 40.752 26.676 39.0001 24 39.0001C21.324 39.0001 19.0572 40.752 18.2838 43.1713Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="4"
+              />
+              <path
+                d="M24 31C27.866 31 31 27.866 31 24C31 20.134 27.866 17 24 17C20.134 17 17 20.134 17 24C17 27.866 20.134 31 24 31Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="4"
+              />
+            </svg>
+            Options
+          </span>
+        </h3>
+        <div class="text-sm opacity-60 italic">
+          Need to implement: default, prefersdark, color-scheme options
+        </div>
       </div>
 
       {/* Preview - Right Column */}
       <div class="overflow-x-hidden">
         <div class="border-base-300 overflow-hidden border-s border-t md:rounded-ss-xl">
-          <div style={`${Object.entries(currentTheme()).filter(([key]) => key.startsWith('--color-')).map(([key, value]) => `${key}:${value}`).join(';')}`}>
-            <div classList={{ "max-md:hidden": dockActiveItem() !== "preview" }}>
-              <div class="p-8 space-y-4">
-                <h3 class="text-lg font-semibold">Preview</h3>
-                <div class="grid gap-4">
-                  <button class="btn btn-primary">Primary Button</button>
-                  <button class="btn btn-secondary">Secondary Button</button>
-                  <button class="btn btn-accent">Accent Button</button>
-                  <div class="alert alert-info">
-                    <span>Info alert with current theme colors</span>
-                  </div>
-                  <div class="card bg-base-200 p-4">
-                    <h4 class="font-semibold">Theme Preview Card</h4>
-                    <p class="text-base-content/70">This shows how your theme looks in practice.</p>
-                  </div>
+          <div
+            style={`${Object.entries(currentTheme())
+              .filter(([key]) => key.startsWith("--color-"))
+              .map(([key, value]) => `${key}:${value}`)
+              .join(";")}`}
+          >
+            <div class="p-8 space-y-4">
+              <h3 class="text-lg font-semibold">Preview</h3>
+              <div class="grid gap-4">
+                <button class="btn btn-primary">Primary Button</button>
+                <button class="btn btn-secondary">Secondary Button</button>
+                <button class="btn btn-accent">Accent Button</button>
+                <div class="alert alert-info">
+                  <span>Info alert with current theme colors</span>
+                </div>
+                <div class="card bg-base-200 p-4">
+                  <h4 class="font-semibold">Theme Preview Card</h4>
+                  <p class="text-base-content/70">
+                    This shows how your theme looks in practice.
+                  </p>
                 </div>
               </div>
             </div>
@@ -453,13 +797,23 @@ export default function Theming() {
         </div>
       </div>
 
-      {/* Color Picker Modal */}
       <Show when={showColorPicker()}>
-        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowColorPicker(false)}>
-          <div class="bg-base-100 border rounded-lg p-6 max-w-lg w-full m-4" onClick={(e) => e.stopPropagation()}>
+        <div
+          class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setShowColorPicker(false)}
+        >
+          <div
+            class="bg-base-100 border rounded-lg p-6 max-w-lg w-full m-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-medium">Select Color</h3>
-              <button onClick={() => setShowColorPicker(false)} class="btn btn-ghost btn-sm">✕</button>
+              <button
+                onClick={() => setShowColorPicker(false)}
+                class="btn btn-ghost btn-sm"
+              >
+                ✕
+              </button>
             </div>
             <div class="grid grid-cols-8 gap-2 max-h-96 overflow-y-auto">
               <For each={Object.entries(TAILWIND_COLORS)}>
@@ -467,10 +821,13 @@ export default function Theming() {
                   <button
                     onClick={() => selectColor(colorValue)}
                     class="w-8 h-8 rounded border border-gray-300 hover:border-gray-500 transition-colors relative group"
-                    style={{ "background": colorValue }}
+                    style={{ background: colorValue }}
                     title={`${colorName}: ${colorValue}`}
                   >
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 rounded transition-opacity" style="background-color: rgba(0,0,0,0.1)" />
+                    <div
+                      class="absolute inset-0 opacity-0 group-hover:opacity-10 rounded transition-opacity"
+                      style="background-color: rgba(0,0,0,0.1)"
+                    />
                   </button>
                 )}
               </For>
@@ -481,89 +838,3 @@ export default function Theming() {
     </div>
   );
 }
-// import { createSignal, onMount, createEffect } from "solid-js";
-// import ShowcaseLayout from "../components/ShowcaseLayout";
-// import { theme, setTheme } from "../lib/theme";
-
-// export default function Theming() {
-//   const [hue, setHue] = createSignal(210);
-//   const [saturation, setSaturation] = createSignal(60);
-
-//   onMount(() => {
-//     const storedHue = localStorage.getItem("theme-hue");
-//     const storedSaturation = localStorage.getItem("theme-saturation");
-
-//     if (storedHue) setHue(+storedHue);
-//     if (storedSaturation) setSaturation(+storedSaturation);
-//   });
-
-//   createEffect(() => {
-//     const h = hue();
-//     const s = saturation();
-
-//     document.documentElement.style.setProperty("--hue", h.toString());
-//     document.documentElement.style.setProperty("--saturation", `${s}%`);
-
-//     localStorage.setItem("theme-hue", h.toString());
-//     localStorage.setItem("theme-saturation", s.toString());
-//   });
-
-//   return (
-//     <ShowcaseLayout>
-//       <div class="grid gap-6 md:grid-cols-3 mt-4">
-//         <div>
-//           <label class="block mb-1 text-sm font-medium text-[hsl(var(--color-fg-body))]">
-//             Hue
-//           </label>
-//           <div class="flex items-center gap-2">
-//             <input
-//               type="range"
-//               min="0"
-//               max="360"
-//               value={hue()}
-//               onInput={(e) => setHue(+e.currentTarget.value)}
-//               class="w-full"
-//             />
-//             <div class="text-sm mt-1 text-[hsl(var(--color-fg-secondary))]">
-//               {hue()}
-//             </div>
-//           </div>
-//         </div>
-
-//         <div>
-//           <label class="block mb-1 text-sm font-medium text-[hsl(var(--color-fg-body))]">
-//             Saturation
-//           </label>
-//           <div class="flex items-center gap-2">
-//             <input
-//               type="range"
-//               min="0"
-//               max="100"
-//               value={saturation()}
-//               onInput={(e) => setSaturation(+e.currentTarget.value)}
-//               class="w-full"
-//             />
-//             <div class="text-sm mt-1 text-[hsl(var(--color-fg-secondary))]">
-//               {saturation()}%
-//             </div>
-//           </div>
-//         </div>
-
-//         <div>
-//           <button
-//             onClick={() => {
-//               const next = theme() === "light" ? "dark" : "light";
-//               setTheme(next);
-//               document.documentElement.dataset.theme = next;
-//               localStorage.setItem("theme", next);
-//             }}
-//             class="inline-flex items-center px-4 py-2 rounded border font-medium text-sm bg-[hsl(var(--color-bg-secondary))] text-[hsl(var(--color-fg-body))]"
-//           >
-//             {theme() === "light" ? "Light Mode" : "Dark Mode"}
-//           </button>
-//         </div>
-//       </div>
-//     </ShowcaseLayout>
-//   );
-// }
-
