@@ -119,16 +119,9 @@ const generateRandomTheme = () => {
 
   const baseTheme = {
     name: `theme-${Date.now()}`,
-    "--color-base-100":
-      theme() === "dark" ? "oklch(13% 0.028 261.692)" : "oklch(100% 0 0)",
-    "--color-base-200":
-      theme() === "dark"
-        ? "oklch(21% 0.034 264.665)"
-        : "oklch(96% 0.003 264.542)",
-    "--color-base-300":
-      theme() === "dark"
-        ? "oklch(27% 0.033 256.848)"
-        : "oklch(87% 0.01 258.338)",
+    "--color-base-100": getRandomColor(),
+    "--color-base-200": getRandomColor(),
+    "--color-base-300": getRandomColor(),
     "--color-base-content":
       theme() === "dark"
         ? "oklch(87% 0.01 258.338)"
@@ -166,7 +159,6 @@ export default function Theming() {
   const [showColorPicker, setShowColorPicker] = createSignal(false);
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
   const [dockActiveItem] = createSignal("editor");
-
 
   const randomizeTheme = () => {
     const newTheme = generateRandomTheme();
@@ -763,10 +755,9 @@ export default function Theming() {
           >
             <div class="p-6 space-y-6">
               <h3 class="text-lg font-semibold mb-4">Component Preview</h3>
-              
+
               {/* Grid of realistic component examples */}
               <div class="grid gap-6 lg:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
-                
                 {/* Registration Form */}
                 <div class="card bg-base-100 border border-base-300 p-6">
                   <h4 class="font-semibold mb-4">Create Account</h4>
@@ -775,10 +766,10 @@ export default function Theming() {
                       <label class="label">
                         <span class="label-text">Email</span>
                       </label>
-                      <input 
-                        type="email" 
-                        placeholder="Enter your email" 
-                        class="input input-bordered w-full" 
+                      <input
+                        type="email"
+                        placeholder="Enter your email"
+                        class="input input-bordered w-full"
                         value="user@example.com"
                       />
                     </div>
@@ -786,16 +777,20 @@ export default function Theming() {
                       <label class="label">
                         <span class="label-text">Password</span>
                       </label>
-                      <input 
-                        type="password" 
-                        placeholder="Enter password" 
-                        class="input input-bordered w-full" 
+                      <input
+                        type="password"
+                        placeholder="Enter password"
+                        class="input input-bordered w-full"
                         value="password123"
                       />
                     </div>
                     <div class="form-control">
                       <label class="cursor-pointer label justify-start gap-3">
-                        <input type="checkbox" class="checkbox checkbox-primary" checked />
+                        <input
+                          type="checkbox"
+                          class="checkbox checkbox-primary"
+                          checked
+                        />
                         <span class="label-text">I agree to the terms</span>
                       </label>
                     </div>
@@ -816,7 +811,10 @@ export default function Theming() {
                       <div class="stat-desc">21% more than last month</div>
                     </div>
                     <div class="w-full bg-base-200 rounded-full h-2">
-                      <div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+                      <div
+                        class="bg-primary h-2 rounded-full"
+                        style="width: 75%"
+                      ></div>
                     </div>
                     <div class="flex justify-between text-sm">
                       <span>Progress</span>
@@ -857,20 +855,50 @@ export default function Theming() {
                 <div class="card bg-base-100 border border-base-300 p-6">
                   <div class="space-y-4">
                     <div class="alert alert-info">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        class="stroke-current shrink-0 w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
                       </svg>
                       <span>System update available</span>
                     </div>
                     <div class="alert alert-success">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="stroke-current shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                       <span>Backup completed successfully</span>
                     </div>
                     <div class="alert alert-warning">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="stroke-current shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"
+                        />
                       </svg>
                       <span>Storage space running low</span>
                     </div>
@@ -902,14 +930,29 @@ export default function Theming() {
                               John Doe
                             </div>
                           </td>
-                          <td><div class="badge badge-success">Completed</div></td>
+                          <td>
+                            <div class="badge badge-success">Completed</div>
+                          </td>
                           <td class="font-semibold">$129.99</td>
                           <td>
                             <div class="dropdown dropdown-end">
-                              <div tabindex="0" role="button" class="btn btn-ghost btn-xs">⋮</div>
-                              <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                                <li><a>View Details</a></li>
-                                <li><a>Refund</a></li>
+                              <div
+                                tabindex="0"
+                                role="button"
+                                class="btn btn-ghost btn-xs"
+                              >
+                                ⋮
+                              </div>
+                              <ul
+                                tabindex="0"
+                                class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                              >
+                                <li>
+                                  <a>View Details</a>
+                                </li>
+                                <li>
+                                  <a>Refund</a>
+                                </li>
                               </ul>
                             </div>
                           </td>
@@ -924,14 +967,29 @@ export default function Theming() {
                               Jane Smith
                             </div>
                           </td>
-                          <td><div class="badge badge-warning">Pending</div></td>
+                          <td>
+                            <div class="badge badge-warning">Pending</div>
+                          </td>
                           <td class="font-semibold">$89.50</td>
                           <td>
                             <div class="dropdown dropdown-end">
-                              <div tabindex="0" role="button" class="btn btn-ghost btn-xs">⋮</div>
-                              <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                                <li><a>View Details</a></li>
-                                <li><a>Cancel</a></li>
+                              <div
+                                tabindex="0"
+                                role="button"
+                                class="btn btn-ghost btn-xs"
+                              >
+                                ⋮
+                              </div>
+                              <ul
+                                tabindex="0"
+                                class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                              >
+                                <li>
+                                  <a>View Details</a>
+                                </li>
+                                <li>
+                                  <a>Cancel</a>
+                                </li>
                               </ul>
                             </div>
                           </td>
@@ -957,7 +1015,6 @@ export default function Theming() {
                     <button class="btn btn-outline">Outline</button>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
