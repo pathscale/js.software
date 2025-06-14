@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onMount, For, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import { theme } from "../lib/theme";
 
 // Theme data structures adapted from daisyui
@@ -167,15 +167,6 @@ export default function Theming() {
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
   const [dockActiveItem] = createSignal("editor");
 
-  const applyThemeVars = () => {
-    // Apply theme colors
-    const themeData = currentTheme();
-    Object.entries(themeData).forEach(([key, value]) => {
-      if (key.startsWith("--color-")) {
-        document.documentElement.style.setProperty(key, value);
-      }
-    });
-  };
 
   const randomizeTheme = () => {
     const newTheme = generateRandomTheme();
@@ -253,14 +244,8 @@ export default function Theming() {
     setShowColorPicker(false);
   };
 
-  createEffect(() => {
-    // Apply theme when it changes
-    applyThemeVars();
-  });
-
-  onMount(() => {
-    applyThemeVars();
-  });
+  // Remove global theme application effects
+  // The preview section will handle its own theme variables
 
   return (
     <div class="relative grid md:grid-cols-[14rem_17rem_1fr]">
@@ -776,21 +761,203 @@ export default function Theming() {
               .map(([key, value]) => `${key}:${value}`)
               .join(";")}`}
           >
-            <div class="p-8 space-y-4">
-              <h3 class="text-lg font-semibold">Preview</h3>
-              <div class="grid gap-4">
-                <button class="btn btn-primary">Primary Button</button>
-                <button class="btn btn-secondary">Secondary Button</button>
-                <button class="btn btn-accent">Accent Button</button>
-                <div class="alert alert-info">
-                  <span>Info alert with current theme colors</span>
+            <div class="p-6 space-y-6">
+              <h3 class="text-lg font-semibold mb-4">Component Preview</h3>
+              
+              {/* Grid of realistic component examples */}
+              <div class="grid gap-6 lg:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
+                
+                {/* Registration Form */}
+                <div class="card bg-base-100 border border-base-300 p-6">
+                  <h4 class="font-semibold mb-4">Create Account</h4>
+                  <div class="space-y-4">
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Email</span>
+                      </label>
+                      <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        class="input input-bordered w-full" 
+                        value="user@example.com"
+                      />
+                    </div>
+                    <div class="form-control">
+                      <label class="label">
+                        <span class="label-text">Password</span>
+                      </label>
+                      <input 
+                        type="password" 
+                        placeholder="Enter password" 
+                        class="input input-bordered w-full" 
+                        value="password123"
+                      />
+                    </div>
+                    <div class="form-control">
+                      <label class="cursor-pointer label justify-start gap-3">
+                        <input type="checkbox" class="checkbox checkbox-primary" checked />
+                        <span class="label-text">I agree to the terms</span>
+                      </label>
+                    </div>
+                    <div class="flex gap-2">
+                      <button class="btn btn-primary flex-1">Sign Up</button>
+                      <button class="btn btn-ghost">Cancel</button>
+                    </div>
+                  </div>
                 </div>
-                <div class="card bg-base-200 p-4">
-                  <h4 class="font-semibold">Theme Preview Card</h4>
-                  <p class="text-base-content/70">
-                    This shows how your theme looks in practice.
-                  </p>
+
+                {/* Statistics Card */}
+                <div class="card bg-base-100 border border-base-300 p-6">
+                  <h4 class="font-semibold mb-4">Analytics</h4>
+                  <div class="space-y-4">
+                    <div class="stat">
+                      <div class="stat-title">Total Users</div>
+                      <div class="stat-value text-primary">25,678</div>
+                      <div class="stat-desc">21% more than last month</div>
+                    </div>
+                    <div class="w-full bg-base-200 rounded-full h-2">
+                      <div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span>Progress</span>
+                      <span class="text-primary font-medium">75%</span>
+                    </div>
+                  </div>
                 </div>
+
+                {/* Navigation & Tabs */}
+                <div class="card bg-base-100 border border-base-300 p-6">
+                  <div class="tabs tabs-boxed mb-4">
+                    <a class="tab tab-active">Overview</a>
+                    <a class="tab">Analytics</a>
+                    <a class="tab">Reports</a>
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-base-200 rounded-lg">
+                      <div class="flex items-center gap-3">
+                        <div class="avatar">
+                          <div class="w-8 h-8 rounded-full bg-primary"></div>
+                        </div>
+                        <span>Dashboard</span>
+                      </div>
+                      <div class="badge badge-primary">New</div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 hover:bg-base-200 rounded-lg">
+                      <div class="flex items-center gap-3">
+                        <div class="avatar">
+                          <div class="w-8 h-8 rounded-full bg-secondary"></div>
+                        </div>
+                        <span>Settings</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Alert & Status */}
+                <div class="card bg-base-100 border border-base-300 p-6">
+                  <div class="space-y-4">
+                    <div class="alert alert-info">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span>System update available</span>
+                    </div>
+                    <div class="alert alert-success">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Backup completed successfully</span>
+                    </div>
+                    <div class="alert alert-warning">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                      </svg>
+                      <span>Storage space running low</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Data Table */}
+                <div class="card bg-base-100 border border-base-300 p-6 col-span-full">
+                  <h4 class="font-semibold mb-4">Recent Orders</h4>
+                  <div class="overflow-x-auto">
+                    <table class="table table-zebra">
+                      <thead>
+                        <tr>
+                          <th>Order ID</th>
+                          <th>Customer</th>
+                          <th>Status</th>
+                          <th>Amount</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="font-mono">#12345</td>
+                          <td>
+                            <div class="flex items-center gap-3">
+                              <div class="avatar">
+                                <div class="w-8 h-8 rounded-full bg-primary"></div>
+                              </div>
+                              John Doe
+                            </div>
+                          </td>
+                          <td><div class="badge badge-success">Completed</div></td>
+                          <td class="font-semibold">$129.99</td>
+                          <td>
+                            <div class="dropdown dropdown-end">
+                              <div tabindex="0" role="button" class="btn btn-ghost btn-xs">⋮</div>
+                              <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                <li><a>View Details</a></li>
+                                <li><a>Refund</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="font-mono">#12346</td>
+                          <td>
+                            <div class="flex items-center gap-3">
+                              <div class="avatar">
+                                <div class="w-8 h-8 rounded-full bg-secondary"></div>
+                              </div>
+                              Jane Smith
+                            </div>
+                          </td>
+                          <td><div class="badge badge-warning">Pending</div></td>
+                          <td class="font-semibold">$89.50</td>
+                          <td>
+                            <div class="dropdown dropdown-end">
+                              <div tabindex="0" role="button" class="btn btn-ghost btn-xs">⋮</div>
+                              <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                <li><a>View Details</a></li>
+                                <li><a>Cancel</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Button Showcase */}
+                <div class="card bg-base-100 border border-base-300 p-6 col-span-full">
+                  <h4 class="font-semibold mb-4">Button Variations</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn btn-secondary">Secondary</button>
+                    <button class="btn btn-accent">Accent</button>
+                    <button class="btn btn-info">Info</button>
+                    <button class="btn btn-success">Success</button>
+                    <button class="btn btn-warning">Warning</button>
+                    <button class="btn btn-error">Error</button>
+                    <button class="btn btn-ghost">Ghost</button>
+                    <button class="btn btn-link">Link</button>
+                    <button class="btn btn-outline">Outline</button>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
