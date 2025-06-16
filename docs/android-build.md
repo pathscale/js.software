@@ -40,7 +40,7 @@ keytool -genkeypair \
 base64 -i "$KEYSTORE_NAME" | tr -d '\n' > keystore_base64.txt
 
 # Verify
-base64 -d keystore_base64.txt > test_keystore.jks
+base64 -d -i 'keystore_base64.txt' -o 'test_keystore.jks'
 keytool -list -keystore test_keystore.jks -storepass "$KEYSTORE_PASSWORD"
 rm test_keystore.jks
 
