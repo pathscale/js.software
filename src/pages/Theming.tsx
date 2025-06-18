@@ -1,4 +1,5 @@
-import { createSignal, For, Show } from "solid-js";
+import { createSignal, For } from "solid-js";
+import { Button, Input, Modal, Flex, Dropdown, Grid, Icon } from "@pathscale/ui";
 import Preview from "../components/Preview";
 import { randomizeThemeColors } from "../lib/themeGeneratorRandomizer.js";
 
@@ -249,7 +250,6 @@ const TAILWIND_COLORS = {
   black: "oklch(0% 0 0)",
 };
 
-// Exact copy of DaisyUI's color pairs
 const colorPairs = [
   ["--color-base-100", "--color-base-content"],
   ["--color-base-200", "--color-base-content"],
@@ -288,7 +288,6 @@ const COLOR_GROUPS = [
 ];
 
 export default function Theming() {
-  // Using DaisyUI's exact randomizeThemeColors function
   const generateRandomTheme = () =>
     randomizeThemeColors(TAILWIND_COLORS, colorPairs);
 
@@ -302,7 +301,6 @@ export default function Theming() {
     const newTheme = generateRandomTheme();
     setCurrentTheme(newTheme);
 
-    // Update the theme in the custom themes list too
     setCustomThemes((prev) =>
       prev.map((theme) =>
         theme.name === currentTheme().name ? newTheme : theme
@@ -345,10 +343,8 @@ export default function Theming() {
       setCurrentTheme((prev) => {
         const newTheme = { ...prev, [key]: colorValue };
 
-        // If we're setting a main color, automatically update its content color
         if (!key.includes("-content")) {
           const contentKey = key + "-content";
-          // Use DaisyUI's exact contrast generation
           const {
             generateContrastColor,
           } = require("../lib/themeGeneratorRandomizer.js");
@@ -358,7 +354,6 @@ export default function Theming() {
         return newTheme;
       });
 
-      // Also update the custom themes list
       setCustomThemes((prev) =>
         prev.map((theme) =>
           theme.name === currentTheme().name
@@ -383,93 +378,37 @@ export default function Theming() {
 
   return (
     <div class="relative grid md:grid-cols-[14rem_17rem_1fr]">
-      {/* Themes List - Left Column */}
       <div
         class="border-base-200 bg-base-100 w-full shrink-0 overflow-x-hidden border-e border-dashed p-4 pb-20 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:overflow-y-scroll"
         classList={{ "max-md:hidden": dockActiveItem() !== "themes" }}
       >
         <div class="mb-4 flex items-center justify-between gap-2">
           <h2 class="font-title ms-2 font-semibold">Themes</h2>
-          <div class="dropdown dropdown-end">
-            <div
-              tabindex="0"
-              role="button"
-              class="btn btn-ghost btn-square btn-sm m-1"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-5"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                />
-              </svg>
-            </div>
-            <ul
-              tabindex="0"
-              class="dropdown-content menu bg-base-100 border-base-300 rounded-box z-1 w-48 border p-2 shadow-xl"
-            >
-              <li class="menu-title">Options</li>
-              <li>
-                <button class="text-xs" onClick={() => setCustomThemes([])}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="text-error size-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                    />
-                  </svg>
-                  Remove my themes
-                </button>
-              </li>
-            </ul>
-          </div>
+          <Dropdown end>
+              <Dropdown.Toggle>
+                <Icon name="icon-[mdi-light--dots-horizontal]" width={20} height={20} />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item>Options</Dropdown.Item>
+                <Dropdown.Item>
+                  <Button class="text-xs" onClick={() => setCustomThemes([])}>
+                    <Icon name="icon-[mdi-light--delete]" width={16} height={16} class="text-error" />
+                    Remove my themes
+                  </Button>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+          </Dropdown>
         </div>
 
         <ul class="menu w-full min-w-40 p-0">
           <li>
-            <button
-              class="btn group theme-generator-btn bg-auto px-2"
+            <Button
               onClick={createNewTheme}
+              class="theme-generator-btn bg-auto px-2"
             >
-              <svg
-                class="size-5 origin-[40%_60%] [transition:rotate_.2s_ease] group-hover:-rotate-12"
-                width="18"
-                height="18"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20.1005 8.1005L24.3431 12.3431M30 4V10V4ZM39.8995 8.1005L35.6569 12.3431L39.8995 8.1005ZM44 18H38H44ZM39.8995 27.8995L35.6569 23.6569L39.8995 27.8995ZM30 32V26V32ZM20.1005 27.8995L24.3431 23.6569L20.1005 27.8995ZM16 18H22H16Z"
-                  stroke="currentColor"
-                  stroke-width="4"
-                  stroke-linecap="butt"
-                  stroke-linejoin="bevel"
-                ></path>
-                <path
-                  d="M29.5856 18.4143L5.54395 42.4559"
-                  stroke="currentColor"
-                  stroke-width="4"
-                  stroke-linecap="butt"
-                  stroke-linejoin="bevel"
-                ></path>
-              </svg>
+              <Icon name="icon-[mdi-light--palette]" width={18} height={18} class="group-hover:-rotate-12 transition-transform" />
               <span class="font-normal">Add new theme</span>
-            </button>
+            </Button>
           </li>
           <li class="menu-title mt-6">My themes</li>
           <For each={customThemes()}>
@@ -485,15 +424,17 @@ export default function Theming() {
                   <span class="flex-1 text-left truncate">
                     {themeItem.name}
                   </span>
-                  <button
-                    class="btn btn-ghost btn-xs text-error"
+                  <Button
+                    variant="ghost"
+                    size="xs"
+                    color="error"
                     onClick={(e) => {
                       e.stopPropagation();
                       removeTheme(themeItem);
                     }}
                   >
                     ✕
-                  </button>
+                  </Button>
                 </div>
               </li>
             )}
@@ -501,149 +442,76 @@ export default function Theming() {
         </ul>
       </div>
 
-      {/* Editor - Middle Column */}
       <div
         class="bg-base-100 flex w-full shrink-0 flex-col items-center gap-4 p-6 pb-20 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:items-start md:overflow-y-scroll lg:items-stretch"
         classList={{ "max-md:hidden": dockActiveItem() !== "editor" }}
       >
-        {/* Theme Name Input */}
-        <label class="input input-ghost input-sm flex w-full shrink-0 items-center gap-2 font-semibold">
-          <span class="shrink-0 text-xs opacity-60 select-none">Name</span>
-          <input
-            class="w-full shrink"
-            type="text"
-            value={currentTheme().name}
-            onInput={(e) => {
-              const newName = e.currentTarget.value;
-              const oldName = currentTheme().name;
-              setCurrentTheme((prev) => ({ ...prev, name: newName }));
-              setCustomThemes((prev) =>
-                prev.map((theme) =>
-                  theme.name === oldName ? { ...theme, name: newName } : theme
-                )
-              );
-            }}
-            placeholder="mytheme"
-          />
-          <svg
-            class="justify-self-end opacity-40"
-            width="16px"
-            height="16px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4 20.0001H20M4 20.0001V16.0001L12 8.00012M4 20.0001L8 20.0001L16 12.0001M12 8.00012L14.8686 5.13146L14.8704 5.12976C15.2652 4.73488 15.463 4.53709 15.691 4.46301C15.8919 4.39775 16.1082 4.39775 16.3091 4.46301C16.5369 4.53704 16.7345 4.7346 17.1288 5.12892L18.8686 6.86872C19.2646 7.26474 19.4627 7.46284 19.5369 7.69117C19.6022 7.89201 19.6021 8.10835 19.5369 8.3092C19.4628 8.53736 19.265 8.73516 18.8695 9.13061L18.8686 9.13146L16 12.0001M12 8.00012L16 12.0001"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </label>
+        <Input
+          placeholder="mytheme"
+          value={currentTheme().name}
+          onInput={(e) => {
+            const newName = e.currentTarget.value;
+            const oldName = currentTheme().name;
+            setCurrentTheme((prev) => ({ ...prev, name: newName }));
+            setCustomThemes((prev) =>
+              prev.map((theme) =>
+                theme.name === oldName ? { ...theme, name: newName } : theme
+              )
+            );
+          }}
+          leftIcon={
+            <span class="shrink-0 text-xs opacity-60 select-none">Name</span>
+          }
+          rightIcon={
+            <Icon name="icon-[mdi-light--pencil]" width={16} height={16} class="opacity-40" />
+          }
+        />
 
-        {/* Action Buttons */}
-        <div class="grid w-full grid-cols-2 gap-2">
-          <button class="btn group" onClick={randomizeTheme}>
-            <svg
-              class="shrink-0 group-active:scale-95"
-              fill="currentColor"
-              width="16"
-              height="16"
-              viewBox="0 0 256 256"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M192,28H64A36.04061,36.04061,0,0,0,28,64V192a36.04061,36.04061,0,0,0,36,36H192a36.04061,36.04061,0,0,0,36-36V64A36.04061,36.04061,0,0,0,192,28Zm12,164a12.01312,12.01312,0,0,1-12,12H64a12.01312,12.01312,0,0,1-12-12V64A12.01312,12.01312,0,0,1,64,52H192a12.01312,12.01312,0,0,1,12,12ZM104,88A16,16,0,1,1,88,72,16.01833,16.01833,0,0,1,104,88Zm80,0a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,184,88Zm-80,80a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,104,168Zm80,0a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,184,168Zm-40-40a16,16,0,1,1-16-16A16.01833,16.01833,0,0,1,144,128Z" />
-            </svg>
+        <Grid cols="2" gap="sm" class="w-full">
+          <Button onClick={randomizeTheme}>
+            <Icon name="icon-[mdi-light--dice-6]" width={16} height={16} class="group-active:scale-95" />
             Random
-          </button>
-          <button class="btn btn-neutral">
-            <svg
-              class="shrink-0"
-              fill="currentColor"
-              width="16px"
-              height="16px"
-              viewBox="0 0 256 256"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M54.79785,119.48535A34.95033,34.95033,0,0,1,49.05078,128a34.95033,34.95033,0,0,1,5.74707,8.51465C60,147.24414,60,159.8291,60,172c0,25.93652,1.84424,32,20,32a12,12,0,0,1,0,24c-19.14453,0-32.19775-6.90234-38.79785-20.51465C36,196.75586,36,184.1709,36,172c0-25.93652-1.84424-32-20-32a12,12,0,0,1,0-24c18.15576,0,20-6.06348,20-32,0-12.1709,0-24.75586,5.20215-35.48535C47.80225,34.90234,60.85547,28,80,28a12,12,0,0,1,0,24c-18.15576,0-20,6.06348-20,32C60,96.1709,60,108.75586,54.79785,119.48535ZM240,116c-18.15576,0-20-6.06348-20-32,0-12.1709,0-24.75586-5.20215-35.48535C208.19775,34.90234,195.14453,28,176,28a12,12,0,0,0,0,24c18.15576,0,20,6.06348,20,32,0,12.1709,0,24.75586,5.20215,35.48535A34.95033,34.95033,0,0,0,206.94922,128a34.95033,34.95033,0,0,0-5.74707,8.51465C196,147.24414,196,159.8291,196,172c0,25.93652-1.84424,32-20,32a12,12,0,0,0,0,24c19.14453,0,32.19775-6.90234,38.79785-20.51465C220,196.75586,220,184.1709,220,172c0-25.93652,1.84424-32,20-32a12,12,0,0,0,0-24Z" />
-            </svg>
+          </Button>
+          <Button color="neutral">
+            <Icon name="icon-[mdi-light--code-braces]" width={16} height={16} />
             CSS
-          </button>
-        </div>
+          </Button>
+        </Grid>
 
-        {/* Change Colors Section */}
         <h3 class="divider divider-start text-xs">
           <span class="flex gap-1.5">
-            <svg
-              class="opacity-40"
-              width="16"
-              height="16"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M37 37C39.2091 37 41 35.2091 41 33C41 31.5272 39.6667 29.5272 37 27C34.3333 29.5272 33 31.5272 33 33C33 35.2091 34.7909 37 37 37Z"
-                fill="currentColor"
-              />
-              <path
-                d="M20.8535 5.50439L24.389 9.03993"
-                stroke="currentColor"
-                stroke-width="4"
-                stroke-linecap="round"
-              />
-              <path
-                d="M23.6818 8.33281L8.12549 23.8892L19.4392 35.2029L34.9955 19.6465L23.6818 8.33281Z"
-                stroke="currentColor"
-                stroke-width="4"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12 20.0732L28.961 25.6496"
-                stroke="currentColor"
-                stroke-width="4"
-                stroke-linecap="round"
-              />
-            </svg>
+            <Icon name="icon-[mdi-light--palette-outline]" width={16} height={16} class="opacity-40" />
             Change Colors
           </span>
         </h3>
-        <div class="grid w-fit grid-cols-4 gap-4">
+        <Grid cols="4" gap="md" class="w-fit">
           <For each={COLOR_GROUPS}>
             {(group) => (
-              <div
-                class="flex flex-col gap-1"
-                classList={{
-                  "col-span-4": group.name === "base",
-                  "col-span-2": group.name !== "base",
-                }}
+              <Flex
+                direction="col"
+                gap="xs"
+                class={
+                  group.name === "base" ? "col-span-4" : "col-span-2"
+                }
               >
-                <div class="flex gap-4">
+                <Flex gap="md">
                   <For each={group.colors}>
                     {(colorKey) => {
                       const isContentColor = colorKey.endsWith("-content");
 
-                      // FUNCIONES REACTIVAS - se recalculan cuando currentTheme() cambia
                       const backgroundColor = () => {
                         if (group.name === "base") {
                           if (isContentColor) {
-                            // base-content box: fondo base-100
                             return (
                               currentTheme()["--color-base-100"] ||
                               "oklch(100% 0 0)"
                             );
                           } else {
-                            // base-100, base-200, base-300: fondo propio
                             return (
                               currentTheme()[colorKey] || "oklch(50% 0.1 180)"
                             );
                           }
                         } else {
-                          // Para otros colores (primary, secondary, etc.)
                           const mainColorKey = isContentColor
                             ? colorKey.replace("-content", "")
                             : colorKey;
@@ -682,7 +550,7 @@ export default function Theming() {
                       const label = getLabel(colorKey);
 
                       return (
-                        <button
+                        <Button
                           onClick={() => openColorPicker(colorKey)}
                           class="w-8 h-8 rounded border border-gray-300 hover:border-gray-400 transition-colors relative group flex items-center justify-center"
                           style={{ background: backgroundColor() }}
@@ -698,19 +566,18 @@ export default function Theming() {
                           >
                             {label}
                           </span>
-                        </button>
+                        </Button>
                       );
                     }}
                   </For>
-                </div>
+                </Flex>
                 <div class="text-base-content/60 text-xs">{group.name}</div>
-              </div>
+              </Flex>
             )}
           </For>
-        </div>
+        </Grid>
       </div>
 
-      {/* Preview - Right Column */}
       <div class="overflow-x-hidden">
         <div class="border-base-300 overflow-hidden border-s border-t md:rounded-ss-xl">
           <div
@@ -724,44 +591,45 @@ export default function Theming() {
         </div>
       </div>
 
-      <Show when={showColorPicker()}>
-        <div
-          class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          onClick={() => setShowColorPicker(false)}
-        >
-          <div
-            class="bg-base-100 border rounded-lg p-6 max-w-lg w-full m-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-medium">Select Color</h3>
-              <button
-                onClick={() => setShowColorPicker(false)}
-                class="btn btn-ghost btn-sm"
-              >
-                ✕
-              </button>
-            </div>
-            <div class="grid grid-cols-8 gap-2 max-h-96 overflow-y-auto">
-              <For each={Object.entries(TAILWIND_COLORS)}>
-                {([colorName, colorValue]) => (
-                  <button
-                    onClick={() => selectColor(colorValue)}
-                    class="w-8 h-8 rounded border border-gray-300 hover:border-gray-500 transition-colors relative group"
-                    style={{ background: colorValue }}
-                    title={`${colorName}: ${colorValue}`}
-                  >
-                    <div
-                      class="absolute inset-0 opacity-0 group-hover:opacity-10 rounded transition-opacity"
-                      style="background-color: rgba(0,0,0,0.1)"
-                    />
-                  </button>
-                )}
-              </For>
-            </div>
+      <Modal 
+        open={showColorPicker()} 
+        onClose={() => setShowColorPicker(false)}
+        backdrop
+        position="middle"
+        closeOnEsc
+        closeOnOutsideClick
+      >
+        <Modal.Header>
+          <h3 class="text-lg font-medium">Select Color</h3>
+        </Modal.Header>
+        <Modal.Body>
+          <div class="grid grid-cols-8 gap-2 max-h-96 overflow-y-auto">
+            <For each={Object.entries(TAILWIND_COLORS)}>
+              {([colorName, colorValue]) => (
+                <Button
+                  onClick={() => selectColor(colorValue)}
+                  class="w-8 h-8 rounded border border-gray-300 hover:border-gray-500 transition-colors relative group"
+                  style={{ background: colorValue }}
+                  title={`${colorName}: ${colorValue}`}
+                >
+                  <div
+                    class="absolute inset-0 opacity-0 group-hover:opacity-10 rounded transition-opacity"
+                    style="background-color: rgba(0,0,0,0.1)"
+                  />
+                </Button>
+              )}
+            </For>
           </div>
-        </div>
-      </Show>
+        </Modal.Body>
+        <Modal.Actions>
+          <Button
+            onClick={() => setShowColorPicker(false)}
+            variant="ghost"
+          >
+            Close
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </div>
   );
 }
