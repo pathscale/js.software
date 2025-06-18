@@ -8,7 +8,7 @@ interface ThemeEditorProps {
   onThemeNameChange: (name: string) => void;
   onRandomizeTheme: () => void;
   onExportCSS: () => void;
-  onColorClick: (colorKey: string) => void;
+  onColorClick: (colorKey: string, event: MouseEvent) => void;
   dockActiveItem: string;
 }
 

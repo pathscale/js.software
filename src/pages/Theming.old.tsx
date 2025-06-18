@@ -1,26 +1,20 @@
 import { createSignal } from "solid-js";
 import Preview from "../components/Preview";
-import {
-  generateRandomTheme,
-  updateThemeColor,
+import { 
+  generateRandomTheme, 
+  updateThemeColor, 
   generateThemeStyleString,
-  oklchToHex,
-  Theme,
+  Theme 
 } from "../utils/themeUtils";
 import ThemeList from "../components/theming/ThemeList";
 import ThemeEditor from "../components/theming/ThemeEditor";
-import ColorPickerPopover from "../components/theming/ColorPickerPopover";
+import ColorPickerModal from "../components/theming/ColorPickerModal";
 
 export default function Theming() {
-  const [currentTheme, setCurrentTheme] = createSignal<Theme>(
-    generateRandomTheme()
-  );
-  const [customThemes, setCustomThemes] = createSignal<Theme[]>([
-    generateRandomTheme(),
-  ]);
+  const [currentTheme, setCurrentTheme] = createSignal<Theme>(generateRandomTheme());
+  const [customThemes, setCustomThemes] = createSignal<Theme[]>([generateRandomTheme()]);
   const [showColorPicker, setShowColorPicker] = createSignal(false);
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
-  const [pickerPosition, setPickerPosition] = createSignal({ x: 0, y: 0 });
   const [dockActiveItem] = createSignal("editor");
 
   const randomizeTheme = () => {
@@ -62,19 +56,13 @@ export default function Theming() {
     setCurrentTheme(generateRandomTheme());
   };
 
-  const openColorPicker = (colorKey: string, event: MouseEvent) => {
-    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-    setPickerPosition({
-      x: rect.left + rect.width + 10,
-      y: rect.top,
-    });
+  const openColorPicker = (colorKey: string) => {
     setSelectedColorKey(colorKey);
     setShowColorPicker(true);
   };
 
   const selectColor = (colorValue: string) => {
     const key = selectedColorKey();
-
     if (key) {
       const newTheme = updateThemeColor(currentTheme(), key, colorValue);
       setCurrentTheme(newTheme);
@@ -87,6 +75,7 @@ export default function Theming() {
         )
       );
     }
+    setShowColorPicker(false);
   };
 
   const updateThemeName = (newName: string) => {
@@ -102,6 +91,11 @@ export default function Theming() {
   const exportCSS = () => {
     const cssText = generateThemeStyleString(currentTheme());
     navigator.clipboard.writeText(cssText);
+    console.log("CSS copied to clipboard:", cssText);
+  };
+
+  const convertColorToOklch = (hexColor: string): string => {
+    return hexColor;
   };
 
   return (
@@ -128,25 +122,18 @@ export default function Theming() {
       <div class="overflow-x-hidden">
         <div class="border-base-300 overflow-hidden border-s border-t md:rounded-ss-xl">
           <div
-            style={Object.fromEntries(
-              Object.entries(currentTheme())
-                .filter(([key]) => key.startsWith("--color-"))
-                .map(([key, value]) => [key, value])
-            )}
+            style={generateThemeStyleString(currentTheme())}
           >
             <Preview currentTheme={currentTheme()} />
           </div>
         </div>
       </div>
 
-      <ColorPickerPopover
-        isOpen={showColorPicker()}
+      <ColorPickerModal
+        open={showColorPicker()}
         onClose={() => setShowColorPicker(false)}
-        onColorSelect={selectColor}
-        initialColor={selectedColorKey() ? oklchToHex(
-          currentTheme()[selectedColorKey()] || "oklch(100% 0 0)"
-        ) : "#ffffff"}
-        position={pickerPosition()}
+        onColorSelect={(color) => selectColor(convertColorToOklch(color))}
+        initialColor={currentTheme()[selectedColorKey()] || "#ffffff"}
       />
     </div>
   );

@@ -1,4 +1,19 @@
 import { randomizeThemeColors } from "../lib/themeGeneratorRandomizer.js";
+import { formatHex, formatOklch, converter } from "culori";
+
+const generateContrastColor = (backgroundOKLCH: string): string => {
+  const match = backgroundOKLCH.match(/oklch\((\d+(?:\.\d+)?)%?\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/);
+  if (!match) return "oklch(0% 0 0)";
+  
+  const l = parseFloat(match[1]);
+  const h = parseFloat(match[3]) || 0;
+  
+  if (l > 50) {
+    return `oklch(20% 0.02 ${h})`;
+  } else {
+    return `oklch(95% 0.02 ${h})`;
+  }
+};
 
 export const TAILWIND_COLORS = {
   "slate-50": "oklch(98% 0.003 247.858)",
@@ -297,12 +312,13 @@ export const updateThemeColor = (
   colorKey: string,
   colorValue: string
 ): Theme => {
-  const newTheme = { ...theme, [colorKey]: colorValue };
+  // Convert HEX to OKLCH if needed
+  const oklchColor = colorValue.startsWith('#') ? hexToOklch(colorValue) : colorValue;
+  const newTheme = { ...theme, [colorKey]: oklchColor };
 
   if (!colorKey.includes("-content")) {
     const contentKey = colorKey + "-content";
-    const { generateContrastColor } = require("../lib/themeGeneratorRandomizer.js");
-    newTheme[contentKey] = generateContrastColor(colorValue);
+    newTheme[contentKey] = generateContrastColor(oklchColor);
   }
 
   return newTheme;
@@ -362,4 +378,38 @@ export const generateThemeStyleString = (theme: Theme): string => {
     .filter(([key]) => key.startsWith("--color-"))
     .map(([key, value]) => `${key}:${value}`)
     .join(";");
+};
+
+export const hexToOklch = (hex: string): string => {
+  try {
+    const oklchColor = converter("oklch")(hex);
+    if (!oklchColor) return "oklch(50% 0.1 0)";
+    
+    const l = Math.round(oklchColor.l * 100);
+    const c = parseFloat(oklchColor.c?.toFixed(3) || "0");
+    const h = Math.round(oklchColor.h || 0);
+    
+    return `oklch(${l}% ${c} ${h})`;
+  } catch (error) {
+    return "oklch(50% 0.1 0)";
+  }
+};
+
+export const oklchToHex = (oklch: string): string => {
+  try {
+    const match = oklch.match(/oklch\(([^%]+)%?\s+([^\s]+)\s+([^)]+)\)/);
+    if (!match) return "#ffffff";
+    
+    const oklchColor = {
+      mode: "oklch" as const,
+      l: parseFloat(match[1]) / 100,
+      c: parseFloat(match[2]),
+      h: parseFloat(match[3])
+    };
+    
+    const hexColor = formatHex(oklchColor);
+    return hexColor || "#ffffff";
+  } catch (error) {
+    return "#ffffff";
+  }
 };

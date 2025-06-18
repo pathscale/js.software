@@ -8,7 +8,7 @@ interface ColorGroupProps {
     colors: string[];
   };
   theme: Theme;
-  onColorClick: (colorKey: string) => void;
+  onColorClick: (colorKey: string, event: MouseEvent) => void;
 }
 
 export default function ColorGroup(props: ColorGroupProps) {
@@ -29,7 +29,7 @@ export default function ColorGroup(props: ColorGroupProps) {
 
             return (
               <Button
-                onClick={() => props.onColorClick(colorKey)}
+                onClick={(e: any) => props.onColorClick(colorKey, e)}
                 class="w-8 h-8 rounded border border-gray-300 hover:border-gray-400 transition-colors relative group flex items-center justify-center"
                 style={{ background: backgroundColor() }}
                 title={colorKey}
