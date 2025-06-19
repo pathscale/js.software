@@ -4,10 +4,7 @@ import { pluginSolid } from "@rsbuild/plugin-solid";
 import CompressionPlugin from "compression-webpack-plugin";
 
 export default defineConfig({
-  plugins: [
-    pluginBabel({ include: /\.(?:jsx|tsx|ts)$/ }),
-    pluginSolid()
-  ],
+  plugins: [pluginBabel({ include: /\.(?:jsx|tsx|ts)$/ }), pluginSolid()],
   source: {
     alias: { "~": "./src" },
     define: {
@@ -29,22 +26,25 @@ export default defineConfig({
         splitChunks: false,
         runtimeChunk: false,
       },
-      plugins: [
-        new (require("webpack").BannerPlugin)({
-          banner: () => "",
-          test: /\.js$/,
-        }),
-        new CompressionPlugin({
-          algorithm: "brotliCompress",
-          filename: "[path][base].br",
-          test: /\.(mjs|css)$/,
-          compressionOptions: {
-            level: 11,
-          },
-          threshold: 0,
-          minRatio: 1,
-        }),
-      ],
+      plugins:
+        process.env.NODE_ENV === "production"
+          ? [
+              new (require("webpack").BannerPlugin)({
+                banner: () => "",
+                test: /\.js$/,
+              }),
+              new CompressionPlugin({
+                algorithm: "brotliCompress",
+                filename: "[path][base].br",
+                test: /\.(mjs|css)$/,
+                compressionOptions: {
+                  level: 11,
+                },
+                threshold: 0,
+                minRatio: 1,
+              }),
+            ]
+          : [],
     },
   },
   output: {
