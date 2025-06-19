@@ -47,6 +47,7 @@
     "cmdk-solid": "^1.1.2",
     "commitizen": "^4.3.0",
     "compression-webpack-plugin": "^11.1.0",
+    "culori": "^4.0.1",
     "daisyui": "^5.0.37",
     "embla-carousel-solid": "^8.6.0",
     "husky": "^9.1.7",
@@ -59,8 +60,6 @@
     "tailwindcss": "^4.0.7",
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "^1.2.9",
-    "typescript": "^5.7.2",
-    "culori": "^4.0.1",
-    "solid-colorful": "^0.0.2"
+    "typescript": "^5.7.2"
   }
 }
