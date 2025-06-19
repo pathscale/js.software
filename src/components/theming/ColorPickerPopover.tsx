@@ -1,6 +1,6 @@
 import { createSignal, createEffect, For } from "solid-js";
 import { Button, Modal } from "@pathscale/ui";
-import { TAILWIND_COLORS } from "../../utils/themeUtils";
+import { MATERIAL_COLORS } from "../../utils/themeUtils";
 
 interface ColorPickerPopoverProps {
   isOpen: boolean;
@@ -32,17 +32,17 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
       closeOnOutsideClick
     >
       <Modal.Body>
-        <div class="grid grid-cols-11 gap-1" role="listbox">
-          <For each={Object.entries(TAILWIND_COLORS)}>
+        <div class="grid grid-cols-10 w-full" role="listbox">
+          <For each={Object.entries(MATERIAL_COLORS)}>
             {([colorName, colorValue]) => (
               <button
-                class="appearance-none p-px cursor-pointer"
+                class="appearance-none cursor-pointer w-full"
                 aria-label={colorName}
                 aria-selected={color() === colorValue}
                 onClick={() => handleColorSelect(colorValue)}
               >
                 <div
-                  class="relative grid aspect-square w-5 place-items-center bg-transparent select-none sm:w-6 cursor-pointer hover:scale-110 transition-transform"
+                  class="relative grid h-4 place-items-center bg-transparent select-none cursor-pointer hover:scale-110 transition-transform"
                   style={{
                     "background-color": colorValue,
                     "box-shadow":
@@ -68,7 +68,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
         </div>
       </Modal.Body>
       <Modal.Actions class="bg-base-100">
-        <Button onClick={props.onClose} variant="primary" class="min-w-[80px]">
+        <Button onClick={props.onClose} color="primary">
           Done
         </Button>
       </Modal.Actions>
