@@ -328,6 +328,14 @@ export const updateThemeColor = (
   return newTheme;
 };
 
+export const updateThemeProperty = (
+  theme: Theme,
+  key: string,
+  value: string
+): Theme => {
+  return { ...theme, [key]: value };
+};
+
 export const getColorBackgroundStyle = (
   theme: Theme,
   colorKey: string,
@@ -379,7 +387,7 @@ export const getColorLabel = (colorKey: string, groupName: string): string => {
 
 export const generateThemeStyleString = (theme: Theme): string => {
   return Object.entries(theme)
-    .filter(([key]) => key.startsWith("--color-"))
+    .filter(([key]) => key.startsWith("--") && key !== "name")
     .map(([key, value]) => `${key}:${value}`)
     .join(";");
 };

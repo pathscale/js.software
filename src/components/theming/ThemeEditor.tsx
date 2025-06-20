@@ -2,6 +2,9 @@ import { For } from "solid-js";
 import { Button, Input, Grid, Icon } from "@pathscale/ui";
 import { Theme, COLOR_GROUPS } from "../../utils/themeUtils";
 import ColorGroup from "./ColorGroup";
+import RadiusSection from "./RadiusSection";
+import EffectsSection from "./EffectsSection";
+import SizesSection from "./SizesSection";
 
 interface ThemeEditorProps {
   theme: Theme;
@@ -9,13 +12,14 @@ interface ThemeEditorProps {
   onRandomizeTheme: () => void;
   onExportCSS: () => void;
   onColorClick: (colorKey: string, event: MouseEvent) => void;
+  onThemePropertyUpdate: (key: string, value: string) => void;
   dockActiveItem: string;
 }
 
 export default function ThemeEditor(props: ThemeEditorProps) {
   return (
     <div
-      class="bg-base-100 flex w-full shrink-0 flex-col items-center gap-4 p-6 pb-20 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:items-start md:overflow-y-scroll lg:items-stretch"
+      class="bg-base-100 flex w-full shrink-0 flex-col items-center gap-6 p-6 pb-20 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:items-start md:overflow-y-scroll lg:items-stretch"
       classList={{ "max-md:hidden": props.dockActiveItem !== "editor" }}
     >
       <Input
@@ -61,6 +65,21 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           )}
         </For>
       </Grid>
+
+      <RadiusSection
+        theme={props.theme}
+        onThemeUpdate={props.onThemePropertyUpdate}
+      />
+
+      <EffectsSection
+        theme={props.theme}
+        onThemeUpdate={props.onThemePropertyUpdate}
+      />
+
+      <SizesSection
+        theme={props.theme}
+        onThemeUpdate={props.onThemePropertyUpdate}
+      />
     </div>
   );
 }

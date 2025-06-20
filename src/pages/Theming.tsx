@@ -3,6 +3,7 @@ import Preview from "../components/Preview";
 import {
   generateRandomTheme,
   updateThemeColor,
+  updateThemeProperty,
   generateThemeStyleString,
   oklchToHex,
   Theme,
@@ -89,6 +90,19 @@ export default function Theming() {
     }
   };
 
+  const updateThemePropertyValue = (key: string, value: string) => {
+    const newTheme = updateThemeProperty(currentTheme(), key, value);
+    setCurrentTheme(newTheme);
+
+    setCustomThemes((prev) =>
+      prev.map((theme) =>
+        theme.name === currentTheme().name
+          ? updateThemeProperty(theme, key, value)
+          : theme
+      )
+    );
+  };
+
   const updateThemeName = (newName: string) => {
     const oldName = currentTheme().name;
     setCurrentTheme((prev) => ({ ...prev, name: newName }));
@@ -122,6 +136,7 @@ export default function Theming() {
         onRandomizeTheme={randomizeTheme}
         onExportCSS={exportCSS}
         onColorClick={openColorPicker}
+        onThemePropertyUpdate={updateThemePropertyValue}
         dockActiveItem={dockActiveItem()}
       />
 
@@ -130,7 +145,7 @@ export default function Theming() {
           <div
             style={Object.fromEntries(
               Object.entries(currentTheme())
-                .filter(([key]) => key.startsWith("--color-"))
+                .filter(([key]) => key.startsWith("--"))
                 .map(([key, value]) => [key, value])
             )}
           >
