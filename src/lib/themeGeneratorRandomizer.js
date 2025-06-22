@@ -310,5 +310,14 @@ export function randomizeThemeColors(tailwindcolors, colorPairs) {
     }
   }
 
+  newColors["--radius-selector"] = randomFrom(radiusValues);
+  newColors["--radius-field"] = randomFrom(radiusValues);
+  newColors["--radius-box"] = randomFrom(radiusValues);
+  newColors["--size-selector"] = randomFrom(sizeValues);
+  newColors["--size-field"] = randomFrom(sizeValues);
+  newColors["--border"] = randomFrom(borderValues);
+  newColors["--depth"] = randomFrom(depthValues);
+  newColors["--noise"] = randomFrom(noiseValues);
+
   return newColors;
 }

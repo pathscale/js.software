@@ -4,13 +4,13 @@ import {
   generateRandomTheme,
   updateThemeColor,
   updateThemeProperty,
-  generateThemeStyleString,
   oklchToHex,
   Theme,
 } from "../utils/themeUtils";
 import ThemeList from "../components/theming/ThemeList";
 import ThemeEditor from "../components/theming/ThemeEditor";
 import ColorPickerPopover from "../components/theming/ColorPickerPopover";
+import ThemeCSSModal from "../components/theming/ThemeCSSModal";
 
 export default function Theming() {
   const [currentTheme, setCurrentTheme] = createSignal<Theme>(
@@ -22,6 +22,7 @@ export default function Theming() {
   const [showColorPicker, setShowColorPicker] = createSignal(false);
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
   const [pickerPosition, setPickerPosition] = createSignal({ x: 0, y: 0 });
+  const [showCSSModal, setShowCSSModal] = createSignal(false);
   const [dockActiveItem] = createSignal("editor");
 
   const randomizeTheme = () => {
@@ -114,8 +115,7 @@ export default function Theming() {
   };
 
   const exportCSS = () => {
-    const cssText = generateThemeStyleString(currentTheme());
-    navigator.clipboard.writeText(cssText);
+    setShowCSSModal(true);
   };
 
   return (
@@ -158,10 +158,20 @@ export default function Theming() {
         isOpen={showColorPicker()}
         onClose={() => setShowColorPicker(false)}
         onColorSelect={selectColor}
-        initialColor={selectedColorKey() ? oklchToHex(
-          currentTheme()[selectedColorKey()] || "oklch(100% 0 0)"
-        ) : "#ffffff"}
+        initialColor={
+          selectedColorKey()
+            ? oklchToHex(
+                currentTheme()[selectedColorKey()] || "oklch(100% 0 0)"
+              )
+            : "#ffffff"
+        }
         position={pickerPosition()}
+      />
+
+      <ThemeCSSModal
+        isOpen={showCSSModal()}
+        onClose={() => setShowCSSModal(false)}
+        theme={currentTheme()}
       />
     </div>
   );
