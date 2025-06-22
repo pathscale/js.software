@@ -7,7 +7,6 @@ import {
   oklchToHex,
   Theme,
 } from "../utils/themeUtils";
-import ThemeList from "../components/theming/ThemeList";
 import ThemeEditor from "../components/theming/ThemeEditor";
 import ColorPickerPopover from "../components/theming/ColorPickerPopover";
 import ThemeCSSModal from "../components/theming/ThemeCSSModal";
@@ -16,52 +15,16 @@ export default function Theming() {
   const [currentTheme, setCurrentTheme] = createSignal<Theme>(
     generateRandomTheme()
   );
-  const [customThemes, setCustomThemes] = createSignal<Theme[]>([
-    generateRandomTheme(),
-  ]);
   const [showColorPicker, setShowColorPicker] = createSignal(false);
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
   const [pickerPosition, setPickerPosition] = createSignal({ x: 0, y: 0 });
   const [showCSSModal, setShowCSSModal] = createSignal(false);
+  const [themeOptions, setThemeOptions] = createSignal({ isDefault: false, isPrefersDark: false, colorScheme: "light" as "light" | "dark" });
   const [dockActiveItem] = createSignal("editor");
 
   const randomizeTheme = () => {
     const newTheme = generateRandomTheme();
     setCurrentTheme(newTheme);
-    setCustomThemes((prev) =>
-      prev.map((theme) =>
-        theme.name === currentTheme().name ? newTheme : theme
-      )
-    );
-  };
-
-  const createNewTheme = () => {
-    const newTheme = generateRandomTheme();
-    setCustomThemes((prev) => [newTheme, ...prev]);
-    setCurrentTheme(newTheme);
-  };
-
-  const loadTheme = (theme: Theme) => {
-    setCurrentTheme(theme);
-  };
-
-  const removeTheme = (themeToRemove: Theme) => {
-    setCustomThemes((prev) =>
-      prev.filter((t) => t.name !== themeToRemove.name)
-    );
-    if (currentTheme().name === themeToRemove.name) {
-      const remaining = customThemes().filter(
-        (t) => t.name !== themeToRemove.name
-      );
-      setCurrentTheme(
-        remaining.length > 0 ? remaining[0] : generateRandomTheme()
-      );
-    }
-  };
-
-  const clearAllThemes = () => {
-    setCustomThemes([]);
-    setCurrentTheme(generateRandomTheme());
   };
 
   const openColorPicker = (colorKey: string, event: MouseEvent) => {
@@ -80,63 +43,27 @@ export default function Theming() {
     if (key) {
       const newTheme = updateThemeColor(currentTheme(), key, colorValue);
       setCurrentTheme(newTheme);
-
-      setCustomThemes((prev) =>
-        prev.map((theme) =>
-          theme.name === currentTheme().name
-            ? updateThemeColor(theme, key, colorValue)
-            : theme
-        )
-      );
     }
   };
 
   const updateThemePropertyValue = (key: string, value: string) => {
     const newTheme = updateThemeProperty(currentTheme(), key, value);
     setCurrentTheme(newTheme);
-
-    setCustomThemes((prev) =>
-      prev.map((theme) =>
-        theme.name === currentTheme().name
-          ? updateThemeProperty(theme, key, value)
-          : theme
-      )
-    );
   };
 
-  const updateThemeName = (newName: string) => {
-    const oldName = currentTheme().name;
-    setCurrentTheme((prev) => ({ ...prev, name: newName }));
-    setCustomThemes((prev) =>
-      prev.map((theme) =>
-        theme.name === oldName ? { ...theme, name: newName } : theme
-      )
-    );
-  };
-
-  const exportCSS = () => {
+  const exportCSS = (isDefault: boolean, isPrefersDark: boolean, colorScheme: "light" | "dark") => {
+    setThemeOptions({ isDefault, isPrefersDark, colorScheme });
     setShowCSSModal(true);
   };
 
   return (
-    <div class="relative grid md:grid-cols-[14rem_17rem_1fr]">
-      <ThemeList
-        themes={customThemes()}
-        currentTheme={currentTheme()}
-        onThemeSelect={loadTheme}
-        onThemeRemove={removeTheme}
-        onCreateNewTheme={createNewTheme}
-        onClearAllThemes={clearAllThemes}
-        dockActiveItem={dockActiveItem()}
-      />
-
+    <div class="relative grid md:grid-cols-[20rem_1fr]">
       <ThemeEditor
         theme={currentTheme()}
-        onThemeNameChange={updateThemeName}
-        onRandomizeTheme={randomizeTheme}
-        onExportCSS={exportCSS}
         onColorClick={openColorPicker}
         onThemePropertyUpdate={updateThemePropertyValue}
+        onRandomizeTheme={randomizeTheme}
+        onExportCSS={exportCSS}
         dockActiveItem={dockActiveItem()}
       />
 
@@ -172,6 +99,9 @@ export default function Theming() {
         isOpen={showCSSModal()}
         onClose={() => setShowCSSModal(false)}
         theme={currentTheme()}
+        isDefault={themeOptions().isDefault}
+        isPrefersDark={themeOptions().isPrefersDark}
+        colorScheme={themeOptions().colorScheme}
       />
     </div>
   );

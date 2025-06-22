@@ -6,6 +6,9 @@ interface ThemeCSSModalProps {
   isOpen: boolean;
   onClose: () => void;
   theme: Theme;
+  isDefault?: boolean;
+  isPrefersDark?: boolean;
+  colorScheme?: "light" | "dark";
 }
 
 export default function ThemeCSSModal(props: ThemeCSSModalProps) {
@@ -15,9 +18,9 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
   const generateCSS = (theme: Theme) => {
     const baseProps = [
       `  name: "${theme.name}";`,
-      `  default: false;`,
-      `  prefersdark: false;`,
-      `  color-scheme: "light";`,
+      `  default: ${props.isDefault ? "true" : "false"};`,
+      `  prefersdark: ${props.isPrefersDark ? "true" : "false"};`,
+      `  color-scheme: "${props.colorScheme || "light"}";`,
     ];
 
     // Color properties in specific order like DaisyUI
@@ -77,6 +80,13 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
     return `@plugin "daisyui/theme" {\n${allProps.join("\n")}\n}`;
   };
 
+  createEffect(() => {
+    if (props.isOpen) {
+      setCssText(generateCSS(props.theme));
+    }
+  });
+
+  // Update CSS when options change
   createEffect(() => {
     if (props.isOpen) {
       setCssText(generateCSS(props.theme));

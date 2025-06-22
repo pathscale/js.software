@@ -66,16 +66,16 @@ export default function SizesSection(props: SizesSectionProps) {
         </span>
       </h3>
       
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
         <For each={SIZE_TYPES}>
           {(sizeType) => (
             <div class="w-full">
-              <div class="mb-2">
+              <div class="mb-0.5">
                 <div class="text-base-content/70 text-xs">{sizeType.label}</div>
                 <div class="text-base-content/40 text-xs italic">{sizeType.description}</div>
               </div>
               
-              <div class="bg-base-200 rounded-box flex items-end justify-center gap-4 p-4 px-6">
+              <div class="bg-base-200 rounded-box flex items-end justify-center gap-2 p-2">
                 <div class="flex gap-1">
                   <For each={sizeType.scale}>
                     {(size, index) => {
@@ -115,7 +115,7 @@ export default function SizesSection(props: SizesSectionProps) {
                 />
               </div>
               
-              <div class="mt-2 text-center">
+              <div class="mt-0.5 text-center">
                 <span class="text-base-content/50 text-xs font-mono">
                   {sizeType.label} base size: {(parseFloat(props.theme[sizeType.key] || "0.25rem") * 16 * 4).toFixed(1)} Pixels
                 </span>
@@ -130,7 +130,7 @@ export default function SizesSection(props: SizesSectionProps) {
             <div class="text-base-content/40 text-xs italic">All components</div>
           </div>
           
-          <div class="bg-base-200 rounded-box p-4 px-6">
+          <div class="bg-base-200 rounded-box p-2">
             <div class="flex flex-col gap-2">
               <div class="flex justify-between text-xs text-base-content/50">
                 <span>0.5px</span>

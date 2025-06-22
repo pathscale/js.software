@@ -30,7 +30,7 @@ export default function EffectsSection(props: EffectsSectionProps) {
         </span>
       </h3>
       
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-1">
         <For each={EFFECTS}>
           {(effect) => (
             <label class="flex cursor-pointer items-center justify-between gap-2">

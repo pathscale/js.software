@@ -37,11 +37,11 @@ export default function RadiusSection(props: RadiusSectionProps) {
         </span>
       </h3>
       
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1.5">
         <For each={RADIUS_TYPES}>
           {(radiusType) => (
             <div class="w-full">
-              <div class="mb-2">
+              <div class="mb-0.5">
                 <div class="text-base-content/70 text-xs">{radiusType.label}</div>
                 <div class="text-base-content/40 text-xs italic">{radiusType.description}</div>
               </div>
@@ -57,7 +57,7 @@ export default function RadiusSection(props: RadiusSectionProps) {
                         checked={props.theme[radiusType.key] === value}
                         onChange={() => props.onThemeUpdate(radiusType.key, value)}
                       />
-                      <div class="pe-3 pt-2 pb-2 ps-2">
+                      <div class="px-1.5 py-1">
                         <div 
                           class="border-base-content/20 bg-base-200 h-6 w-8 border-e-2 border-t-2"
                           classList={{

@@ -1,5 +1,5 @@
-import { For } from "solid-js";
-import { Button, Input, Grid, Icon } from "@pathscale/ui";
+import { For, createSignal } from "solid-js";
+import { Grid, Icon, Button, Dropdown, Toggle } from "@pathscale/ui";
 import { Theme, COLOR_GROUPS } from "../../utils/themeUtils";
 import ColorGroup from "./ColorGroup";
 import RadiusSection from "./RadiusSection";
@@ -8,40 +8,29 @@ import SizesSection from "./SizesSection";
 
 interface ThemeEditorProps {
   theme: Theme;
-  onThemeNameChange: (name: string) => void;
-  onRandomizeTheme: () => void;
-  onExportCSS: () => void;
   onColorClick: (colorKey: string, event: MouseEvent) => void;
   onThemePropertyUpdate: (key: string, value: string) => void;
+  onRandomizeTheme: () => void;
+  onExportCSS: (isDefault: boolean, isPrefersDark: boolean, colorScheme: "light" | "dark") => void;
   dockActiveItem: string;
 }
 
 export default function ThemeEditor(props: ThemeEditorProps) {
+  const [isDefault, setIsDefault] = createSignal(false);
+  const [isPrefersDark, setIsPrefersDark] = createSignal(false);
+  const [colorScheme, setColorScheme] = createSignal<"light" | "dark">("light");
+
   return (
     <div
-      class="bg-base-100 flex w-full shrink-0 flex-col items-center gap-6 p-6 pb-20 md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:items-start md:overflow-y-scroll lg:items-stretch"
+      class="bg-base-100 flex w-full shrink-0 flex-col items-center gap-2 p-2 pb-20 md:sticky md:top-16 md:items-start lg:items-stretch"
       classList={{ "max-md:hidden": props.dockActiveItem !== "editor" }}
     >
-      <Input
-        placeholder="mytheme"
-        value={props.theme.name}
-        onInput={(e: any) => {
-          props.onThemeNameChange(e.currentTarget.value);
-        }}
-        leftIcon={
-          <span class="shrink-0 text-xs opacity-60 select-none">Name</span>
-        }
-        rightIcon={
-          <Icon name="icon-[mdi-light--pencil]" width={16} height={16} class="opacity-40" />
-        }
-      />
-
       <Grid cols="2" gap="sm" class="w-full">
         <Button onClick={props.onRandomizeTheme}>
           <Icon name="icon-[mdi--dice]" width={16} height={16} class="group-active:scale-95" />
           Random
         </Button>
-        <Button color="neutral" onClick={props.onExportCSS}>
+        <Button color="neutral" onClick={() => props.onExportCSS(isDefault(), isPrefersDark(), colorScheme())}>
           <Icon name="icon-[mdi--code-braces]" width={16} height={16} />
           CSS
         </Button>
@@ -80,6 +69,42 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         theme={props.theme}
         onThemeUpdate={props.onThemePropertyUpdate}
       />
+      
+      <h3 class="divider divider-start text-xs">
+        <span class="flex gap-1.5">
+          <Icon name="icon-[mdi--cog]" width={16} height={16} class="opacity-40" />
+          Options
+        </span>
+      </h3>
+      
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-base-content/60 text-xs">Default theme</span>
+          <Toggle 
+            size="xs"
+            checked={isDefault()}
+            onChange={(e: any) => setIsDefault(e.currentTarget.checked)}
+          />
+        </div>
+        
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-base-content/60 text-xs">Default dark theme</span>
+          <Toggle 
+            size="xs"
+            checked={isPrefersDark()}
+            onChange={(e: any) => setIsPrefersDark(e.currentTarget.checked)}
+          />
+        </div>
+        
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-base-content/60 text-xs">Dark color scheme</span>
+          <Toggle 
+            size="xs"
+            checked={colorScheme() === "dark"}
+            onChange={(e: any) => setColorScheme(e.currentTarget.checked ? "dark" : "light")}
+          />
+        </div>
+      </div>
     </div>
   );
 }
