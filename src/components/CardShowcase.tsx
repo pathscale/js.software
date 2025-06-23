@@ -1,8 +1,8 @@
-import ShowcaseLayout from "./ShowcaseLayout";
-import { Card, Button, Flex } from "@pathscale/ui";
-import { PropsTable } from "./showcase/PropsTable";
+import { Button, Card, Flex } from "@pathscale/ui";
 import { CodeBlock } from "./showcase/CodeBlock";
+import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import ShowcaseLayout from "./ShowcaseLayout";
 
 export default function CardShowcase() {
   const sections = [

@@ -1,12 +1,12 @@
+import { Alert, Button, Flex, Toast } from "@pathscale/ui";
 import { Component, createSignal } from "solid-js";
-import ShowcaseLayout from "./ShowcaseLayout";
-import { Toast, Button, Alert, Flex } from "@pathscale/ui";
-import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
+import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import ShowcaseLayout from "./ShowcaseLayout";
 
 type AlertStatus = "info" | "success" | "warning" | "error";
-type AlertItem = { text: string; status: AlertStatus };
+type AlertItem = { text: string; status: AlertStatus; };
 
 const ToastShowcase: Component = () => {
   const sections = [

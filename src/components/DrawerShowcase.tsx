@@ -1,9 +1,9 @@
-import { Drawer, Menu, Button, Navbar, Flex } from "@pathscale/ui";
+import { Button, Drawer, Flex, Menu, Navbar } from "@pathscale/ui";
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
+import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function DrawerShowcase() {
   const sections = [
@@ -149,7 +149,7 @@ export default function DrawerShowcase() {
                   contentClassName="flex flex-col"
                 >
                   <Navbar class="w-full bg-base-300">
-                    <div class="flex-none lg:hidden">
+                    <Flex class="lg:hidden">
                       <Button
                         shape="square"
                         color="ghost"
@@ -169,9 +169,9 @@ export default function DrawerShowcase() {
                           />
                         </svg>
                       </Button>
-                    </div>
-                    <div class="flex-1 px-2 mx-2">Navbar Title</div>
-                    <div class="flex-none hidden lg:block">
+                    </Flex>
+                    <Flex grow={1} class="px-2 mx-2">Navbar Title</Flex>
+                    <Flex class="hidden lg:block">
                       <Menu horizontal>
                         <Menu.Item>
                           <a>Navbar Item 1</a>
@@ -180,11 +180,11 @@ export default function DrawerShowcase() {
                           <a>Navbar Item 2</a>
                         </Menu.Item>
                       </Menu>
-                    </div>
+                    </Flex>
                   </Navbar>
-                  <div class="flex flex-grow items-center justify-center">
+                  <Flex grow={1} align="center" justify="center">
                     Content
-                  </div>
+                  </Flex>
                 </Drawer>
               );
             })()}
