@@ -1,5 +1,5 @@
-import { createSignal, createEffect } from "solid-js";
-import { Button, Modal, Icon } from "@pathscale/ui";
+import { Button, Icon, Modal } from "@pathscale/ui";
+import { createEffect, createSignal } from "solid-js";
 import { Theme } from "../../utils/themeUtils";
 
 interface ThemeCSSModalProps {
@@ -27,7 +27,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
     const colorOrder = [
       "--color-base-100", "--color-base-content", "--color-base-200", "--color-base-300",
       "--color-primary", "--color-primary-content",
-      "--color-secondary", "--color-secondary-content", 
+      "--color-secondary", "--color-secondary-content",
       "--color-accent", "--color-accent-content",
       "--color-neutral", "--color-neutral-content",
       "--color-info", "--color-info-content",
@@ -43,7 +43,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
     // Add default radius, size and effect values if not present
     const defaultValues = {
       "--radius-selector": "0.5rem",
-      "--radius-field": "0.25rem", 
+      "--radius-field": "0.25rem",
       "--radius-box": "0.5rem",
       "--size-selector": "0.25rem",
       "--size-field": "0.25rem",
@@ -119,12 +119,12 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
           CSS Theme
         </div>
       </Modal.Header>
-      
+
       <Modal.Body>
         <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)] mb-4">
           Copy this CSS to add your theme to DaisyUI
         </p>
-        
+
         <div class="relative">
           <textarea
             class="textarea textarea-bordered w-full h-80 font-mono text-xs resize-none"
@@ -132,9 +132,9 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
             readonly
             spellcheck={false}
           />
-          
+
           <Button
-            class="absolute top-2 right-2"
+            class="absolute top-2 right-5"
             size="sm"
             color={isClipboardButtonPressed() ? "success" : "neutral"}
             onClick={copyThemeCSSToClipboard}
@@ -153,9 +153,12 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
           </Button>
         </div>
       </Modal.Body>
-      
+
       <Modal.Actions>
-        <Button onClick={props.onClose}>
+        <Button
+          onClick={props.onClose}
+          class="mt-5"
+        >
           Close
         </Button>
       </Modal.Actions>
