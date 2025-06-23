@@ -1,4 +1,51 @@
 import { createSignal } from "solid-js";
+import {
+  Button,
+  Card,
+  Alert,
+  Input,
+  Flex,
+  Checkbox,
+  Badge,
+  Avatar,
+  Stats,
+  Progress,
+  RadialProgress,
+  Rating,
+  Menu,
+  Tabs,
+  Toggle,
+  Range,
+  Textarea,
+  ChatBubble,
+  CodeMockup,
+  CodeMockupLine,
+  Timeline,
+  TimelineItem,
+  TimelineStart,
+  TimelineMiddle,
+  TimelineEnd,
+  Table,
+  Navbar,
+  Breadcrumbs,
+  BreadcrumbsItem,
+  Collapse,
+  Drawer,
+  Modal,
+  Pagination,
+  Steps,
+  Tooltip,
+  Select,
+  Dropdown,
+  Loading,
+  Skeleton,
+  Form,
+  Join,
+  Divider,
+  Indicator,
+  Swap,
+  Radio,
+} from "@pathscale/ui";
 
 interface PreviewProps {
   currentTheme: Record<string, string>;
@@ -6,7 +53,6 @@ interface PreviewProps {
 
 export default function Preview(props: PreviewProps) {
   const [previewtabs, setPreviewtabs] = createSignal("Components Demo");
-  const [sliderValue, setSliderValue] = createSignal(50);
 
   return (
     <div
@@ -26,7 +72,11 @@ export default function Preview(props: PreviewProps) {
               checked={previewtabs() === "Components Demo"}
               onChange={() => setPreviewtabs("Components Demo")}
             />
-            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <svg
+              class="size-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
               <g
                 stroke-linejoin="round"
                 stroke-linecap="round"
@@ -50,7 +100,11 @@ export default function Preview(props: PreviewProps) {
               checked={previewtabs() === "Component Variants"}
               onChange={() => setPreviewtabs("Component Variants")}
             />
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="size-4"
+            >
               <g
                 stroke-linejoin="round"
                 stroke-linecap="round"
@@ -78,7 +132,11 @@ export default function Preview(props: PreviewProps) {
               checked={previewtabs() === "Color Palette"}
               onChange={() => setPreviewtabs("Color Palette")}
             />
-            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <svg
+              class="size-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
               <g
                 stroke-linejoin="round"
                 stroke-linecap="round"
@@ -97,183 +155,890 @@ export default function Preview(props: PreviewProps) {
       </div>
       <div class="px-8 py-6">
         {previewtabs() === "Components Demo" && (
-          <div class="text-base-content mx-auto grid gap-6 pb-20 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-            <div class="flex flex-col gap-4">
+          <div class="text-base-content mx-auto grid gap-6 pb-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {/* Column 1 */}
+            <Flex direction="col" gap="md">
+              {/* Filters Card */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex justify="between" align="center">
+                    <Flex align="center" gap="sm">
+                      <i class="icon-[mdi--filter-variant] w-4 h-4" />
+                      <span class="font-semibold">Filters</span>
+                    </Flex>
+                    <Button variant="link" size="xs">
+                      more
+                    </Button>
+                  </Flex>
+                  <Flex gap="sm" class="mt-3 flex-wrap">
+                    <Badge color="primary">
+                      Shoes
+                      <Button variant="link" size="xs" class="ml-1 p-0 h-auto">
+                        <i class="icon-[mdi--close] w-3 h-3" />
+                      </Button>
+                    </Badge>
+                    <Badge color="secondary">
+                      Bags
+                      <Button variant="link" size="xs" class="ml-1 p-0 h-auto">
+                        <i class="icon-[mdi--close] w-3 h-3" />
+                      </Button>
+                    </Badge>
+                  </Flex>
+                  <Flex direction="col" gap="sm" class="mt-4">
+                    <Flex justify="between" align="center">
+                      <Flex align="center" gap="sm">
+                        <Checkbox size="sm" />
+                        <span class="text-sm">Hoodies</span>
+                      </Flex>
+                      <Badge size="sm" variant="outline">
+                        25
+                      </Badge>
+                    </Flex>
+                    <Flex justify="between" align="center">
+                      <Flex align="center" gap="sm">
+                        <Checkbox size="sm" checked />
+                        <span class="text-sm">Bags</span>
+                      </Flex>
+                      <Badge size="sm" variant="outline" color="primary">
+                        3
+                      </Badge>
+                    </Flex>
+                    <Flex justify="between" align="center">
+                      <Flex align="center" gap="sm">
+                        <Checkbox size="sm" checked />
+                        <span class="text-sm">Shoes</span>
+                      </Flex>
+                      <Badge size="sm" variant="outline">
+                        0
+                      </Badge>
+                    </Flex>
+                    <Flex justify="between" align="center">
+                      <Flex align="center" gap="sm">
+                        <Checkbox size="sm" />
+                        <span class="text-sm">Accessories</span>
+                      </Flex>
+                      <Badge size="sm" variant="outline">
+                        4
+                      </Badge>
+                    </Flex>
+                  </Flex>
+                </Card.Body>
+              </Card>
 
-              {/* Registration form */}
-              <div class="card bg-base-100 card-border border-base-300 card-sm">
-                <div class="card-body gap-4">
-                  <h2 class="font-semibold">Register</h2>
-                  <div class="flex flex-col gap-1">
-                    <label class="input input-border flex max-w-none items-center gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                      </svg>
-                      <input type="text" class="grow" placeholder="Username" />
-                    </label>
-                  </div>
-                  <div class="flex flex-col gap-1">
-                    <label class="input input-border flex max-w-none items-center gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
-                        <path fill-rule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clip-rule="evenodd" />
-                      </svg>
-                      <input type="password" class="grow" placeholder="password" />
-                    </label>
-                    <span class="text-base-content/60 flex items-center gap-2 px-1 text-[0.6875rem]">
-                      <span class="status status-error inline-block"></span>
-                      Password must be 8+ characters
-                    </span>
-                  </div>
-                  <label class="text-base-content/60 flex items-center gap-2 text-xs">
-                    <input type="checkbox" class="toggle toggle-xs" />
-                    Accept terms without reading
-                  </label>
-                  <label class="text-base-content/60 flex items-center gap-2 text-xs">
-                    <input type="checkbox" class="toggle toggle-xs" />
-                    Subscribe to spam emails
-                  </label>
-                  <div class="card-actions items-center gap-6">
-                    <button class="btn btn-primary">Register</button>
-                    <button class="link">Or login</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              {/* Calendar Card */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="md">
+                    <Flex class="grid grid-cols-7 gap-1 text-center text-xs">
+                      <Flex class="font-semibold opacity-60" justify="center">
+                        M
+                      </Flex>
+                      <Flex class="font-semibold opacity-60" justify="center">
+                        T
+                      </Flex>
+                      <Flex class="font-semibold opacity-60" justify="center">
+                        W
+                      </Flex>
+                      <Flex class="font-semibold opacity-60" justify="center">
+                        T
+                      </Flex>
+                      <Flex class="font-semibold opacity-60" justify="center">
+                        F
+                      </Flex>
+                      <Flex class="font-semibold opacity-60" justify="center">
+                        S
+                      </Flex>
+                      <Flex class="font-semibold opacity-60" justify="center">
+                        S
+                      </Flex>
+                      <Button size="xs" variant="outline" class="p-2">
+                        1
+                      </Button>
+                      <Button size="xs" variant="outline" class="p-2">
+                        2
+                      </Button>
+                      <Button size="xs" variant="outline" class="p-2">
+                        3
+                      </Button>
+                      <Button size="xs" variant="outline" class="p-2">
+                        4
+                      </Button>
+                      <Button size="xs" color="primary" class="p-2">
+                        5
+                      </Button>
+                      <Button size="xs" variant="outline" class="p-2">
+                        6
+                      </Button>
+                      <Button size="xs" variant="outline" class="p-2">
+                        7
+                      </Button>
+                    </Flex>
+                    <Input
+                      placeholder="Search events..."
+                      leftIcon={<i class="icon-[mdi--magnify] w-4 h-4" />}
+                      size="sm"
+                    />
+                    <Flex justify="between" align="center">
+                      <span class="text-sm">Show all day events</span>
+                      <Toggle size="sm" />
+                    </Flex>
+                    <Card size="sm" class="mt-2">
+                      <Card.Body class="p-2">
+                        <Flex justify="between" align="center">
+                          <span class="text-sm font-medium">Team meeting</span>
+                          <Badge size="xs" color="info">
+                            2h
+                          </Badge>
+                        </Flex>
+                      </Card.Body>
+                    </Card>
+                  </Flex>
+                </Card.Body>
+              </Card>
 
-            <div class="flex flex-col gap-4">
-              {/* Chart */}
-              <div class="card bg-base-100 card-border border-base-300 card-sm">
-                <div class="card-body gap-4">
-                  <div class="*:bg-base-content mt-4 flex h-24 items-end gap-2 *:w-full *:rounded-sm">
-                    <div style="height: 10%"></div>
-                    <div style="height: 20%"></div>
-                    <div style="height: 10%"></div>
-                    <div style="height: 25%"></div>
-                    <div style="height: 22%"></div>
-                    <div style="height: 15%"></div>
-                    <div style="height: 20%"></div>
-                    <div style="height: 35%"></div>
-                    <div style="height: 40%"></div>
-                    <div style="height: 45%"></div>
-                    <div style="height: 30%"></div>
-                    <div style="height: 35%"></div>
-                    <div style="height: 60%"></div>
-                    <div style="height: 65%"></div>
-                    <div style="height: 80%"></div>
-                    <div style="height: 90%"></div>
+              {/* Tabs Component */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Tabs>
+                    <Tabs.Tab active>Tab 1</Tabs.Tab>
+                    <Tabs.Tab>Tab 2</Tabs.Tab>
+                    <Tabs.Tab>Tab 3</Tabs.Tab>
+                  </Tabs>
+                  <div class="mt-4 p-4 bg-base-200 rounded">
+                    <p class="text-sm">
+                      Content for tab 1. This is where the tab content would be
+                      displayed.
+                    </p>
                   </div>
-                  <p class="py-3 text-xs">
-                    Sales volume reached $12,450 this week, showing a 15% increase from the previous period.
-                  </p>
-                  <div class="grid grid-cols-2 gap-2">
-                    <button class="btn">Charts</button>
-                    <button class="btn btn-neutral">Details</button>
-                  </div>
-                </div>
-              </div>
+                </Card.Body>
+              </Card>
 
-              {/* Stat */}
-              <div class="card bg-base-100 card-border border-base-300 w-full">
-                <div class="stats bg-base-100 w-full overflow-hidden shadow-[0_.1rem_.5rem_-.3rem_#0003]">
-                  <div class="stat">
-                    <div class="stat-figure">
-                      <div class="radial-progress" style="--value:91;--size:3rem;" role="progressbar">
-                        91
-                      </div>
-                    </div>
-                    <div class="stat-title">Page Score</div>
-                    <div class="stat-value">91<span class="text-sm">/100</span></div>
-                    <div class="stat-desc flex items-center gap-1">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="text-success size-4">
-                        <path fill-rule="evenodd" d="M8.5 1.709a.75.75 0 0 0-1 0 8.963 8.963 0 0 1-4.84 2.217.75.75 0 0 0-.654.72 10.499 10.499 0 0 0 5.647 9.672.75.75 0 0 0 .694-.001 10.499 10.499 0 0 0 5.647-9.672.75.75 0 0 0-.654-.719A8.963 8.963 0 0 1 8.5 1.71Zm2.34 5.504a.75.75 0 0 0-1.18-.926L7.394 9.17l-1.156-.99a.75.75 0 1 0-.976 1.138l1.75 1.5a.75.75 0 0 0 1.078-.106l2.75-3.5Z" clip-rule="evenodd" />
-                      </svg>
-                      All good
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/* Price Range Card */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex align="center" gap="sm" class="mb-2">
+                    <i class="icon-[mdi--currency-usd] w-4 h-4" />
+                    <span class="font-semibold">Price Range</span>
+                  </Flex>
+                  <Range
+                    min={0}
+                    max={100}
+                    value="25"
+                    class="range range-primary range-sm"
+                    step="25"
+                  />
+                  <Flex justify="between" class="w-full text-xs px-2">
+                    <span>$0</span>
+                    <span>$25</span>
+                    <span>$50</span>
+                    <span>$75</span>
+                    <span>$100</span>
+                  </Flex>
+                  <Flex direction="col" gap="sm" class="mt-4">
+                    <Flex justify="between" align="center">
+                      <Input placeholder="Min" size="sm" class="max-w-20" />
+                      <span class="text-sm opacity-60">to</span>
+                      <Input placeholder="Max" size="sm" class="max-w-20" />
+                    </Flex>
+                    <Button size="sm" color="primary" fullWidth>
+                      Apply
+                    </Button>
+                  </Flex>
+                </Card.Body>
+              </Card>
 
-              {/* Button showcase */}
-              <div class="card bg-base-100 card-border border-base-300 card-sm">
-                <div class="card-body gap-4">
-                  <h2 class="font-semibold">Buttons</h2>
-                  <div class="flex flex-wrap gap-2">
-                    <button class="btn btn-primary">Primary</button>
-                    <button class="btn btn-secondary">Secondary</button>
-                    <button class="btn btn-accent">Accent</button>
-                    <button class="btn btn-info">Info</button>
-                    <button class="btn btn-success">Success</button>
-                    <button class="btn btn-warning">Warning</button>
-                    <button class="btn btn-error">Error</button>
-                    <button class="btn btn-ghost">Ghost</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+              {/* Stats Component */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Stats>
+                    <Stats.Stat>
+                      <Stats.Stat.Figure>
+                        <RadialProgress value={91} size="3rem" color="primary">
+                          91
+                        </RadialProgress>
+                      </Stats.Stat.Figure>
+                      <Stats.Stat.Title>Page Score</Stats.Stat.Title>
+                      <Stats.Stat.Value>
+                        91<span class="text-sm">/100</span>
+                      </Stats.Stat.Value>
+                      <Stats.Stat.Desc>
+                        <Flex align="center" gap="sm">
+                          <i class="icon-[mdi--shield-check] text-success w-4 h-4" />
+                          All good
+                        </Flex>
+                      </Stats.Stat.Desc>
+                    </Stats.Stat>
+                  </Stats>
+                </Card.Body>
+              </Card>
 
-            <div class="flex flex-col gap-4">
+              {/* Recent Orders */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <Flex justify="between" align="center">
+                      <span class="text-sm">Order #1234</span>
+                      <Badge color="info" size="sm">
+                        Sent
+                      </Badge>
+                    </Flex>
+                    <Flex justify="between" align="center">
+                      <span class="text-sm">Order #1235</span>
+                      <Badge color="error" size="sm">
+                        Failed
+                      </Badge>
+                    </Flex>
+                    <Flex justify="between" align="center">
+                      <span class="text-sm">Order #1236</span>
+                      <Badge color="warning" size="sm">
+                        In progress
+                      </Badge>
+                    </Flex>
+                    <Flex justify="between" align="center">
+                      <span class="text-sm">Order #1237</span>
+                      <Badge color="success" size="sm">
+                        Completed
+                      </Badge>
+                    </Flex>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Revenue Stats */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex align="center" gap="sm" class="mb-2">
+                    <span class="text-sm font-medium">Monthly Revenue</span>
+                    <i class="icon-[mdi--trending-up] text-success w-4 h-4" />
+                  </Flex>
+                  <Flex direction="col">
+                    <span class="text-2xl font-bold">$12,450</span>
+                    <span class="text-xs opacity-60">+15% from last month</span>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Loading States */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <Flex align="center" gap="sm">
+                      <Loading size="sm" />
+                      <span class="text-sm">Processing...</span>
+                    </Flex>
+                    <Skeleton class="h-4 w-3/4" />
+                    <Skeleton class="h-4 w-1/2" />
+                    <Button size="sm" loading>
+                      Submitting
+                    </Button>
+                  </Flex>
+                </Card.Body>
+              </Card>
+            </Flex>
+
+            {/* Column 2 */}
+            <Flex direction="col" gap="md">
+              {/* Product Card */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex align="center" gap="sm" class="mb-3">
+                    <Avatar
+                      size="sm"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    />
+                    <Flex direction="col">
+                      <span class="font-medium text-sm">Premium Product</span>
+                      <span class="text-xs opacity-60">In Stock</span>
+                    </Flex>
+                  </Flex>
+                  <Progress value={75} class="progress-primary" />
+                  <Flex justify="between" align="center" class="mt-2">
+                    <span class="text-xs">75% sold</span>
+                    <span class="font-bold text-primary">$99.99</span>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
               {/* Alerts */}
-              <div class="card bg-base-100 card-border border-base-300 card-sm">
-                <div class="card-body gap-4">
-                  <h2 class="font-semibold">Alerts</h2>
-                  <div class="alert alert-info text-xs font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    There are 9 new messages
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <Alert
+                      status="info"
+                      icon={<i class="icon-[mdi--information] w-5 h-5" />}
+                    >
+                      <span class="text-xs">New software update available</span>
+                    </Alert>
+                    <Alert
+                      status="success"
+                      variant="outline"
+                      icon={<i class="icon-[mdi--check-circle] w-5 h-5" />}
+                    >
+                      <span class="text-xs">Verification completed</span>
+                    </Alert>
+                    <Alert
+                      status="warning"
+                      variant="dash"
+                      icon={<i class="icon-[mdi--alert] w-5 h-5" />}
+                    >
+                      <span class="text-xs">
+                        <Button variant="link" size="xs" class="p-0 h-auto">
+                          Click
+                        </Button>{" "}
+                        to verify email
+                      </span>
+                    </Alert>
+                    <Alert
+                      status="error"
+                      variant="soft"
+                      icon={<i class="icon-[mdi--close-circle] w-5 h-5" />}
+                    >
+                      <Flex justify="between" align="center" class="w-full">
+                        <span class="text-xs">Access denied</span>
+                        <Button color="ghost" size="xs">
+                          Support
+                        </Button>
+                      </Flex>
+                    </Alert>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Timeline */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Timeline vertical class="mt-3">
+                    <TimelineItem connect="both">
+                      <TimelineStart box>9:00</TimelineStart>
+                      <TimelineMiddle class="text-success">
+                        <i class="icon-[mdi--check-circle] w-4 h-4" />
+                      </TimelineMiddle>
+                      <TimelineEnd>
+                        <Flex direction="col">
+                          <span class="text-sm font-medium">
+                            Project Started
+                          </span>
+                          <span class="text-xs opacity-60">
+                            Initial setup completed
+                          </span>
+                        </Flex>
+                      </TimelineEnd>
+                    </TimelineItem>
+                    <TimelineItem connect="both">
+                      <TimelineStart box>11:00</TimelineStart>
+                      <TimelineMiddle class="text-success">
+                        <i class="icon-[mdi--check-circle] w-4 h-4" />
+                      </TimelineMiddle>
+                      <TimelineEnd>
+                        <Flex direction="col">
+                          <span class="text-sm font-medium">
+                            Development Phase
+                          </span>
+                          <span class="text-xs opacity-60">
+                            Core features implemented
+                          </span>
+                        </Flex>
+                      </TimelineEnd>
+                    </TimelineItem>
+                    <TimelineItem connect="start">
+                      <TimelineStart box>15:00</TimelineStart>
+                      <TimelineMiddle class="text-warning">
+                        <i class="icon-[mdi--clock-outline] w-4 h-4" />
+                      </TimelineMiddle>
+                      <TimelineEnd>
+                        <Flex direction="col">
+                          <span class="text-sm font-medium">Testing Phase</span>
+                          <span class="text-xs opacity-60">In progress...</span>
+                        </Flex>
+                      </TimelineEnd>
+                    </TimelineItem>
+                  </Timeline>
+                </Card.Body>
+              </Card>
+
+              {/* Pricing Card */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Tabs>
+                    <Tabs.Tab active>Monthly</Tabs.Tab>
+                    <Tabs.Tab>
+                      Yearly
+                      <Badge size="xs" color="error" class="ml-1">
+                        SALE
+                      </Badge>
+                    </Tabs.Tab>
+                  </Tabs>
+                  <Flex direction="col" class="mt-4">
+                    <Flex class="text-3xl font-bold">
+                      $9<span class="text-sm font-normal">/month</span>
+                    </Flex>
+                    <Flex direction="col" gap="sm" class="mt-3">
+                      <Flex align="center" gap="sm">
+                        <i class="icon-[mdi--check] text-success w-4 h-4" />
+                        <span class="text-sm">Unlimited projects</span>
+                      </Flex>
+                      <Flex align="center" gap="sm">
+                        <i class="icon-[mdi--check] text-success w-4 h-4" />
+                        <span class="text-sm">Priority support</span>
+                      </Flex>
+                      <Flex align="center" gap="sm">
+                        <i class="icon-[mdi--close] text-error w-4 h-4" />
+                        <span class="text-sm opacity-50">
+                          Advanced analytics
+                        </span>
+                      </Flex>
+                    </Flex>
+                    <Button color="primary" fullWidth class="mt-4">
+                      Choose Plan
+                    </Button>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Table Component */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <div class="overflow-x-auto">
+                    <Table size="sm">
+                      <Table.Head>
+                        <Table.HeadCell>Name</Table.HeadCell>
+                        <Table.HeadCell>Role</Table.HeadCell>
+                        <Table.HeadCell>Status</Table.HeadCell>
+                      </Table.Head>
+                      <Table.Body>
+                        <Table.Row>
+                          <Table.Cell>
+                            <Flex align="center" gap="sm">
+                              <Avatar size="xs" src="" />
+                              <span class="text-sm">John Doe</span>
+                            </Flex>
+                          </Table.Cell>
+                          <Table.Cell>
+                            <Badge size="sm" color="primary">
+                              Admin
+                            </Badge>
+                          </Table.Cell>
+                          <Table.Cell>
+                            <Badge size="sm" color="success">
+                              Active
+                            </Badge>
+                          </Table.Cell>
+                        </Table.Row>
+                        <Table.Row>
+                          <Table.Cell>
+                            <Flex align="center" gap="sm">
+                              <Avatar size="xs" src="" />
+                              <span class="text-sm">Jane Smith</span>
+                            </Flex>
+                          </Table.Cell>
+                          <Table.Cell>
+                            <Badge size="sm" color="secondary">
+                              Editor
+                            </Badge>
+                          </Table.Cell>
+                          <Table.Cell>
+                            <Badge size="sm" color="warning">
+                              Away
+                            </Badge>
+                          </Table.Cell>
+                        </Table.Row>
+                      </Table.Body>
+                    </Table>
                   </div>
-                  <div class="alert alert-success text-xs font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                    </svg>
-                    Verification process completed
-                  </div>
-                  <div class="alert alert-warning text-xs font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
-                    </svg>
-                    <span><span class="link">Click</span> to verify your email</span>
-                  </div>
-                  <div class="alert alert-error text-xs font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-                    </svg>
-                    Access denied
-                    <button class="btn btn-xs btn-ghost">Support</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                </Card.Body>
+              </Card>
+
+              {/* Modal Example */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    {(() => {
+                      const [modalOpen, setModalOpen] = createSignal(false);
+                      return (
+                        <>
+                          <Button size="sm" onClick={() => setModalOpen(true)}>
+                            Open Dialog
+                          </Button>
+                          <Modal
+                            open={modalOpen()}
+                            onClose={() => setModalOpen(false)}
+                            backdrop
+                            position="middle"
+                            closeOnEsc
+                            closeOnOutsideClick
+                          >
+                            <Modal.Header class="font-bold">
+                              Confirmation
+                            </Modal.Header>
+                            <Modal.Body>
+                              Are you sure you want to continue?
+                            </Modal.Body>
+                            <Modal.Actions>
+                              <Button onClick={() => setModalOpen(false)}>
+                                Cancel
+                              </Button>
+                              <Button
+                                color="primary"
+                                onClick={() => setModalOpen(false)}
+                              >
+                                Confirm
+                              </Button>
+                            </Modal.Actions>
+                          </Modal>
+                        </>
+                      );
+                    })()}
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Interactive Elements */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <Flex align="center" gap="sm">
+                      <Tooltip message="Click to expand" position="top">
+                        <Button size="sm" variant="outline">
+                          Hover me
+                        </Button>
+                      </Tooltip>
+                      <Indicator>
+                        <Badge size="xs" color="error" class="indicator-item">
+                          3
+                        </Badge>
+                        <Button size="sm" variant="outline" shape="circle">
+                          <i class="icon-[mdi--bell] w-4 h-4" />
+                        </Button>
+                      </Indicator>
+                    </Flex>
+                    <Flex gap="sm">
+                      <Swap>
+                        <div>☀️</div>
+                        <div>🌙</div>
+                      </Swap>
+                      <span class="text-sm">Theme Toggle</span>
+                    </Flex>
+                  </Flex>
+                </Card.Body>
+              </Card>
+            </Flex>
+
+            {/* Column 3 */}
+            <Flex direction="col" gap="md">
+              {/* Chat */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <ChatBubble>
+                      <ChatBubble.Header>
+                        John Doe
+                        <ChatBubble.Time>12:45</ChatBubble.Time>
+                      </ChatBubble.Header>
+                      <ChatBubble.Avatar src="" />
+                      <ChatBubble.Message>
+                        Hey! How are you doing?
+                      </ChatBubble.Message>
+                    </ChatBubble>
+                    <ChatBubble end>
+                      <ChatBubble.Header>
+                        You
+                        <ChatBubble.Time>12:46</ChatBubble.Time>
+                      </ChatBubble.Header>
+                      <ChatBubble.Avatar src="" />
+                      <ChatBubble.Message color="primary">
+                        I'm doing great! Thanks for asking.
+                      </ChatBubble.Message>
+                    </ChatBubble>
+                  </Flex>
+                  <Flex gap="sm" class="mt-4 justify-center">
+                    <Button size="sm" variant="outline" shape="circle">
+                      <i class="icon-[mdi--phone] w-4 h-4" />
+                    </Button>
+                    <Button size="sm" variant="outline" shape="circle">
+                      <i class="icon-[mdi--message] w-4 h-4" />
+                    </Button>
+                    <Button size="sm" variant="outline" shape="circle">
+                      <i class="icon-[mdi--cog] w-4 h-4" />
+                    </Button>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Admin Menu */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Menu>
+                    <Menu.Item>
+                      <Flex justify="between" align="center" class="w-full">
+                        <Flex align="center" gap="sm">
+                          <i class="icon-[mdi--database] w-4 h-4" />
+                          <span>Database</span>
+                        </Flex>
+                        <Badge size="xs" color="primary">
+                          2
+                        </Badge>
+                      </Flex>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Flex justify="between" align="center" class="w-full">
+                        <Flex align="center" gap="sm">
+                          <i class="icon-[mdi--package-variant] w-4 h-4" />
+                          <span>Products</span>
+                        </Flex>
+                        <Badge size="xs" color="success">
+                          12
+                        </Badge>
+                      </Flex>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Flex justify="between" align="center" class="w-full">
+                        <Flex align="center" gap="sm">
+                          <i class="icon-[mdi--message-text] w-4 h-4" />
+                          <span>Messages</span>
+                        </Flex>
+                        <Badge size="xs" color="warning">
+                          5
+                        </Badge>
+                      </Flex>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Flex align="center" gap="sm">
+                        <i class="icon-[mdi--key] w-4 h-4" />
+                        <span>Access Tokens</span>
+                      </Flex>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Flex align="center" gap="sm">
+                        <i class="icon-[mdi--account-group] w-4 h-4" />
+                        <span>Users</span>
+                      </Flex>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Flex align="center" gap="sm">
+                        <i class="icon-[mdi--cog] w-4 h-4" />
+                        <span>Settings</span>
+                      </Flex>
+                    </Menu.Item>
+                  </Menu>
+                </Card.Body>
+              </Card>
+
+              {/* Music Player */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <Flex justify="between" align="center">
+                      <Flex align="center" gap="sm">
+                        <Button size="sm" shape="circle">
+                          <i class="icon-[mdi--skip-previous] w-4 h-4" />
+                        </Button>
+                        <Button size="sm" shape="circle" color="primary">
+                          <i class="icon-[mdi--play] w-4 h-4" />
+                        </Button>
+                        <Button size="sm" shape="circle">
+                          <i class="icon-[mdi--skip-next] w-4 h-4" />
+                        </Button>
+                      </Flex>
+                      <Button size="sm" variant="outline">
+                        <i class="icon-[mdi--volume-high] w-4 h-4" />
+                      </Button>
+                    </Flex>
+                    <Flex direction="col">
+                      <span class="font-medium text-sm">Bohemian Rhapsody</span>
+                      <span class="text-xs opacity-60">Queen</span>
+                    </Flex>
+                    <Progress value={45} class="mt-2" />
+                    <Flex justify="between" class="text-xs opacity-60">
+                      <span>2:34</span>
+                      <span>5:55</span>
+                    </Flex>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Code Mockup */}
+              <Card variant="border" size="sm">
+                <Card.Body class="p-0">
+                  <CodeMockup>
+                    <CodeMockupLine prefix="$">
+                      npm install daisyui
+                    </CodeMockupLine>
+                    <CodeMockupLine prefix=">">installing...</CodeMockupLine>
+                    <CodeMockupLine prefix=">">Done!</CodeMockupLine>
+                  </CodeMockup>
+                </Card.Body>
+              </Card>
+
+              {/* Navbar Example */}
+              <Card variant="border" size="sm">
+                <Card.Body class="p-0">
+                  <Navbar class="bg-base-200 px-4">
+                    <Navbar.Start>
+                      <Dropdown>
+                        <Button color="ghost" shape="circle" size="sm">
+                          <i class="icon-[mdi--menu] w-4 h-4" />
+                        </Button>
+                        <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1]">
+                          <Dropdown.Item>Dashboard</Dropdown.Item>
+                          <Dropdown.Item>Settings</Dropdown.Item>
+                          <Dropdown.Item>Logout</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </Navbar.Start>
+                    <Navbar.Center>
+                      <span class="font-bold text-sm">Brand</span>
+                    </Navbar.Center>
+                    <Navbar.End>
+                      <Button color="ghost" shape="circle" size="sm">
+                        <i class="icon-[mdi--account] w-4 h-4" />
+                      </Button>
+                    </Navbar.End>
+                  </Navbar>
+                </Card.Body>
+              </Card>
+
+              {/* Steps Component */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Steps vertical>
+                    <Steps.Step color="primary">Account Created</Steps.Step>
+                    <Steps.Step color="primary">Email Verified</Steps.Step>
+                    <Steps.Step color="warning">Profile Setup</Steps.Step>
+                    <Steps.Step>Payment Added</Steps.Step>
+                  </Steps>
+                </Card.Body>
+              </Card>
+
+              {/* Join Components */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <Join>
+                      <Button class="join-item" size="sm">
+                        Button 1
+                      </Button>
+                      <Button class="join-item" size="sm" active>
+                        Button 2
+                      </Button>
+                      <Button class="join-item" size="sm">
+                        Button 3
+                      </Button>
+                    </Join>
+                    <Join>
+                      <Input
+                        placeholder="Search..."
+                        class="join-item flex-1"
+                        size="sm"
+                      />
+                      <Button class="join-item" size="sm" color="primary">
+                        <i class="icon-[mdi--magnify] w-4 h-4" />
+                      </Button>
+                    </Join>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Form Survey */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Flex direction="col" gap="sm">
+                    <Form>
+                      <Form.Label title="How did you hear about us?" />
+                      <Select class="w-full" size="sm">
+                        <option>Search Engine</option>
+                        <option>Social Media</option>
+                        <option>Friend</option>
+                        <option>Advertisement</option>
+                      </Select>
+                    </Form>
+                    <Form>
+                      <Form.Label title="Rate your experience" />
+                      <Rating value={4} />
+                    </Form>
+                    <Flex gap="sm" class="mt-2">
+                      <Radio size="sm" name="recommend" checked />
+                      <span class="text-sm">Would recommend</span>
+                    </Flex>
+                    <Button size="sm" color="primary">
+                      Submit
+                    </Button>
+                  </Flex>
+                </Card.Body>
+              </Card>
+
+              {/* Navigation */}
+              <Card variant="border" size="sm">
+                <Card.Body>
+                  <Breadcrumbs>
+                    <BreadcrumbsItem href="/">Home</BreadcrumbsItem>
+                    <BreadcrumbsItem href="/products">Products</BreadcrumbsItem>
+                    <BreadcrumbsItem>Details</BreadcrumbsItem>
+                  </Breadcrumbs>
+                  <Divider />
+                  <Pagination>
+                    <Button size="xs" class="join-item">
+                      1
+                    </Button>
+                    <Button size="xs" class="join-item" active>
+                      2
+                    </Button>
+                    <Button size="xs" class="join-item">
+                      3
+                    </Button>
+                  </Pagination>
+                </Card.Body>
+              </Card>
+            </Flex>
           </div>
         )}
 
         {previewtabs() === "Component Variants" && (
-          <div class="space-y-6">
-            <h5 class="mt-10 px-3 py-2 font-semibold">Buttons</h5>
-            <div class="my-6 flex flex-wrap gap-3">
-              <button class="btn">Button</button>
-              <button class="btn btn-primary">Primary</button>
-              <button class="btn btn-secondary">Secondary</button>
-              <button class="btn btn-accent">Accent</button>
-              <button class="btn btn-info">Info</button>
-              <button class="btn btn-success">Success</button>
-              <button class="btn btn-warning">Warning</button>
-              <button class="btn btn-error">Error</button>
-              <button class="btn btn-ghost">Ghost</button>
-            </div>
-            
-            <h5 class="mt-10 px-3 py-2 font-semibold">Inputs</h5>
-            <div class="my-6 flex flex-wrap gap-3">
-              <input type="text" placeholder="Input" class="input input-bordered max-w-32" />
-              <input type="text" placeholder="Primary" class="input input-bordered input-primary max-w-32" />
-              <input type="text" placeholder="Secondary" class="input input-bordered input-secondary max-w-32" />
-              <input type="text" placeholder="Accent" class="input input-bordered input-accent max-w-32" />
-              <input type="text" placeholder="Info" class="input input-bordered input-info max-w-32" />
-              <input type="text" placeholder="Success" class="input input-bordered input-success max-w-32" />
-              <input type="text" placeholder="Warning" class="input input-bordered input-warning max-w-32" />
-              <input type="text" placeholder="Error" class="input input-bordered input-error max-w-32" />
-            </div>
-          </div>
+          <Flex direction="col" gap="lg">
+            <Card variant="border" size="sm">
+              <Card.Body>
+                <Card.Title tag="h5">Buttons</Card.Title>
+                <Flex gap="sm" class="flex-wrap">
+                  <Button>Button</Button>
+                  <Button color="primary">Primary</Button>
+                  <Button color="secondary">Secondary</Button>
+                  <Button color="accent">Accent</Button>
+                  <Button color="info">Info</Button>
+                  <Button color="success">Success</Button>
+                  <Button color="warning">Warning</Button>
+                  <Button color="error">Error</Button>
+                  <Button color="ghost">Ghost</Button>
+                </Flex>
+              </Card.Body>
+            </Card>
+
+            <Card variant="border" size="sm">
+              <Card.Body>
+                <Card.Title tag="h5">Inputs</Card.Title>
+                <Flex gap="sm" class="flex-wrap">
+                  <Input placeholder="Input" class="max-w-32" />
+                  <Input
+                    placeholder="Primary"
+                    color="danger"
+                    class="max-w-32"
+                  />
+                  <Input placeholder="Secondary" class="max-w-32" />
+                  <Input placeholder="Accent" class="max-w-32" />
+                  <Input placeholder="Info" class="max-w-32" />
+                  <Input
+                    placeholder="Success"
+                    color="success"
+                    class="max-w-32"
+                  />
+                  <Input
+                    placeholder="Warning"
+                    color="warning"
+                    class="max-w-32"
+                  />
+                  <Input placeholder="Error" color="danger" class="max-w-32" />
+                </Flex>
+              </Card.Body>
+            </Card>
+          </Flex>
         )}
 
         {previewtabs() === "Color Palette" && (
