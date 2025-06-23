@@ -149,7 +149,7 @@ export default function DrawerShowcase() {
                   contentClassName="flex flex-col"
                 >
                   <Navbar class="w-full bg-base-300">
-                    <Flex class="lg:hidden">
+                    <div class="flex-none lg:hidden">
                       <Button
                         shape="square"
                         color="ghost"
@@ -169,9 +169,9 @@ export default function DrawerShowcase() {
                           />
                         </svg>
                       </Button>
-                    </Flex>
-                    <Flex grow={1} class="px-2 mx-2">Navbar Title</Flex>
-                    <Flex class="hidden lg:block">
+                    </div>
+                    <div class="flex-1 px-2 mx-2">Navbar Title</div>
+                    <div class="flex-none hidden lg:block">
                       <Menu horizontal>
                         <Menu.Item>
                           <a>Navbar Item 1</a>
@@ -180,9 +180,9 @@ export default function DrawerShowcase() {
                           <a>Navbar Item 2</a>
                         </Menu.Item>
                       </Menu>
-                    </Flex>
+                    </div>
                   </Navbar>
-                  <Flex grow={1} align="center" justify="center">
+                  <Flex grow align="center" justify="center">
                     Content
                   </Flex>
                 </Drawer>
