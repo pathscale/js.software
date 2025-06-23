@@ -1,9 +1,9 @@
-import { Drawer, Menu, Button, Navbar, Flex } from "@pathscale/ui";
+import { Button, Drawer, Flex, Menu, Navbar } from "@pathscale/ui";
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
+import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function DrawerShowcase() {
   const sections = [
@@ -182,9 +182,9 @@ export default function DrawerShowcase() {
                       </Menu>
                     </div>
                   </Navbar>
-                  <div class="flex flex-grow items-center justify-center">
+                  <Flex grow align="center" justify="center">
                     Content
-                  </div>
+                  </Flex>
                 </Drawer>
               );
             })()}

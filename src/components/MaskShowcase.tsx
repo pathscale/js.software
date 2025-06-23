@@ -1,8 +1,8 @@
-import { Mask, Flex } from "@pathscale/ui";
+import { Flex, Mask } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
+import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function MaskShowcase() {
   const sections = [
@@ -78,14 +78,14 @@ export default function MaskShowcase() {
         <ShowcaseSection id="variants" title="Variants">
           <Flex wrap="wrap" gap="md">
             {variants.map((variant) => (
-              <div class="flex flex-col items-center space-y-2">
+              <Flex direction="col" align="center" gap="md">
                 <Mask
                   variant={variant}
                   class="w-24 h-24"
                   src="https://img.daisyui.com/images/stock/photo-1567653418876-5bb0e566e1c2.webp"
                 />
                 <span class="text-sm text-center">{variant}</span>
-              </div>
+              </Flex>
             ))}
           </Flex>
 
