@@ -199,13 +199,13 @@ export default function SidenavWrapper() {
                   Diff
                 </A>
               </SidenavLink>
-              <SidenavItem active={activePath() === "/icon"}>
-                <SidenavLink asChild>
-                  <A noScroll href="/icon" class="sidenav-item-link">
-                    Icon
-                  </A>
-                </SidenavLink>
-              </SidenavItem>
+            </SidenavItem>
+            <SidenavItem active={activePath() === "/icon"}>
+              <SidenavLink asChild>
+                <A noScroll href="/icon" class="sidenav-item-link">
+                  Icon
+                </A>
+              </SidenavLink>
             </SidenavItem>
             <SidenavItem active={activePath() === "/kbd"}>
               <SidenavLink asChild>
