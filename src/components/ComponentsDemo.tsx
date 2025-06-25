@@ -324,10 +324,9 @@ export default function ComponentsDemo() {
         <Card size="sm" class="bg-base-100">
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-3">
-              <Avatar
-                size="sm"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+              <Flex align="center" justify="center" class="w-8 h-8 bg-primary/10 rounded-full">
+                <i class="icon-[mdi--package-variant] w-4 h-4 text-primary" />
+              </Flex>
               <Flex direction="col">
                 <span class="font-medium text-sm">Premium Product</span>
                 <span class="text-xs opacity-60">In Stock</span>
