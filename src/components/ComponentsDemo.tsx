@@ -47,6 +47,8 @@ import {
 } from "@pathscale/ui";
 
 export default function ComponentsDemo() {
+  const [modalOpen, setModalOpen] = createSignal(false);
+
   return (
     <div class="text-base-content mx-auto grid gap-6 pb-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <Flex direction="col" gap="md">
@@ -96,11 +98,11 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox size="sm" checked />
+                  <Checkbox size="sm" />
                   <span class="text-sm">Shoes</span>
                 </Flex>
                 <Badge size="sm" variant="outline">
-                  0
+                  12
                 </Badge>
               </Flex>
               <Flex justify="between" align="center">
@@ -118,6 +120,10 @@ export default function ComponentsDemo() {
 
         <Card size="sm" class="bg-base-100">
           <Card.Body>
+            <Flex align="center" gap="sm" class="mb-3">
+              <i class="icon-[mdi--calendar] w-4 h-4" />
+              <span class="font-semibold">Calendar</span>
+            </Flex>
             <Flex direction="col" gap="md">
               <Flex class="grid grid-cols-7 gap-1 text-center text-xs">
                 <Flex class="font-semibold opacity-60" justify="center">
@@ -324,7 +330,11 @@ export default function ComponentsDemo() {
         <Card size="sm" class="bg-base-100">
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-3">
-              <Flex align="center" justify="center" class="w-8 h-8 bg-primary/10 rounded-full">
+              <Flex
+                align="center"
+                justify="center"
+                class="w-8 h-8 bg-primary/10 rounded-full"
+              >
                 <i class="icon-[mdi--package-variant] w-4 h-4 text-primary" />
               </Flex>
               <Flex direction="col">
@@ -394,9 +404,7 @@ export default function ComponentsDemo() {
                 </TimelineMiddle>
                 <TimelineEnd>
                   <Flex direction="col">
-                    <span class="text-sm font-medium">
-                      Project Started
-                    </span>
+                    <span class="text-sm font-medium">Project Started</span>
                     <span class="text-xs opacity-60">
                       Initial setup completed
                     </span>
@@ -410,9 +418,7 @@ export default function ComponentsDemo() {
                 </TimelineMiddle>
                 <TimelineEnd>
                   <Flex direction="col">
-                    <span class="text-sm font-medium">
-                      Development Phase
-                    </span>
+                    <span class="text-sm font-medium">Development Phase</span>
                     <span class="text-xs opacity-60">
                       Core features implemented
                     </span>
@@ -461,9 +467,7 @@ export default function ComponentsDemo() {
                 </Flex>
                 <Flex align="center" gap="sm">
                   <i class="icon-[mdi--close] text-error w-4 h-4" />
-                  <span class="text-sm opacity-50">
-                    Advanced analytics
-                  </span>
+                  <span class="text-sm opacity-50">Advanced analytics</span>
                 </Flex>
               </Flex>
               <Button color="primary" fullWidth class="mt-4">
@@ -486,7 +490,11 @@ export default function ComponentsDemo() {
                   <Table.Row>
                     <Table.Cell>
                       <Flex align="center" gap="sm">
-                        <Avatar size="xs" src="" />
+                        <Avatar size="xs">
+                          <div class="bg-primary text-primary-content text-xs flex items-center justify-center w-full h-full">
+                            JD
+                          </div>
+                        </Avatar>
                         <span class="text-sm">John Doe</span>
                       </Flex>
                     </Table.Cell>
@@ -504,7 +512,11 @@ export default function ComponentsDemo() {
                   <Table.Row>
                     <Table.Cell>
                       <Flex align="center" gap="sm">
-                        <Avatar size="xs" src="" />
+                        <Avatar size="xs">
+                          <div class="bg-secondary text-secondary-content text-xs flex items-center justify-center w-full h-full">
+                            JS
+                          </div>
+                        </Avatar>
                         <span class="text-sm">Jane Smith</span>
                       </Flex>
                     </Table.Cell>
@@ -528,42 +540,28 @@ export default function ComponentsDemo() {
         <Card size="sm" class="bg-base-100">
           <Card.Body>
             <Flex direction="col" gap="sm">
-              {(() => {
-                const [modalOpen, setModalOpen] = createSignal(false);
-                return (
-                  <>
-                    <Button size="sm" onClick={() => setModalOpen(true)}>
-                      Open Dialog
+              <Button size="sm" onClick={() => setModalOpen(true)}>
+                Open Dialog
+              </Button>
+              <Modal
+                open={modalOpen()}
+                onClose={() => setModalOpen(false)}
+                backdrop
+                position="middle"
+                closeOnEsc
+                closeOnOutsideClick
+              >
+                <Modal.Header class="font-bold">Confirmation</Modal.Header>
+                <Modal.Body>Are you sure you want to continue?</Modal.Body>
+                <Modal.Actions>
+                  <div class="flex gap-2 mt-2">
+                    <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+                    <Button color="primary" onClick={() => setModalOpen(false)}>
+                      Confirm
                     </Button>
-                    <Modal
-                      open={modalOpen()}
-                      onClose={() => setModalOpen(false)}
-                      backdrop
-                      position="middle"
-                      closeOnEsc
-                      closeOnOutsideClick
-                    >
-                      <Modal.Header class="font-bold">
-                        Confirmation
-                      </Modal.Header>
-                      <Modal.Body>
-                        Are you sure you want to continue?
-                      </Modal.Body>
-                      <Modal.Actions>
-                        <Button onClick={() => setModalOpen(false)}>
-                          Cancel
-                        </Button>
-                        <Button
-                          color="primary"
-                          onClick={() => setModalOpen(false)}
-                        >
-                          Confirm
-                        </Button>
-                      </Modal.Actions>
-                    </Modal>
-                  </>
-                );
-              })()}
+                  </div>
+                </Modal.Actions>
+              </Modal>
             </Flex>
           </Card.Body>
         </Card>
@@ -607,17 +605,23 @@ export default function ComponentsDemo() {
                   John Doe
                   <ChatBubble.Time>12:45</ChatBubble.Time>
                 </ChatBubble.Header>
-                <ChatBubble.Avatar src="" />
-                <ChatBubble.Message>
-                  Hey! How are you doing?
-                </ChatBubble.Message>
+                <ChatBubble.Avatar>
+                  <div class="bg-primary text-primary-content text-xs flex items-center justify-center w-full h-full">
+                    JD
+                  </div>
+                </ChatBubble.Avatar>
+                <ChatBubble.Message>Hey! How are you doing?</ChatBubble.Message>
               </ChatBubble>
               <ChatBubble end>
                 <ChatBubble.Header>
                   You
                   <ChatBubble.Time>12:46</ChatBubble.Time>
                 </ChatBubble.Header>
-                <ChatBubble.Avatar src="" />
+                <ChatBubble.Avatar>
+                  <div class="bg-accent text-accent-content text-xs flex items-center justify-center w-full h-full">
+                    ME
+                  </div>
+                </ChatBubble.Avatar>
                 <ChatBubble.Message color="primary">
                   I'm doing great! Thanks for asking.
                 </ChatBubble.Message>
@@ -715,8 +719,8 @@ export default function ComponentsDemo() {
                 </Button>
               </Flex>
               <Flex direction="col">
-                <span class="font-medium text-sm">Bohemian Rhapsody</span>
-                <span class="text-xs opacity-60">Queen</span>
+                <span class="font-medium text-sm">Song Title</span>
+                <span class="text-xs opacity-60">Artist Name</span>
               </Flex>
               <Progress value={45} class="mt-2" />
               <Flex justify="between" class="text-xs opacity-60">
@@ -730,9 +734,7 @@ export default function ComponentsDemo() {
         <Card size="sm" class="bg-base-100">
           <Card.Body class="p-0">
             <CodeMockup>
-              <CodeMockupLine prefix="$">
-                npm install daisyui
-              </CodeMockupLine>
+              <CodeMockupLine prefix="$">npm install daisyui</CodeMockupLine>
               <CodeMockupLine prefix=">">installing...</CodeMockupLine>
               <CodeMockupLine prefix=">">Done!</CodeMockupLine>
             </CodeMockup>
