@@ -1,19 +1,38 @@
 import { randomizeThemeColors } from "../lib/themeGeneratorRandomizer.js";
-import { formatHex, formatOklch, converter } from "culori";
+import { formatHex, converter } from "culori";
+import Color from "color";
 
 const generateContrastColor = (backgroundOKLCH: string): string => {
-  const match = backgroundOKLCH.match(
-    /oklch\((\d+(?:\.\d+)?)%?\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/
-  );
-  if (!match) return "oklch(0% 0 0)";
+  try {
+    const hexColor = oklchToHex(backgroundOKLCH);
+    const color = Color(hexColor);
 
-  const l = parseFloat(match[1]);
-  const h = parseFloat(match[3]) || 0;
+    const luminosity = color.luminosity();
 
-  if (l > 50) {
-    return `oklch(20% 0.02 ${h})`;
-  } else {
-    return `oklch(95% 0.02 ${h})`;
+    const match = backgroundOKLCH.match(
+      /oklch\((\d+(?:\.\d+)?)%?\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/
+    );
+    const h = match ? parseFloat(match[3]) || 0 : 0;
+
+    if (luminosity > 0.5) {
+      return `oklch(15% 0.02 ${h})`;
+    } else {
+      return `oklch(98% 0.02 ${h})`;
+    }
+  } catch (error) {
+    const match = backgroundOKLCH.match(
+      /oklch\((\d+(?:\.\d+)?)%?\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/
+    );
+    if (!match) return "oklch(0% 0 0)";
+
+    const l = parseFloat(match[1]);
+    const h = parseFloat(match[3]) || 0;
+
+    if (l > 50) {
+      return `oklch(20% 0.02 ${h})`;
+    } else {
+      return `oklch(95% 0.02 ${h})`;
+    }
   }
 };
 
@@ -326,6 +345,60 @@ export const updateThemeColor = (
   }
 
   return newTheme;
+};
+
+export const getContrastRatio = (color1: string, color2: string): number => {
+  try {
+    const hex1 = color1.startsWith("oklch") ? oklchToHex(color1) : color1;
+    const hex2 = color2.startsWith("oklch") ? oklchToHex(color2) : color2;
+    return Color(hex1).contrast(Color(hex2));
+  } catch (error) {
+    return 1;
+  }
+};
+
+export const isAccessible = (
+  backgroundColor: string,
+  textColor: string,
+  level: "AA" | "AAA" = "AA"
+): boolean => {
+  const contrast = getContrastRatio(backgroundColor, textColor);
+  return level === "AAA" ? contrast >= 7 : contrast >= 4.5;
+};
+
+export const generateAccessibleTextColor = (
+  backgroundColor: string
+): string => {
+  try {
+    const hexColor = backgroundColor.startsWith("oklch")
+      ? oklchToHex(backgroundColor)
+      : backgroundColor;
+    const color = Color(hexColor);
+
+    let hue = 0;
+    if (backgroundColor.startsWith("oklch")) {
+      const match = backgroundColor.match(
+        /oklch\((\d+(?:\.\d+)?)%?\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/
+      );
+      hue = match ? parseFloat(match[3]) || 0 : 0;
+    }
+
+    const lightText = `oklch(98% 0.02 ${hue})`;
+    if (isAccessible(backgroundColor, lightText, "AA")) {
+      return lightText;
+    }
+
+    const darkText = `oklch(15% 0.02 ${hue})`;
+    if (isAccessible(backgroundColor, darkText, "AA")) {
+      return darkText;
+    }
+
+    return color.luminosity() > 0.5
+      ? `oklch(10% 0.02 ${hue})`
+      : `oklch(95% 0.02 ${hue})`;
+  } catch (error) {
+    return "oklch(0% 0 0)";
+  }
 };
 
 export const updateThemeProperty = (

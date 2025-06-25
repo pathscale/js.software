@@ -64,18 +64,8 @@ export default function ComponentsDemo() {
               </Button>
             </Flex>
             <Flex gap="sm" class="mt-3 flex-wrap">
-              <Badge color="primary">
-                Shoes
-                <Button variant="link" size="xs" class="ml-1 p-0 h-auto">
-                  <i class="icon-[mdi--close] w-3 h-3" />
-                </Button>
-              </Badge>
-              <Badge color="secondary">
-                Bags
-                <Button variant="link" size="xs" class="ml-1 p-0 h-auto">
-                  <i class="icon-[mdi--close] w-3 h-3" />
-                </Button>
-              </Badge>
+              <Badge color="primary">Shoes</Badge>
+              <Badge color="secondary">Bags</Badge>
             </Flex>
             <Flex direction="col" gap="sm" class="mt-4">
               <Flex justify="between" align="center">

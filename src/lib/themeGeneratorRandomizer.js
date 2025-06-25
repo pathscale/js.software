@@ -5,19 +5,8 @@ const depthValues = ["0", "1"];
 const noiseValues = ["0", "1"];
 const sizeValues = ["0.25rem"];
 
-const colorPairs = [
-  ["--color-base-100", "--color-base-content"],
-  ["--color-base-200", "--color-base-content"],
-  ["--color-base-300", "--color-base-content"],
-  ["--color-primary", "--color-primary-content"],
-  ["--color-secondary", "--color-secondary-content"],
-  ["--color-accent", "--color-accent-content"],
-  ["--color-neutral", "--color-neutral-content"],
-  ["--color-info", "--color-info-content"],
-  ["--color-success", "--color-success-content"],
-  ["--color-warning", "--color-warning-content"],
-  ["--color-error", "--color-error-content"],
-];
+
+import Color from "color";
 
 function parseOKLCH(oklchString) {
   const match = oklchString.match(/oklch\((\d+(?:\.\d+)?)%?\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/);
@@ -28,20 +17,44 @@ function parseOKLCH(oklchString) {
       h: parseFloat(match[3])
     };
   }
-  return { l: 50, c: 0.1, h: 0 }; // fallback
+  return { l: 50, c: 0.1, h: 0 };
+}
+
+function oklchToHex(oklch) {
+  try {
+    const match = oklch.match(/oklch\(([^%]+)%?\s+([^\s]+)\s+([^)]+)\)/);
+    if (!match) return "#ffffff";
+    const l = parseFloat(match[1]) / 100;
+    const c = parseFloat(match[2]);
+    const h = parseFloat(match[3]);
+    const hsl = `hsl(${h}, ${Math.min(c * 100, 100)}%, ${l * 100}%)`;
+    return Color(hsl).hex();
+  } catch (error) {
+    return "#ffffff";
+  }
 }
 
 function generateContrastColor(backgroundOKLCH) {
-  const parsed = parseOKLCH(backgroundOKLCH);
-  if (!parsed) return "oklch(0% 0 0)"; // fallback to black
-  
-  const { l, h } = parsed;
-  
-  // If background is light (L > 50%), use dark text
-  if (l > 50) {
-    return `oklch(20% 0.02 ${h || 0})`;
-  } else {
-    return `oklch(95% 0.02 ${h || 0})`;
+  try {
+    const hexColor = oklchToHex(backgroundOKLCH);
+    const color = Color(hexColor);
+    const luminosity = color.luminosity();
+    const parsed = parseOKLCH(backgroundOKLCH);
+    const h = parsed.h || 0;
+    if (luminosity > 0.5) {
+      return `oklch(15% 0.02 ${h})`;
+    } else {
+      return `oklch(98% 0.02 ${h})`;
+    }
+  } catch (error) {
+    const parsed = parseOKLCH(backgroundOKLCH);
+    if (!parsed) return "oklch(0% 0 0)";
+    const { l, h } = parsed;
+    if (l > 50) {
+      return `oklch(20% 0.02 ${h || 0})`;
+    } else {
+      return `oklch(95% 0.02 ${h || 0})`;
+    }
   }
 }
 
@@ -49,6 +62,36 @@ function selectRandomColor(tailwindcolors) {
   const colorKeys = Object.keys(tailwindcolors);
   const randomKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
   return tailwindcolors[randomKey];
+}
+
+// Improved color selection with accessibility consideration
+function selectAccessibleColorPair(tailwindcolors, preferredShades) {
+  const attempts = 10;
+  for (let i = 0; i < attempts; i++) {
+    const shade = preferredShades[Math.floor(Math.random() * preferredShades.length)];
+    const colorKeys = Object.keys(tailwindcolors).filter(key => key.endsWith(`-${shade}`));
+    if (colorKeys.length > 0) {
+      const randomKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+      const backgroundColor = tailwindcolors[randomKey];
+      const textColor = generateContrastColor(backgroundColor);
+      try {
+        const bgHex = oklchToHex(backgroundColor);
+        const textHex = oklchToHex(textColor);
+        const contrast = Color(bgHex).contrast(Color(textHex));
+        if (contrast >= 4.5) {
+          return backgroundColor;
+        }
+      } catch (error) {
+      }
+    }
+  }
+  const shade = preferredShades[Math.floor(Math.random() * preferredShades.length)];
+  const colorKeys = Object.keys(tailwindcolors).filter(key => key.endsWith(`-${shade}`));
+  if (colorKeys.length > 0) {
+    const randomKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+    return tailwindcolors[randomKey];
+  }
+  return selectRandomColor(tailwindcolors);
 }
 
 function selectColorFromFamily(tailwindcolors, colorNames, shades) {
@@ -200,35 +243,22 @@ export function randomizeThemeColors(tailwindcolors, colorPairs) {
           }
         }
       }
-      // Handle semantic colors with appropriate color families
       else if (backgroundColorKey === "--color-info") {
-        const semanticShade = randomFrom(["400", "500", "600"]);
-        selectedColor = selectColorFromFamily(
-          tailwindcolors,
-          ["cyan", "sky", "blue"],
-          [semanticShade]
-        );
+        const semanticShades = ["400", "500", "600"];
+        selectedColor = selectAccessibleColorPair(tailwindcolors, semanticShades) ||
+          selectColorFromFamily(tailwindcolors, ["cyan", "sky", "blue"], semanticShades);
       } else if (backgroundColorKey === "--color-success") {
-        const semanticShade = randomFrom(["400", "500", "600"]);
-        selectedColor = selectColorFromFamily(
-          tailwindcolors,
-          ["lime", "green", "emerald", "teal"],
-          [semanticShade]
-        );
+        const semanticShades = ["400", "500", "600"];
+        selectedColor = selectAccessibleColorPair(tailwindcolors, semanticShades) ||
+          selectColorFromFamily(tailwindcolors, ["lime", "green", "emerald", "teal"], semanticShades);
       } else if (backgroundColorKey === "--color-warning") {
-        const semanticShade = randomFrom(["400", "500", "600"]);
-        selectedColor = selectColorFromFamily(
-          tailwindcolors,
-          ["yellow", "amber", "orange"],
-          [semanticShade]
-        );
+        const semanticShades = ["400", "500", "600"];
+        selectedColor = selectAccessibleColorPair(tailwindcolors, semanticShades) ||
+          selectColorFromFamily(tailwindcolors, ["yellow", "amber", "orange"], semanticShades);
       } else if (backgroundColorKey === "--color-error") {
-        const semanticShade = randomFrom(["400", "500", "600"]);
-        selectedColor = selectColorFromFamily(
-          tailwindcolors,
-          ["red", "pink", "rose"],
-          [semanticShade]
-        );
+        const semanticShades = ["400", "500", "600"];
+        selectedColor = selectAccessibleColorPair(tailwindcolors, semanticShades) ||
+          selectColorFromFamily(tailwindcolors, ["red", "pink", "rose"], semanticShades);
       }
       // Handle brand colors (primary, secondary, accent, neutral)
       else if (
@@ -278,14 +308,18 @@ export function randomizeThemeColors(tailwindcolors, colorPairs) {
             ["600", "700", "800"]
           );
         } else {
-          const availableColors = generateWeightedArray(brandColorWeights);
-          const shuffledColors = shuffle(availableColors);
-          const colorName = shuffledColors[0];
-          selectedColor = selectColorFromFamily(
-            tailwindcolors,
-            [colorName],
-            [brandShades]
-          );
+          const brandShadeArray = [brandShades];
+          selectedColor = selectAccessibleColorPair(tailwindcolors, brandShadeArray);
+          if (!selectedColor) {
+            const availableColors = generateWeightedArray(brandColorWeights);
+            const shuffledColors = shuffle(availableColors);
+            const colorName = shuffledColors[0];
+            selectedColor = selectColorFromFamily(
+              tailwindcolors,
+              [colorName],
+              brandShadeArray
+            );
+          }
         }
       } else {
         // Fallback: select any random color

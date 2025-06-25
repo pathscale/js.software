@@ -60,6 +60,8 @@
     "tailwindcss": "^4.0.7",
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "^1.2.9",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "@types/color": "^4.2.0",
+    "color": "^5.0.0"
   }
 }
