@@ -1,16 +1,15 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@plugin "@iconify/tailwind4";
 @plugin "daisyui";
 @source "../node_modules/@pathscale/ui/";
+@import "tailwindcss";
+@import "tw-animate-css";
 @import "@pathscale/ui/dist/sidenav/Sidenav.css";
 @import "@pathscale/ui/dist/styles/icons/generated-icons.css";
-@plugin "@iconify/tailwind4";
-
+@import "daisyui/components/diff.css";
 @import "./styles/themes/generated.css";
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
 }
