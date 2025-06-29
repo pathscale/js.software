@@ -1,5 +1,6 @@
 /**
- * Main theme generation logic
+ * Main theme generation logic - improved with LCH color science
+ * Maintains same API but uses chroma.js and scientific color harmony
  */
 
 import {
@@ -10,28 +11,25 @@ import {
 } from "../types/theme";
 import {
   COLOR_PAIRS,
-  DEFAULT_BRAND_COLOR_WEIGHTS,
-  SHADE_PREFERENCES,
-  BASE_COLOR_FAMILIES,
   RADIUS_VALUES,
   BORDER_VALUES,
   THEME_PROPERTY_VALUES,
 } from "../colors/palettes";
 import { generateContrastColor } from "../utils/theme/contrastCalculation";
+import { createOklchColor } from "../utils/theme/colorConversion";
 import {
-  selectRandomColor,
-  getRandomWeightedArray,
-  selectColorFromFamily,
-  selectAccessibleColorPair,
-  findExistingColorFamily,
-  selectBrandColor,
-  selectSemanticColor,
+  generateSemanticHues,
   generateBaseColors,
-  extractColorFamily,
+  selectSemanticColor,
+  selectBrandColor,
+  generateLCHColor,
+  // Keep legacy functions for compatibility
+  selectRandomColor,
+  findExistingColorFamily,
 } from "../utils/theme/colorSelection";
 
 /**
- * Generate a random theme with Material Design colors
+ * Generate a random theme using LCH color science instead of palette selection
  */
 export function generateRandomTheme(
   palette: ColorPalette,
@@ -55,10 +53,21 @@ export function generateRandomTheme(
     isDarkTheme = Math.random() > 0.5;
   }
 
-  const themeType: ThemeType = isDarkTheme ? "dark" : "light";
-  const shadePrefs = SHADE_PREFERENCES[themeType];
+  // Add theme type information after determining it
+  newColors._themeType = isDarkTheme ? "dark" : "light";
 
-  // Generate colors using the color pairs approach
+  // SCIENTIFIC COLOR GENERATION (new approach based on articles)
+
+  // 1. Generate primary hue - this drives all color harmony
+  const primaryHue = (options as any)._primaryHue || Math.random() * 360;
+
+  // 2. Generate semantic hues using proper color theory
+  const semanticHues = generateSemanticHues(primaryHue);
+
+  // 3. Generate base colors using perceptually uniform lightness
+  const baseColors = generateBaseColors(primaryHue, isDarkTheme);
+
+  // 4. Apply scientific color generation to theme structure
   for (const {
     background: backgroundColorKey,
     content: contentColorKey,
@@ -66,33 +75,11 @@ export function generateRandomTheme(
     if (!newColors[backgroundColorKey]) {
       let selectedColor: string;
 
-      // Handle base colors specially - they should be from the same family
+      // Handle base colors with perceptually uniform scales
       if (
         backgroundColorKey.startsWith("--color-base") &&
         !backgroundColorKey.endsWith("-content")
       ) {
-        // Get or create the base color family
-        let baseColorName =
-          options.baseColorFamily ||
-          findExistingColorFamily(newColors, palette);
-
-        // If no base color family found, select one
-        if (!baseColorName) {
-          const baseColorNames = getRandomWeightedArray(
-            BASE_COLOR_FAMILIES as string[][],
-            0.3
-          ); // 70% chance of neutral colors
-          baseColorName =
-            baseColorNames[Math.floor(Math.random() * baseColorNames.length)];
-        }
-
-        // Generate the appropriate base color based on theme and position
-        const baseColors = generateBaseColors(
-          palette,
-          baseColorName,
-          isDarkTheme
-        );
-
         if (backgroundColorKey === "--color-base-100") {
           selectedColor = baseColors.base100;
         } else if (backgroundColorKey === "--color-base-200") {
@@ -103,60 +90,38 @@ export function generateRandomTheme(
           selectedColor = baseColors.base100; // fallback
         }
       }
-      // Handle semantic colors
+      // Handle semantic colors using color harmony
       else if (backgroundColorKey === "--color-info") {
-        selectedColor =
-          selectAccessibleColorPair(palette, [...shadePrefs.semantic]) ||
-          selectSemanticColor(palette, "info", [...shadePrefs.semantic]);
+        selectedColor = selectSemanticColor("info", primaryHue, isDarkTheme);
       } else if (backgroundColorKey === "--color-success") {
-        selectedColor =
-          selectAccessibleColorPair(palette, [...shadePrefs.semantic]) ||
-          selectSemanticColor(palette, "success", [...shadePrefs.semantic]);
+        selectedColor = selectSemanticColor("success", primaryHue, isDarkTheme);
       } else if (backgroundColorKey === "--color-warning") {
-        // Always use semantic color selection for warning (it has stricter logic)
-        selectedColor = selectSemanticColor(
-          palette,
-          "warning",
-          [...shadePrefs.semantic]
-        );
+        selectedColor = selectSemanticColor("warning", primaryHue, isDarkTheme);
       } else if (backgroundColorKey === "--color-error") {
-        selectedColor =
-          selectAccessibleColorPair(palette, [...shadePrefs.semantic]) ||
-          selectSemanticColor(palette, "error", [...shadePrefs.semantic]);
+        selectedColor = selectSemanticColor("error", primaryHue, isDarkTheme);
       }
-      // Handle brand colors (primary, secondary, accent, neutral)
-      else if (
-        backgroundColorKey.match(/^--color-(primary|secondary|accent|neutral)$/)
-      ) {
-        const brandShades = shadePrefs.brand;
-        const brandColorWeights =
-          options.brandColorWeights || DEFAULT_BRAND_COLOR_WEIGHTS;
-
-        if (backgroundColorKey === "--color-neutral") {
-          // Neutral should match base color family but in middle range
-          const baseColorName =
-            findExistingColorFamily(newColors, palette) || "gray";
-          selectedColor = selectColorFromFamily(
-            palette,
-            [baseColorName],
-            [...shadePrefs.neutral]
-          );
-        } else {
-          selectedColor =
-            selectAccessibleColorPair(palette, [...brandShades]) ||
-            selectBrandColor(palette, brandColorWeights, [...brandShades]);
-        }
+      // Handle brand colors using color harmony
+      else if (backgroundColorKey === "--color-primary") {
+        selectedColor = selectBrandColor("primary", primaryHue, isDarkTheme);
+      } else if (backgroundColorKey === "--color-secondary") {
+        selectedColor = selectBrandColor("secondary", primaryHue, isDarkTheme);
+      } else if (backgroundColorKey === "--color-accent") {
+        selectedColor = selectBrandColor("accent", primaryHue, isDarkTheme);
+      } else if (backgroundColorKey === "--color-neutral") {
+        // FIXED: Neutral color with proper lightness
+        const neutralLightness = isDarkTheme ? 50 : 60;
+        selectedColor = createOklchColor(neutralLightness, 0.01, primaryHue);
       } else {
-        // Fallback: select any random color
+        // Fallback: select from palette (legacy compatibility)
         selectedColor = selectRandomColor(palette);
       }
 
       newColors[backgroundColorKey] = selectedColor;
     }
 
-    // Generate content color only if not already set
+    // Generate content color using improved contrast logic
     if (!newColors[contentColorKey]) {
-      // Special handling for base-content: it should contrast with base-100 (primary background)
+      // Special handling for base-content: it should contrast with base-100
       if (contentColorKey === "--color-base-content") {
         const base100Color =
           newColors["--color-base-100"] || newColors[backgroundColorKey];
@@ -169,7 +134,7 @@ export function generateRandomTheme(
     }
   }
 
-  // Add additional theme properties
+  // Add additional theme properties (unchanged)
   newColors["--radius-selector"] = randomFrom([...RADIUS_VALUES]);
   newColors["--radius-field"] = randomFrom([...RADIUS_VALUES]);
   newColors["--radius-box"] = randomFrom([...RADIUS_VALUES]);
@@ -183,7 +148,7 @@ export function generateRandomTheme(
 }
 
 /**
- * Generate multiple theme variations
+ * Generate multiple theme variations (improved with color harmony)
  */
 export function generateThemeVariations(
   palette: ColorPalette,
@@ -192,30 +157,44 @@ export function generateThemeVariations(
 ): Theme[] {
   const themes: Theme[] = [];
 
+  // Generate a base hue and create harmonious variations
+  const baseHue = Math.random() * 360;
+
   for (let i = 0; i < count; i++) {
-    themes.push(generateRandomTheme(palette, options));
+    // Create harmonious hue shifts
+    const hueShift = (360 / count) * i;
+    const variantHue = (baseHue + hueShift) % 360;
+
+    // Force the same theme type for variations if specified
+    const variantOptions = {
+      ...options,
+      _primaryHue: variantHue, // Internal parameter for hue control
+    };
+
+    themes.push(generateRandomTheme(palette, variantOptions));
   }
 
   return themes;
 }
 
 /**
- * Generate light/dark theme pair
+ * Generate light/dark theme pair with shared color harmony
  */
 export function generateThemePair(
   palette: ColorPalette,
   baseColorFamily?: string
 ): { light: Theme; dark: Theme } {
-  const sharedOptions = { baseColorFamily };
+  // Generate a primary hue for both themes
+  const primaryHue = Math.random() * 360;
 
   return {
     light: generateRandomTheme(palette, {
-      ...sharedOptions,
       forceLightTheme: true,
+      _primaryHue: primaryHue,
     }),
     dark: generateRandomTheme(palette, {
-      ...sharedOptions,
       forceDarkTheme: true,
+      _primaryHue: primaryHue,
     }),
   };
 }

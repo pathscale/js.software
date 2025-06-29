@@ -18,7 +18,7 @@ export interface ColorFamily {
 
 export interface ColorPair {
   background: string; // CSS variable name like "--color-primary"
-  content: string;    // CSS variable name like "--color-primary-content"
+  content: string; // CSS variable name like "--color-primary-content"
 }
 
 export interface ColorGroup {
@@ -36,26 +36,35 @@ export interface ThemeGenerationOptions {
   baseColorFamily?: string;
   brandColorWeights?: BrandColorWeights;
   preferredShades?: string[];
+  _primaryHue?: number; // Internal property for color harmony control
 }
 
 export interface AccessibilityOptions {
   minContrastRatio?: number; // Default: 4.5 (WCAG AA)
-  maxAttempts?: number;      // Default: 10
+  maxAttempts?: number; // Default: 10
 }
 
-export type ColorType = 
-  | 'base'
-  | 'primary' 
-  | 'secondary' 
-  | 'accent' 
-  | 'neutral'
-  | 'info' 
-  | 'success' 
-  | 'warning' 
-  | 'error';
+export type ColorType =
+  | "base"
+  | "primary"
+  | "secondary"
+  | "accent"
+  | "neutral"
+  | "info"
+  | "success"
+  | "warning"
+  | "error";
 
-export type ThemeType = 'light' | 'dark';
+export type ThemeType = "light" | "dark";
 
-export type ShadeLevel = 
-  | '50' | '100' | '200' | '300' | '400' 
-  | '500' | '600' | '700' | '800' | '900';
+export type ShadeLevel =
+  | "50"
+  | "100"
+  | "200"
+  | "300"
+  | "400"
+  | "500"
+  | "600"
+  | "700"
+  | "800"
+  | "900";

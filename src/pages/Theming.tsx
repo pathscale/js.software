@@ -12,19 +12,32 @@ import ColorPickerPopover from "../components/theming/ColorPickerPopover";
 import ThemeCSSModal from "../components/theming/ThemeCSSModal";
 
 export default function Theming() {
-  const [currentTheme, setCurrentTheme] = createSignal<Theme>(
-    generateRandomTheme()
-  );
+  const initialTheme = generateRandomTheme();
+  const [currentTheme, setCurrentTheme] = createSignal<Theme>(initialTheme);
   const [showColorPicker, setShowColorPicker] = createSignal(false);
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
   const [pickerPosition, setPickerPosition] = createSignal({ x: 0, y: 0 });
   const [showCSSModal, setShowCSSModal] = createSignal(false);
-  const [themeOptions, setThemeOptions] = createSignal({ isDefault: false, isPrefersDark: false, colorScheme: "light" as "light" | "dark" });
+  
+  // Detect initial theme type automatically
+  const initialIsDark = (initialTheme as any)._themeType === "dark";
+  const [themeOptions, setThemeOptions] = createSignal({ 
+    isDefault: false, 
+    isPrefersDark: false, 
+    colorScheme: initialIsDark ? "dark" : "light" as "light" | "dark" 
+  });
   const [dockActiveItem] = createSignal("editor");
 
   const randomizeTheme = () => {
     const newTheme = generateRandomTheme();
     setCurrentTheme(newTheme);
+    
+    // Update theme options based on generated theme
+    const isDark = (newTheme as any)._themeType === "dark";
+    setThemeOptions(prev => ({
+      ...prev,
+      colorScheme: isDark ? "dark" : "light"
+    }));
   };
 
   const openColorPicker = (colorKey: string, event: MouseEvent) => {
