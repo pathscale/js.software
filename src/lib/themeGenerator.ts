@@ -13,10 +13,7 @@ import {
 import { generateAccessibleTextColor } from "../utils/theme/contrastCalculation";
 import { createOklchColor } from "../utils/theme/colorConversion";
 import {
-  generateSemanticHues,
-  generateBaseColors,
-  selectSemanticColor,
-  selectBrandColor,
+  generateRandomMaterialTheme,
   selectColorFromFamily,
 } from "../utils/theme/colorSelection";
 
@@ -41,9 +38,9 @@ export function generateRandomTheme(
 
   newColors._themeType = isDarkTheme ? "dark" : "light";
 
-  const primaryHue = (options as any)._primaryHue || Math.random() * 360;
-  const semanticHues = generateSemanticHues(primaryHue);
-  const baseColors = generateBaseColors(primaryHue, isDarkTheme);
+  const materialTheme = generateRandomMaterialTheme(isDarkTheme);
+  const { baseColors, semanticColors, brandColors, primaryHue } = materialTheme;
+
   for (const {
     background: backgroundColorKey,
     content: contentColorKey,
@@ -65,25 +62,25 @@ export function generateRandomTheme(
           selectedColor = baseColors.base100;
         }
       } else if (backgroundColorKey === "--color-info") {
-        selectedColor = selectSemanticColor("info", primaryHue, isDarkTheme);
+        selectedColor = semanticColors.info;
       } else if (backgroundColorKey === "--color-success") {
-        selectedColor = selectSemanticColor("success", primaryHue, isDarkTheme);
+        selectedColor = semanticColors.success;
       } else if (backgroundColorKey === "--color-warning") {
-        selectedColor = selectSemanticColor("warning", primaryHue, isDarkTheme);
+        selectedColor = semanticColors.warning;
       } else if (backgroundColorKey === "--color-error") {
-        selectedColor = selectSemanticColor("error", primaryHue, isDarkTheme);
+        selectedColor = semanticColors.error;
       } else if (backgroundColorKey === "--color-primary") {
-        selectedColor = selectBrandColor("primary", primaryHue, isDarkTheme);
+        selectedColor = brandColors.primary;
       } else if (backgroundColorKey === "--color-secondary") {
-        selectedColor = selectBrandColor("secondary", primaryHue, isDarkTheme);
+        selectedColor = brandColors.secondary;
       } else if (backgroundColorKey === "--color-accent") {
-        selectedColor = selectBrandColor("accent", primaryHue, isDarkTheme);
+        selectedColor = brandColors.accent;
       } else if (backgroundColorKey === "--color-neutral") {
-        const neutralLightness = isDarkTheme ? 50 : 60;
+        const neutralLightness = isDarkTheme ? 20 : 90;
         selectedColor = createOklchColor(neutralLightness, 0.01, primaryHue);
       } else {
         const colorFamilies = new Set(
-          Object.keys(palette).map(key => {
+          Object.keys(palette).map((key) => {
             const parts = key.split("-");
             return parts.length > 1 ? parts[0] : key;
           })
