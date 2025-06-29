@@ -82,7 +82,13 @@ export function generateRandomTheme(
         const neutralLightness = isDarkTheme ? 50 : 60;
         selectedColor = createOklchColor(neutralLightness, 0.01, primaryHue);
       } else {
-        const colorNames = Object.keys(palette).map((key) => key.split("-")[0]);
+        const colorFamilies = new Set(
+          Object.keys(palette).map(key => {
+            const parts = key.split("-");
+            return parts.length > 1 ? parts[0] : key;
+          })
+        );
+        const colorNames = Array.from(colorFamilies);
         const shades: ShadeLevel[] = [
           "50",
           "100",

@@ -25,33 +25,32 @@ import {
   getColorLabel,
 } from "../lib/themeIndex";
 
-// Legacy Tailwind colors (deprecated - use MATERIAL_COLORS instead)
+import chroma from "chroma-js";
+import { createOklchColor } from "./theme/colorConversion";
+
+const generateTailwindColorScale = (baseHue: number, baseChroma: number = 0.04) => {
+  const postmarkScale = [98, 93.3, 88.6, 79.9, 71.2, 60.5, 49.8, 38.4, 27, 15.6, 12];
+  const shades = ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "950"];
+  
+  const colors: Record<string, string> = {};
+  postmarkScale.forEach((lightness, index) => {
+    const adjustedChroma = lightness > 85 || lightness < 20 ? baseChroma * 0.6 : baseChroma;
+    const color = chroma.lch(lightness, adjustedChroma, baseHue);
+    const [l, c, h] = color.oklch();
+    colors[shades[index]] = createOklchColor(Math.round(l * 100), c, h || baseHue);
+  });
+  
+  return colors;
+};
+
+const slateColors = generateTailwindColorScale(250, 0.02);
+const grayColors = generateTailwindColorScale(260, 0.015);
+
 export const TAILWIND_COLORS = {
-  "slate-50": "oklch(98% 0.003 247.858)",
-  "slate-100": "oklch(96% 0.007 247.896)",
-  "slate-200": "oklch(92% 0.013 255.508)",
-  "slate-300": "oklch(86% 0.022 252.894)",
-  "slate-400": "oklch(70% 0.04 256.788)",
-  "slate-500": "oklch(55% 0.046 257.417)",
-  "slate-600": "oklch(44% 0.043 257.281)",
-  "slate-700": "oklch(37% 0.044 257.287)",
-  "slate-800": "oklch(27% 0.041 260.031)",
-  "slate-900": "oklch(20% 0.042 265.755)",
-  "slate-950": "oklch(12% 0.042 264.695)",
-  "gray-50": "oklch(98% 0.002 247.839)",
-  "gray-100": "oklch(96% 0.003 264.542)",
-  "gray-200": "oklch(92% 0.006 264.531)",
-  "gray-300": "oklch(87% 0.01 258.338)",
-  "gray-400": "oklch(70% 0.022 261.325)",
-  "gray-500": "oklch(55% 0.027 264.364)",
-  "gray-600": "oklch(44% 0.03 256.802)",
-  "gray-700": "oklch(37% 0.034 259.733)",
-  "gray-800": "oklch(27% 0.033 256.848)",
-  "gray-900": "oklch(21% 0.034 264.665)",
-  "gray-950": "oklch(13% 0.028 261.692)",
-  // ... (truncated for brevity, includes all Tailwind colors)
-  white: "oklch(100% 0 0)",
-  black: "oklch(0% 0 0)",
+  ...Object.fromEntries(Object.entries(slateColors).map(([shade, color]) => [`slate-${shade}`, color])),
+  ...Object.fromEntries(Object.entries(grayColors).map(([shade, color]) => [`gray-${shade}`, color])),
+  white: createOklchColor(100, 0, 0),
+  black: createOklchColor(0, 0, 0),
 };
 
 // Legacy function exports for backwards compatibility

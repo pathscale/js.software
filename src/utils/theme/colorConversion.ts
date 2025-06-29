@@ -7,26 +7,19 @@ export const convertHexToOklch = (hex: string): string => {
     const [l, c, h] = color.oklch();
     return createOklchColor(Math.round(l * 100), c, h || 0);
   } catch (error) {
-    return "oklch(50% 0.1 0)";
+    const fallbackColor = chroma.oklch(0.5, 0.1, 0);
+    const [l, c, h] = fallbackColor.oklch();
+    return createOklchColor(Math.round(l * 100), c, h);
   }
 };
 
 export const convertOklchToHex = (oklchString: string): string => {
   try {
-    const match = oklchString.match(
-      /oklch\((\d+(?:\.\d+)?)%\s+(\d*\.?\d+)\s+(\d+(?:\.\d+)?)\)/
-    );
-    if (!match) return "#ffffff";
-
-    const [, l, c, h] = match;
-    const color = chroma.oklch(
-      parseFloat(l) / 100,
-      parseFloat(c),
-      parseFloat(h)
-    );
+    const color = chroma(oklchString);
     return color.hex();
   } catch (error) {
-    return "#ffffff";
+    const fallbackColor = chroma.oklch(0.5, 0.1, 0);
+    return fallbackColor.hex();
   }
 };
 

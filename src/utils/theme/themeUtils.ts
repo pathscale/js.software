@@ -1,5 +1,6 @@
+import chroma from "chroma-js";
 import { Theme, ColorGroup } from "../../types/theme";
-import { convertHexToOklch, convertOklchToHex } from "./colorConversion";
+import { convertHexToOklch, convertOklchToHex, createOklchColor } from "./colorConversion";
 import { generateAccessibleTextColor } from "./contrastCalculation";
 
 export const updateThemeColor = (
@@ -38,15 +39,21 @@ export const getColorBackgroundStyle = (
 
   if (groupName === "base") {
     if (isContentColor) {
-      return theme["--color-base-100"] || "oklch(100% 0 0)";
+      const fallback = chroma.oklch(1, 0, 0);
+      const [l, c, h] = fallback.oklch();
+      return theme["--color-base-100"] || createOklchColor(Math.round(l * 100), c, h);
     } else {
-      return theme[colorKey] || "oklch(50% 0.1 180)";
+      const fallback = chroma.oklch(0.5, 0.1, 180);
+      const [l, c, h] = fallback.oklch();
+      return theme[colorKey] || createOklchColor(Math.round(l * 100), c, h);
     }
   } else {
     const mainColorKey = isContentColor
       ? colorKey.replace("-content", "")
       : colorKey;
-    return theme[mainColorKey] || "oklch(50% 0.1 180)";
+    const fallback = chroma.oklch(0.5, 0.1, 180);
+    const [l, c, h] = fallback.oklch();
+    return theme[mainColorKey] || createOklchColor(Math.round(l * 100), c, h);
   }
 };
 
@@ -58,13 +65,17 @@ export const getColorTextStyle = (
   const isContentColor = colorKey.endsWith("-content");
 
   if (groupName === "base") {
-    return theme["--color-base-content"] || "oklch(0% 0 0)";
+    const fallback = chroma.oklch(0, 0, 0);
+    const [l, c, h] = fallback.oklch();
+    return theme["--color-base-content"] || createOklchColor(Math.round(l * 100), c, h);
   } else {
     const mainColorKey = isContentColor
       ? colorKey.replace("-content", "")
       : colorKey;
     const contentColorKey = mainColorKey + "-content";
-    return theme[contentColorKey] || "oklch(100% 0 0)";
+    const fallback = chroma.oklch(1, 0, 0);
+    const [l, c, h] = fallback.oklch();
+    return theme[contentColorKey] || createOklchColor(Math.round(l * 100), c, h);
   }
 };
 

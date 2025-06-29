@@ -12,10 +12,10 @@ export const calculateContrastRatio = (
   color2: string
 ): number => {
   try {
-    const hex1 = color1.startsWith("#") ? color1 : convertOklchToHex(color1);
-    const hex2 = color2.startsWith("#") ? color2 : convertOklchToHex(color2);
-
-    return chroma.contrast(hex1, hex2);
+    const chromaColor1 = chroma(color1);
+    const chromaColor2 = chroma(color2);
+    
+    return chroma.contrast(chromaColor1, chromaColor2);
   } catch (error) {
     return 1;
   }
@@ -26,15 +26,11 @@ export const calculateAPCAContrast = (
   backgroundColor: string
 ): number => {
   try {
-    const textHex = textColor.startsWith("#")
-      ? textColor
-      : convertOklchToHex(textColor);
-    const bgHex = backgroundColor.startsWith("#")
-      ? backgroundColor
-      : convertOklchToHex(backgroundColor);
+    const textChroma = chroma(textColor);
+    const bgChroma = chroma(backgroundColor);
 
-    const textRGB = chroma(textHex).rgb();
-    const bgRGB = chroma(bgHex).rgb();
+    const textRGB = textChroma.rgb();
+    const bgRGB = bgChroma.rgb();
 
     const toLinear = (val: number) => {
       val = val / 255;
@@ -105,8 +101,9 @@ export const generateAccessibleTextColor = (
     }
   }
 
-  const fallbackLightness = bgL > 50 ? 0 : 100;
-  return createOklchColor(fallbackLightness, 0, 0);
+  const fallbackColor = chroma.oklch(bgL > 50 ? 0 : 1, 0, 0);
+  const [l, c, h] = fallbackColor.oklch();
+  return createOklchColor(Math.round(l * 100), c, h);
 };
 
 export const validateThemeAccessibility = (
