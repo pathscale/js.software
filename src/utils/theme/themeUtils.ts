@@ -4,7 +4,10 @@
 
 import { Theme, ColorType, ColorGroup } from "../../types/theme";
 import { convertHexToOklch, convertOklchToHex } from "./colorConversion";
-import { generateContrastColor, validateThemeAccessibility } from "./contrastCalculation";
+import {
+  generateAccessibleTextColor,
+  validateThemeAccessibility,
+} from "./contrastCalculation";
 import { COLOR_GROUPS } from "../../colors/palettes";
 
 /**
@@ -19,13 +22,13 @@ export const updateThemeColor = (
   const oklchColor = colorValue.startsWith("#")
     ? convertHexToOklch(colorValue)
     : colorValue;
-  
+
   const newTheme = { ...theme, [colorKey]: oklchColor };
 
   // Auto-generate content color if updating a background color
   if (!colorKey.includes("-content")) {
     const contentKey = colorKey + "-content";
-    newTheme[contentKey] = generateContrastColor(oklchColor);
+    newTheme[contentKey] = generateAccessibleTextColor(oklchColor);
   }
 
   return newTheme;
@@ -113,12 +116,15 @@ export const generateThemeStyleString = (theme: Theme): string => {
 /**
  * Apply theme to DOM
  */
-export const applyThemeToDOM = (theme: Theme, targetElement?: HTMLElement): void => {
+export const applyThemeToDOM = (
+  theme: Theme,
+  targetElement?: HTMLElement
+): void => {
   const element = targetElement || document.documentElement;
   const styleString = generateThemeStyleString(theme);
-  
+
   // Parse and apply individual CSS variables
-  styleString.split(";").forEach(declaration => {
+  styleString.split(";").forEach((declaration) => {
     const [property, value] = declaration.split(":");
     if (property && value) {
       element.style.setProperty(property.trim(), value.trim());
@@ -129,34 +135,38 @@ export const applyThemeToDOM = (theme: Theme, targetElement?: HTMLElement): void
 /**
  * Extract theme from DOM
  */
-export const extractThemeFromDOM = (targetElement?: HTMLElement): Partial<Theme> => {
+export const extractThemeFromDOM = (
+  targetElement?: HTMLElement
+): Partial<Theme> => {
   const element = targetElement || document.documentElement;
   const computedStyle = getComputedStyle(element);
   const theme: Partial<Theme> = {};
-  
+
   // Extract all CSS custom properties that match our theme structure
-  const colorKeys = COLOR_GROUPS.flatMap(group => group.colors);
-  
-  colorKeys.forEach(key => {
+  const colorKeys = COLOR_GROUPS.flatMap((group) => group.colors);
+
+  colorKeys.forEach((key) => {
     const value = computedStyle.getPropertyValue(key).trim();
     if (value) {
       theme[key] = value;
     }
   });
-  
+
   return theme;
 };
 
 /**
  * Validate theme completeness
  */
-export const validateThemeCompleteness = (theme: Theme): { 
-  isComplete: boolean; 
-  missingKeys: string[] 
+export const validateThemeCompleteness = (
+  theme: Theme
+): {
+  isComplete: boolean;
+  missingKeys: string[];
 } => {
-  const requiredKeys = COLOR_GROUPS.flatMap(group => group.colors);
-  const missingKeys = requiredKeys.filter(key => !(key in theme));
-  
+  const requiredKeys = COLOR_GROUPS.flatMap((group) => group.colors);
+  const missingKeys = requiredKeys.filter((key) => !(key in theme));
+
   return {
     isComplete: missingKeys.length === 0,
     missingKeys,
@@ -168,7 +178,7 @@ export const validateThemeCompleteness = (theme: Theme): {
  */
 export const convertThemeToHex = (theme: Theme): Record<string, string> => {
   const hexTheme: Record<string, string> = {};
-  
+
   Object.entries(theme).forEach(([key, value]) => {
     if (key.startsWith("--color-")) {
       hexTheme[key] = convertOklchToHex(value);
@@ -176,7 +186,7 @@ export const convertThemeToHex = (theme: Theme): Record<string, string> => {
       hexTheme[key] = value;
     }
   });
-  
+
   return hexTheme;
 };
 
@@ -193,13 +203,14 @@ export const getColorGroups = (): ColorGroup[] => {
 export const analyzeTheme = (theme: Theme) => {
   const accessibility = validateThemeAccessibility(theme);
   const completeness = validateThemeCompleteness(theme);
-  
+
   return {
     accessibility,
     completeness,
     summary: {
       isValid: accessibility.isValid && completeness.isComplete,
-      totalIssues: accessibility.violations.length + completeness.missingKeys.length,
-    }
+      totalIssues:
+        accessibility.violations.length + completeness.missingKeys.length,
+    },
   };
 };
