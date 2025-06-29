@@ -1,3 +1,53 @@
+/**
+ * ACCESSIBLE THEME GENERATION SYSTEM
+ * 
+ * Implementation strictly following three key sources:
+ * 1. Wildbit: "Accessible Palette: stop using HSL for color systems"
+ *    https://www.wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems
+ * 2. Chroma.js documentation: https://gka.github.io/chroma.js/
+ * 3. AccessiblePalette.com tool methodology
+ * 
+ * CORE IMPLEMENTATION PRINCIPLES:
+ * 
+ * 1. LCh COLOR SPACE (Wildbit + Chroma.js)
+ *    - chroma.lch(lightness, chroma, hue) for perceptually uniform generation
+ *    - OKLCH conversion for CSS compatibility
+ *    - Abandons HSL completely per Wildbit recommendations
+ * 
+ * 2. EXACT ACCESSIBLE PALETTE LIGHTNESS SCALE
+ *    - Fixed scale: [98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20]
+ *    - Light themes: positions [0,1,2] = [98.2, 96.5, 94]
+ *    - Dark themes: positions [8,7,6] = [28, 41, 49.5]
+ *    - Semantic colors: position 7 (dark) / 5 (light) = [41, 65]
+ *    - Brand colors: fixed positions per hierarchy (primary: 49.5/77, secondary: 41/89.5, accent: 28/65)
+ * 
+ * 3. CONTROLLED CHROMA SYSTEM
+ *    - getChromaForLightness() reduces chroma at extremes per Wildbit methodology
+ *    - Base colors: chroma 15
+ *    - Semantic colors: chroma 40
+ *    - Brand colors: chroma 30-50 based on hierarchy
+ *    - Hue-specific adjustments (yellows 0.8x, blues 1.1x)
+ * 
+ * 4. MATHEMATICAL HUE RELATIONSHIPS
+ *    - Semantic colors: precise 90°, 180°, 270° offsets from primary hue
+ *    - Hue compensation prevents unnatural color shifts across lightness
+ *    - No random variation - fixed mathematical relationships
+ * 
+ * 5. DUAL ACCESSIBILITY VALIDATION
+ *    - WCAG 2.1: 4.5:1 minimum contrast ratio
+ *    - APCA (WCAG 3): 60+ score minimum per Wildbit recommendation
+ *    - Automatic text color generation meeting both standards
+ * 
+ * 6. MATERIAL DESIGN COLOR FOUNDATION
+ *    - Random selection from 17 Material Design colors only
+ *    - No warm/cool/neutral variations (not mentioned in sources)
+ *    - LCh hue extraction preserves color relationships
+ * 
+ * This system generates themes with consistent perceived lightness, mathematical
+ * color harmony, and guaranteed accessibility compliance using scientific color
+ * theory rather than HSL's perceptual limitations.
+ */
+
 import { createSignal } from "solid-js";
 import Preview from "../components/Preview";
 import {

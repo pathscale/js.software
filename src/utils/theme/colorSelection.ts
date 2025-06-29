@@ -1,62 +1,7 @@
-/**
- * Scientific Color Selection using LCh Color Science
- *
- * Implementation based on two key articles:
- * 1. Wildbit: "Stop using HSL for color systems" (https://www.wildbit.com/blog/accessible-palette-stop-using-hsl-for-color-systems)
- * 2. Chroma.js Documentation (https://gka.github.io/chroma.js/)
- *
- * CORE PRINCIPLES APPLIED:
- *
- * 1. ABANDON HSL COMPLETELY (Wildbit principle)
- *    - HSL uses mathematical transformations that don't reflect human color perception
- *    - Colors like blue appear darker than yellow despite same HSL lightness values
- *    - Our implementation: Zero HSL usage, pure LCh color space throughout
- *
- * 2. PERCEPTUALLY UNIFORM LIGHTNESS (Wildbit + Chroma.js)
- *    - Use LCh lightness which closely matches human visual perception
- *    - Material Design lightness scale: 98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20
- *    - Our implementation: Direct use of Material Design lightness values
- *
- * 3. CONTROLLED CHROMA FOR COLOR VISIBILITY (Wildbit principle)
- *    - Chroma availability varies with lightness (fewer colors at extremes)
- *    - Higher chroma at mid-range lightness, reduced at black/white extremes
- *    - Our implementation: Dynamic chroma adjustment based on lightness position
- *
- * 4. SCIENTIFIC COLOR HARMONY (Chroma.js methodology)
- *    - Use mathematically precise hue relationships: 0°, 90°, 180°, 270°
- *    - Generate color scales using chroma.scale() with LCh interpolation
- *    - Our implementation: Semantic colors use precise angular relationships
- *
- * 5. ACCESSIBILITY-FIRST CONTRAST (Wildbit requirement)
- *    - Dual standard: WCAG 2.1 + APCA (Advanced Perceptual Contrast Algorithm)
- *    - APCA score 60 minimum for readable text (Wildbit recommendation)
- *    - Our implementation: Both WCAG and APCA validation in contrast calculations
- *
- * 6. SYSTEMATIC PALETTE GENERATION (Both articles)
- *    - Start with base colors, customize lightness levels, control contrast ratios
- *    - Use chroma.lch() constructor for precise color generation
- *    - Our implementation: Three-tier system (base: chroma 8, semantic: chroma 40, brand: chroma 50)
- *
- * HOW THIS CODE IMPLEMENTS THE PRINCIPLES:
- * - generateLightnessScale(): Uses exact Material Design lightness values with dynamic chroma
- * - generateSemanticHues(): Mathematical hue relationships (90°, 180°, 270° offsets)
- * - selectSemanticColor/selectBrandColor(): LCh constructor with controlled chroma levels
- * - All functions: Convert to OKLCH for CSS compatibility while maintaining LCh science
- *
- * KEY FEATURES:
- * - Bezier curve interpolation for smooth color transitions
- * - Hue compensation for visual consistency across lightness levels
- * - Support for both LAB and RGB color space interpolation
- * - Brand color preservation at specific lightness levels
- * - URL-based configuration sharing
- * - Complete accessibility validation with WCAG and APCA
- */
-
 import chroma from "chroma-js";
 import { ColorPalette, ShadeLevel } from "../../types/theme";
-import { createOklchColor, convertOklchToHex } from "./colorConversion";
+import { createOklchColor } from "./colorConversion";
 import {
-  generateAccessibleTextColor,
   calculateContrastRatio,
   calculateAPCAContrast,
 } from "./contrastCalculation";
@@ -118,18 +63,17 @@ export function generateLightnessScale(
   chromaLevel: number,
   isDarkTheme: boolean,
   customLightnessLevels?: number[],
-  hueShift?: number,
-  colorSpace: "lab" | "rgb" = "lab"
+  hueShift?: number
 ): { base100: string; base200: string; base300: string } {
-  const materialScale = [98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20];
   let lightnessPalette: number[];
 
   if (customLightnessLevels && customLightnessLevels.length >= 3) {
     lightnessPalette = customLightnessLevels.slice(0, 3);
   } else {
+    const accessiblePaletteScale = [98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20];
     lightnessPalette = isDarkTheme
-      ? [materialScale[9], materialScale[8], materialScale[7]]
-      : [materialScale[0], materialScale[1], materialScale[2]];
+      ? [accessiblePaletteScale[8], accessiblePaletteScale[7], accessiblePaletteScale[6]]
+      : [accessiblePaletteScale[0], accessiblePaletteScale[1], accessiblePaletteScale[2]];
   }
 
   const hueShiftAmount = hueShift || 0;
@@ -187,65 +131,26 @@ export const selectSemanticColor = (
     const semanticHues = generateSemanticHues(primaryHue);
     const targetHue = semanticHues[semanticType];
 
-    const materialScale = [98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20];
+    const accessiblePaletteScale = [98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20];
+    
+    const semanticLightness = isDarkTheme ? accessiblePaletteScale[7] : accessiblePaletteScale[5];
+    const semanticChroma = 40;
 
-    const baseLightness = isDarkTheme ? materialScale[6] : materialScale[4];
-    const targetLightness = isDarkTheme ? materialScale[5] : materialScale[3];
-
-    const baseSemanticColor = chroma.lch(baseLightness, 40, targetHue);
-
-    const primaryColor = chroma.lch(baseLightness, 30, primaryHue);
-
-    const mixedColor = chroma.mix(
-      primaryColor.hex(),
-      baseSemanticColor.hex(),
-      0.7,
-      "lab"
-    );
-
-    const vibrantColor = chroma.lch(targetLightness, 50, targetHue);
-    const averageColor = chroma.average(
-      [primaryColor.hex(), baseSemanticColor.hex()],
-      "lab"
-    );
-
-    if (!averageColor) {
-      return createOklchColor(baseLightness, 0.05, targetHue);
-    }
-
-    const bezierScale = chroma
-      .bezier([
-        primaryColor.hex(),
-        averageColor.hex(),
-        mixedColor.hex(),
-        vibrantColor.hex(),
-        baseSemanticColor.hex(),
-      ])
-      .scale();
-
-    const scale = bezierScale
-      .mode("lab")
-      .correctLightness(true)
-      .gamma(0.9)
-      .padding([0.05, 0.05])
-      .domain([0, 0.25, 0.5, 0.75, 1])
-      .classes(5);
-
-    const selectedColorHex = scale(0.6).hex();
-    const selectedColor = chroma(selectedColorHex);
-    const [l, c, h] = selectedColor.oklch();
+    const adjustedChroma = getChromaForLightness(semanticLightness, targetHue, semanticChroma);
+    const semanticColor = chroma.lch(semanticLightness, adjustedChroma, targetHue);
+    const [l, c, h] = semanticColor.oklch();
     return createOklchColor(Math.round(l * 100), c, h || targetHue);
   } catch (error) {
     console.warn("Error in selectSemanticColor:", error);
     const fallbackHues = generateSemanticHues(primaryHue);
-    return createOklchColor(50, 0.05, fallbackHues[semanticType]);
+    const fallbackLightness = isDarkTheme ? 48 : 70;
+    return createOklchColor(fallbackLightness, 0.15, fallbackHues[semanticType]);
   }
 };
 
 export const generateBaseColors = (
   isDarkTheme: boolean,
-  customLightnessLevels?: number[],
-  colorSpace: "lab" | "rgb" = "lab"
+  customLightnessLevels?: number[]
 ): { base100: string; base200: string; base300: string } => {
   const materialColorKeys = Object.keys(MATERIAL_COLORS);
   const randomKey =
@@ -256,14 +161,13 @@ export const generateBaseColors = (
   const baseColor = chroma(selectedColor);
   const [, , baseHue] = baseColor.lch();
 
-  const controlledChroma = 15;
+  const baseChroma = 15;
   return generateLightnessScale(
     baseHue || 0,
-    controlledChroma,
+    baseChroma,
     isDarkTheme,
     customLightnessLevels,
-    0,
-    colorSpace
+    0
   );
 };
 
@@ -275,57 +179,32 @@ export const selectBrandColor = (
   try {
     const semanticHues = generateSemanticHues(primaryHue);
     const targetHue = semanticHues[semanticType];
+    
+    const accessiblePaletteScale = [98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20];
+    
+    let brandLightness: number;
+    let brandChroma: number;
+    
+    if (semanticType === "primary") {
+      brandLightness = isDarkTheme ? accessiblePaletteScale[6] : accessiblePaletteScale[4];
+      brandChroma = 50;
+    } else if (semanticType === "secondary") {
+      brandLightness = isDarkTheme ? accessiblePaletteScale[7] : accessiblePaletteScale[3];
+      brandChroma = 40;
+    } else {
+      brandLightness = isDarkTheme ? accessiblePaletteScale[8] : accessiblePaletteScale[5];
+      brandChroma = 30;
+    }
 
-    const materialScale = [98.2, 96.5, 94, 89.5, 77, 65, 49.5, 41, 28, 20];
-    const baseLightness = isDarkTheme ? materialScale[7] : materialScale[3];
-    const targetLightness = isDarkTheme ? materialScale[6] : materialScale[2];
-
-    const brandChroma = 50;
-    const adjustedChroma = getChromaForLightness(
-      baseLightness,
-      targetHue,
-      brandChroma
-    );
-
-    const compensatedHue = applyHueCompensation(targetHue, baseLightness, 0);
-
-    const baseBrandColor = chroma.lch(
-      baseLightness,
-      adjustedChroma,
-      compensatedHue
-    );
-
-    const vibrantColor = chroma.lch(
-      targetLightness,
-      brandChroma * 1.2,
-      targetHue
-    );
-    const subtleColor = chroma.lch(baseLightness, brandChroma * 0.6, targetHue);
-
-    const bezierScale = chroma
-      .bezier([subtleColor.hex(), baseBrandColor.hex(), vibrantColor.hex()])
-      .scale();
-
-    const scale = bezierScale
-      .mode("lab")
-      .correctLightness(true)
-      .gamma(1.1)
-      .padding([0.05, 0.05])
-      .domain([0, 0.5, 1]);
-
-    const position =
-      semanticType === "primary"
-        ? 0.7
-        : semanticType === "secondary"
-        ? 0.5
-        : 0.3;
-
-    const selectedColor = chroma(scale(position).hex());
-    const [l, c, h] = selectedColor.oklch();
+    const adjustedChroma = getChromaForLightness(brandLightness, targetHue, brandChroma);
+    const brandColor = chroma.lch(brandLightness, adjustedChroma, targetHue);
+    
+    const [l, c, h] = brandColor.oklch();
     return createOklchColor(Math.round(l * 100), c, h || targetHue);
   } catch (error) {
     console.warn("Error in selectBrandColor:", error);
-    return createOklchColor(50, 0.1, primaryHue);
+    const fallbackLightness = isDarkTheme ? 55 : 60;
+    return createOklchColor(fallbackLightness, 0.2, primaryHue);
   }
 };
 
@@ -398,7 +277,6 @@ export const createAccessiblePaletteSystem = (
     customLightnessLevels?: number[];
     maintainBrandColor?: boolean;
     hueShiftAmount?: number;
-    colorSpace?: "lab" | "rgb";
     validateContrast?: boolean;
   } = {}
 ): {
@@ -415,7 +293,6 @@ export const createAccessiblePaletteSystem = (
     isDarkTheme = false,
     customLightnessLevels,
     hueShiftAmount = 0,
-    colorSpace = "lab",
     validateContrast = true,
   } = options;
 
@@ -424,8 +301,7 @@ export const createAccessiblePaletteSystem = (
     15,
     isDarkTheme,
     customLightnessLevels,
-    hueShiftAmount,
-    colorSpace
+    hueShiftAmount
   );
 
   const semanticColors = {
