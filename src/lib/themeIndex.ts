@@ -1,11 +1,6 @@
 import { MATERIAL_COLORS_HEX } from "../colors/material";
 import { convertHexPaletteToOklch } from "../utils/theme/colorConversion";
-import {
-  generateRandomTheme,
-  generateThemeVariations,
-  generateThemePair,
-} from "./themeGenerator";
-import { COLOR_PAIRS } from "../colors/palettes";
+import { generateRandomTheme } from "./themeGenerator";
 
 export const MATERIAL_COLORS = convertHexPaletteToOklch(MATERIAL_COLORS_HEX);
 

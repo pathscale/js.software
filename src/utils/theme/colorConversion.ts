@@ -41,24 +41,6 @@ export const convertHexPaletteToOklch = (
   );
 };
 
-export const parseOklchComponents = (oklchString: string) => {
-  try {
-    const match = oklchString.match(
-      /oklch\((\d+(?:\.\d+)?)%\s+(\d*\.?\d+)\s+(\d+(?:\.\d+)?)\)/
-    );
-    if (!match) return null;
-
-    const [, l, c, h] = match;
-    return {
-      l: parseFloat(l) / 100,
-      c: parseFloat(c),
-      h: parseFloat(h),
-    };
-  } catch (error) {
-    return null;
-  }
-};
-
 export const createOklchColor = (l: number, c: number, h: number): string => {
   const lightness = Math.max(0, Math.min(100, l));
   const chroma = Math.max(0, c);

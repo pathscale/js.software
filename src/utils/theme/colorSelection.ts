@@ -1,7 +1,6 @@
 import chroma from "chroma-js";
 import { ColorPalette, ShadeLevel } from "../../types/theme";
 import { createOklchColor, convertOklchToHex } from "./colorConversion";
-import { calculateContrastRatio } from "./contrastCalculation";
 
 export function generateLightnessScale(
   baseHue: number,
@@ -99,11 +98,6 @@ export const selectBrandColor = (
   return createOklchColor(Math.round(l * 100), c, h || hue);
 };
 
-export const selectRandomColor = (palette: ColorPalette): string => {
-  const colors = Object.values(palette);
-  return colors[Math.floor(Math.random() * colors.length)];
-};
-
 export const selectColorFromFamily = (
   palette: ColorPalette,
   colorNames: string[],
@@ -122,14 +116,6 @@ export const selectColorFromFamily = (
 
   if (validColors.length === 0) return "oklch(50% 0.1 180)";
   return validColors[Math.floor(Math.random() * validColors.length)][1];
-};
-
-export const extractColorFamily = (colorName: string): string => {
-  const parts = colorName.split("-");
-  if (/^\d+$/.test(parts[parts.length - 1])) {
-    return parts.slice(0, -1).join("-");
-  }
-  return colorName;
 };
 
 export const findExistingColorFamily = (

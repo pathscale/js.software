@@ -1,8 +1,8 @@
 import {
   Theme,
   ThemeGenerationOptions,
-  ThemeType,
   ColorPalette,
+  ShadeLevel,
 } from "../types/theme";
 import {
   COLOR_PAIRS,
@@ -17,9 +17,7 @@ import {
   generateBaseColors,
   selectSemanticColor,
   selectBrandColor,
-  generateLCHColor,
-  selectRandomColor,
-  findExistingColorFamily,
+  selectColorFromFamily,
 } from "../utils/theme/colorSelection";
 
 export function generateRandomTheme(
@@ -84,7 +82,20 @@ export function generateRandomTheme(
         const neutralLightness = isDarkTheme ? 50 : 60;
         selectedColor = createOklchColor(neutralLightness, 0.01, primaryHue);
       } else {
-        selectedColor = selectRandomColor(palette);
+        const colorNames = Object.keys(palette).map((key) => key.split("-")[0]);
+        const shades: ShadeLevel[] = [
+          "50",
+          "100",
+          "200",
+          "300",
+          "400",
+          "500",
+          "600",
+          "700",
+          "800",
+          "900",
+        ];
+        selectedColor = selectColorFromFamily(palette, colorNames, shades);
       }
 
       newColors[backgroundColorKey] = selectedColor;
@@ -113,45 +124,4 @@ export function generateRandomTheme(
   newColors["--noise"] = randomFrom([...THEME_PROPERTY_VALUES.noise]);
 
   return newColors as Theme;
-}
-
-export function generateThemeVariations(
-  palette: ColorPalette,
-  count = 5,
-  options: ThemeGenerationOptions = {}
-): Theme[] {
-  const themes: Theme[] = [];
-  const baseHue = Math.random() * 360;
-
-  for (let i = 0; i < count; i++) {
-    const hueShift = (360 / count) * i;
-    const variantHue = (baseHue + hueShift) % 360;
-
-    const variantOptions = {
-      ...options,
-      _primaryHue: variantHue,
-    };
-
-    themes.push(generateRandomTheme(palette, variantOptions));
-  }
-
-  return themes;
-}
-
-export function generateThemePair(
-  palette: ColorPalette,
-  baseColorFamily?: string
-): { light: Theme; dark: Theme } {
-  const primaryHue = Math.random() * 360;
-
-  return {
-    light: generateRandomTheme(palette, {
-      forceLightTheme: true,
-      _primaryHue: primaryHue,
-    }),
-    dark: generateRandomTheme(palette, {
-      forceDarkTheme: true,
-      _primaryHue: primaryHue,
-    }),
-  };
 }

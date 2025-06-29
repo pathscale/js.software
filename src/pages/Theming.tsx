@@ -18,25 +18,25 @@ export default function Theming() {
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
   const [pickerPosition, setPickerPosition] = createSignal({ x: 0, y: 0 });
   const [showCSSModal, setShowCSSModal] = createSignal(false);
-  
+
   // Detect initial theme type automatically
   const initialIsDark = (initialTheme as any)._themeType === "dark";
-  const [themeOptions, setThemeOptions] = createSignal({ 
-    isDefault: false, 
-    isPrefersDark: false, 
-    colorScheme: initialIsDark ? "dark" : "light" as "light" | "dark" 
+  const [themeOptions, setThemeOptions] = createSignal({
+    isDefault: false,
+    isPrefersDark: false,
+    colorScheme: initialIsDark ? "dark" : ("light" as "light" | "dark"),
   });
   const [dockActiveItem] = createSignal("editor");
 
   const randomizeTheme = () => {
     const newTheme = generateRandomTheme();
     setCurrentTheme(newTheme);
-    
+
     // Update theme options based on generated theme
     const isDark = (newTheme as any)._themeType === "dark";
-    setThemeOptions(prev => ({
+    setThemeOptions((prev) => ({
       ...prev,
-      colorScheme: isDark ? "dark" : "light"
+      colorScheme: isDark ? "dark" : "light",
     }));
   };
 
@@ -64,7 +64,11 @@ export default function Theming() {
     setCurrentTheme(newTheme);
   };
 
-  const exportCSS = (isDefault: boolean, isPrefersDark: boolean, colorScheme: "light" | "dark") => {
+  const exportCSS = (
+    isDefault: boolean,
+    isPrefersDark: boolean,
+    colorScheme: "light" | "dark"
+  ) => {
     setThemeOptions({ isDefault, isPrefersDark, colorScheme });
     setShowCSSModal(true);
   };
