@@ -10,6 +10,7 @@ export default function ModalShowcase() {
     { id: "default", title: "Default" },
     { id: "clicked-outside", title: "Clicked Outside" },
     { id: "close-button", title: "Close Button" },
+    { id: "sizes", title: "Sizes" },
     { id: "custom-width", title: "Custom Width" },
     { id: "props", title: "Props" },
   ] as const;
@@ -60,6 +61,26 @@ export default function ModalShowcase() {
       type: "boolean",
       default: "false",
       description: "Enables closing the modal by clicking outside.",
+    },
+    {
+      name: "size",
+      type: `"xs" | "sm" | "md" | "lg" | "xl" | "full"`,
+      description: "Size of the modal.",
+    },
+    {
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value.",
+    },
+    {
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes to apply.",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class).",
     },
   ];
 
@@ -265,6 +286,85 @@ export default function ModalShowcase() {
   </form>
   <Modal.Header class="font-bold">Hello!</Modal.Header>
   <Modal.Body>Press ESC key or click on X button to close</Modal.Body>
+</Modal>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="sizes" title="Sizes">
+          <Flex direction="col" gap="md">
+            <Flex justify="left" align="left" gap="md">
+              <Button onClick={() => setDefaultOpen(true)}>XS Modal</Button>
+              <Modal
+                open={defaultOpen()}
+                onClose={() => setDefaultOpen(false)}
+                backdrop
+                position="middle"
+                closeOnEsc
+                closeOnOutsideClick
+                size="xs"
+              >
+                <Modal.Header class="font-bold">XS Modal</Modal.Header>
+                <Modal.Body>This is an extra small modal</Modal.Body>
+                <Modal.Actions>
+                  <form method="dialog">
+                    <Button>Close</Button>
+                  </form>
+                </Modal.Actions>
+              </Modal>
+              
+              <Button onClick={() => setOutsideOpen(true)}>SM Modal</Button>
+              <Modal
+                open={outsideOpen()}
+                onClose={() => setOutsideOpen(false)}
+                backdrop
+                position="middle"
+                closeOnEsc
+                closeOnOutsideClick
+                size="sm"
+              >
+                <Modal.Header class="font-bold">Small Modal</Modal.Header>
+                <Modal.Body>This is a small modal</Modal.Body>
+                <Modal.Actions>
+                  <form method="dialog">
+                    <Button>Close</Button>
+                  </form>
+                </Modal.Actions>
+              </Modal>
+              
+              <Button onClick={() => setCloseButtonOpen(true)}>LG Modal</Button>
+              <Modal
+                open={closeButtonOpen()}
+                onClose={() => setCloseButtonOpen(false)}
+                backdrop
+                position="middle"
+                closeOnEsc
+                closeOnOutsideClick
+                size="lg"
+              >
+                <Modal.Header class="font-bold">Large Modal</Modal.Header>
+                <Modal.Body>This is a large modal with more content space</Modal.Body>
+                <Modal.Actions>
+                  <form method="dialog">
+                    <Button>Close</Button>
+                  </form>
+                </Modal.Actions>
+              </Modal>
+            </Flex>
+            <CodeBlock
+              code={`<Modal size="xs" open={open()} onClose={() => setOpen(false)}>
+  <Modal.Header>XS Modal</Modal.Header>
+  <Modal.Body>Extra small modal</Modal.Body>
+</Modal>
+
+<Modal size="sm" open={open()} onClose={() => setOpen(false)}>
+  <Modal.Header>Small Modal</Modal.Header>
+  <Modal.Body>Small modal</Modal.Body>
+</Modal>
+
+<Modal size="lg" open={open()} onClose={() => setOpen(false)}>
+  <Modal.Header>Large Modal</Modal.Header>
+  <Modal.Body>Large modal</Modal.Body>
 </Modal>`}
             />
           </Flex>

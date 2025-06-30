@@ -11,6 +11,9 @@ export default function CardShowcase() {
     { id: "side-image", title: "Side Image" },
     { id: "bordered", title: "Bordered" },
     { id: "compact", title: "Compact" },
+    { id: "backgrounds", title: "Backgrounds" },
+    { id: "shadows", title: "Shadows" },
+    { id: "sizes", title: "Sizes" },
     { id: "props", title: "Props" },
   ] as const;
 
@@ -44,6 +47,22 @@ export default function CardShowcase() {
         "Whether to show content side by side and at what breakpoint",
     },
     {
+      name: "background",
+      type: '"primary" | "secondary" | "accent" | "neutral" | "info" | "success" | "warning" | "error" | "base-100" | "base-200" | "base-300"',
+      description: "Background color of the card",
+    },
+    {
+      name: "shadow",
+      type: '"none" | "sm" | "md" | "lg" | "xl"',
+      description: "Shadow size of the card",
+    },
+    {
+      name: "fullWidth",
+      type: "boolean",
+      default: "false",
+      description: "Make card take full width of container",
+    },
+    {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value",
@@ -52,6 +71,36 @@ export default function CardShowcase() {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label",
+    },
+    {
+      name: "aria-describedby",
+      type: "string",
+      description: "ID of element that describes the card",
+    },
+    {
+      name: "aria-labelledby",
+      type: "string",
+      description: "ID of element that labels the card",
+    },
+    {
+      name: "role",
+      type: "string",
+      description: "ARIA role attribute",
     },
   ];
 
@@ -218,6 +267,147 @@ export default function CardShowcase() {
     <Card.Actions class="justify-end">
       <Button color="primary" size="sm">Action</Button>
     </Card.Actions>
+  </Card.Body>
+</Card>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="backgrounds" title="Backgrounds">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="left" align="left" gap="lg">
+              <Card background="primary">
+                <Card.Body>
+                  <Card.Title tag="h2">Primary Background</Card.Title>
+                  <p>Card with primary background color</p>
+                </Card.Body>
+              </Card>
+              <Card background="secondary">
+                <Card.Body>
+                  <Card.Title tag="h2">Secondary Background</Card.Title>
+                  <p>Card with secondary background color</p>
+                </Card.Body>
+              </Card>
+              <Card background="base-200">
+                <Card.Body>
+                  <Card.Title tag="h2">Base-200 Background</Card.Title>
+                  <p>Card with base-200 background color</p>
+                </Card.Body>
+              </Card>
+            </Flex>
+            <CodeBlock
+              code={`<Card background="primary">
+  <Card.Body>
+    <Card.Title tag="h2">Primary Background</Card.Title>
+    <p>Card with primary background color</p>
+  </Card.Body>
+</Card>
+
+<Card background="secondary">
+  <Card.Body>
+    <Card.Title tag="h2">Secondary Background</Card.Title>
+    <p>Card with secondary background color</p>
+  </Card.Body>
+</Card>
+
+<Card background="base-200">
+  <Card.Body>
+    <Card.Title tag="h2">Base-200 Background</Card.Title>
+    <p>Card with base-200 background color</p>
+  </Card.Body>
+</Card>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="shadows" title="Shadows">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="left" align="left" gap="lg">
+              <Card shadow="sm">
+                <Card.Body>
+                  <Card.Title tag="h2">Small Shadow</Card.Title>
+                  <p>Card with small shadow</p>
+                </Card.Body>
+              </Card>
+              <Card shadow="lg">
+                <Card.Body>
+                  <Card.Title tag="h2">Large Shadow</Card.Title>
+                  <p>Card with large shadow</p>
+                </Card.Body>
+              </Card>
+              <Card shadow="xl">
+                <Card.Body>
+                  <Card.Title tag="h2">Extra Large Shadow</Card.Title>
+                  <p>Card with extra large shadow</p>
+                </Card.Body>
+              </Card>
+            </Flex>
+            <CodeBlock
+              code={`<Card shadow="sm">
+  <Card.Body>
+    <Card.Title tag="h2">Small Shadow</Card.Title>
+    <p>Card with small shadow</p>
+  </Card.Body>
+</Card>
+
+<Card shadow="lg">
+  <Card.Body>
+    <Card.Title tag="h2">Large Shadow</Card.Title>
+    <p>Card with large shadow</p>
+  </Card.Body>
+</Card>
+
+<Card shadow="xl">
+  <Card.Body>
+    <Card.Title tag="h2">Extra Large Shadow</Card.Title>
+    <p>Card with extra large shadow</p>
+  </Card.Body>
+</Card>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="sizes" title="Sizes">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="left" align="left" gap="lg">
+              <Card size="xs">
+                <Card.Body>
+                  <Card.Title tag="h2">XS Card</Card.Title>
+                  <p>Extra small card</p>
+                </Card.Body>
+              </Card>
+              <Card size="sm">
+                <Card.Body>
+                  <Card.Title tag="h2">Small Card</Card.Title>
+                  <p>Small card</p>
+                </Card.Body>
+              </Card>
+              <Card size="lg">
+                <Card.Body>
+                  <Card.Title tag="h2">Large Card</Card.Title>
+                  <p>Large card with more padding</p>
+                </Card.Body>
+              </Card>
+            </Flex>
+            <CodeBlock
+              code={`<Card size="xs">
+  <Card.Body>
+    <Card.Title tag="h2">XS Card</Card.Title>
+    <p>Extra small card</p>
+  </Card.Body>
+</Card>
+
+<Card size="sm">
+  <Card.Body>
+    <Card.Title tag="h2">Small Card</Card.Title>
+    <p>Small card</p>
+  </Card.Body>
+</Card>
+
+<Card size="lg">
+  <Card.Body>
+    <Card.Title tag="h2">Large Card</Card.Title>
+    <p>Large card with more padding</p>
   </Card.Body>
 </Card>`}
             />

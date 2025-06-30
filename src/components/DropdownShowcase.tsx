@@ -11,15 +11,49 @@ export default function DropdownShowcase() {
     { id: "in-navbar", title: "In Navbar" },
     { id: "helper", title: "Helper" },
     { id: "details", title: "Details" },
+    { id: "positioning", title: "Positioning" },
+    { id: "full-width", title: "Full Width" },
     { id: "props", title: "Props" },
   ] as const;
 
   const dropdownProps = [
     {
+      name: "horizontal",
+      type: '"left" | "right"',
+      description: "Horizontal alignment of the dropdown menu",
+    },
+    {
+      name: "vertical",
+      type: '"top" | "bottom"',
+      description: "Vertical alignment of the dropdown menu",
+    },
+    {
       name: "end",
       type: "boolean",
       default: "false",
-      description: "Align dropdown menu to the right",
+      description: "Align dropdown menu to the right (legacy)",
+    },
+    {
+      name: "hover",
+      type: "boolean",
+      default: "false",
+      description: "Open dropdown on hover instead of click",
+    },
+    {
+      name: "open",
+      type: "boolean",
+      description: "Force open/close state of the dropdown",
+    },
+    {
+      name: "fullWidth",
+      type: "boolean",
+      default: "false",
+      description: "Make dropdown container full width",
+    },
+    {
+      name: "item",
+      type: "JSX.Element",
+      description: "Content to render as dropdown items",
     },
     {
       name: "dataTheme",
@@ -32,9 +66,39 @@ export default function DropdownShowcase() {
       description: "Additional CSS classes to apply",
     },
     {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
       name: "style",
       type: "JSX.CSSProperties",
       description: "Inline styles to apply",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label",
+    },
+    {
+      name: "aria-describedby",
+      type: "string",
+      description: "ID of element that describes the dropdown",
+    },
+    {
+      name: "aria-expanded",
+      type: "boolean",
+      description: "Indicates if dropdown is expanded",
+    },
+    {
+      name: "aria-haspopup",
+      type: "boolean | string",
+      description: "Indicates dropdown has popup menu",
+    },
+    {
+      name: "aria-labelledby",
+      type: "string",
+      description: "ID of element that labels the dropdown",
     },
   ];
 
@@ -232,6 +296,94 @@ export default function DropdownShowcase() {
     <Dropdown.Item>Item 2</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown.Details>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="positioning" title="Positioning">
+          <Flex direction="col" gap="md">
+            <Flex justify="center" align="center" gap="md" class="my-16">
+              <Dropdown horizontal="left">
+                <Dropdown.Toggle>Left</Dropdown.Toggle>
+                <Dropdown.Menu class="w-52">
+                  <Dropdown.Item>Item 1</Dropdown.Item>
+                  <Dropdown.Item>Item 2</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              
+              <Dropdown horizontal="right">
+                <Dropdown.Toggle>Right</Dropdown.Toggle>
+                <Dropdown.Menu class="w-52">
+                  <Dropdown.Item>Item 1</Dropdown.Item>
+                  <Dropdown.Item>Item 2</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              
+              <Dropdown vertical="top">
+                <Dropdown.Toggle>Top</Dropdown.Toggle>
+                <Dropdown.Menu class="w-52">
+                  <Dropdown.Item>Item 1</Dropdown.Item>
+                  <Dropdown.Item>Item 2</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              
+              <Dropdown vertical="bottom">
+                <Dropdown.Toggle>Bottom</Dropdown.Toggle>
+                <Dropdown.Menu class="w-52">
+                  <Dropdown.Item>Item 1</Dropdown.Item>
+                  <Dropdown.Item>Item 2</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Flex>
+            <CodeBlock
+              code={`<Dropdown horizontal="left">
+  <Dropdown.Toggle>Left</Dropdown.Toggle>
+  <Dropdown.Menu class="w-52">
+    <Dropdown.Item>Item 1</Dropdown.Item>
+    <Dropdown.Item>Item 2</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+
+<Dropdown horizontal="right">
+  <Dropdown.Toggle>Right</Dropdown.Toggle>
+  <Dropdown.Menu class="w-52">
+    <Dropdown.Item>Item 1</Dropdown.Item>
+    <Dropdown.Item>Item 2</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>
+
+<Dropdown vertical="top">
+  <Dropdown.Toggle>Top</Dropdown.Toggle>
+  <Dropdown.Menu class="w-52">
+    <Dropdown.Item>Item 1</Dropdown.Item>
+    <Dropdown.Item>Item 2</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="full-width" title="Full Width">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="left" align="left" class="my-16">
+              <Dropdown fullWidth>
+                <Dropdown.Toggle class="w-full justify-start">Full Width Dropdown</Dropdown.Toggle>
+                <Dropdown.Menu class="w-full">
+                  <Dropdown.Item>Item 1</Dropdown.Item>
+                  <Dropdown.Item>Item 2</Dropdown.Item>
+                  <Dropdown.Item>Item 3</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Flex>
+            <CodeBlock
+              code={`<Dropdown fullWidth>
+  <Dropdown.Toggle class="w-full justify-start">Full Width Dropdown</Dropdown.Toggle>
+  <Dropdown.Menu class="w-full">
+    <Dropdown.Item>Item 1</Dropdown.Item>
+    <Dropdown.Item>Item 2</Dropdown.Item>
+    <Dropdown.Item>Item 3</Dropdown.Item>
+  </Dropdown.Menu>
+</Dropdown>`}
             />
           </Flex>
         </ShowcaseSection>

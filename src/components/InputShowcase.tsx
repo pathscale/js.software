@@ -14,6 +14,7 @@ export default function InputShowcase() {
     { id: "basic", title: "Basic Usage" },
     { id: "colors", title: "Color Variants" },
     { id: "states", title: "States" },
+    { id: "sizes", title: "Sizes" },
     { id: "variants", title: "Variants" },
     { id: "icons", title: "With Icons" },
     { id: "props", title: "Props" },
@@ -28,27 +29,31 @@ export default function InputShowcase() {
       description: "HTML input type",
     },
     {
+      name: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      description: "Size of the input",
+    },
+    {
       name: "color",
-      type: '"danger" | "success" | "warning"',
-      description: "Color state of the input",
+      type: '"primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
+      description: "Color variant of the input",
     },
     {
-      name: "rounded",
-      type: "boolean",
-      default: "false",
-      description: "Applies full border radius",
+      name: "variant",
+      type: '"bordered" | "ghost" | "flushed"',
+      default: '"bordered"',
+      description: "Visual variant of the input",
     },
     {
-      name: "expanded",
+      name: "fullWidth",
       type: "boolean",
       default: "true",
       description: "Expands input to full width",
     },
     {
-      name: "loading",
-      type: "boolean",
-      default: "false",
-      description: "Shows loading state",
+      name: "placeholder",
+      type: "string",
+      description: "Placeholder text",
     },
     {
       name: "disabled",
@@ -58,14 +63,9 @@ export default function InputShowcase() {
     },
     {
       name: "readonly",
-      type: "boolean",
+      type: "boolean", 
       default: "false",
       description: "Makes the input readonly",
-    },
-    {
-      name: "passwordReveal",
-      type: "boolean",
-      description: "Toggles password visibility",
     },
     {
       name: "leftIcon",
@@ -75,9 +75,36 @@ export default function InputShowcase() {
     {
       name: "rightIcon",
       type: "JSX.Element",
-      description: "Icon/button on the right (used with passwordReveal)",
+      description: "Icon/button on the right (used with password toggle)",
     },
-    { name: "class", type: "string", description: "Custom class names" },
+    {
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value",
+    },
+    { name: "class", type: "string", description: "Additional CSS classes" },
+    { name: "className", type: "string", description: "Additional CSS classes (alias for class)" },
+    { name: "style", type: "JSX.CSSProperties", description: "Inline styles" },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label",
+    },
+    {
+      name: "aria-describedby",
+      type: "string",
+      description: "ID of element that describes the input",
+    },
+    {
+      name: "aria-invalid",
+      type: "boolean",
+      description: "Indicates if the input has a validation error",
+    },
+    {
+      name: "aria-required",
+      type: "boolean",
+      description: "Indicates if the input is required",
+    },
   ];
 
   return (
@@ -121,15 +148,23 @@ export default function InputShowcase() {
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="left" align="left" gap="lg">
               <Input placeholder="Default input" />
+              <Input color="primary" placeholder="Primary" />
+              <Input color="secondary" placeholder="Secondary" />
+              <Input color="accent" placeholder="Accent" />
+              <Input color="info" placeholder="Info" />
               <Input color="success" placeholder="Success" />
               <Input color="warning" placeholder="Warning" />
-              <Input color="danger" placeholder="Danger" />
+              <Input color="error" placeholder="Error" />
             </Flex>
             <CodeBlock
               code={`<Input placeholder="Default input" />
+<Input color="primary" placeholder="Primary" />
+<Input color="secondary" placeholder="Secondary" />
+<Input color="accent" placeholder="Accent" />
+<Input color="info" placeholder="Info" />
 <Input color="success" placeholder="Success" />
 <Input color="warning" placeholder="Warning" />
-<Input color="danger" placeholder="Danger" />`}
+<Input color="error" placeholder="Error" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -155,18 +190,41 @@ export default function InputShowcase() {
           </Flex>
         </ShowcaseSection>
 
+        <ShowcaseSection id="sizes" title="Sizes">
+          <Flex direction="col" gap="md">
+            <Flex direction="col" justify="left" align="left" gap="lg">
+              <Input size="xs" placeholder="Extra small" />
+              <Input size="sm" placeholder="Small" />
+              <Input size="md" placeholder="Medium (default)" />
+              <Input size="lg" placeholder="Large" />
+              <Input size="xl" placeholder="Extra large" />
+            </Flex>
+            <CodeBlock
+              code={`<Input size="xs" placeholder="Extra small" />
+<Input size="sm" placeholder="Small" />
+<Input size="md" placeholder="Medium (default)" />
+<Input size="lg" placeholder="Large" />
+<Input size="xl" placeholder="Extra large" />`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="left" align="left" gap="lg">
-              <Input rounded placeholder="Rounded input" />
+              <Input variant="bordered" placeholder="Bordered (default)" />
+              <Input variant="ghost" placeholder="Ghost variant" />
+              <Input variant="flushed" placeholder="Flushed variant" />
               <div class="w-48">
-                <Input expanded={false} placeholder="Not expanded" />
+                <Input fullWidth={false} placeholder="Not full width" />
               </div>
             </Flex>
             <CodeBlock
-              code={`<Input rounded placeholder="Rounded input" />
+              code={`<Input variant="bordered" placeholder="Bordered (default)" />
+<Input variant="ghost" placeholder="Ghost variant" />
+<Input variant="flushed" placeholder="Flushed variant" />
 <div class="w-48">
-  <Input expanded={false} placeholder="Not expanded" />
+  <Input fullWidth={false} placeholder="Not full width" />
 </div>`}
             />
           </Flex>
