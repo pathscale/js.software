@@ -158,6 +158,11 @@ export default function ModalShowcase() {
   const [closeButtonOpen, setCloseButtonOpen] = createSignal(false);
   const [customWidthOpen, setCustomWidthOpen] = createSignal(false);
   const [legacyOpen, setLegacyOpen] = createSignal(false);
+  
+  // Sizes section modals
+  const [xsModalOpen, setXsModalOpen] = createSignal(false);
+  const [smModalOpen, setSmModalOpen] = createSignal(false);
+  const [lgModalOpen, setLgModalOpen] = createSignal(false);
 
   return (
     <ShowcaseLayout>
@@ -294,10 +299,10 @@ export default function ModalShowcase() {
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
             <Flex justify="left" align="left" gap="md">
-              <Button onClick={() => setDefaultOpen(true)}>XS Modal</Button>
+              <Button onClick={() => setXsModalOpen(true)}>XS Modal</Button>
               <Modal
-                open={defaultOpen()}
-                onClose={() => setDefaultOpen(false)}
+                open={xsModalOpen()}
+                onClose={() => setXsModalOpen(false)}
                 backdrop
                 position="middle"
                 closeOnEsc
@@ -313,10 +318,10 @@ export default function ModalShowcase() {
                 </Modal.Actions>
               </Modal>
               
-              <Button onClick={() => setOutsideOpen(true)}>SM Modal</Button>
+              <Button onClick={() => setSmModalOpen(true)}>SM Modal</Button>
               <Modal
-                open={outsideOpen()}
-                onClose={() => setOutsideOpen(false)}
+                open={smModalOpen()}
+                onClose={() => setSmModalOpen(false)}
                 backdrop
                 position="middle"
                 closeOnEsc
@@ -332,10 +337,10 @@ export default function ModalShowcase() {
                 </Modal.Actions>
               </Modal>
               
-              <Button onClick={() => setCloseButtonOpen(true)}>LG Modal</Button>
+              <Button onClick={() => setLgModalOpen(true)}>LG Modal</Button>
               <Modal
-                open={closeButtonOpen()}
-                onClose={() => setCloseButtonOpen(false)}
+                open={lgModalOpen()}
+                onClose={() => setLgModalOpen(false)}
                 backdrop
                 position="middle"
                 closeOnEsc
