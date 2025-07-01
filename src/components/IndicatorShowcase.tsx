@@ -25,6 +25,10 @@ export default function IndicatorShowcase() {
       description: "Vertical alignment",
     },
     { name: "class", type: "string", description: "Custom CSS classes" },
+    { name: "className", type: "string", description: "Additional CSS classes (alias for class)" },
+    { name: "style", type: "JSX.CSSProperties", description: "Inline styles to apply" },
+    { name: "children", type: "JSX.Element", description: "Content to display inside the indicator" },
+    { name: "dataTheme", type: "string", description: "Theme data attribute value" },
     { name: "as", type: "string", description: "Custom element tag" },
   ];
 

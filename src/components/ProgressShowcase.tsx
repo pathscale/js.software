@@ -37,6 +37,46 @@ const ProgressShowcase: Component = () => {
       description: "Color variant of the progress bar",
     },
     {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label for the progress bar",
+    },
+    {
+      name: "aria-describedby",
+      type: "string",
+      description: "ID of element describing the progress",
+    },
+    {
+      name: "aria-valuenow",
+      type: "number",
+      description: "Current value for screen readers",
+    },
+    {
+      name: "aria-valuemin",
+      type: "number",
+      description: "Minimum value for screen readers",
+    },
+    {
+      name: "aria-valuemax",
+      type: "number",
+      description: "Maximum value for screen readers",
+    },
+    {
+      name: "aria-valuetext",
+      type: "string",
+      description: "Human-readable text describing the current value",
+    },
+    {
+      name: "aria-labelledby",
+      type: "string",
+      description: "ID of element that labels the progress bar",
+    },
+    {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value",

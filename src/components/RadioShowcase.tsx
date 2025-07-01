@@ -53,6 +53,12 @@ const RadioShowcase: Component = () => {
       type: "string",
       description: "Additional CSS classes to apply",
     },
+    {
+      name: "size",
+      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      default: '"md"',
+      description: "Size of the radio button",
+    },
   ];
 
   return (

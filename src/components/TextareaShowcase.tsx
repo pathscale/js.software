@@ -56,6 +56,12 @@ const TextareaShowcase: Component = () => {
       type: "string",
       description: "Additional CSS classes to apply",
     },
+    {
+      name: "resize",
+      type: '"none" | "both" | "horizontal" | "vertical"',
+      default: '"both"',
+      description: "Controls the resizable behavior of the textarea",
+    },
   ];
 
   return (

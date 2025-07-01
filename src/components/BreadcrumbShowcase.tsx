@@ -19,6 +19,11 @@ export default function BreadcrumbShowcase() {
       description: "Additional CSS classes to apply",
     },
     {
+      name: "className",
+      type: "string",
+      description: "Alias for `class`, useful in JSX environments",
+    },
+    {
       name: "style",
       type: "JSX.CSSProperties",
       description: "Inline styles to apply",

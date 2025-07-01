@@ -34,9 +34,49 @@ export default function AccordionShowcase() {
       description: "Whether the accordion is expanded by default",
     },
     {
+      name: "mode",
+      type: '"radio" | "checkbox" | "controlled"',
+      description: "Interaction mode for the accordion",
+    },
+    {
+      name: "expanded",
+      type: "boolean",
+      description: "Whether the accordion is expanded (for controlled mode)",
+    },
+    {
+      name: "onToggle",
+      type: "() => void",
+      description: "Callback function called when accordion state changes",
+    },
+    {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label for the accordion",
+    },
+    {
+      name: "aria-describedby",
+      type: "string",
+      description: "ID of element describing the accordion",
+    },
+    {
+      name: "aria-labelledby",
+      type: "string",
+      description: "ID of element labeling the accordion",
     },
     {
       name: "dataTheme",

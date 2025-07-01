@@ -57,15 +57,15 @@ export default function BackgroundShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="with-theme" title="With Theme">
-          <Background data-theme="retro">
+          <Background dataTheme="retro">
             <div class="p-8 text-center text-base-content">
               This background uses <code>data-theme="retro"</code>.
             </div>
           </Background>
           <CodeBlock
-            code={`<Background data-theme="retro">
+            code={`<Background dataTheme="retro">
   <div class="p-8 text-center text-base-content">
-    This background uses <code>data-theme="retro"</code>.
+    This background uses <code>dataTheme="retro"</code>.
   </div>
 </Background>`}
           />

@@ -28,15 +28,29 @@ const ToastShowcase: Component = () => {
       description: "Maximum number of toasts to show (0 for unlimited)",
     },
     {
-      name: "position",
-      type: '"top" | "bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right"',
-      default: '"bottom-right"',
-      description: "Position of the toast container",
+      name: "horizontal",
+      type: '"start" | "center" | "end"',
+      description: "Horizontal position of the toast container",
+    },
+    {
+      name: "vertical", 
+      type: '"top" | "middle" | "bottom"',
+      description: "Vertical position of the toast container",
     },
     {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
     },
     {
       name: "dataTheme",

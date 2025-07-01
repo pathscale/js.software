@@ -40,6 +40,21 @@ export default function CarouselShowcase() {
       type: "JSX.Element",
       description: "Carousel.Item components as children",
     },
+    {
+      name: "ariaLabel",
+      type: "string",
+      description: "ARIA label for accessibility",
+    },
+    {
+      name: "ariaLabelledBy",
+      type: "string",
+      description: "ARIA labelledby for accessibility",
+    },
+    {
+      name: "role",
+      type: "string",
+      description: "ARIA role attribute",
+    },
   ];
 
   const itemProps = [

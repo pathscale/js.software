@@ -44,27 +44,8 @@ export default function SelectShowcase() {
     },
     {
       name: "color",
-      type: '"primary" | "info" | "success" | "warning" | "danger"',
-      default: '"primary"',
-      description: "Color scheme",
-    },
-    {
-      name: "loading",
-      type: "boolean",
-      default: "false",
-      description: "Apply loading styles",
-    },
-    {
-      name: "expanded",
-      type: "boolean",
-      default: "false",
-      description: "Make the select fill its container",
-    },
-    {
-      name: "rounded",
-      type: "boolean",
-      default: "false",
-      description: "Apply rounded corners",
+      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
+      description: "Color scheme of the select input",
     },
     {
       name: "disabled",
@@ -73,11 +54,20 @@ export default function SelectShowcase() {
       description: "Disable the select input",
     },
     {
-      name: "nativeSize",
-      type: "string | number",
-      description: "Native HTML select size (number of visible options)",
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes to apply",
     },
-    { name: "class", type: "string", description: "Additional custom classes" },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value",
+    },
   ];
 
   const fruitOptions = [

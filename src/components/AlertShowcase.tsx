@@ -44,6 +44,46 @@ const AlertShowcase: Component = () => {
       description: "Additional CSS classes to apply",
     },
     {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
+    },
+    {
+      name: "children",
+      type: "JSX.Element",
+      description: "Content of the alert",
+    },
+    {
+      name: "aria-atomic",
+      type: "boolean",
+      description: "Whether screen readers should present the entire alert as atomic",
+    },
+    {
+      name: "aria-live",
+      type: '"off" | "polite" | "assertive"',
+      description: "How screen readers should announce changes",
+    },
+    {
+      name: "aria-relevant",
+      type: "string",
+      description: "What changes are relevant for screen readers",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label for the alert",
+    },
+    {
+      name: "aria-labelledby",
+      type: "string",
+      description: "ID of element that labels the alert",
+    },
+    {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value",

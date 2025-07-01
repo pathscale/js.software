@@ -21,7 +21,7 @@ export default function CheckboxShowcase() {
       description: "Controls the checked state",
     },
     {
-      name: "checked",
+      name: "defaultChecked",
       type: "boolean",
       description: "Sets the initial checked state",
     },

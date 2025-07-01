@@ -41,6 +41,11 @@ export default function CopyButtonShowcase() {
       description: "Additional CSS classes to apply.",
     },
     {
+      name: "className",
+      type: "string", 
+      description: "Additional CSS classes (alias for class).",
+    },
+    {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value.",
@@ -66,9 +71,9 @@ export default function CopyButtonShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex gap="md" wrap>
-              <CopyButton />
+              <CopyButton text="Hello World" />
             </Flex>
-            <CodeBlock code={`<CopyButton />`} />
+            <CodeBlock code={`<CopyButton text="Hello World" />`} />
           </Flex>
         </ShowcaseSection>
 

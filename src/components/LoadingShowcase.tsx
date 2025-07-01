@@ -47,6 +47,31 @@ export default function LoadingShowcase() {
       description: "Inline styles to apply",
     },
     {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label for the loading indicator",
+    },
+    {
+      name: "aria-describedby",
+      type: "string",
+      description: "ID of element describing the loading state",
+    },
+    {
+      name: "aria-live",
+      type: '"off" | "polite" | "assertive"',
+      description: "How screen readers should announce loading changes",
+    },
+    {
+      name: "aria-busy",
+      type: "boolean",
+      description: "Indicates the element is busy (loading)",
+    },
+    {
+      name: "role",
+      type: "string",
+      description: "ARIA role for the loading indicator",
+    },
+    {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value",

@@ -80,6 +80,26 @@ export default function AvatarShowcase() {
       type: "string",
       description: "Class applied to the inner element",
     },
+    {
+      name: "as",
+      type: "string",
+      description: "HTML element or component to render as",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Alias for `class`, useful in JSX environments",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
+    },
+    {
+      name: "children",
+      type: "JSX.Element",
+      description: "Child elements or content to render inside the avatar",
+    },
   ];
 
   const sampleImage =

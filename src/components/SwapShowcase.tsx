@@ -63,6 +63,11 @@ export default function SwapShowcase() {
       type: "string",
       description: "Additional CSS classes to apply",
     },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
   ];
 
   return (

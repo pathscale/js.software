@@ -15,6 +15,26 @@ export default function FooterShowcase() {
 
   const props = [
     {
+      name: "children",
+      type: "JSX.Element",
+      description: "Child elements to render inside the footer",
+    },
+    {
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes to apply",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Alias for `class`, useful in JSX environments",
+    },
+    {
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute value",
+    },
+    {
       name: "center",
       type: "boolean",
       description: "Center the footer content",

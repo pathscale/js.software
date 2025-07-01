@@ -15,6 +15,11 @@ export default function HeroShowcase() {
 
   const props = [
     {
+      name: "children",
+      type: "JSX.Element",
+      description: "Child elements to render inside the hero container",
+    },
+    {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",

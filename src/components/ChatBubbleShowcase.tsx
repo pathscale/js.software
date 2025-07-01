@@ -33,6 +33,16 @@ export default function ChatBubbleShowcase() {
       type: "string",
       description: "Additional CSS classes to apply",
     },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "style",
+      type: "JSX.CSSProperties",
+      description: "Inline styles to apply",
+    },
   ];
 
   return (

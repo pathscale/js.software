@@ -16,7 +16,30 @@ export default function CodeMockupShowcase() {
     { id: "props", title: "Props" },
   ] as const;
 
-  const props = [
+  const codeMockupProps = [
+    {
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes for the mockup container",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
+    },
+    {
+      name: "dataTheme",
+      type: "string",
+      description: "Theme data attribute",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessibility label for the code mockup",
+    },
+  ];
+
+  const codeMockupLineProps = [
     {
       name: "dataPrefix",
       type: "string | boolean",
@@ -29,14 +52,14 @@ export default function CodeMockupShowcase() {
       description: "Highlights the line with the corresponding status color.",
     },
     {
-      name: "class",
-      type: "string",
-      description: "Additional class for outer container",
+      name: "innerProps",
+      type: "JSX.HTMLAttributes<HTMLElement>",
+      description: "Props passed to the inner <code> element",
     },
     {
-      name: "innerClass",
-      type: "string",
-      description: "Class applied to the inner <code> tag",
+      name: "innerRef",
+      type: "HTMLElement | ((el: HTMLElement) => void)",
+      description: "Ref for the inner <code> element",
     },
     {
       name: "dataTheme",
@@ -68,7 +91,7 @@ export default function CodeMockupShowcase() {
             </CodeMockup>
             <CodeBlock
               code={`<CodeMockup>
-  <CodeMockup.Line>yarn add daisyui react-daisyui</CodeMockup.Line>
+  <CodeMockupLine>yarn add daisyui react-daisyui</CodeMockupLine>
 </CodeMockup>`}
             />
           </Flex>
@@ -83,9 +106,9 @@ export default function CodeMockupShowcase() {
             </CodeMockup>
             <CodeBlock
               code={`<CodeMockup>
-  <CodeMockup.Line dataPrefix="$">
+  <CodeMockupLine dataPrefix="$">
     yarn add daisyui react-daisyui
-  </CodeMockup.Line>
+  </CodeMockupLine>
 </CodeMockup>`}
             />
           </Flex>
@@ -102,9 +125,9 @@ export default function CodeMockupShowcase() {
             </CodeMockup>
             <CodeBlock
               code={`<CodeMockup>
-  <CodeMockup.Line>yarn add daisyui react-daisyui</CodeMockup.Line>
-  <CodeMockup.Line class="text-warning">installing...</CodeMockup.Line>
-  <CodeMockup.Line class="text-success">Done!</CodeMockup.Line>
+  <CodeMockupLine>yarn add daisyui react-daisyui</CodeMockupLine>
+  <CodeMockupLine class="text-warning">installing...</CodeMockupLine>
+  <CodeMockupLine class="text-success">Done!</CodeMockupLine>
 </CodeMockup>`}
             />
           </Flex>
@@ -119,9 +142,9 @@ export default function CodeMockupShowcase() {
             </CodeMockup>
             <CodeBlock
               code={`<CodeMockup>
-  <CodeMockup.Line>yarn add daisyui react-daisyui</CodeMockup.Line>
-  <CodeMockup.Line>installing...</CodeMockup.Line>
-  <CodeMockup.Line status="warning">Error!</CodeMockup.Line>
+  <CodeMockupLine>yarn add daisyui react-daisyui</CodeMockupLine>
+  <CodeMockupLine>installing...</CodeMockupLine>
+  <CodeMockupLine status="warning">Error!</CodeMockupLine>
 </CodeMockup>`}
             />
           </Flex>
@@ -137,9 +160,9 @@ export default function CodeMockupShowcase() {
             </CodeMockup>
             <CodeBlock
               code={`<CodeMockup>
-  <CodeMockup.Line dataPrefix="~">
+  <CodeMockupLine dataPrefix="~">
     Magnam dolore beatae necessitatibus nemopsum itaque sit. Et porro quae qui et et dolore ratione.
-  </CodeMockup.Line>
+  </CodeMockupLine>
 </CodeMockup>`}
             />
           </Flex>
@@ -152,14 +175,18 @@ export default function CodeMockupShowcase() {
             </CodeMockup>
             <CodeBlock
               code={`<CodeMockup>
-  <CodeMockup.Line dataPrefix={false}>without prefix</CodeMockup.Line>
+  <CodeMockupLine dataPrefix={false}>without prefix</CodeMockupLine>
 </CodeMockup>`}
             />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
-          <PropsTable props={props} />
+          <h3 class="text-lg font-semibold mb-2">CodeMockup</h3>
+          <PropsTable props={codeMockupProps} />
+          
+          <h3 class="text-lg font-semibold mt-6 mb-2">CodeMockupLine</h3>
+          <PropsTable props={codeMockupLineProps} />
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>
