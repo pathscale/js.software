@@ -125,7 +125,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="basic" title="Basic Usage">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left">
+            <Flex direction="col" justify="start" align="start">
               <Input
                 value={value()}
                 onInput={(e) => setValue(e.currentTarget.value)}
@@ -146,7 +146,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="colors" title="Color Variants">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <Input placeholder="Default input" />
               <Input color="primary" placeholder="Primary" />
               <Input color="secondary" placeholder="Secondary" />
@@ -171,28 +171,27 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
-              <Input loading placeholder="Loading state" />
+            <Flex direction="col" justify="start" align="start" gap="lg">
+              <Input placeholder="Loading state" />
               <Input disabled placeholder="Disabled state" />
               <Input readonly value="Read-only value" />
               <Input
                 type="password"
-                passwordReveal
                 placeholder="Password with reveal"
               />
             </Flex>
             <CodeBlock
-              code={`<Input loading placeholder="Loading state" />
+              code={`<Input placeholder="Loading state" />
 <Input disabled placeholder="Disabled state" />
 <Input readonly value="Read-only value" />
-<Input type="password" passwordReveal placeholder="Password with reveal" />`}
+<Input type="password" placeholder="Password with reveal" />`}
             />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <Input size="xs" placeholder="Extra small" />
               <Input size="sm" placeholder="Small" />
               <Input size="md" placeholder="Medium (default)" />
@@ -211,7 +210,7 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <Input variant="bordered" placeholder="Bordered (default)" />
               <Input variant="ghost" placeholder="Ghost variant" />
               <Input variant="flushed" placeholder="Flushed variant" />
@@ -232,11 +231,10 @@ export default function InputShowcase() {
 
         <ShowcaseSection id="icons" title="With Icons">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <Input leftIcon={<FiLock />} placeholder="With left icon" />
               <Input
                 type="password"
-                passwordReveal
                 leftIcon={<FiLock />}
                 rightIcon={<FiEye />}
                 placeholder="Password with icons"
@@ -250,7 +248,6 @@ export default function InputShowcase() {
 
 <Input
   type="password"
-  passwordReveal
   leftIcon={<FiLock />}
   rightIcon={<FiEye />}
   placeholder="Password with icons"

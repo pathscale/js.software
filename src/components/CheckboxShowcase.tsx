@@ -21,11 +21,6 @@ export default function CheckboxShowcase() {
       description: "Controls the checked state",
     },
     {
-      name: "defaultChecked",
-      type: "boolean",
-      description: "Sets the initial checked state",
-    },
-    {
       name: "indeterminate",
       type: "boolean",
       default: "false",
@@ -69,7 +64,7 @@ export default function CheckboxShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Checkbox />
             </Flex>
             <CodeBlock code={`<Checkbox />`} />
@@ -78,7 +73,7 @@ export default function CheckboxShowcase() {
 
         <ShowcaseSection id="indeterminate" title="Indeterminate">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Checkbox indeterminate />
             </Flex>
             <CodeBlock code={`<Checkbox indeterminate />`} />
@@ -87,7 +82,7 @@ export default function CheckboxShowcase() {
 
         <ShowcaseSection id="form-control" title="Form Control">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <div class="form-control">
                 <label class="label cursor-pointer">
                   <Checkbox />
@@ -111,7 +106,7 @@ export default function CheckboxShowcase() {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" gap="lg">
+            <Flex justify="start" align="start" gap="lg">
               <Checkbox checked color="primary" />
               <Checkbox checked color="secondary" />
               <Checkbox checked color="accent" />
@@ -138,7 +133,7 @@ export default function CheckboxShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" gap="lg">
+            <Flex justify="start" align="start" gap="lg">
               <Checkbox checked size="xs" />
               <Checkbox checked size="sm" />
               <Checkbox checked size="md" />
@@ -159,7 +154,7 @@ export default function CheckboxShowcase() {
 
         <ShowcaseSection id="disabled" title="Disabled States">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" gap="lg">
+            <Flex justify="start" align="start" gap="lg">
               <div>
                 <h3 class="text-sm mb-2">Disabled</h3>
                 <Checkbox disabled />

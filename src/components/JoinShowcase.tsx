@@ -182,7 +182,7 @@ export default function JoinShowcase() {
                 align="center"
                 gap="sm"
               >
-                <Radio name="radio-join" defaultChecked />
+                <Radio name="radio-join" checked />
                 <span>Red Pill</span>
               </Flex>
               <Flex
@@ -201,7 +201,7 @@ export default function JoinShowcase() {
     <Radio
       name="radio-join"
       class="checked:bg-red-500"
-      defaultChecked
+      checked
     />
     <span>Red Pill</span>
   </Flex>

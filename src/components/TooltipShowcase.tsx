@@ -84,7 +84,7 @@ export default function TooltipShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" class="my-16">
+            <Flex align="start" justify="start" class="my-16">
               <Tooltip message="hello">
                 <Button>Hover me</Button>
               </Tooltip>
@@ -99,7 +99,7 @@ export default function TooltipShowcase() {
 
         <ShowcaseSection id="force-open" title="Force Open">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" class="my-16">
+            <Flex align="start" justify="start" class="my-16">
               <Tooltip message="hello" open>
                 <Button>Hover me</Button>
               </Tooltip>
@@ -114,7 +114,7 @@ export default function TooltipShowcase() {
 
         <ShowcaseSection id="positions" title="Positions">
           <Flex direction="col" gap="md">
-            <Flex gap="8" align="left" justify="left" class="my-16">
+            <Flex gap="xl" align="start" justify="start" class="my-16">
               <Tooltip message="top" position="top">
                 <Button size="sm">Top</Button>
               </Tooltip>
@@ -147,7 +147,7 @@ export default function TooltipShowcase() {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg" class="my-16">
+            <Flex align="start" justify="start" gap="lg" class="my-16">
               <Tooltip color="primary" message="primary" open>
                 <Button color="primary">Primary</Button>
               </Tooltip>
@@ -178,7 +178,7 @@ export default function TooltipShowcase() {
 
         <ShowcaseSection id="statuses" title="Statuses">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg" class="my-16">
+            <Flex align="start" justify="start" gap="lg" class="my-16">
               <Tooltip color="info" message="info" open>
                 <Button color="info">Info</Button>
               </Tooltip>

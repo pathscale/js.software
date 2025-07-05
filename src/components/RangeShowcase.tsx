@@ -91,7 +91,7 @@ const RangeShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Range />
             </Flex>
             <CodeBlock code={`<Range />`} />
@@ -100,7 +100,7 @@ const RangeShowcase: Component = () => {
 
         <ShowcaseSection id="steps" title="With Steps and Ticks">
           <Flex direction="col" gap="md">
-            <Flex direction="col" align="left" justify="left" gap="lg">
+            <Flex direction="col" align="start" justify="start" gap="lg">
               <div class="w-full max-w-xs">
                 <p class="text-sm mb-4">Automatic ticks with step</p>
                 <Range min={0} max={100} step={25} />
@@ -129,7 +129,7 @@ const RangeShowcase: Component = () => {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Flex direction="col" gap="sm" class="w-full">
                 <Range value={20} color="primary" />
                 <Range value={30} color="secondary" />
@@ -156,7 +156,7 @@ const RangeShowcase: Component = () => {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Flex direction="col" gap="sm" class="w-full">
                 <Range value={40} size="xs" />
                 <Range value={50} size="sm" />

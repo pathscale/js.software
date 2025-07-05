@@ -766,7 +766,7 @@ const NavbarShowcase: Component = () => {
 
               <Show when={activeStrategy()}>
                 <Navbar.Row class="bg-neutral text-neutral-content" padded>
-                  <Flex wrap gap="sm">
+                  <Flex wrap="wrap" gap="sm">
                     {strategyDetails[activeStrategy()!].map((item) => (
                       <a href="#" class="hover:underline">
                         {item}

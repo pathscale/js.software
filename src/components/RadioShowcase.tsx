@@ -22,12 +22,6 @@ const RadioShowcase: Component = () => {
       description: "Whether the radio is checked",
     },
     {
-      name: "defaultChecked",
-      type: "boolean",
-      default: "false",
-      description: "Whether the radio is checked by default",
-    },
-    {
       name: "disabled",
       type: "boolean",
       default: "false",
@@ -79,13 +73,13 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="sm">
-              <Radio name="radio1" defaultChecked />
+            <Flex align="start" justify="start" gap="sm">
+              <Radio name="radio1" checked />
               <Radio name="radio1" />
             </Flex>
             <CodeBlock
-              code={`<Flex align="left" justify="left" gap="sm">
-  <Radio name="radio1" defaultChecked />
+              code={`<Flex align="start" justify="start" gap="sm">
+  <Radio name="radio1" checked />
   <Radio name="radio1" />
 </Flex>`}
             />
@@ -94,24 +88,24 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="sm">
-              <Radio defaultChecked color="primary" name="radio2" />
-              <Radio defaultChecked color="secondary" name="radio3" />
-              <Radio defaultChecked color="accent" name="radio4" />
-              <Radio defaultChecked color="success" name="radio5" />
-              <Radio defaultChecked color="warning" name="radio6" />
-              <Radio defaultChecked color="info" name="radio7" />
-              <Radio defaultChecked color="error" name="radio8" />
+            <Flex align="start" justify="start" gap="sm">
+              <Radio checked color="primary" name="radio2" />
+              <Radio checked color="secondary" name="radio3" />
+              <Radio checked color="accent" name="radio4" />
+              <Radio checked color="success" name="radio5" />
+              <Radio checked color="warning" name="radio6" />
+              <Radio checked color="info" name="radio7" />
+              <Radio checked color="error" name="radio8" />
             </Flex>
             <CodeBlock
-              code={`<Flex align="left" justify="left" gap="sm">
-  <Radio defaultChecked color="primary" name="radio2" />
-  <Radio defaultChecked color="secondary" name="radio3" />
-  <Radio defaultChecked color="accent" name="radio4" />
-  <Radio defaultChecked color="success" name="radio5" />
-  <Radio defaultChecked color="warning" name="radio6" />
-  <Radio defaultChecked color="info" name="radio7" />
-  <Radio defaultChecked color="error" name="radio8" />
+              code={`<Flex align="start" justify="start" gap="sm">
+  <Radio checked color="primary" name="radio2" />
+  <Radio checked color="secondary" name="radio3" />
+  <Radio checked color="accent" name="radio4" />
+  <Radio checked color="success" name="radio5" />
+  <Radio checked color="warning" name="radio6" />
+  <Radio checked color="info" name="radio7" />
+  <Radio checked color="error" name="radio8" />
 </Flex>`}
             />
           </Flex>
@@ -119,12 +113,12 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="sm">
+            <Flex align="start" justify="start" gap="sm">
               <Radio name="radio9" disabled />
               <Radio name="radio9" disabled />
             </Flex>
             <CodeBlock
-              code={`<Flex align="left" justify="left" gap="sm">
+              code={`<Flex align="start" justify="start" gap="sm">
   <Radio name="radio9" disabled />
   <Radio name="radio9" disabled />
 </Flex>`}
@@ -134,7 +128,7 @@ const RadioShowcase: Component = () => {
 
         <ShowcaseSection id="with-labels" title="With Labels and Form">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Flex
                 gap="lg"
                 class="bg-[hsl(var(--color-bg-secondary)/1)] w-full max-w-sm p-4 rounded-lg shadow"
@@ -143,7 +137,7 @@ const RadioShowcase: Component = () => {
                   <Radio
                     name="radio10"
                     class="checked:bg-red-500"
-                    defaultChecked
+                    checked
                   />
                   <span>Red Pill</span>
                 </label>
@@ -159,7 +153,7 @@ const RadioShowcase: Component = () => {
   class="bg-[hsl(var(--color-bg-secondary)/1)] w-full max-w-sm p-4 rounded-lg shadow"
 >
   <label class="cursor-pointer flex items-center gap-2">
-    <Radio name="radio10" class="checked:bg-red-500" defaultChecked />
+    <Radio name="radio10" class="checked:bg-red-500" checked />
     <span>Red Pill</span>
   </label>
   <label class="cursor-pointer flex items-center gap-2">

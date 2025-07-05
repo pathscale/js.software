@@ -67,7 +67,7 @@ const RadialProgressShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <RadialProgress value={75}>75%</RadialProgress>
             </Flex>
             <CodeBlock
@@ -78,7 +78,7 @@ const RadialProgressShowcase: Component = () => {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg">
+            <Flex align="start" justify="start" gap="lg">
               <RadialProgress value={75} color="primary">
                 75%
               </RadialProgress>
@@ -102,7 +102,7 @@ const RadialProgressShowcase: Component = () => {
               </RadialProgress>
             </Flex>
             <CodeBlock
-              code={`<Flex align="left" justify="left" gap="lg">
+              code={`<Flex align="start" justify="start" gap="lg">
   <RadialProgress value={75} color="primary">75%</RadialProgress>
   <RadialProgress value={75} color="secondary">75%</RadialProgress>
   <RadialProgress value={75} color="accent">75%</RadialProgress>
@@ -117,7 +117,7 @@ const RadialProgressShowcase: Component = () => {
 
         <ShowcaseSection id="background" title="Background Color">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <RadialProgress
                 value={75}
                 class="bg-primary text-primary-content border-4 border-primary"
@@ -138,7 +138,7 @@ const RadialProgressShowcase: Component = () => {
 
         <ShowcaseSection id="size-thickness" title="Custom Size and Thickness">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg">
+            <Flex align="start" justify="start" gap="lg">
               <RadialProgress value={70} size="12rem" thickness="2px">
                 70%
               </RadialProgress>
@@ -147,7 +147,7 @@ const RadialProgressShowcase: Component = () => {
               </RadialProgress>
             </Flex>
             <CodeBlock
-              code={`<Flex align="left" justify="left" gap="lg">
+              code={`<Flex align="start" justify="start" gap="lg">
   <RadialProgress value={70} size="12rem" thickness="2px">
     70%
   </RadialProgress>

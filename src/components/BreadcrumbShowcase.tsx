@@ -53,7 +53,7 @@ export default function BreadcrumbShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Breadcrumbs>
                 <BreadcrumbsItem href="/">Home</BreadcrumbsItem>
                 <BreadcrumbsItem href="/">Documents</BreadcrumbsItem>
@@ -72,7 +72,7 @@ export default function BreadcrumbShowcase() {
 
         <ShowcaseSection id="with-icons" title="With Icons">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Breadcrumbs>
                 <BreadcrumbsItem href="/">
                   <svg
@@ -151,7 +151,7 @@ export default function BreadcrumbShowcase() {
 
         <ShowcaseSection id="max-width" title="With Max Width">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Breadcrumbs class="max-w-xs">
                 <BreadcrumbsItem>Long text 1</BreadcrumbsItem>
                 <BreadcrumbsItem>Long text 2</BreadcrumbsItem>

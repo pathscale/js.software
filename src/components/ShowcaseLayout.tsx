@@ -25,7 +25,7 @@ const ShowcaseLayout: ParentComponent = (props) => {
   return (
     <main class="min-h-screen w-full p-4 md:p-6 lg:p-8">
       <div class="mx-auto max-w-5xl">
-        <Flex direction="col" gap="6" class="max-w-4xl mx-auto">
+        <Flex direction="col" gap="lg" class="max-w-4xl mx-auto">
           <div>
             <h1 class="text-3xl font-bold mb-2">{current()?.name}</h1>
             <p class="text-gray-600 dark:text-gray-400">

@@ -83,22 +83,22 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Rating value={rating1()} onChange={setRating1}>
-                <Rating.Item name="rating-1" class="mask mask-star" />
-                <Rating.Item name="rating-1" class="mask mask-star" />
-                <Rating.Item name="rating-1" class="mask mask-star" />
-                <Rating.Item name="rating-1" class="mask mask-star" />
-                <Rating.Item name="rating-1" class="mask mask-star" />
+                <Rating.Item value={1} name="rating-1" class="mask mask-star" />
+                <Rating.Item value={2} name="rating-1" class="mask mask-star" />
+                <Rating.Item value={3} name="rating-1" class="mask mask-star" />
+                <Rating.Item value={4} name="rating-1" class="mask mask-star" />
+                <Rating.Item value={5} name="rating-1" class="mask mask-star" />
               </Rating>
             </Flex>
             <CodeBlock
               code={`<Rating value={value} onChange={setValue}>
-  <Rating.Item name="rating-1" class="mask mask-star" />
-  <Rating.Item name="rating-1" class="mask mask-star" />
-  <Rating.Item name="rating-1" class="mask mask-star" />
-  <Rating.Item name="rating-1" class="mask mask-star" />
-  <Rating.Item name="rating-1" class="mask mask-star" />
+  <Rating.Item value={1} name="rating-1" class="mask mask-star" />
+  <Rating.Item value={2} name="rating-1" class="mask mask-star" />
+  <Rating.Item value={3} name="rating-1" class="mask mask-star" />
+  <Rating.Item value={4} name="rating-1" class="mask mask-star" />
+  <Rating.Item value={5} name="rating-1" class="mask mask-star" />
 </Rating>`}
             />
           </Flex>
@@ -106,25 +106,30 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="star2-warning" title="Star 2 with Warning Color">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Rating value={rating2()} onChange={setRating2}>
                 <Rating.Item
+                  value={1}
                   name="rating-2"
                   class="mask mask-star-2 bg-orange-400"
                 />
                 <Rating.Item
+                  value={2}
                   name="rating-2"
                   class="mask mask-star-2 bg-orange-400"
                 />
                 <Rating.Item
+                  value={3}
                   name="rating-2"
                   class="mask mask-star-2 bg-orange-400"
                 />
                 <Rating.Item
+                  value={4}
                   name="rating-2"
                   class="mask mask-star-2 bg-orange-400"
                 />
                 <Rating.Item
+                  value={5}
                   name="rating-2"
                   class="mask mask-star-2 bg-orange-400"
                 />
@@ -132,11 +137,11 @@ const RatingShowcase: Component = () => {
             </Flex>
             <CodeBlock
               code={`<Rating value={value} onChange={setValue}>
-  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
-  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
-  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
-  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
-  <Rating.Item name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item value={1} name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item value={2} name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item value={3} name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item value={4} name="rating-2" class="mask mask-star-2 bg-orange-400" />
+  <Rating.Item value={5} name="rating-2" class="mask mask-star-2 bg-orange-400" />
 </Rating>`}
             />
           </Flex>
@@ -147,25 +152,30 @@ const RatingShowcase: Component = () => {
           title="Heart with Multiple Colors"
         >
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Rating value={rating3()} onChange={setRating3}>
                 <Rating.Item
+                  value={1}
                   name="rating-3"
                   class="mask mask-heart bg-red-400"
                 />
                 <Rating.Item
+                  value={2}
                   name="rating-3"
                   class="mask mask-heart bg-orange-400"
                 />
                 <Rating.Item
+                  value={3}
                   name="rating-3"
                   class="mask mask-heart bg-yellow-400"
                 />
                 <Rating.Item
+                  value={4}
                   name="rating-3"
                   class="mask mask-heart bg-lime-400"
                 />
                 <Rating.Item
+                  value={5}
                   name="rating-3"
                   class="mask mask-heart bg-green-400"
                 />
@@ -173,11 +183,11 @@ const RatingShowcase: Component = () => {
             </Flex>
             <CodeBlock
               code={`<Rating value={value} onChange={setValue}>
-  <Rating.Item name="rating-3" class="mask mask-heart bg-red-400" />
-  <Rating.Item name="rating-3" class="mask mask-heart bg-orange-400" />
-  <Rating.Item name="rating-3" class="mask mask-heart bg-yellow-400" />
-  <Rating.Item name="rating-3" class="mask mask-heart bg-lime-400" />
-  <Rating.Item name="rating-3" class="mask mask-heart bg-green-400" />
+  <Rating.Item value={1} name="rating-3" class="mask mask-heart bg-red-400" />
+  <Rating.Item value={2} name="rating-3" class="mask mask-heart bg-orange-400" />
+  <Rating.Item value={3} name="rating-3" class="mask mask-heart bg-yellow-400" />
+  <Rating.Item value={4} name="rating-3" class="mask mask-heart bg-lime-400" />
+  <Rating.Item value={5} name="rating-3" class="mask mask-heart bg-green-400" />
 </Rating>`}
             />
           </Flex>
@@ -185,25 +195,30 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="star2-green" title="Star 2 with Green Color">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Rating value={rating4()} onChange={setRating4}>
                 <Rating.Item
+                  value={1}
                   name="rating-4"
                   class="mask mask-star-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={2}
                   name="rating-4"
                   class="mask mask-star-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={3}
                   name="rating-4"
                   class="mask mask-star-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={4}
                   name="rating-4"
                   class="mask mask-star-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={5}
                   name="rating-4"
                   class="mask mask-star-2 bg-green-500"
                 />
@@ -211,11 +226,11 @@ const RatingShowcase: Component = () => {
             </Flex>
             <CodeBlock
               code={`<Rating value={value} onChange={setValue}>
-  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
-  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
-  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
-  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
-  <Rating.Item name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item value={1} name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item value={2} name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item value={3} name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item value={4} name="rating-4" class="mask mask-star-2 bg-green-500" />
+  <Rating.Item value={5} name="rating-4" class="mask mask-star-2 bg-green-500" />
 </Rating>`}
             />
           </Flex>
@@ -223,22 +238,22 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="hidden" title="Hidden Rating">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Rating value={rating5()} onChange={setRating5} size="lg">
-                <Rating.Item name="rating-9" class="mask mask-star" />
-                <Rating.Item name="rating-9" class="mask mask-star" />
-                <Rating.Item name="rating-9" class="mask mask-star" />
-                <Rating.Item name="rating-9" class="mask mask-star" />
-                <Rating.Item name="rating-9" class="mask mask-star" />
+                <Rating.Item value={1} name="rating-9" class="mask mask-star" />
+                <Rating.Item value={2} name="rating-9" class="mask mask-star" />
+                <Rating.Item value={3} name="rating-9" class="mask mask-star" />
+                <Rating.Item value={4} name="rating-9" class="mask mask-star" />
+                <Rating.Item value={5} name="rating-9" class="mask mask-star" />
               </Rating>
             </Flex>
             <CodeBlock
               code={`<Rating value={0} onChange={setValue} size="lg">
-  <Rating.Item name="rating-9" class="mask mask-star" />
-  <Rating.Item name="rating-9" class="mask mask-star" />
-  <Rating.Item name="rating-9" class="mask mask-star" />
-  <Rating.Item name="rating-9" class="mask mask-star" />
-  <Rating.Item name="rating-9" class="mask mask-star" />
+  <Rating.Item value={1} name="rating-9" class="mask mask-star" />
+  <Rating.Item value={2} name="rating-9" class="mask mask-star" />
+  <Rating.Item value={3} name="rating-9" class="mask mask-star" />
+  <Rating.Item value={4} name="rating-9" class="mask mask-star" />
+  <Rating.Item value={5} name="rating-9" class="mask mask-star" />
 </Rating>`}
             />
           </Flex>
@@ -246,45 +261,55 @@ const RatingShowcase: Component = () => {
 
         <ShowcaseSection id="half-stars" title="Half Stars">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" class="w-full component-preview">
+            <Flex align="start" justify="start" class="w-full component-preview">
               <Rating value={rating6()} onChange={setRating6} half size="lg">
                 <Rating.Item
+                  value={0.5}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-1 bg-green-500"
                 />
                 <Rating.Item
+                  value={1}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={1.5}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-1 bg-green-500"
                 />
                 <Rating.Item
+                  value={2}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={2.5}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-1 bg-green-500"
                 />
                 <Rating.Item
+                  value={3}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={3.5}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-1 bg-green-500"
                 />
                 <Rating.Item
+                  value={4}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-2 bg-green-500"
                 />
                 <Rating.Item
+                  value={4.5}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-1 bg-green-500"
                 />
                 <Rating.Item
+                  value={5}
                   name="rating-10"
                   class="mask mask-star-2 mask-half-2 bg-green-500"
                 />
@@ -292,16 +317,16 @@ const RatingShowcase: Component = () => {
             </Flex>
             <CodeBlock
               code={`<Rating value={value} onChange={setValue} half size="lg">
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
-  <Rating.Item name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item value={0.5} name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item value={1} name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item value={1.5} name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item value={2} name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item value={2.5} name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item value={3} name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item value={3.5} name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item value={4} name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
+  <Rating.Item value={4.5} name="rating-10" class="mask mask-star-2 mask-half-1 bg-green-500" />
+  <Rating.Item value={5} name="rating-10" class="mask mask-star-2 mask-half-2 bg-green-500" />
 </Rating>`}
             />
           </Flex>

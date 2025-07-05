@@ -275,7 +275,7 @@ export default function CardShowcase() {
 
         <ShowcaseSection id="backgrounds" title="Backgrounds">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <Card background="primary">
                 <Card.Body>
                   <Card.Title tag="h2">Primary Background</Card.Title>
@@ -322,7 +322,7 @@ export default function CardShowcase() {
 
         <ShowcaseSection id="shadows" title="Shadows">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <Card shadow="sm">
                 <Card.Body>
                   <Card.Title tag="h2">Small Shadow</Card.Title>
@@ -369,7 +369,7 @@ export default function CardShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <Card size="xs">
                 <Card.Body>
                   <Card.Title tag="h2">XS Card</Card.Title>

@@ -129,7 +129,7 @@ export default function SelectShowcase() {
 
         <ShowcaseSection id="basic" title="Basic Usage">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="sm">
+            <Flex align="start" justify="start" gap="sm">
               <Select
                 placeholder="Select a fruit"
                 value={selected()}
@@ -170,7 +170,7 @@ const fruitOptions = [
 
         <ShowcaseSection id="colors" title="Color Variants">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg">
+            <Flex align="start" justify="start" gap="lg">
               <Select
                 placeholder="Select a color"
                 color="primary"
@@ -196,7 +196,7 @@ const fruitOptions = [
                   <option value={opt.value}>{opt.label}</option>
                 ))}
               </Select>
-              <Select placeholder="Select an animal" color="danger">
+              <Select placeholder="Select an animal" color="error">
                 {animalOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>
                 ))}
@@ -223,7 +223,7 @@ const fruitOptions = [
     <option value={opt.value}>{opt.label}</option>
   ))}
 </Select>
-<Select placeholder="Select an animal" color="danger">
+<Select placeholder="Select an animal" color="error">
   {animalOptions.map((opt) => (
     <option value={opt.value}>{opt.label}</option>
   ))}
@@ -234,7 +234,7 @@ const fruitOptions = [
 
         <ShowcaseSection id="sizes" title="Size Variants">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg">
+            <Flex align="start" justify="start" gap="lg">
               <Select
                 size="sm"
                 placeholder="Small size"
@@ -278,13 +278,13 @@ const fruitOptions = [
 
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg">
+            <Flex align="start" justify="start" gap="lg">
               <Select disabled placeholder="Disabled state">
                 {fruitOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>
                 ))}
               </Select>
-              <Select loading placeholder="Loading state">
+              <Select placeholder="Loading state">
                 {animalOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>
                 ))}
@@ -296,7 +296,7 @@ const fruitOptions = [
     <option value={opt.value}>{opt.label}</option>
   ))}
 </Select>
-<Select loading placeholder="Loading state">
+<Select placeholder="Loading state">
   {animalOptions.map((opt) => (
     <option value={opt.value}>{opt.label}</option>
   ))}
@@ -307,35 +307,35 @@ const fruitOptions = [
 
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left" gap="lg">
-              <Select rounded placeholder="Rounded corners">
+            <Flex align="start" justify="start" gap="lg">
+              <Select placeholder="Rounded corners">
                 {colorOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>
                 ))}
               </Select>
-              <Select expanded placeholder="Full width">
+              <Select placeholder="Full width">
                 {categoryOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>
                 ))}
               </Select>
-              <Select nativeSize={4} placeholder="Multiple visible options">
+              <Select placeholder="Multiple visible options">
                 {animalOptions.map((opt) => (
                   <option value={opt.value}>{opt.label}</option>
                 ))}
               </Select>
             </Flex>
             <CodeBlock
-              code={`<Select rounded placeholder="Rounded corners">
+              code={`<Select placeholder="Rounded corners">
   {colorOptions.map((opt) => (
     <option value={opt.value}>{opt.label}</option>
   ))}
 </Select>
-<Select expanded placeholder="Full width">
+<Select placeholder="Full width">
   {categoryOptions.map((opt) => (
     <option value={opt.value}>{opt.label}</option>
   ))}
 </Select>
-<Select nativeSize={4} placeholder="Multiple visible options">
+<Select placeholder="Multiple visible options">
   {animalOptions.map((opt) => (
     <option value={opt.value}>{opt.label}</option>
   ))}

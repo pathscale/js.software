@@ -47,7 +47,7 @@ export default function StatsShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Stats class="shadow">
                 <Stats.Stat>
                   <Stats.Stat.Title>Total Page Views</Stats.Stat.Title>
@@ -70,7 +70,7 @@ export default function StatsShowcase() {
 
         <ShowcaseSection id="icons-or-image" title="Icons or Image">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Stats class="shadow font-sans">
                 <Stats.Stat>
                   <Stats.Stat.Figure class="text-primary">
@@ -200,7 +200,7 @@ export default function StatsShowcase() {
 
         <ShowcaseSection id="centered-items" title="Centered Items">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Stats class="shadow font-sans">
                 <Stats.Stat class="place-items-center">
                   <Stats.Stat.Title>Downloads</Stats.Stat.Title>
@@ -254,7 +254,7 @@ export default function StatsShowcase() {
 
         <ShowcaseSection id="vertical" title="Vertical">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Stats direction="vertical" class="shadow font-sans">
                 <Stats.Stat>
                   <Stats.Stat.Title>Downloads</Stats.Stat.Title>
@@ -302,7 +302,7 @@ export default function StatsShowcase() {
 
         <ShowcaseSection id="responsive" title="Responsive">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Stats class="lg:stats-horizontal shadow">
                 <Stats.Stat>
                   <Stats.Stat.Title>Downloads</Stats.Stat.Title>
@@ -350,7 +350,7 @@ export default function StatsShowcase() {
 
         <ShowcaseSection id="custom-colors" title="Custom Colors and Button">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="left">
+            <Flex align="start" justify="start">
               <Stats class="font-sans bg-primary text-primary-content">
                 <Stats.Stat>
                   <Stats.Stat.Title>Account balance</Stats.Stat.Title>

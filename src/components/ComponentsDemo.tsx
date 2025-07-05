@@ -222,9 +222,9 @@ export default function ComponentsDemo() {
             </Flex>
             <Flex direction="col" gap="sm" class="mt-4">
               <Flex justify="between" align="center">
-                <Input placeholder="Min" size="sm" expanded={false} />
+                <Input placeholder="Min" size="sm" />
                 <span class="text-sm opacity-60">to</span>
-                <Input placeholder="Max" size="sm" expanded={false} />
+                <Input placeholder="Max" size="sm" />
               </Flex>
               <Button size="sm" color="primary" fullWidth>
                 Apply
@@ -565,10 +565,7 @@ export default function ComponentsDemo() {
                 </Indicator>
               </Flex>
               <Flex gap="sm">
-                <Swap>
-                  <div>☀️</div>
-                  <div>🌙</div>
-                </Swap>
+                <Swap onElement={<div>☀️</div>} offElement={<div>🌙</div>} />
                 <span class="text-sm">Theme Toggle</span>
               </Flex>
             </Flex>

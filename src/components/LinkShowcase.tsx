@@ -67,7 +67,7 @@ const LinkShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Link>It's just a simple link</Link>
             </Flex>
             <CodeBlock code={`<Link>It's just a simple link</Link>`} />
@@ -76,7 +76,7 @@ const LinkShowcase: Component = () => {
 
         <ShowcaseSection id="with-href" title="With Href">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Link href="https://google.com" target="_blank">
                 Take me to Google!
               </Link>
@@ -91,7 +91,7 @@ const LinkShowcase: Component = () => {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" gap="lg">
+            <Flex justify="start" align="start" gap="lg">
               <Link>Default</Link>
               <Link color="neutral">Neutral</Link>
               <Link color="primary">Primary</Link>
@@ -118,7 +118,7 @@ const LinkShowcase: Component = () => {
 
         <ShowcaseSection id="hover" title="Hover Effect">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" gap="lg">
+            <Flex justify="start" align="start" gap="lg">
               <Link hover>With hover effect (default)</Link>
               <Link hover={false}>Without hover effect</Link>
             </Flex>

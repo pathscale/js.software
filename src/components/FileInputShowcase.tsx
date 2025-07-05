@@ -69,7 +69,7 @@ const FileInputShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <FileInput class="w-full max-w-xs" />
             </Flex>
             <CodeBlock code={`<FileInput class="w-full max-w-xs" />`} />
@@ -78,7 +78,7 @@ const FileInputShowcase: Component = () => {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <FileInput class="w-full max-w-xs" color="primary" />
               <FileInput class="w-full max-w-xs" color="secondary" />
               <FileInput class="w-full max-w-xs" color="accent" />
@@ -89,7 +89,7 @@ const FileInputShowcase: Component = () => {
               <FileInput class="w-full max-w-xs" color="error" />
             </Flex>
             <CodeBlock
-              code={`<Flex justify="left" align="left">
+              code={`<Flex justify="start" align="start">
 <FileInput class="w-full max-w-xs" color="primary" />
 <FileInput class="w-full max-w-xs" color="secondary" />
 <FileInput class="w-full max-w-xs" color="accent" />
@@ -105,7 +105,7 @@ const FileInputShowcase: Component = () => {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <FileInput class="w-full max-w-xs" size="xs" />
               <FileInput class="w-full max-w-xs" size="sm" />
               <FileInput class="w-full max-w-xs" size="md" />
@@ -113,7 +113,7 @@ const FileInputShowcase: Component = () => {
               <FileInput class="w-full max-w-xs" size="xl" />
             </Flex>
             <CodeBlock
-              code={`<Flex direction="col" justify="left" align="left" gap="lg">
+              code={`<Flex direction="col" justify="start" align="start" gap="lg">
   <FileInput class="w-full max-w-xs" size="xs" />
   <FileInput class="w-full max-w-xs" size="sm" />
   <FileInput class="w-full max-w-xs" size="md" />
@@ -126,7 +126,7 @@ const FileInputShowcase: Component = () => {
 
         <ShowcaseSection id="bordered" title="Bordered">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" gap="lg">
+            <Flex direction="col" justify="start" align="start" gap="lg">
               <FileInput class="w-full max-w-xs" bordered />
               <FileInput class="w-full max-w-xs" bordered color="primary" />
               <FileInput class="w-full max-w-xs" bordered color="secondary" />
@@ -143,7 +143,7 @@ const FileInputShowcase: Component = () => {
 
         <ShowcaseSection id="form-control" title="Form Control and Labels">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <div class="form-control w-full max-w-xs">
                 <label class="label">
                   <span class="label-text">Pick a file</span>

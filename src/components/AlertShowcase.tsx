@@ -173,8 +173,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="default" title="Default">
           <Flex
             class="w-full component-preview"
-            align="left"
-            justify="left"
+            align="start"
+            justify="start"
             gap="md"
           >
             <Alert icon={<InfoIcon />}>
@@ -187,8 +187,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="status-colors" title="Status Colors">
           <Flex
             class="w-full component-preview"
-            align="left"
-            justify="left"
+            align="start"
+            justify="start"
             gap="md"
           >
             <Flex direction="col" gap="md" class="w-full">
@@ -214,8 +214,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="variants" title="Variants">
           <Flex
             class="w-full component-preview"
-            align="left"
-            justify="left"
+            align="start"
+            justify="start"
             gap="md"
           >
             <Flex direction="col" gap="md" class="w-full">
@@ -239,8 +239,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="layout" title="Layout">
           <Flex
             class="w-full component-preview"
-            align="left"
-            justify="left"
+            align="start"
+            justify="start"
             gap="md"
           >
             <Flex direction="col" gap="md">
@@ -261,8 +261,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="with-buttons" title="With Buttons">
           <Flex
             class="w-full component-preview"
-            align="left"
-            justify="left"
+            align="start"
+            justify="start"
             gap="md"
           >
             <Alert icon={<InfoIcon />} class="shadow-lg">
@@ -281,8 +281,8 @@ const AlertShowcase: Component = () => {
         <ShowcaseSection id="with-title" title="With Title and Description">
           <Flex
             class="w-full component-preview"
-            align="left"
-            justify="left"
+            align="start"
+            justify="start"
             gap="md"
           >
             <Alert icon={<InfoIcon />} class="shadow-lg">

@@ -32,7 +32,7 @@ export default function ComponentVariants() {
             <Input placeholder="Input" class="max-w-32" />
             <Input
               placeholder="Primary"
-              color="danger"
+              color="error"
               class="max-w-32"
             />
             <Input placeholder="Secondary" class="max-w-32" />
@@ -48,7 +48,7 @@ export default function ComponentVariants() {
               color="warning"
               class="max-w-32"
             />
-            <Input placeholder="Error" color="danger" class="max-w-32" />
+            <Input placeholder="Error" color="error" class="max-w-32" />
           </Flex>
         </Card.Body>
       </Card>

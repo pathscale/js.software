@@ -212,7 +212,7 @@ export default function DividerShowcase() {
 
         <ShowcaseSection id="positions-horizontal" title="Horizontal Positions">
           <Flex direction="col" gap="md">
-            <Flex align="left" justify="center" gap="sm" class="h-42">
+            <Flex align="start" justify="center" gap="sm" class="h-42">
               <Divider horizontal position="start">
                 Start
               </Divider>

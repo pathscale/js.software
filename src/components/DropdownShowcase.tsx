@@ -120,7 +120,7 @@ export default function DropdownShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" class="my-16">
+            <Flex justify="start" align="start" class="my-16">
               <Dropdown>
                 <Dropdown.Toggle>Click</Dropdown.Toggle>
                 <Dropdown.Menu class="w-52">
@@ -143,7 +143,7 @@ export default function DropdownShowcase() {
 
         <ShowcaseSection id="as-card" title="As Card">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" class="my-16">
+            <Flex justify="start" align="start" class="my-16">
               <Dropdown>
                 <Dropdown.Toggle>Click</Dropdown.Toggle>
                 <Dropdown.Menu class="card card-compact w-64 p-2 shadow bg-primary text-primary-content m-1">
@@ -214,7 +214,7 @@ export default function DropdownShowcase() {
 
         <ShowcaseSection id="helper" title="Helper">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" class="my-16">
+            <Flex justify="start" align="start" class="my-16">
               A normal text and a helper dropdown
               <Dropdown end>
                 <Dropdown.Toggle
@@ -244,7 +244,7 @@ export default function DropdownShowcase() {
               </Dropdown>
             </Flex>
             <CodeBlock
-              code={`<Flex justify="left" align="left" class="my-16">
+              code={`<Flex justify="start" align="start" class="my-16">
   A normal text and a helper dropdown
   <Dropdown end>
     <Dropdown.Toggle
@@ -279,7 +279,7 @@ export default function DropdownShowcase() {
 
         <ShowcaseSection id="details" title="Details">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" class="my-16">
+            <Flex justify="start" align="start" class="my-16">
               <Dropdown.Details>
                 <Dropdown.Details.Toggle>Click</Dropdown.Details.Toggle>
                 <Dropdown.Menu class="w-52">
@@ -365,7 +365,7 @@ export default function DropdownShowcase() {
 
         <ShowcaseSection id="full-width" title="Full Width">
           <Flex direction="col" gap="md">
-            <Flex direction="col" justify="left" align="left" class="my-16">
+            <Flex direction="col" justify="start" align="start" class="my-16">
               <Dropdown fullWidth>
                 <Dropdown.Toggle class="w-full justify-start">Full Width Dropdown</Dropdown.Toggle>
                 <Dropdown.Menu class="w-full">

@@ -2,8 +2,10 @@ import type { Component } from "solid-js";
 import { createSignal } from "solid-js";
 import {
   Sidenav,
-  type SidenavItem,
-  type SidenavItemGroup,
+  SidenavMenu,
+  SidenavItem,
+  SidenavGroup,
+  SidenavLink,
   Flex,
 } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
@@ -16,7 +18,7 @@ const SidenavShowcase: Component = () => {
   const [isCollapsed, setIsCollapsed] = createSignal(false);
   const [isOpen, setIsOpen] = createSignal(true);
 
-  const simpleMenuItems: SidenavItem[] = [
+  const simpleMenuItems = [
     {
       id: "dashboard",
       label: "Dashboard",
@@ -44,13 +46,14 @@ const SidenavShowcase: Component = () => {
     {
       id: "settings",
       label: "Settings",
+      href: "#settings",
       icon: "⚙",
       active: selectedId() === "settings",
       onClick: () => setSelectedId("settings"),
     },
   ];
 
-  const menuItems: (SidenavItem | SidenavItemGroup)[] = [
+  const menuItems = [
     {
       id: "dashboard",
       label: "Dashboard",
@@ -86,6 +89,7 @@ const SidenavShowcase: Component = () => {
         {
           id: "settings",
           label: "Settings",
+          href: "#settings",
           icon: "⚙",
           active: selectedId() === "settings",
           onClick: () => setSelectedId("settings"),
@@ -108,9 +112,9 @@ const SidenavShowcase: Component = () => {
       description: "The title displayed in the sidenav header.",
     },
     {
-      name: "items",
-      type: "(SidenavItem | SidenavItemGroup)[]",
-      description: "Array of sidenav items and item groups.",
+      name: "children",
+      type: "JSX.Element",
+      description: "The content to display in the sidenav (typically SidenavMenu with SidenavItem and SidenavGroup components).",
     },
     {
       name: "isOpen",
@@ -168,10 +172,22 @@ const SidenavShowcase: Component = () => {
             <Flex>
               <Sidenav
                 title="Simple Dashboard"
-                items={simpleMenuItems}
                 isOpen={true}
                 collapsed={false}
-              />
+              >
+                <SidenavMenu>
+                  {simpleMenuItems.map((item) => (
+                    <SidenavItem active={item.active}>
+                      <SidenavLink>
+                        <a href={item.href} onClick={item.onClick}>
+                          <span class="sidenav-item-icon">{item.icon}</span>
+                          <span class="sidenav-item-label">{item.label}</span>
+                        </a>
+                      </SidenavLink>
+                    </SidenavItem>
+                  ))}
+                </SidenavMenu>
+              </Sidenav>
               <Flex grow direction="col" class="p-8">
                 <h1>Default Sidenav Example</h1>
                 <p class="text-gray-600">
@@ -180,32 +196,31 @@ const SidenavShowcase: Component = () => {
               </Flex>
             </Flex>
             <CodeBlock
-              code={`const simpleMenuItems: SidenavItem[] = [
-  {
-    id: "dashboard",
-    label: "Dashboard",
-    href: "#dashboard",
-    icon: "⌂",
-    active: selectedId() === "dashboard",
-    onClick: () => setSelectedId("dashboard"),
-  },
-  {
-    id: "users",
-    label: "Users",
-    href: "#users",
-    icon: "👥",
-    active: selectedId() === "users",
-    onClick: () => setSelectedId("users"),
-  },
-  // ... more items
-];
-
-<Sidenav
+              code={`<Sidenav
   title="Simple Dashboard"
-  items={simpleMenuItems}
   isOpen={true}
   collapsed={false}
-/>`}
+>
+  <SidenavMenu>
+    <SidenavItem active={selectedId() === "dashboard"}>
+      <SidenavLink>
+        <a href="#dashboard" onClick={() => setSelectedId("dashboard")}>
+          <span class="sidenav-item-icon">⌂</span>
+          <span class="sidenav-item-label">Dashboard</span>
+        </a>
+      </SidenavLink>
+    </SidenavItem>
+    <SidenavItem active={selectedId() === "users"}>
+      <SidenavLink>
+        <a href="#users" onClick={() => setSelectedId("users")}>
+          <span class="sidenav-item-icon">👥</span>
+          <span class="sidenav-item-label">Users</span>
+        </a>
+      </SidenavLink>
+    </SidenavItem>
+    {/* ... more items */}
+  </SidenavMenu>
+</Sidenav>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -215,16 +230,51 @@ const SidenavShowcase: Component = () => {
             <Flex>
               <Sidenav
                 title="My Dashboard"
-                items={menuItems}
                 isOpen={true}
                 collapsed={true}
-              />
+              >
+                <SidenavMenu>
+                  {menuItems.map((item) => (
+                    item.items ? (
+                      <SidenavGroup label={item.label} collapsed={true}>
+                        {item.items.map((subItem) => (
+                          <SidenavItem active={subItem.active}>
+                            <SidenavLink>
+                              <a href={subItem.href} onClick={subItem.onClick}>
+                                <span class="sidenav-item-icon">{subItem.icon}</span>
+                                <span class="sidenav-item-label">{subItem.label}</span>
+                              </a>
+                            </SidenavLink>
+                          </SidenavItem>
+                        ))}
+                      </SidenavGroup>
+                    ) : (
+                      <SidenavItem active={item.active}>
+                        <SidenavLink>
+                          <a href={item.href} onClick={item.onClick}>
+                            <span class="sidenav-item-icon">{item.icon}</span>
+                            <span class="sidenav-item-label">{item.label}</span>
+                          </a>
+                        </SidenavLink>
+                      </SidenavItem>
+                    )
+                  ))}
+                </SidenavMenu>
+              </Sidenav>
               <Flex grow direction="col" class="p-8">
                 <h1>Collapsed Sidenav Example</h1>
               </Flex>
             </Flex>
             <CodeBlock
-              code={`<Sidenav\n  title="My Dashboard"\n  items={menuItems}\n  isOpen={true}\n  collapsed={true}\n/>`}
+              code={`<Sidenav
+  title="My Dashboard"
+  isOpen={true}
+  collapsed={true}
+>
+  <SidenavMenu>
+    {/* Regular items and groups */}
+  </SidenavMenu>
+</Sidenav>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -233,17 +283,77 @@ const SidenavShowcase: Component = () => {
           <Flex>
             <Sidenav
               title="My Dashboard"
-              items={menuItems}
               isOpen={true}
               collapsed={false}
-            />
+            >
+              <SidenavMenu>
+                {menuItems.map((item) => (
+                  item.items ? (
+                    <SidenavGroup label={item.label} collapsed={false}>
+                      {item.items.map((subItem) => (
+                        <SidenavItem active={subItem.active}>
+                          <SidenavLink>
+                            <a href={subItem.href} onClick={subItem.onClick}>
+                              <span class="sidenav-item-icon">{subItem.icon}</span>
+                              <span class="sidenav-item-label">{subItem.label}</span>
+                            </a>
+                          </SidenavLink>
+                        </SidenavItem>
+                      ))}
+                    </SidenavGroup>
+                  ) : (
+                    <SidenavItem active={item.active}>
+                      <SidenavLink>
+                        <a href={item.href} onClick={item.onClick}>
+                          <span class="sidenav-item-icon">{item.icon}</span>
+                          <span class="sidenav-item-label">{item.label}</span>
+                        </a>
+                      </SidenavLink>
+                    </SidenavItem>
+                  )
+                ))}
+              </SidenavMenu>
+            </Sidenav>
             <Flex grow direction="col" class="p-8">
               <h1>Sidenav with Item Groups Example</h1>
             </Flex>
           </Flex>
           {/* Reusing menuItems as it already has groups */}
           <CodeBlock
-            code={`const menuItems = [\n  // ... items and groups definition ...\n];\n\n<Sidenav\n  title="My Dashboard"\n  items={menuItems}\n  isOpen={true}\n  collapsed={false}\n/>`}
+            code={`<Sidenav
+  title="My Dashboard"
+  isOpen={true}
+  collapsed={false}
+>
+  <SidenavMenu>
+    <SidenavItem active={selectedId() === "dashboard"}>
+      <SidenavLink>
+        <a href="#dashboard">
+          <span class="sidenav-item-icon">⌂</span>
+          <span class="sidenav-item-label">Dashboard</span>
+        </a>
+      </SidenavLink>
+    </SidenavItem>
+    <SidenavGroup label="Management">
+      <SidenavItem active={selectedId() === "users"}>
+        <SidenavLink>
+          <a href="#users">
+            <span class="sidenav-item-icon">👥</span>
+            <span class="sidenav-item-label">Users</span>
+          </a>
+        </SidenavLink>
+      </SidenavItem>
+      <SidenavItem active={selectedId() === "analytics"}>
+        <SidenavLink>
+          <a href="#analytics">
+            <span class="sidenav-item-icon">📊</span>
+            <span class="sidenav-item-label">Analytics</span>
+          </a>
+        </SidenavLink>
+      </SidenavItem>
+    </SidenavGroup>
+  </SidenavMenu>
+</Sidenav>`}
           />
         </ShowcaseSection>
 

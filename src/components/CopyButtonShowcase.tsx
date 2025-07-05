@@ -70,7 +70,7 @@ export default function CopyButtonShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex gap="md" wrap>
+            <Flex gap="md" wrap="wrap">
               <CopyButton text="Hello World" />
             </Flex>
             <CodeBlock code={`<CopyButton text="Hello World" />`} />

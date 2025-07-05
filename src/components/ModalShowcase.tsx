@@ -182,7 +182,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Button onClick={() => setDefaultOpen(true)}>Open Modal</Button>
               <Modal
                 open={defaultOpen()}
@@ -224,7 +224,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="outside-click" title="Click Outside">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Button onClick={() => setOutsideOpen(true)}>Open Modal</Button>
               <Modal
                 open={outsideOpen()}
@@ -256,7 +256,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="close-button" title="Close Button">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Button onClick={() => setCloseButtonOpen(true)}>
                 Open Modal
               </Button>
@@ -298,7 +298,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left" gap="md">
+            <Flex justify="start" align="start" gap="md">
               <Button onClick={() => setXsModalOpen(true)}>XS Modal</Button>
               <Modal
                 open={xsModalOpen()}
@@ -377,7 +377,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="custom-width" title="Custom Width">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Button onClick={() => setCustomWidthOpen(true)}>
                 Open Modal
               </Button>
@@ -423,7 +423,7 @@ export default function ModalShowcase() {
 
         <ShowcaseSection id="legacy" title="Modal Legacy">
           <Flex direction="col" gap="md">
-            <Flex justify="left" align="left">
+            <Flex justify="start" align="start">
               <Button onClick={() => setLegacyOpen(true)}>
                 Open Legacy Modal
               </Button>

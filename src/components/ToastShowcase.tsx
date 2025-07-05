@@ -194,7 +194,7 @@ const ToastShowcase: Component = () => {
                 <Alert
                   status={alert.status}
                   class="flex justify-between gap-4"
-                  style="min-width: 16rem;"
+                  style={{ "min-width": "16rem" }}
                 >
                   <span>{alert.text}</span>
                   <Button
@@ -238,7 +238,7 @@ const ToastShowcase: Component = () => {
                 <Alert
                   status={alert.status}
                   class="flex justify-between gap-4"
-                  style="min-width: 16rem;"
+                  style={{ "min-width": "16rem" }}
                 >
                   <span>{alert.text}</span>
                   <Button

@@ -15,7 +15,7 @@ export default function ColorGroup(props: ColorGroupProps) {
   return (
     <Flex
       direction="col"
-      gap="xs"
+      gap="sm"
       class={
         props.group.name === "base" ? "col-span-4" : "col-span-2"
       }

@@ -2,8 +2,9 @@ import { Route, Router } from "@solidjs/router";
 import { Footer } from "./components/Footer";
 import { routes } from "./routes";
 import SidenavWrapper from "./SidenavWrapper";
+import { ParentComponent } from "solid-js";
 
-const Layout = (props) => {
+const Layout: ParentComponent = (props) => {
   return (
     <div class="relative min-h-screen bg-base-100 text-base-content">
       <SidenavWrapper />
