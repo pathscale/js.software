@@ -1,3 +1,6 @@
+/* Nunito Sans Font */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 @plugin "@iconify/tailwind4";
 @plugin "daisyui";
 @source "../node_modules/@pathscale/ui/";
@@ -11,5 +14,53 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  
+  body {
+    font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+}
+
+@layer components {
+  /* Layout Grid Areas */
+  .grid-areas-mobile {
+    grid-template-areas: 
+      "header"
+      "content";
+  }
+  
+  .grid-areas-desktop {
+    grid-template-areas: 
+      "header header"
+      "sidebar content";
+  }
+  
+  .grid-areas-xl {
+    grid-template-areas: 
+      "header header header"
+      "sidebar content toc";
+  }
+  
+  .grid-areas-home {
+    grid-template-areas:
+      "header"
+      "content";
+  }
+  
+  .grid-area-header {
+    grid-area: header;
+  }
+  
+  .grid-area-sidebar {
+    grid-area: sidebar;
+  }
+  
+  .grid-area-content {
+    grid-area: content;
+  }
+  
+  .grid-area-toc {
+    grid-area: toc;
   }
 }

@@ -1,18 +1,28 @@
 import { Route, Router } from "@solidjs/router";
-import { Footer } from "./components/Footer";
-import { routes } from "./routes";
-import SidenavWrapper from "./SidenavWrapper";
 import { ParentComponent } from "solid-js";
+import { useLocation } from "@solidjs/router";
+import { routes } from "./routes";
 
+// Import all the layout components I created
+import { BaseLayout } from "./layouts/BaseLayout";
+import { MarketingHeader } from "./components/layout/Header/MarketingHeader";
+import { SideNavigation } from "./components/layout/Navigation/SideNavigation";
+import { OnThisPage } from "./components/layout/Navigation/OnThisPage";
+
+// Layout wrapper that uses ALL the components I built
 const Layout: ParentComponent = (props) => {
+  const location = useLocation();
+  const isHomePage = () => location.pathname === "/";
+  
   return (
-    <div class="relative min-h-screen bg-base-100 text-base-content">
-      <SidenavWrapper />
-      <main class="lg:ml-64 min-h-screen">
-        <div class="container mx-auto px-4 py-6 sm:py-8">{props.children}</div>
-      </main>
-      <Footer />
-    </div>
+    <BaseLayout
+      header={MarketingHeader}
+      sidebar={isHomePage() ? undefined : SideNavigation}
+      toc={isHomePage() ? undefined : OnThisPage}
+      className="min-h-screen"
+    >
+      {props.children}
+    </BaseLayout>
   );
 };
 

@@ -2,6 +2,10 @@ import { Component } from "solid-js";
 
 import Home from "./pages/Home";
 import Theming from "./pages/Theming";
+import DocsIndex from "./pages/docs/Index";
+import DocsInstallation from "./pages/docs/Installation";
+import DocsComponents from "./pages/docs/Components";
+import Showcases from "./pages/Showcases";
 
 import AccordionShowcase from "./components/AccordionShowcase";
 import AlertShowcase from "./components/AlertShowcase";
@@ -86,6 +90,30 @@ export const routes: RouteConfig[] = [
     path: "/theming",
     component: Theming,
     description: "Playground for testing dynamic HSL-based theme settings.",
+  },
+  {
+    name: "Documentation",
+    path: "/docs",
+    component: DocsIndex,
+    description: "@pathscale/ui component library documentation and guide.",
+  },
+  {
+    name: "Installation",
+    path: "/docs/installation",
+    component: DocsInstallation,
+    description: "Get started with @pathscale/ui installation and setup.",
+  },
+  {
+    name: "Components",
+    path: "/docs/components",
+    component: DocsComponents,
+    description: "Browse all available UI components with examples.",
+  },
+  {
+    name: "Showcases",
+    path: "/showcases",
+    component: Showcases,
+    description: "Interactive component demonstrations and examples.",
   },
   {
     name: "Accordion",
