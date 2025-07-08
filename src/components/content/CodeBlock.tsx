@@ -5,6 +5,9 @@ interface CodeBlockProps {
   code: string;
   language?: string;
   showCopy?: boolean;
+  copyable?: boolean;
+  title?: string;
+  className?: string;
 }
 
 export const CodeBlock: Component<CodeBlockProps> = (props) => {
@@ -17,15 +20,16 @@ export const CodeBlock: Component<CodeBlockProps> = (props) => {
   };
 
   return (
-    <div class="relative">
+    <div class={`relative ${props.className || ""}`}>
+      {props.title && <div class="text-sm font-medium mb-2">{props.title}</div>}
       <pre class="mockup-code bg-base-300 text-base-content rounded-lg overflow-x-auto">
         <code class={`language-${props.language || "typescript"}`}>
           {props.code}
         </code>
       </pre>
-      {props.showCopy && (
+      {(props.showCopy || props.copyable) && (
         <div class="absolute top-2 right-2">
-          <CopyButton onClick={handleCopy} copied={copied()} />
+          <CopyButton text={props.code} title="Copy code" />
         </div>
       )}
     </div>

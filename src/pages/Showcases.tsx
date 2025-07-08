@@ -72,7 +72,7 @@ const Showcases: Component = () => {
           applications.
         </p>
 
-        <Grid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} gap="lg">
+        <Grid cols={{ base: "1", sm: "2", md: "3", lg: "4" }} gap="lg">
           <For each={featuredRoutes}>
             {(route) => (
               <Card class="hover:shadow-xl transition-all duration-300 group">
@@ -104,7 +104,7 @@ const Showcases: Component = () => {
           @pathscale/ui.
         </p>
 
-        <Grid cols={{ base: 1, sm: 2, md: 3 }} gap="lg">
+        <Grid cols={{ base: "1", sm: "2", md: "3" }} gap="lg">
           <For each={otherRoutes}>
             {(route) => (
               <Card class="hover:shadow-lg transition-shadow duration-200">
