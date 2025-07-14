@@ -186,14 +186,14 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
             href="/"
             class="text-xl font-bold normal-case hover:text-primary transition-colors px-4 py-2"
           >
-            @pathscale/ui
+            UI
           </a>
         </Navbar.Start>
 
         {/* Center logo for mobile */}
         <Navbar.Center class="lg:hidden">
           <a href="/" class="text-xl font-bold normal-case px-4 py-2">
-            @pathscale/ui
+            UI
           </a>
         </Navbar.Center>
 
@@ -242,7 +242,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
             </a>
             <a
               href="/docs/installation"
-              class="bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-lg font-semibold transition-all"
+              class="bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-lg font-semibold transition-all whitespace-nowrap"
             >
               Get Started
             </a>
@@ -305,7 +305,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
             <div class="flex flex-col h-screen">
               {/* Header */}
               <div class="flex items-center justify-between p-4 border-b border-base-300">
-                <span class="text-xl font-bold">@pathscale/ui</span>
+                <span class="text-xl font-bold">UI</span>
                 <Button
                   color="ghost"
                   size="sm"
@@ -367,7 +367,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
               <div class="p-4 border-t border-base-300">
                 <a
                   href="/docs/installation"
-                  class="block w-full bg-primary text-white hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-center transition-all"
+                  class="block w-full bg-primary text-white hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-center transition-all whitespace-nowrap"
                   onClick={() => setIsOpen(false)}
                 >
                   Get Started
