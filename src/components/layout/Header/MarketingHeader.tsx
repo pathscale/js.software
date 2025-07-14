@@ -2,15 +2,15 @@ import { Component, createSignal, For, Show, createMemo } from "solid-js";
 import { Navbar, Button, Flex } from "@pathscale/ui";
 import { useLocation } from "@solidjs/router";
 import Search from "../../content/Search";
-import { 
-  FiTool, 
-  FiZap, 
-  FiBarChart2, 
-  FiCompass, 
-  FiMessageCircle, 
-  FiEdit3, 
-  FiGrid, 
-  FiSmartphone 
+import {
+  FiTool,
+  FiZap,
+  FiBarChart2,
+  FiCompass,
+  FiMessageCircle,
+  FiEdit3,
+  FiGrid,
+  FiSmartphone,
 } from "solid-icons/fi";
 
 export interface MarketingHeaderProps {
@@ -145,8 +145,8 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
 
   const activeCat = createMemo(() => {
     const currentPath = location.pathname;
-    return navigationCategories.find(cat => 
-      cat.items.some(item => item.href === currentPath)
+    return navigationCategories.find((cat) =>
+      cat.items.some((item) => item.href === currentPath)
     );
   });
 
@@ -202,22 +202,28 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
           <Flex gap="md" align="center">
             <For each={navigationCategories}>
               {(category) => (
-                <button
+                <Button
+                  color="ghost"
+                  size="lg"
                   onClick={() => {
                     setActiveCategory(
-                      activeCategory() === category.title ? null : category.title
+                      activeCategory() === category.title
+                        ? null
+                        : category.title
                     );
                   }}
-                  class={`px-3 py-1.5 rounded-lg transition-colors font-medium ${
-                    activeCategory() === category.title || 
-                    (!activeCategory() && activeCat() && activeCat()!.title === category.title)
+                  class={`px-3 py-2 rounded-lg transition-colors font-medium text-base ${
+                    activeCategory() === category.title ||
+                    (!activeCategory() &&
+                      activeCat() &&
+                      activeCat()!.title === category.title)
                       ? "bg-primary/20 text-primary"
                       : "hover:bg-base-200"
                   }`}
                 >
-                  <category.icon size={16} class="mr-1 inline-block" />
+                  <category.icon size={18} class="mr-2 inline-block" />
                   {category.title}
-                </button>
+                </Button>
               )}
             </For>
           </Flex>
@@ -285,37 +291,45 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         })()}
       </Show>
 
-
       {/* Mobile Sidebar */}
       <Show when={isOpen()}>
         <div class="lg:hidden fixed inset-0 z-50">
           {/* Overlay */}
-          <div 
+          <div
             class="fixed inset-0 bg-black/50 transition-opacity duration-300"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Sidebar */}
           <div class="fixed top-0 left-0 h-screen w-80 bg-base-100 shadow-xl transform transition-transform duration-300 ease-in-out">
             <div class="flex flex-col h-screen">
               {/* Header */}
               <div class="flex items-center justify-between p-4 border-b border-base-300">
                 <span class="text-xl font-bold">@pathscale/ui</span>
-                <button
+                <Button
+                  color="ghost"
+                  size="sm"
+                  shape="circle"
                   onClick={() => setIsOpen(false)}
-                  class="btn btn-ghost btn-sm btn-circle"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M18 6L6 18M6 6l12 12" />
                   </svg>
-                </button>
+                </Button>
               </div>
-              
+
               {/* Search */}
               <div class="p-4 border-b border-base-300">
                 <Search />
               </div>
-              
+
               {/* Navigation */}
               <div class="flex-1 overflow-y-auto p-4">
                 <div class="space-y-6">
@@ -348,7 +362,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
                   </For>
                 </div>
               </div>
-              
+
               {/* Footer */}
               <div class="p-4 border-t border-base-300">
                 <a
