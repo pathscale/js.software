@@ -184,7 +184,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Avatar src={sampleImage} innerClass="rounded" size="sm" />
             </Flex>
             <CodeBlock
@@ -195,7 +195,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="custom-size" title="Custom Size">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Avatar src={sampleImage} shape="circle" size={30} />
             </Flex>
             <CodeBlock
@@ -206,7 +206,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Avatar src={sampleImage} size="lg" />
               <Avatar src={sampleImage} size="md" />
               <Avatar src={sampleImage} size={80} />
@@ -227,7 +227,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="rounded" title="Rounded">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Avatar src={sampleImage} innerClass="rounded-xl" size="sm" />
               <Avatar src={sampleImage} shape="circle" size="sm" />
             </Flex>
@@ -240,7 +240,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="with-mask" title="With Mask">
           <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
+            <Flex align="start" justify="start" gap="lg" wrap="wrap">
               <Avatar
                 src={sampleImage}
                 innerClass={Mask.className({ variant: "squircle" })}
@@ -267,7 +267,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="group" title="Group">
           <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
+            <Flex align="start" justify="start" gap="lg" wrap="wrap">
               <Avatar.Group>
                 <Avatar src={sampleImage} size="sm" />
                 <Avatar src={sampleImage} size="sm" />
@@ -288,7 +288,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="group-counter" title="Group with Counter">
           <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
+            <Flex align="start" justify="start" gap="lg" wrap="wrap">
               <Avatar.Group>
                 <Avatar src={sampleImage} size="sm" />
                 <Avatar src={sampleImage} size="sm" />
@@ -371,7 +371,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="presence" title="Presence Indicator">
           <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
+            <Flex align="start" justify="start" gap="lg" wrap="wrap">
               <Avatar src={sampleImage} shape="circle" online size="sm" />
               <Avatar src={sampleImage} shape="circle" offline size="sm" />
             </Flex>
@@ -384,7 +384,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="placeholder" title="Placeholder">
           <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
+            <Flex align="start" justify="start" gap="lg" wrap="wrap">
               <Avatar letters="K" size="lg" shape="circle" />
               <Avatar letters="JO" size="md" shape="circle" online />
               <Avatar letters="MX" size="sm" shape="circle" />
@@ -416,7 +416,7 @@ export default function AvatarShowcase() {
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
+            <Flex align="start" justify="start" gap="lg" wrap="wrap">
               <Avatar
                 src={sampleImage}
                 border
@@ -474,7 +474,7 @@ export default function AvatarShowcase() {
                 size="sm"
               />
             </Flex>
-            <Flex align="start" justify="start" gap="lg">
+            <Flex align="start" justify="start" gap="lg" wrap="wrap">
               <Avatar
                 letters="Y"
                 border

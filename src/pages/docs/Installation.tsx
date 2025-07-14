@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import { ContentContainer } from "../../components/content/ContentContainer";
-import { CodeBlock } from "../../components/content/CodeBlock";
+import { CodeBlock } from "../../components/showcase/CodeBlock";
 import { Badge, Flex } from "@pathscale/ui";
 import { Callout } from "../../components/content/Callout";
 
@@ -50,9 +50,7 @@ const Installation: Component = () => {
             <h3 class="text-xl font-medium mb-3">Using NPM</h3>
             <CodeBlock
               language="bash"
-              copyable={true}
               code="npm install @pathscale/ui"
-              className="mb-4"
             />
           </div>
 
@@ -61,9 +59,7 @@ const Installation: Component = () => {
             <h3 class="text-xl font-medium mb-3">Using Yarn</h3>
             <CodeBlock
               language="bash"
-              copyable={true}
               code="yarn add @pathscale/ui"
-              className="mb-4"
             />
           </div>
 
@@ -72,9 +68,7 @@ const Installation: Component = () => {
             <h3 class="text-xl font-medium mb-3">Using PNPM</h3>
             <CodeBlock
               language="bash"
-              copyable={true}
               code="pnpm add @pathscale/ui"
-              className="mb-4"
             />
           </div>
         </div>
@@ -93,9 +87,7 @@ const Installation: Component = () => {
           </p>
           <CodeBlock
             language="typescript"
-            copyable={true}
             code={`import "@pathscale/ui/styles.css";`}
-            className="mb-4"
           />
         </div>
 
@@ -107,12 +99,10 @@ const Installation: Component = () => {
           </p>
           <CodeBlock
             language="javascript"
-            copyable={true}
             code={`module.exports = {
   presets: [require("@pathscale/ui/tailwind")],
   // ... your config
 };`}
-            className="mb-4"
           />
         </div>
 
@@ -124,7 +114,6 @@ const Installation: Component = () => {
           </p>
           <CodeBlock
             language="typescript"
-            copyable={true}
             code={`import { Button, Card } from "@pathscale/ui";
 
 function App() {
@@ -137,7 +126,6 @@ function App() {
     </Card>
   );
 }`}
-            className="mb-4"
           />
         </div>
       </section>

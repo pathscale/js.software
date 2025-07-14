@@ -4,6 +4,7 @@ interface LayoutGridProps {
   header?: Component;
   sidebar?: Component;
   toc?: Component;
+  footer?: Component;
   children: any;
   className?: string;
 }
@@ -70,6 +71,15 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
           </div>
         </div>
       </div>
+      
+      {/* Footer */}
+      {props.footer && (
+        <div class={`${hasAnySidebar() ? "container mx-auto" : "w-full"}`}>
+          <div class={`${hasAnySidebar() && (isDesktop() || isXl()) ? "ml-[280px]" : ""} ${hasAnySidebar() && isXl() ? "mr-[280px]" : ""}`}>
+            <props.footer />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

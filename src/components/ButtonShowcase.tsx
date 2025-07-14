@@ -165,7 +165,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="brand-colors" title="Brand Colors">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button>Default</Button>
               <Button color="neutral">Neutral</Button>
               <Button color="primary">Primary</Button>
@@ -188,7 +188,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="soft-style" title="Soft Style">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button variant="soft">Default</Button>
               <Button variant="soft" color="primary">
                 Primary
@@ -227,7 +227,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="outline-style" title="Outline Style">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button variant="outline">Default</Button>
               <Button variant="outline" color="primary">
                 Primary
@@ -266,7 +266,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="dash-style" title="Dash Style">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button variant="dash">Default</Button>
               <Button variant="dash" color="primary">
                 Primary
@@ -305,7 +305,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="active-buttons" title="Active Buttons">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button active>Default</Button>
               <Button active color="neutral">
                 Neutral
@@ -340,7 +340,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="state-colors" title="State Colors">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button color="info">Info</Button>
               <Button color="success">Success</Button>
               <Button color="warning">Warning</Button>
@@ -357,7 +357,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="button-sizes" title="Button Sizes">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button size="lg">Large</Button>
               <Button>Normal</Button>
               <Button size="sm">Small</Button>
@@ -408,7 +408,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="html-tags" title="Different HTML Tags">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button as="a" role="button">
                 Link
               </Button>
@@ -433,7 +433,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button disabled>Disabled using attribute</Button>
               <Button
                 class="btn btn-disabled"
@@ -460,7 +460,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="square" title="Square Button">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button shape="square">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -511,7 +511,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="circle" title="Circle Button">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button shape="circle">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -562,7 +562,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="icon-start" title="Icon at Start">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button
                 startIcon={
                   <svg
@@ -600,7 +600,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="icon-end" title="Icon at End">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button
                 endIcon={
                   <svg
@@ -638,7 +638,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="block" title="Block Button">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button fullWidth>Block</Button>
             </Flex>
             <CodeBlock code={`<Button fullWidth>Block</Button>`} />
@@ -647,7 +647,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="loading" title="Loading States">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button loading shape="square" />
               <Button loading>loading</Button>
             </Flex>
@@ -660,7 +660,7 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="no-animation" title="Without Animation">
           <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button animation={false}>I don't have click animation</Button>
             </Flex>
             <CodeBlock

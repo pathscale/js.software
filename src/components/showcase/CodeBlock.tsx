@@ -3,7 +3,7 @@ import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-tsx";
 import "prismjs/components/prism-typescript";
 import "prismjs/themes/prism-tomorrow.css";
-import { onMount } from "solid-js";
+import { onMount, createEffect } from "solid-js";
 import { CopyButton } from "./CopyButton";
 
 interface CodeBlockProps {
@@ -14,9 +14,11 @@ interface CodeBlockProps {
 export function CodeBlock(props: CodeBlockProps) {
   let codeRef: HTMLElement | undefined;
 
-  onMount(() => {
-    if (codeRef) {
-      Prism.highlightElement(codeRef);
+  createEffect(() => {
+    if (codeRef && props.code) {
+      requestAnimationFrame(() => {
+        Prism.highlightElement(codeRef);
+      });
     }
   });
 
