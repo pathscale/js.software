@@ -39,7 +39,7 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
       </div>
 
       {/* Main content area */}
-      <div class="pt-[72px]">
+      <div class="pt-20">
         <div class={hasAnySidebar() ? "container mx-auto" : "w-full"}>
           <div class="relative flex">
             {/* Left sidebar */}
@@ -71,11 +71,15 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
           </div>
         </div>
       </div>
-      
+
       {/* Footer */}
       {props.footer && (
         <div class={`${hasAnySidebar() ? "container mx-auto" : "w-full"}`}>
-          <div class={`${hasAnySidebar() && (isDesktop() || isXl()) ? "ml-[280px]" : ""} ${hasAnySidebar() && isXl() ? "mr-[280px]" : ""}`}>
+          <div
+            class={`${
+              hasAnySidebar() && (isDesktop() || isXl()) ? "ml-[280px]" : ""
+            } ${hasAnySidebar() && isXl() ? "mr-[280px]" : ""}`}
+          >
             <props.footer />
           </div>
         </div>
