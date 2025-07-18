@@ -1,6 +1,5 @@
-import { Component, JSX } from "solid-js";
-import { Dynamic } from "solid-js/web";
-import CodeBlock from "./CodeBlock";
+import { Component } from "solid-js";
+import { CodeBlock } from "../showcase/CodeBlock";
 import Callout from "./Callout";
 
 export interface MDXRendererProps {

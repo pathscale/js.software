@@ -38,7 +38,7 @@ export const useNavigation = () => {
     const currentPath = location.pathname;
     const mainPages = [ROUTES.HOME, ROUTES.DOCS, ROUTES.SHOWCASES];
     
-    if (mainPages.includes(currentPath)) {
+    if (mainPages.includes(currentPath as any)) {
       setActiveCategory(null);
       setIsNavbarExpanded(false);
     }
