@@ -1,6 +1,7 @@
 import { Component, createSignal, For, Show } from "solid-js";
 import { useLocation } from "@solidjs/router";
 import { Dropdown } from "@pathscale/ui";
+import { ROUTES, EXTERNAL_ROUTES } from "../../../config/routes";
 
 export interface CompactNavigationProps {
   className?: string;
@@ -10,11 +11,10 @@ export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = createSignal(false);
 
-  // Simplified navigation for compact view
   const navigationItems = [
-    { title: "Overview", href: "/docs" },
-    { title: "Components", href: "/docs/components" },
-    { title: "Theming", href: "/docs/theming" },
+    { title: "Overview", href: ROUTES.DOCS },
+    { title: "Components", href: ROUTES.SHOWCASES },
+    { title: "Theming", href: ROUTES.THEMING },
     { title: "Guides", href: "/docs/guides" },
   ];
 
@@ -68,7 +68,6 @@ export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
             )}
           </For>
 
-          {/* Additional links */}
           <div class="border-t border-chromatic-border">
             <a
               href="/resources"
@@ -78,7 +77,7 @@ export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
               Resources
             </a>
             <a
-              href="https://github.com/pathscale/ui"
+              href={EXTERNAL_ROUTES.GITHUB}
               target="_blank"
               rel="noopener noreferrer"
               class="block px-4 py-3 text-sm text-chromatic-muted hover: hover:bg-base-200 transition-colors"

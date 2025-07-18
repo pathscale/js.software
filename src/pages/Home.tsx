@@ -7,11 +7,11 @@ import {
   HiOutlineCheckCircle,
   HiOutlineHeart,
 } from "solid-icons/hi";
+import { ROUTES } from "../config/routes";
 
 const Home: Component = () => {
   return (
     <div>
-      {/* Hero Section */}
       <Hero class="min-h-[80vh] bg-gradient-to-br from-primary to-base-200">
         <Hero.Content center>
           <ContentContainer maxWidth="xl" prose={false} className="text-center">
@@ -35,15 +35,14 @@ const Home: Component = () => {
             </p>
 
             <Flex gap="lg" justify="center" wrap="wrap" class="mb-16">
-              <a href="/docs/installation" class="btn btn-primary btn-lg">
+              <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-primary btn-lg">
                 Start Building Today
               </a>
-              <a href="/docs/components" class="btn btn-outline btn-lg">
+              <a href={ROUTES.SHOWCASES} class="btn btn-outline btn-lg">
                 Explore Components
               </a>
             </Flex>
 
-            {/* Trust indicators */}
             <div class="text-center">
               <p class="text-sm font-semibold text-primary mb-6 uppercase tracking-wider">
                 TRUSTED BY DEVELOPERS EVERYWHERE
@@ -74,7 +73,6 @@ const Home: Component = () => {
         </Hero.Content>
       </Hero>
 
-      {/* Features Section */}
       <ContentContainer maxWidth="xl" prose={false}>
         <div class="text-center mb-16">
           <h2 class="text-4xl lg:text-5xl font-bold mb-6">
@@ -130,7 +128,6 @@ const Home: Component = () => {
           </Card>
         </div>
 
-        {/* Component Preview Section */}
         <div class="text-center mb-16">
           <h2 class="text-4xl lg:text-5xl font-bold mb-8">See it in action</h2>
           <p class="text-xl text-base-content/70 mb-12 max-w-3xl mx-auto">
@@ -167,12 +164,11 @@ const Home: Component = () => {
             </div>
           </div>
 
-          <a href="/docs/components" class="btn btn-primary btn-lg">
+          <a href={ROUTES.SHOWCASES} class="btn btn-primary btn-lg">
             Explore all components
           </a>
         </div>
 
-        {/* CTA Section */}
         <div class="text-center py-24 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl card">
           <h2 class="text-4xl lg:text-5xl font-bold mb-6">
             Start building amazing UIs today
@@ -182,10 +178,10 @@ const Home: Component = () => {
             projects. Get started in minutes, not hours.
           </p>
           <Flex gap="lg" justify="center" wrap="wrap">
-            <a href="/docs/installation" class="btn btn-primary btn-lg">
+            <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-primary btn-lg">
               Get started for free
             </a>
-            <a href="/docs" class="btn btn-outline btn-lg">
+            <a href={ROUTES.DOCS} class="btn btn-outline btn-lg">
               View documentation
             </a>
           </Flex>

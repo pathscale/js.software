@@ -46,6 +46,7 @@ import {
   Radio,
   Icon,
 } from "@pathscale/ui";
+import { ROUTES } from "../config/routes";
 
 export default function ComponentsDemo() {
   const [modalOpen, setModalOpen] = createSignal(false);
@@ -810,7 +811,7 @@ export default function ComponentsDemo() {
         <Card size="sm" class="bg-base-100">
           <Card.Body>
             <Breadcrumbs>
-              <BreadcrumbsItem href="/">Home</BreadcrumbsItem>
+              <BreadcrumbsItem href={ROUTES.HOME}>Home</BreadcrumbsItem>
               <BreadcrumbsItem href="/products">Products</BreadcrumbsItem>
               <BreadcrumbsItem>Details</BreadcrumbsItem>
             </Breadcrumbs>

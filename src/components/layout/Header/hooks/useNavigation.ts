@@ -2,6 +2,7 @@ import { createSignal, createEffect, createMemo } from "solid-js";
 import { useLocation } from "@solidjs/router";
 import { setIsNavbarExpanded } from "../../LayoutGrid";
 import { navigationItems } from "../navigationData";
+import { ROUTES } from "../../../../config/routes";
 
 export const useNavigation = () => {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -35,7 +36,7 @@ export const useNavigation = () => {
 
   createEffect(() => {
     const currentPath = location.pathname;
-    const mainPages = ["/", "/docs", "/showcases"];
+    const mainPages = [ROUTES.HOME, ROUTES.DOCS, ROUTES.SHOWCASES];
     
     if (mainPages.includes(currentPath)) {
       setActiveCategory(null);

@@ -2,14 +2,15 @@ import { Component, For } from "solid-js";
 import { ContentContainer } from "../../components/content/ContentContainer";
 import { Card, Grid, Flex } from "@pathscale/ui";
 import { routes } from "../../routes";
+import { ROUTES } from "../../config/routes";
 
 const Components: Component = () => {
   // Filter out non-component routes
   const componentRoutes = routes.filter(
     (route) =>
-      route.path !== "/" &&
-      route.path !== "/docs" &&
-      route.path !== "/theming" &&
+      route.path !== ROUTES.HOME &&
+      route.path !== ROUTES.DOCS &&
+      route.path !== ROUTES.THEMING &&
       !route.path.startsWith("/docs/")
   );
 

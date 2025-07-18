@@ -3,11 +3,11 @@ import { Card, Flex } from "@pathscale/ui";
 import { ContentContainer } from "../../components/content/ContentContainer";
 import { CodeBlock } from "../../components/showcase/CodeBlock";
 import { Callout } from "../../components/content/Callout";
+import { ROUTES, EXTERNAL_ROUTES } from "../../config/routes";
 
 const DocsIndex: Component = () => {
   return (
-    <ContentContainer maxWidth="lg">
-      {/* Header */}
+    <ContentContainer maxWidth="2xl" prose={false}>
       <div class="mb-12">
         <h1 id="introduction" class="text-5xl font-bold mb-6 ">
           JS.Software UI
@@ -20,7 +20,6 @@ const DocsIndex: Component = () => {
         </p>
       </div>
 
-      {/* Quick Start using Callout component I created */}
       <section class="mb-16">
         <h2 id="quick-start" class="text-3xl font-semibold mb-6 ">
           Quick Start
@@ -34,47 +33,39 @@ const DocsIndex: Component = () => {
         <Callout type="info" title="Prerequisites" className="mb-6">
           Before getting started, ensure you have a SolidJS project with
           TailwindCSS configured. New to the setup? Check out our{" "}
-          <a href="/docs/installation" class="text-primary hover:underline">
+          <a
+            href={ROUTES.DOCS_INSTALLATION}
+            class="text-primary hover:underline"
+          >
             comprehensive installation guide
           </a>{" "}
           for detailed instructions.
         </Callout>
       </section>
 
-      {/* Installation using CodeBlock component I created */}
       <section class="mb-16">
         <h2 id="installation" class="text-3xl font-semibold mb-6 ">
           Installation
         </h2>
         <p class="text-base-content/70 mb-6 leading-relaxed">
-          Install @pathscale/ui using your preferred package manager:
+          Get started quickly with a simple npm install:
         </p>
 
-        <div class="grid gap-4 md:grid-cols-2 mb-6">
-          <CodeBlock
-            title="npm"
-            code="npm install @pathscale/ui"
-            language="bash"
-            copyable={true}
-          />
-          <CodeBlock
-            title="pnpm"
-            code="pnpm add @pathscale/ui"
-            language="bash"
-            copyable={true}
-          />
-        </div>
-
-        <CodeBlock
-          title="yarn"
-          code="yarn add @pathscale/ui"
-          language="bash"
-          copyable={true}
-          className="mb-6"
-        />
+        <CodeBlock code="npm install @pathscale/ui" language="bash" copyable={true} className="mb-6" />
+        
+        <Callout type="info" title="Complete Setup Guide" className="mb-6">
+          For detailed installation instructions, prerequisites, and configuration steps, 
+          check out our comprehensive{" "}
+          <a
+            href={ROUTES.DOCS_INSTALLATION}
+            class="text-primary hover:underline font-medium"
+          >
+            installation guide
+          </a>
+          .
+        </Callout>
       </section>
 
-      {/* Basic Usage using CodeBlock component I created */}
       <section class="mb-16">
         <h2 id="usage" class="text-3xl font-semibold mb-6 ">
           Basic Usage
@@ -84,7 +75,6 @@ const DocsIndex: Component = () => {
         </p>
 
         <CodeBlock
-          title="App.tsx"
           code={`import { Button, Card, Flex } from "@pathscale/ui";
 
 function App() {
@@ -106,8 +96,6 @@ function App() {
   );
 }`}
           language="tsx"
-          copyable={true}
-          className="mb-6"
         />
 
         <Callout type="success" title="That's it!" className="mb-6">
@@ -117,7 +105,6 @@ function App() {
         </Callout>
       </section>
 
-      {/* Examples using Card components from @pathscale/ui */}
       <section class="mb-16">
         <h2 id="examples" class="text-3xl font-semibold mb-6 ">
           Examples
@@ -134,7 +121,7 @@ function App() {
                 Create responsive navigation with our Navbar component
               </p>
               <a
-                href="/docs/components/navbar"
+                href={ROUTES.NAVBAR}
                 class="text-primary hover:underline font-medium"
               >
                 View Navbar docs →
@@ -149,7 +136,7 @@ function App() {
                 Build accessible forms with our input and form components
               </p>
               <a
-                href="/docs/components/forms"
+                href={ROUTES.FORM}
                 class="text-primary hover:underline font-medium"
               >
                 View Form docs →
@@ -164,7 +151,7 @@ function App() {
                 Create responsive layouts with Flex, Grid, and Stack components
               </p>
               <a
-                href="/docs/components/layout"
+                href={ROUTES.FLEX}
                 class="text-primary hover:underline font-medium"
               >
                 View Layout docs →
@@ -179,7 +166,7 @@ function App() {
                 Customize colors, fonts, and design tokens for your brand
               </p>
               <a
-                href="/docs/theming"
+                href={ROUTES.THEMING}
                 class="text-primary hover:underline font-medium"
               >
                 View Theming docs →
@@ -189,7 +176,6 @@ function App() {
         </div>
       </section>
 
-      {/* Next Steps using all my custom components */}
       <section class="mb-16">
         <h2 id="next-steps" class="text-3xl font-semibold mb-6 ">
           Next Steps
@@ -202,7 +188,7 @@ function App() {
         <div class="space-y-6">
           <Callout type="note" title="Explore Components">
             Browse our comprehensive{" "}
-            <a href="/docs/components" class="text-primary hover:underline">
+            <a href={ROUTES.SHOWCASES} class="text-primary hover:underline">
               component library
             </a>{" "}
             to see all available components and their props.
@@ -210,7 +196,7 @@ function App() {
 
           <Callout type="info" title="Learn Theming">
             Customize the look and feel with our{" "}
-            <a href="/docs/theming" class="text-primary hover:underline">
+            <a href={ROUTES.THEMING} class="text-primary hover:underline">
               theming system
             </a>{" "}
             to match your brand.
@@ -219,7 +205,7 @@ function App() {
           <Callout type="success" title="Join the Community">
             Get help and share your creations in our{" "}
             <a
-              href="https://github.com/pathscale/ui/discussions"
+              href={EXTERNAL_ROUTES.GITHUB_DISCUSSIONS}
               target="_blank"
               rel="noopener noreferrer"
               class="text-primary hover:underline"
@@ -228,7 +214,7 @@ function App() {
             </a>{" "}
             or{" "}
             <a
-              href="https://discord.gg/pathscale"
+              href={EXTERNAL_ROUTES.DISCORD}
               target="_blank"
               rel="noopener noreferrer"
               class="text-primary hover:underline"
@@ -240,7 +226,6 @@ function App() {
         </div>
       </section>
 
-      {/* Footer CTA */}
       <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-8 text-center border border-base-300">
         <h3 class="text-2xl font-bold mb-4 ">
           Ready to build something amazing?
@@ -250,7 +235,7 @@ function App() {
         </p>
         <Flex gap="md" justify="center" wrap="wrap">
           <a
-            href="/docs/components"
+            href={ROUTES.SHOWCASES}
             class="bg-primary text-white hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold transition-all inline-block"
           >
             Browse Components

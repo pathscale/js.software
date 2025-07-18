@@ -8,6 +8,7 @@ import {
   Show,
 } from "solid-js";
 import { createStore } from "solid-js/store";
+import { ROUTES } from "../../config/routes";
 
 export interface SearchResult {
   title: string;
@@ -31,31 +32,30 @@ export const Search: Component<SearchProps> = (props) => {
   let searchRef: HTMLInputElement | undefined;
   let modalRef: HTMLDivElement | undefined;
 
-  // Mock search data - in production this would come from your content index
   const searchData: SearchResult[] = [
     {
       title: "Getting Started",
-      href: "/docs",
+      href: ROUTES.DOCS,
       excerpt:
         "Learn how to install and use @pathscale/ui components in your project",
       category: "Overview",
     },
     {
       title: "Button Component",
-      href: "/docs/components/button",
+      href: ROUTES.BUTTON,
       excerpt: "Interactive button component with multiple variants and states",
       category: "Components",
     },
     {
       title: "Card Component",
-      href: "/docs/components/card",
+      href: ROUTES.CARD,
       excerpt:
         "Flexible card component for displaying content in a card layout",
       category: "Components",
     },
     {
       title: "Navbar Component",
-      href: "/docs/components/navbar",
+      href: ROUTES.NAVBAR,
       excerpt: "Navigation bar component for website headers and navigation",
       category: "Components",
     },
@@ -73,7 +73,7 @@ export const Search: Component<SearchProps> = (props) => {
     },
     {
       title: "Installation",
-      href: "/docs/installation",
+      href: ROUTES.DOCS_INSTALLATION,
       excerpt: "Install @pathscale/ui in your React, Vue, or Solid project",
       category: "Overview",
     },
@@ -85,7 +85,6 @@ export const Search: Component<SearchProps> = (props) => {
     },
   ];
 
-  // Search function with fuzzy matching
   const performSearch = (searchQuery: string) => {
     if (!searchQuery.trim()) {
       setResults([]);
@@ -126,15 +125,12 @@ export const Search: Component<SearchProps> = (props) => {
     setSelectedIndex(0);
   };
 
-  // Keyboard shortcuts
   const handleGlobalKeyDown = (e: KeyboardEvent) => {
-    // Cmd+K or Ctrl+K to open search
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
       openSearch();
     }
 
-    // Escape to close
     if (e.key === "Escape" && isOpen()) {
       closeSearch();
     }
@@ -194,7 +190,6 @@ export const Search: Component<SearchProps> = (props) => {
     );
   };
 
-  // Handle clicks outside modal
   const handleClickOutside = (e: MouseEvent) => {
     if (modalRef && !modalRef.contains(e.target as Node)) {
       closeSearch();
@@ -231,7 +226,6 @@ export const Search: Component<SearchProps> = (props) => {
 
   return (
     <>
-      {/* Search Trigger Button */}
       <button
         onClick={openSearch}
         class={`flex items-center gap-2 px-3 py-2 text-sm bg-base-100 border border-base-300 rounded-lg hover:bg-base-200 transition-colors ${
@@ -247,14 +241,12 @@ export const Search: Component<SearchProps> = (props) => {
         </kbd>
       </button>
 
-      {/* Search Modal */}
       <Show when={isOpen()}>
         <div class="fixed inset-0 z-50 bg-black/50 flex items-start justify-center pt-[10vh] px-4">
           <div
             ref={modalRef}
             class="w-full max-w-2xl bg-base-100 rounded-lg shadow-2xl border border-base-300"
           >
-            {/* Search Input */}
             <div class="flex items-center px-4 py-3 border-b border-base-300">
               <SearchIcon />
               <input
@@ -269,7 +261,6 @@ export const Search: Component<SearchProps> = (props) => {
               <kbd class="text-xs text-base-content/70">ESC</kbd>
             </div>
 
-            {/* Search Results */}
             <div class="max-h-96 overflow-y-auto">
               <Show
                 when={results.length > 0}
@@ -308,7 +299,6 @@ export const Search: Component<SearchProps> = (props) => {
               </Show>
             </div>
 
-            {/* Footer */}
             <div class="flex items-center justify-between px-4 py-3 text-xs text-base-content/70 border-t border-base-300">
               <div class="flex items-center gap-4">
                 <span class="flex items-center gap-1">

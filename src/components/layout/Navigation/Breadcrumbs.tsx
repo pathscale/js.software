@@ -1,5 +1,6 @@
 import { Component, createMemo, For } from "solid-js";
 import { useLocation } from "@solidjs/router";
+import { ROUTES } from "../../../config/routes";
 
 export interface BreadcrumbItem {
   title: string;
@@ -24,7 +25,7 @@ export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
     const path = location.pathname;
     const segments = path.split("/").filter(Boolean);
 
-    const items: BreadcrumbItem[] = [{ title: "Home", href: "/" }];
+    const items: BreadcrumbItem[] = [{ title: "Home", href: ROUTES.HOME }];
 
     let currentPath = "";
     segments.forEach((segment, index) => {

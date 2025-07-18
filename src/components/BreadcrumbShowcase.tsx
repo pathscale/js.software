@@ -3,6 +3,7 @@ import { Breadcrumbs, BreadcrumbsItem, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import { ROUTES } from "../config/routes";
 
 export default function BreadcrumbShowcase() {
   const sections = [
@@ -55,9 +56,9 @@ export default function BreadcrumbShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
               <Breadcrumbs>
-                <BreadcrumbsItem href="/">Home</BreadcrumbsItem>
-                <BreadcrumbsItem href="/">Documents</BreadcrumbsItem>
-                <BreadcrumbsItem href="/">Add Document</BreadcrumbsItem>
+                <BreadcrumbsItem href={ROUTES.HOME}>Home</BreadcrumbsItem>
+                <BreadcrumbsItem href={ROUTES.HOME}>Documents</BreadcrumbsItem>
+                <BreadcrumbsItem href={ROUTES.HOME}>Add Document</BreadcrumbsItem>
               </Breadcrumbs>
             </Flex>
             <CodeBlock
@@ -74,7 +75,7 @@ export default function BreadcrumbShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
               <Breadcrumbs>
-                <BreadcrumbsItem href="/">
+                <BreadcrumbsItem href={ROUTES.HOME}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -90,7 +91,7 @@ export default function BreadcrumbShowcase() {
                   </svg>
                   Home
                 </BreadcrumbsItem>
-                <BreadcrumbsItem href="/">
+                <BreadcrumbsItem href={ROUTES.HOME}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -106,7 +107,7 @@ export default function BreadcrumbShowcase() {
                   </svg>
                   Documents
                 </BreadcrumbsItem>
-                <BreadcrumbsItem href="/">
+                <BreadcrumbsItem href={ROUTES.HOME}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

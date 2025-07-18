@@ -2,18 +2,17 @@ import { Component, For } from "solid-js";
 import { ContentContainer } from "../components/content/ContentContainer";
 import { Card, Grid, Badge, Flex, Hero } from "@pathscale/ui";
 import { routes } from "../routes";
+import { ROUTES } from "../config/routes";
 
 const Showcases: Component = () => {
-  // Filter out non-showcase routes (keep only component showcases)
   const showcaseRoutes = routes.filter(
     (route) =>
-      route.path !== "/" &&
-      route.path !== "/docs" &&
-      route.path !== "/theming" &&
+      route.path !== ROUTES.HOME &&
+      route.path !== ROUTES.DOCS &&
+      route.path !== ROUTES.THEMING &&
       !route.path.startsWith("/docs/")
   );
 
-  // Featured showcases (most commonly used components)
   const featuredComponents = [
     "Button",
     "Card",
@@ -40,7 +39,6 @@ const Showcases: Component = () => {
 
   return (
     <ContentContainer maxWidth="2xl" prose={false}>
-      {/* Hero Section */}
       <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl py-20 mb-16">
         <div class="text-center">
           <h1 class="text-5xl font-bold mb-6">Component Showcases</h1>
@@ -64,7 +62,6 @@ const Showcases: Component = () => {
         </div>
       </div>
 
-      {/* Featured Components */}
       <div class="mb-16">
         <h2 class="text-3xl font-bold mb-6">Featured Components</h2>
         <p class="text-lg text-base-content/70 mb-8">
@@ -95,7 +92,6 @@ const Showcases: Component = () => {
         </Grid>
       </div>
 
-      {/* All Components */}
       <div>
         <h2 class="text-3xl font-bold mb-6">All Components</h2>
         <p class="text-lg text-base-content/70 mb-8">
@@ -126,17 +122,16 @@ const Showcases: Component = () => {
         </Grid>
       </div>
 
-      {/* Quick Links */}
       <div class="mt-16 p-8 bg-base-200 rounded-xl">
         <h3 class="text-2xl font-bold mb-4">Quick Links</h3>
         <Flex gap="lg" wrap="wrap">
-          <a href="/docs" class="btn btn-primary">
+          <a href={ROUTES.DOCS} class="btn btn-primary">
             Documentation
           </a>
-          <a href="/docs/installation" class="btn btn-outline">
+          <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-outline">
             Get Started
           </a>
-          <a href="/theming" class="btn btn-outline">
+          <a href={ROUTES.THEMING} class="btn btn-outline">
             Theme Customization
           </a>
         </Flex>

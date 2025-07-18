@@ -6,6 +6,7 @@ import { ComponentsMenu } from "./components/ComponentsMenu";
 import { MobileSidebar } from "./components/MobileSidebar";
 import { GitHubIcon } from "./components/GitHubIcon";
 import { MarketingHeaderProps } from "./types";
+import { ROUTES, EXTERNAL_ROUTES } from "../../../config/routes";
 
 export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
   const navigation = useNavigation();
@@ -38,7 +39,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
 
         <Navbar.Start class="hidden lg:flex">
           <a
-            href="/"
+            href={ROUTES.HOME}
             class="text-xl font-bold normal-case hover:text-primary transition-colors px-4 py-2"
           >
             UI
@@ -46,7 +47,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         </Navbar.Start>
 
         <Navbar.Center class="lg:hidden">
-          <a href="/" class="text-xl font-bold normal-case px-4 py-2">
+          <a href={ROUTES.HOME} class="text-xl font-bold normal-case px-4 py-2">
             UI
           </a>
         </Navbar.Center>
@@ -58,7 +59,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         <Navbar.End class="hidden lg:flex">
           <Flex gap="md" align="center">
             <a
-              href="https://github.com/pathscale/ui"
+              href={EXTERNAL_ROUTES.GITHUB}
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-primary p-2 rounded-full transition-colors"
@@ -66,7 +67,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
               <GitHubIcon />
             </a>
             <a
-              href="/docs/installation"
+              href={ROUTES.DOCS_INSTALLATION}
               class="bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-lg font-semibold transition-all whitespace-nowrap"
             >
               Get Started
@@ -76,7 +77,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
 
         <Navbar.End class="lg:hidden">
           <a
-            href="https://github.com/pathscale/ui"
+            href={EXTERNAL_ROUTES.GITHUB}
             target="_blank"
             rel="noopener noreferrer"
             class="p-2 rounded-full"
