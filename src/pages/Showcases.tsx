@@ -75,22 +75,21 @@ const Showcases: Component = () => {
         <Grid cols={{ base: "1", sm: "2", md: "3", lg: "4" }} gap="lg">
           <For each={featuredRoutes}>
             {(route) => (
-              <Card class="hover:shadow-xl transition-all duration-300 group">
-                <Card.Body class="p-6">
-                  <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                    <a href={route.path}>{route.name}</a>
-                  </h3>
-                  <p class="text-base-content/70 text-sm leading-relaxed mb-4">
-                    {route.description}
-                  </p>
-                  <a
-                    href={route.path}
-                    class="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm"
-                  >
-                    View Demo →
-                  </a>
-                </Card.Body>
-              </Card>
+              <a href={route.path} class="block">
+                <Card class="hover:shadow-xl transition-all duration-300 group cursor-pointer">
+                  <Card.Body class="p-6">
+                    <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                      {route.name}
+                    </h3>
+                    <p class="text-base-content/70 text-sm leading-relaxed mb-4">
+                      {route.description}
+                    </p>
+                    <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
+                      View Demo →
+                    </span>
+                  </Card.Body>
+                </Card>
+              </a>
             )}
           </For>
         </Grid>
@@ -107,27 +106,21 @@ const Showcases: Component = () => {
         <Grid cols={{ base: "1", sm: "2", md: "3" }} gap="lg">
           <For each={otherRoutes}>
             {(route) => (
-              <Card class="hover:shadow-lg transition-shadow duration-200">
-                <Card.Body class="p-6">
-                  <h3 class="text-lg font-semibold mb-2">
-                    <a
-                      href={route.path}
-                      class="hover:text-primary transition-colors"
-                    >
+              <a href={route.path} class="block">
+                <Card class="hover:shadow-lg transition-shadow duration-200 cursor-pointer group">
+                  <Card.Body class="p-6">
+                    <h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
                       {route.name}
-                    </a>
-                  </h3>
-                  <p class="text-base-content/70 text-sm leading-relaxed mb-3">
-                    {route.description}
-                  </p>
-                  <a
-                    href={route.path}
-                    class="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm"
-                  >
-                    Explore →
-                  </a>
-                </Card.Body>
-              </Card>
+                    </h3>
+                    <p class="text-base-content/70 text-sm leading-relaxed mb-3">
+                      {route.description}
+                    </p>
+                    <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
+                      Explore →
+                    </span>
+                  </Card.Body>
+                </Card>
+              </a>
             )}
           </For>
         </Grid>

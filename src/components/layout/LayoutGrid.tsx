@@ -1,5 +1,7 @@
 import { Component, createEffect, createSignal, onCleanup } from "solid-js";
 
+export const [isNavbarExpanded, setIsNavbarExpanded] = createSignal(false);
+
 interface LayoutGridProps {
   header?: Component;
   sidebar?: Component;
@@ -27,7 +29,6 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
 
   return (
     <div class="min-h-screen">
-      {/* Header */}
       <div
         class={`fixed top-0 left-0 right-0 z-50 ${
           hasAnySidebar()
@@ -38,20 +39,17 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
         {props.header && <props.header />}
       </div>
 
-      {/* Main content area */}
-      <div class="pt-20">
+      <div class={isNavbarExpanded() ? "pt-32" : "pt-16"}>
         <div class={hasAnySidebar() ? "container mx-auto" : "w-full"}>
           <div class="relative flex">
-            {/* Left sidebar */}
             {(isDesktop() || isXl()) && props.sidebar && (
-              <div class="w-[280px] fixed top-[72px] bottom-0">
+              <div class={`w-[280px] fixed ${isNavbarExpanded() ? "top-32" : "top-16"} bottom-0`}>
                 <div class="h-full overflow-auto py-6">
                   <props.sidebar />
                 </div>
               </div>
             )}
 
-            {/* Main content */}
             <div
               class={`flex-1 min-w-0 ${
                 hasAnySidebar() && (isDesktop() || isXl()) ? "ml-[280px]" : ""
@@ -60,9 +58,8 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
               {props.children}
             </div>
 
-            {/* Right sidebar (TOC) */}
             {isXl() && props.toc && (
-              <div class="w-[280px] fixed top-[72px] bottom-0 right-0">
+              <div class={`w-[280px] fixed ${isNavbarExpanded() ? "top-32" : "top-16"} bottom-0 right-0`}>
                 <div class="h-full overflow-auto py-6">
                   <props.toc />
                 </div>
@@ -72,7 +69,6 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
         </div>
       </div>
 
-      {/* Footer */}
       {props.footer && (
         <div class={`${hasAnySidebar() ? "container mx-auto" : "w-full"}`}>
           <div

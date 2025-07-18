@@ -1,8 +1,7 @@
 import { Component } from "solid-js";
 import { Card, Flex } from "@pathscale/ui";
-import { Breadcrumbs } from "../../components/layout/Navigation/Breadcrumbs";
 import { ContentContainer } from "../../components/content/ContentContainer";
-import { CodeBlock } from "../../components/content/CodeBlock";
+import { CodeBlock } from "../../components/showcase/CodeBlock";
 import { Callout } from "../../components/content/Callout";
 
 const DocsIndex: Component = () => {

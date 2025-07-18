@@ -19,6 +19,8 @@ export default function ThemeEditor(props: ThemeEditorProps) {
   const [isDefault, setIsDefault] = createSignal(false);
   const [isPrefersDark, setIsPrefersDark] = createSignal(false);
   const [colorScheme, setColorScheme] = createSignal<"light" | "dark">("light");
+  const [applyToWholeSite, setApplyToWholeSite] = createSignal(false);
+  const [rememberTheme, setRememberTheme] = createSignal(false);
 
   return (
     <div
@@ -35,6 +37,26 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           CSS
         </Button>
       </Grid>
+
+      <div class="flex flex-col gap-2 w-full">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-base-content/60 text-xs">Apply to whole site</span>
+          <Toggle 
+            size="xs"
+            checked={applyToWholeSite()}
+            onChange={(e: any) => setApplyToWholeSite(e.currentTarget.checked)}
+          />
+        </div>
+        
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-base-content/60 text-xs">Remember this theme</span>
+          <Toggle 
+            size="xs"
+            checked={rememberTheme()}
+            onChange={(e: any) => setRememberTheme(e.currentTarget.checked)}
+          />
+        </div>
+      </div>
 
       <h3 class="divider divider-start text-xs">
         <span class="flex gap-1.5">

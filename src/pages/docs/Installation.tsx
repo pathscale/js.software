@@ -137,7 +137,7 @@ function App() {
           <a href="/docs/components" class="btn btn-primary">
             Explore Components
           </a>
-          <a href="/docs/theming" class="btn btn-outline">
+          <a href="/theming" class="btn btn-outline">
             Customize Theme
           </a>
           <a href="/showcases" class="btn btn-outline">
