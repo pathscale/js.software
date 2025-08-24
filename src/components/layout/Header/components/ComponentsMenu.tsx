@@ -1,4 +1,4 @@
-import { Component, For } from "solid-js";
+import { Component, For, createMemo } from "solid-js";
 import { Button, Flex, Navbar } from "@pathscale/ui";
 import { navigationItems } from "../navigationData";
 import { useNavigation } from "../hooks/useNavigation";
@@ -15,7 +15,7 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
     (item) => item.title === "Components"
   );
 
-  const selectedSubcategory = getSelectedSubcategory();
+  const selectedSubcategory = createMemo(() => getSelectedSubcategory());
 
   return (
     <>
@@ -46,7 +46,7 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
       
       <Navbar.Row class="hidden lg:block bg-base-100 border-t border-base-300 px-4 py-2">
         <Flex wrap="wrap" gap="sm" align="center">
-          <For each={selectedSubcategory?.items || []}>
+          <For each={selectedSubcategory()?.items || []}>
             {(item) => (
               <a
                 href={item.href}
