@@ -799,57 +799,6 @@ export default function TableShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="enhanced-table" title="Enhanced Table">
-          <Flex direction="col" gap="md">
-            <div class="overflow-x-auto">
-              <Table.Enhanced
-                columns={[
-                  { accessorKey: "id", header: "ID" },
-                  { accessorKey: "name", header: "Name" },
-                  { accessorKey: "job", header: "Job Title" },
-                  { accessorKey: "color", header: "Favorite Color" },
-                ]}
-                data={[
-                  {
-                    id: 1,
-                    name: "Cy Ganderton",
-                    job: "Quality Control Specialist",
-                    color: "Blue",
-                  },
-                  {
-                    id: 2,
-                    name: "Hart Hagerty",
-                    job: "Desktop Support Technician",
-                    color: "Purple",
-                  },
-                  {
-                    id: 3,
-                    name: "Brice Swyre",
-                    job: "Tax Accountant",
-                    color: "Red",
-                  },
-                ]}
-              />
-            </div>
-
-            <CodeBlock
-              code={`<EnhancedTable
-  columns={[
-    { accessorKey: "id", header: "ID" },
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "job", header: "Job Title" },
-    { accessorKey: "color", header: "Favorite Color" },
-  ]}
-  data={[
-    { id: 1, name: "Cy Ganderton", job: "Quality Control Specialist", color: "Blue" },
-    { id: 2, name: "Hart Hagerty", job: "Desktop Support Technician", color: "Purple" },
-    { id: 3, name: "Brice Swyre", job: "Tax Accountant", color: "Red" },
-  ]}
-/>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
         <ShowcaseSection id="table-props" title="Props">
           <Flex direction="col" gap="md">
             <h3 class="text-lg font-semibold">Table</h3>
