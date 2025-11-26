@@ -63,6 +63,7 @@ import StepsShowcase from "./components/StepsShowcase";
 import SvgBackgroundShowcase from "./components/SvgBackgroundShowcase";
 import SwapShowcase from "./components/SwapShowcase";
 import TableShowcase from "./components/TableShowcase";
+import StreamingTableShowcase from "./components/StreamingTableShowcase";
 import TabsShowcase from "./components/TabsShowcase";
 import TextareaShowcase from "./components/TextareaShowcase";
 import TimelineShowcase from "./components/TimelineShowcase";
@@ -450,6 +451,12 @@ export const routes: RouteConfig[] = [
     component: TableShowcase,
     description:
       "Tables for displaying and organizing data in rows and columns.",
+  },
+  {
+    name: "Streaming Table",
+    path: ROUTES.STREAMING_TABLE,
+    component: StreamingTableShowcase,
+    description: "Real-time data table with buffer management, sorting, filtering, and pagination.",
   },
   {
     name: "Tabs",

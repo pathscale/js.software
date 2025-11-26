@@ -61,6 +61,7 @@ export const ROUTES = {
   SVG_BACKGROUND: "/svg-background",
   SWAP: "/swap",
   TABLE: "/table",
+  STREAMING_TABLE: "/components/streaming-table",
   TABS: "/tabs",
   TEXTAREA: "/textarea",
   TIMELINE: "/timeline",
