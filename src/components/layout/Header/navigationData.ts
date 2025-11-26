@@ -42,6 +42,7 @@ export const navigationItems: NavigationItem[] = [
           { title: "Kbd", href: ROUTES.KBD },
           { title: "Stats", href: ROUTES.STATS },
           { title: "Table", href: ROUTES.TABLE },
+          { title: "Streaming Table", href: ROUTES.STREAMING_TABLE },
           { title: "Timeline", href: ROUTES.TIMELINE },
           { title: "Code Mockup", href: ROUTES.CODE_MOCKUP },
           { title: "Rating", href: ROUTES.RATING },
