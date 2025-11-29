@@ -1,5 +1,6 @@
 import { createSignal, onCleanup } from "solid-js";
-import { Flex, Icon, StreamingTable, StreamingColumnDef} from "@pathscale/ui";
+import { Flex, Icon, StreamingTable } from "@pathscale/ui";
+import type { StreamingColumnDef } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
@@ -16,16 +17,15 @@ interface MockDataRow {
 export default function StreamingTableShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
-    { id: "basic", title: "Basic Streaming" },
-    { id: "append-mode", title: "Append Mode with Buffer Limit" },
-    { id: "sync-mode", title: "Sync Mode" },
-    { id: "with-features", title: "With Sorting, Filtering & Pagination" },
+    { id: "demo", title: "Interactive Demo" },
+    { id: "props", title: "Props" },
   ] as const;
 
   // Mock streaming data generator
   const [data, setData] = createSignal<MockDataRow[]>([]);
   const [isStreaming, setIsStreaming] = createSignal(false);
   const [streamInterval, setStreamInterval] = createSignal<number | undefined>();
+  const [filterValue, setFilterValue] = createSignal("");
 
   const symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "AAVEUSDT"];
 
@@ -103,7 +103,7 @@ export default function StreamingTableShowcase() {
       name: "columns",
       type: "StreamingColumnDef<TData>[]",
       default: "—",
-      description: "Column definitions (header, accessorKey, cell renderer, etc.)",
+      description: "Column definitions (header, accessorKey, cell renderer, sortingFn, filterFn, etc.)",
     },
     {
       name: "getRowId",
@@ -121,13 +121,49 @@ export default function StreamingTableShowcase() {
       name: "streamingConfig.appendMode",
       type: "boolean",
       default: "false",
-      description: "If true, only append new rows (don't remove stale). If false, sync mode (upsert + remove).",
+      description: "If true, only append new rows. If false, sync mode (upsert + remove stale).",
     },
     {
-      name: "...enhancedTableProps",
-      type: "EnhancedTableProps",
-      default: "—",
-      description: "All props from EnhancedTable (sorting, filtering, pagination, icons, etc.)",
+      name: "enableSorting",
+      type: "boolean",
+      default: "false",
+      description: "Enable client-side sorting. Click column headers to toggle sort direction.",
+    },
+    {
+      name: "enableFiltering",
+      type: "boolean",
+      default: "false",
+      description: "Enable client-side filtering. Filters are applied before sorting and pagination.",
+    },
+    {
+      name: "filterValue",
+      type: "string",
+      default: "''",
+      description: "External control of filter value. Case-insensitive search across all columns.",
+    },
+    {
+      name: "globalFilterFn",
+      type: "(row, filterValue, columns) => boolean",
+      default: "defaultGlobalFilterFn",
+      description: "Custom global filter function. Overrides default case-insensitive matching.",
+    },
+    {
+      name: "enablePagination",
+      type: "boolean",
+      default: "false",
+      description: "Enable client-side pagination with page controls.",
+    },
+    {
+      name: "pageSize",
+      type: "number",
+      default: "10",
+      description: "Number of rows per page when pagination is enabled.",
+    },
+    {
+      name: "initialPage",
+      type: "number",
+      default: "0",
+      description: "Initial page index (0-based) when pagination is enabled.",
     },
   ];
 
@@ -147,14 +183,14 @@ export default function StreamingTableShowcase() {
           </nav>
         </ShowcaseSection>
 
-        <ShowcaseSection id="basic" title="Basic Streaming">
+        <ShowcaseSection id="demo" title="Interactive Demo">
           <Flex direction="col" gap="md">
             <p class="text-sm text-base-content/70">
-              StreamingTable maintains reactive row stores for efficient updates.
-              Each incoming data array is synced with the internal store.
+              StreamingTable supports client-side sorting, filtering, and pagination on top of buffered streaming data.
+              All features work together seamlessly: filter → sort → paginate.
             </p>
 
-            <div class="flex gap-2 items-center">
+            <div class="flex gap-2 items-center flex-wrap">
               <button
                 class="btn btn-sm btn-primary h-8"
                 onClick={startStreaming}
@@ -175,8 +211,21 @@ export default function StreamingTableShowcase() {
                 Reset
               </button>
               <div class="badge badge-info h-8 px-3">
-                {data().length} rows
+                {data().length} rows buffered
               </div>
+            </div>
+
+            <div class="form-control w-full max-w-xs">
+              <label class="label">
+                <span class="label-text">Search (filters all columns)</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Filter by symbol, price, change..."
+                class="input input-bordered input-sm"
+                value={filterValue()}
+                onInput={(e) => setFilterValue(e.currentTarget.value)}
+              />
             </div>
 
             <div class="overflow-x-auto">
@@ -185,33 +234,59 @@ export default function StreamingTableShowcase() {
                 columns={columns}
                 getRowId={(row) => row.id}
                 streamingConfig={{
-                  maxBufferSize: 100,
-                  appendMode: false,
+                  maxBufferSize: 1000,
+                  appendMode: true,
                 }}
+                enableSorting={true}
+                enableFiltering={true}
+                filterValue={filterValue()}
+                enablePagination={true}
+                pageSize={10}
               />
             </div>
 
             <CodeBlock
-              code={`const [data, setData] = createSignal<DataRow[]>([]);
+              code={`const [filterValue, setFilterValue] = createSignal("");
+
+<input
+  type="text"
+  value={filterValue()}
+  onInput={(e) => setFilterValue(e.currentTarget.value)}
+/>
 
 <StreamingTable
-  data={data()}
+  data={streamData()}
   columns={columns}
-  getRowId={(row) => row.id}
   streamingConfig={{
-    maxBufferSize: 100,
+    maxBufferSize: 1000,
     appendMode: true,
   }}
-  enablePagination
-  enableSorting
-  enableFilters
-  // ...all EnhancedTable props available
+  // Enable all features
+  enableSorting={true}
+  enableFiltering={true}
+  filterValue={filterValue()}
+  enablePagination={true}
+  pageSize={10}
 />`}
             />
+
+            <div class="alert alert-info">
+              <Icon name="icon-[lucide--info]" width={20} height={20} />
+              <div>
+                <h4 class="font-bold">Feature Highlights</h4>
+                <ul class="list-disc list-inside text-sm mt-2">
+                  <li><strong>Sorting:</strong> Click column headers to sort (asc/desc/none cycle)</li>
+                  <li><strong>Filtering:</strong> Case-insensitive search across all columns</li>
+                  <li><strong>Pagination:</strong> 10 rows per page with page navigation</li>
+                  <li><strong>Buffer Management:</strong> FIFO truncation at 1000 rows</li>
+                  <li><strong>Real-time Updates:</strong> Features work on streaming data</li>
+                </ul>
+              </div>
+            </div>
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="streaming-table-props" title="Props">
+        <ShowcaseSection id="props" title="Props">
           <Flex direction="col" gap="md">
             <h3 class="text-lg font-semibold">StreamingTable</h3>
             <PropsTable props={streamingTableProps} />
