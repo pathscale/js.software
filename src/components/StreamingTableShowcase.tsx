@@ -112,6 +112,12 @@ export default function StreamingTableShowcase() {
       description: "Function to extract unique ID from each row",
     },
     {
+      name: "initialSorting",
+      type: `{ columnId: string; direction: 'asc' | 'desc' }`,
+      default: "null",
+      description: "Set the initial sorting state when the table mounts.",
+    },
+    {
       name: "streamingConfig.maxBufferSize",
       type: "number",
       default: "1000",
@@ -267,6 +273,7 @@ export default function StreamingTableShowcase() {
   filterValue={filterValue()}
   enablePagination={true}
   pageSize={10}
+  initialSorting={{ columnId: 'timestamp', direction: 'desc' }}
 />`}
             />
 
