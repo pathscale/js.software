@@ -62,7 +62,6 @@ export default function ColorPickerShowcase() {
     },
   ];
 
-  // ===== Signals =====
   const [color1, setColor1] = createSignal("#FF6B6B");
   const [color2, setColor2] = createSignal("rgb(78, 205, 196)");
   const [color3, setColor3] = createSignal("hsl(180, 50%, 50%)");
