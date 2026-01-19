@@ -1,10 +1,9 @@
+import { createSignal } from "solid-js";
+import { Flex, ColorPicker } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Flex } from "@pathscale/ui";
-import ColorPicker from "./colorpicker/ColorPicker";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
-import { createSignal } from "solid-js";
 
 export default function ColorPickerShowcase() {
   const sections = [
