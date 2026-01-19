@@ -46,6 +46,7 @@ export const ROUTES = {
   MODAL: "/modal",
   NAVBAR: "/navbar",
   PAGINATION: "/pagination",
+  COLOR_PICKER: "/color-picker",
   PHONEMOCKUP: "/phonemockup",
   PROGRESS: "/progress",
   RADIAL_PROGRESS: "/radial-progress",
