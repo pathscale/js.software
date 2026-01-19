@@ -88,6 +88,7 @@ export const navigationItems: NavigationItem[] = [
           { title: "Textarea", href: ROUTES.TEXTAREA },
           { title: "Toggle", href: ROUTES.TOGGLE },
           { title: "Join", href: ROUTES.JOIN },
+          { title: "Color Picker", href: ROUTES.COLOR_PICKER},
         ],
       },
       {

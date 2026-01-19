@@ -71,6 +71,7 @@ import ToastShowcase from "./components/ToastShowcase";
 import ToggleShowcase from "./components/ToggleShowcase";
 import TooltipShowcase from "./components/TooltipShowcase";
 import WindowMockupShowcase from "./components/WindowMockupShowcase";
+import ColorPickerShowcase from "./components/ColorPickerShowcase";
 
 export interface RouteConfig {
   name: string;
@@ -359,6 +360,13 @@ export const routes: RouteConfig[] = [
     component: PaginationShowcase,
     description:
       "Controls for navigating between pages of content or long lists.",
+  },
+  {
+    name: "ColorPicker",
+    path: ROUTES.COLOR_PICKER,
+    component: ColorPickerShowcase,
+    description:
+      "A color picker component that supports multiple formats and display modes.",
   },
   {
     name: "Phonemockup",
