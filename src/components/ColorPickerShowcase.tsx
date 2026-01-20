@@ -501,7 +501,9 @@ export default function ColorPickerShowcase() {
               value={selectorFlower()}
               onChange={setSelectorFlower}
             >
-              <ColorPickerFlowerSelector />
+              <div class="flex flex-col items-center gap-4 w-full">
+                <ColorPickerFlowerSelector />
+              </div>
             </PickerPanel>
           </div>
           <CodeBlock
@@ -511,7 +513,9 @@ export default function ColorPickerShowcase() {
 </ColorPickerProvider>
 
 <ColorPickerProvider value={color()} onChange={setColor}>
-  <ColorPickerFlowerSelector />
+  <div class="flex flex-col items-center gap-4 w-full">
+    <ColorPickerFlowerSelector />
+  </div>
   <ColorInput />
 </ColorPickerProvider>`}
           />
@@ -537,8 +541,10 @@ export default function ColorPickerShowcase() {
               value={flowerManual()}
               onChange={setFlowerManual}
             >
-              <ColorWheelFlower />
-              <LightnessSlider />
+              <div class="flex flex-col items-center gap-4 w-full">
+                <ColorWheelFlower />
+                <LightnessSlider />
+              </div>
             </PickerPanel>
           </div>
           <CodeBlock
@@ -549,8 +555,10 @@ export default function ColorPickerShowcase() {
 </ColorPickerProvider>
 
 <ColorPickerProvider value={color()} onChange={setColor}>
-  <ColorWheelFlower />
-  <LightnessSlider />
+  <div class="flex flex-col items-center gap-4 w-full">
+    <ColorWheelFlower />
+    <LightnessSlider />
+  </div>
   <ColorInput />
 </ColorPickerProvider>`}
           />
