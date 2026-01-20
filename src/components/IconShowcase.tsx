@@ -19,7 +19,7 @@ export default function IconShowcase() {
       type: "string",
       required: true,
       description:
-        "The icon name from the Iconify set, e.g. icon-[mdi-light--home].",
+        "The icon name from the Iconify set, e.g. icon-[mdi--home].",
     },
     {
       name: "width",
@@ -64,14 +64,14 @@ export default function IconShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex gap="md">
-              <Icon name="icon-[mdi-light--home]" />
-              <Icon name="icon-[mdi-light--chevron-left]" />
-              <Icon name="icon-[mdi-light--chevron-right]" />
+              <Icon name="icon-[mdi--home]" />
+              <Icon name="icon-[mdi--chevron-left]" />
+              <Icon name="icon-[mdi--chevron-right]" />
             </Flex>
             <CodeBlock
-              code={`<Icon name="icon-[mdi-light--home]" />
-<Icon name="icon-[mdi-light--chevron-left]" />
-<Icon name="icon-[mdi-light--chevron-right]" />`}
+              code={`<Icon name="icon-[mdi--home]" />
+<Icon name="icon-[mdi--chevron-left]" />
+<Icon name="icon-[mdi--chevron-right]" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -79,16 +79,16 @@ export default function IconShowcase() {
         <ShowcaseSection id="sizing" title="Custom Size">
           <Flex direction="col" gap="md">
             <Flex gap="md" align="center">
-              <Icon name="icon-[mdi-light--home]" width={16} height={16} />
-              <Icon name="icon-[mdi-light--home]" width={24} height={24} />
-              <Icon name="icon-[mdi-light--home]" width={32} height={32} />
-              <Icon name="icon-[mdi-light--home]" width={48} height={48} />
+              <Icon name="icon-[mdi--home]" width={16} height={16} />
+              <Icon name="icon-[mdi--home]" width={24} height={24} />
+              <Icon name="icon-[mdi--home]" width={32} height={32} />
+              <Icon name="icon-[mdi--home]" width={48} height={48} />
             </Flex>
             <CodeBlock
-              code={`<Icon name="icon-[mdi-light--home]" width={16} height={16} />
-<Icon name="icon-[mdi-light--home]" width={24} height={24} />
-<Icon name="icon-[mdi-light--home]" width={32} height={32} />
-<Icon name="icon-[mdi-light--home]" width={48} height={48} />`}
+              code={`<Icon name="icon-[mdi--home]" width={16} height={16} />
+<Icon name="icon-[mdi--home]" width={24} height={24} />
+<Icon name="icon-[mdi--home]" width={32} height={32} />
+<Icon name="icon-[mdi--home]" width={48} height={48} />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -96,16 +96,16 @@ export default function IconShowcase() {
         <ShowcaseSection id="color" title="Custom Color">
           <Flex direction="col" gap="md">
             <Flex gap="md" align="center">
-              <Icon name="icon-[mdi-light--home]" class="text-primary" />
-              <Icon name="icon-[mdi-light--home]" class="text-secondary" />
-              <Icon name="icon-[mdi-light--home]" class="text-accent" />
-              <Icon name="icon-[mdi-light--home]" class="text-error" />
+              <Icon name="icon-[mdi--home]" class="text-primary" />
+              <Icon name="icon-[mdi--home]" class="text-secondary" />
+              <Icon name="icon-[mdi--home]" class="text-accent" />
+              <Icon name="icon-[mdi--home]" class="text-error" />
             </Flex>
             <CodeBlock
-              code={`<Icon name="icon-[mdi-light--home]" class="text-primary" />
-<Icon name="icon-[mdi-light--home]" class="text-secondary" />
-<Icon name="icon-[mdi-light--home]" class="text-accent" />
-<Icon name="icon-[mdi-light--home]" class="text-error" />`}
+              code={`<Icon name="icon-[mdi--home]" class="text-primary" />
+<Icon name="icon-[mdi--home]" class="text-secondary" />
+<Icon name="icon-[mdi--home]" class="text-accent" />
+<Icon name="icon-[mdi--home]" class="text-error" />`}
             />
           </Flex>
         </ShowcaseSection>

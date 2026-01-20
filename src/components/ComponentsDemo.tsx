@@ -58,7 +58,7 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex justify="between" align="center">
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi-light--filter-variant]" width={16} height={16} />
+                <Icon name="icon-[mdi--filter-variant]" width={16} height={16} />
                 <span class="font-semibold">Filters</span>
               </Flex>
               <Button variant="link" size="xs">
@@ -113,7 +113,7 @@ export default function ComponentsDemo() {
         <Card size="sm" class="bg-base-100">
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-3">
-              <Icon name="icon-[mdi-light--calendar]" width={16} height={16} />
+              <Icon name="icon-[mdi--calendar]" width={16} height={16} />
               <span class="font-semibold">Calendar</span>
             </Flex>
             <Flex direction="col" gap="md">
@@ -163,7 +163,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Input
                 placeholder="Search events..."
-                leftIcon={<Icon name="icon-[mdi-light--magnify]" width={16} height={16} />}
+                leftIcon={<Icon name="icon-[mdi--magnify]" width={16} height={16} />}
                 size="sm"
               />
               <Flex justify="between" align="center">
@@ -203,7 +203,7 @@ export default function ComponentsDemo() {
         <Card size="sm" class="bg-base-100">
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-2">
-              <Icon name="icon-[mdi-light--currency-usd]" width={16} height={16} />
+              <Icon name="icon-[mdi--currency-usd]" width={16} height={16} />
               <span class="font-semibold">Price Range</span>
             </Flex>
             <Range
@@ -249,7 +249,7 @@ export default function ComponentsDemo() {
                 </Stats.Stat.Value>
                 <Stats.Stat.Desc>
                   <Flex align="center" gap="sm">
-                    <Icon name="icon-[mdi-light--shield-check]" width={16} height={16} class="text-success" />
+                    <Icon name="icon-[mdi--shield-check]" width={16} height={16} class="text-success" />
                     All good
                   </Flex>
                 </Stats.Stat.Desc>
@@ -293,7 +293,7 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-2">
               <span class="text-sm font-medium">Monthly Revenue</span>
-              <Icon name="icon-[mdi-light--trending-up]" width={16} height={16} class="text-success" />
+              <Icon name="icon-[mdi--trending-up]" width={16} height={16} class="text-success" />
             </Flex>
             <Flex direction="col">
               <span class="text-2xl font-bold">$12,450</span>
@@ -324,7 +324,7 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-3">
               <Avatar size="sm" color="primary" shape="circle">
-                <Icon name="icon-[mdi-light--package-variant]" width={16} height={16} />
+                <Icon name="icon-[mdi--package-variant]" width={16} height={16} />
               </Avatar>
               <Flex direction="col">
                 <span class="font-medium text-sm">Premium Product</span>
@@ -344,21 +344,21 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Alert
                 status="info"
-                icon={<Icon name="icon-[mdi-light--information]" width={20} height={20} />}
+                icon={<Icon name="icon-[mdi--information]" width={20} height={20} />}
               >
                 <span class="text-xs">New software update available</span>
               </Alert>
               <Alert
                 status="success"
                 variant="outline"
-                icon={<Icon name="icon-[mdi-light--check-circle]" width={20} height={20} />}
+                icon={<Icon name="icon-[mdi--check-circle]" width={20} height={20} />}
               >
                 <span class="text-xs">Verification completed</span>
               </Alert>
               <Alert
                 status="warning"
                 variant="dash"
-                icon={<Icon name="icon-[mdi-light--alert]" width={20} height={20} />}
+                icon={<Icon name="icon-[mdi--alert]" width={20} height={20} />}
               >
                 <span class="text-xs">
                   <Button variant="link" size="xs" class="p-0 h-auto">
@@ -370,7 +370,7 @@ export default function ComponentsDemo() {
               <Alert
                 status="error"
                 variant="soft"
-                icon={<Icon name="icon-[mdi-light--close-circle]" width={20} height={20} />}
+                icon={<Icon name="icon-[mdi--close-circle]" width={20} height={20} />}
               >
                 <Flex justify="between" align="center" class="w-full">
                   <span class="text-xs">Access denied</span>
@@ -389,7 +389,7 @@ export default function ComponentsDemo() {
               <TimelineItem connect="both">
                 <TimelineStart box>9:00</TimelineStart>
                 <TimelineMiddle class="text-success">
-                  <Icon name="icon-[mdi-light--check-circle]" width={16} height={16} />
+                  <Icon name="icon-[mdi--check-circle]" width={16} height={16} />
                 </TimelineMiddle>
                 <TimelineEnd>
                   <Flex direction="col">
@@ -403,7 +403,7 @@ export default function ComponentsDemo() {
               <TimelineItem connect="both">
                 <TimelineStart box>11:00</TimelineStart>
                 <TimelineMiddle class="text-success">
-                  <Icon name="icon-[mdi-light--check-circle]" width={16} height={16} />
+                  <Icon name="icon-[mdi--check-circle]" width={16} height={16} />
                 </TimelineMiddle>
                 <TimelineEnd>
                   <Flex direction="col">
@@ -417,7 +417,7 @@ export default function ComponentsDemo() {
               <TimelineItem connect="start">
                 <TimelineStart box>15:00</TimelineStart>
                 <TimelineMiddle class="text-warning">
-                  <Icon name="icon-[mdi-light--clock-outline]" width={16} height={16} />
+                  <Icon name="icon-[mdi--clock-outline]" width={16} height={16} />
                 </TimelineMiddle>
                 <TimelineEnd>
                   <Flex direction="col">
@@ -447,15 +447,15 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex direction="col" gap="sm" class="mt-3">
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi-light--check]" width={16} height={16} class="text-success" />
+                  <Icon name="icon-[mdi--check]" width={16} height={16} class="text-success" />
                   <span class="text-sm">Unlimited projects</span>
                 </Flex>
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi-light--check]" width={16} height={16} class="text-success" />
+                  <Icon name="icon-[mdi--check]" width={16} height={16} class="text-success" />
                   <span class="text-sm">Priority support</span>
                 </Flex>
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi-light--close]" width={16} height={16} class="text-error" />
+                  <Icon name="icon-[mdi--close]" width={16} height={16} class="text-error" />
                   <span class="text-sm opacity-50">Advanced analytics</span>
                 </Flex>
               </Flex>
@@ -561,7 +561,7 @@ export default function ComponentsDemo() {
                     3
                   </Badge>
                   <Button size="sm" variant="outline" shape="circle">
-                    <Icon name="icon-[mdi-light--bell]" width={16} height={16} />
+                    <Icon name="icon-[mdi--bell]" width={16} height={16} />
                   </Button>
                 </Indicator>
               </Flex>
@@ -603,13 +603,13 @@ export default function ComponentsDemo() {
             </Flex>
             <Flex gap="sm" class="mt-4 justify-center">
               <Button size="sm" variant="outline" shape="circle">
-                <Icon name="icon-[mdi-light--phone]" width={16} height={16} />
+                <Icon name="icon-[mdi--phone]" width={16} height={16} />
               </Button>
               <Button size="sm" variant="outline" shape="circle">
-                <Icon name="icon-[mdi-light--message]" width={16} height={16} />
+                <Icon name="icon-[mdi--message]" width={16} height={16} />
               </Button>
               <Button size="sm" variant="outline" shape="circle">
-                <Icon name="icon-[mdi-light--cog]" width={16} height={16} />
+                <Icon name="icon-[mdi--cog]" width={16} height={16} />
               </Button>
             </Flex>
           </Card.Body>
@@ -621,7 +621,7 @@ export default function ComponentsDemo() {
               <Menu.Item>
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
-                    <Icon name="icon-[mdi-light--database]" width={16} height={16} />
+                    <Icon name="icon-[mdi--database]" width={16} height={16} />
                     <span>Database</span>
                   </Flex>
                   <Badge size="xs" color="primary">
@@ -632,7 +632,7 @@ export default function ComponentsDemo() {
               <Menu.Item>
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
-                    <Icon name="icon-[mdi-light--package-variant]" width={16} height={16} />
+                    <Icon name="icon-[mdi--package-variant]" width={16} height={16} />
                     <span>Products</span>
                   </Flex>
                   <Badge size="xs" color="success">
@@ -643,7 +643,7 @@ export default function ComponentsDemo() {
               <Menu.Item>
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
-                    <Icon name="icon-[mdi-light--message-text]" width={16} height={16} />
+                    <Icon name="icon-[mdi--message-text]" width={16} height={16} />
                     <span>Messages</span>
                   </Flex>
                   <Badge size="xs" color="warning">
@@ -653,19 +653,19 @@ export default function ComponentsDemo() {
               </Menu.Item>
               <Menu.Item>
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi-light--key]" width={16} height={16} />
+                  <Icon name="icon-[mdi--key]" width={16} height={16} />
                   <span>Access Tokens</span>
                 </Flex>
               </Menu.Item>
               <Menu.Item>
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi-light--account-group]" width={16} height={16} />
+                  <Icon name="icon-[mdi--account-group]" width={16} height={16} />
                   <span>Users</span>
                 </Flex>
               </Menu.Item>
               <Menu.Item>
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi-light--cog]" width={16} height={16} />
+                  <Icon name="icon-[mdi--cog]" width={16} height={16} />
                   <span>Settings</span>
                 </Flex>
               </Menu.Item>
@@ -679,17 +679,17 @@ export default function ComponentsDemo() {
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Button size="sm" shape="circle">
-                    <Icon name="icon-[mdi-light--skip-previous]" width={16} height={16} />
+                    <Icon name="icon-[mdi--skip-previous]" width={16} height={16} />
                   </Button>
                   <Button size="sm" shape="circle" color="primary">
-                    <Icon name="icon-[mdi-light--play]" width={16} height={16} />
+                    <Icon name="icon-[mdi--play]" width={16} height={16} />
                   </Button>
                   <Button size="sm" shape="circle">
-                    <Icon name="icon-[mdi-light--skip-next]" width={16} height={16} />
+                    <Icon name="icon-[mdi--skip-next]" width={16} height={16} />
                   </Button>
                 </Flex>
                 <Button size="sm" variant="outline">
-                  <Icon name="icon-[mdi-light--volume-high]" width={16} height={16} />
+                  <Icon name="icon-[mdi--volume-high]" width={16} height={16} />
                 </Button>
               </Flex>
               <Flex direction="col">
@@ -721,7 +721,7 @@ export default function ComponentsDemo() {
               <Navbar.Start>
                 <Dropdown>
                   <Button color="ghost" shape="circle" size="sm">
-                    <Icon name="icon-[mdi-light--menu]" width={16} height={16} />
+                    <Icon name="icon-[mdi--menu]" width={16} height={16} />
                   </Button>
                   <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1]">
                     <Dropdown.Item>Dashboard</Dropdown.Item>
@@ -735,7 +735,7 @@ export default function ComponentsDemo() {
               </Navbar.Center>
               <Navbar.End>
                 <Button color="ghost" shape="circle" size="sm">
-                  <Icon name="icon-[mdi-light--account]" width={16} height={16} />
+                  <Icon name="icon-[mdi--account]" width={16} height={16} />
                 </Button>
               </Navbar.End>
             </Navbar>
@@ -774,7 +774,7 @@ export default function ComponentsDemo() {
                   size="sm"
                 />
                 <Button class="join-item" size="sm" color="primary">
-                  <Icon name="icon-[mdi-light--magnify]" width={16} height={16} />
+                  <Icon name="icon-[mdi--magnify]" width={16} height={16} />
                 </Button>
               </Join>
             </Flex>
