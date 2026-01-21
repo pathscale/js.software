@@ -8,7 +8,7 @@
         "@commitlint/config-conventional": "^19.0.3",
         "@commitlint/cz-commitlint": "^19.8.1",
         "@iconify/tailwind4": "^1.0.6",
-        "@pathscale/ui": "^0.0.111",
+        "@pathscale/ui": "^0.0.112",
         "@rsbuild/core": "^1.3.20",
         "@rsbuild/plugin-babel": "^1.0.5",
         "@rsbuild/plugin-solid": "^1.0.5",
@@ -224,7 +224,7 @@
 
     "@module-federation/webpack-bundler-runtime": ["@module-federation/webpack-bundler-runtime@0.13.1", "", { "dependencies": { "@module-federation/runtime": "0.13.1", "@module-federation/sdk": "0.13.1" } }, "sha512-QSuSIGa09S8mthbB1L6xERqrz+AzPlHR6D7RwAzssAc+IHf40U6NiTLPzUqp9mmKDhC5Tm0EISU0ZHNeJpnpBQ=="],
 
-    "@pathscale/ui": ["@pathscale/ui@0.0.111", "", { "dependencies": { "@iconify/tailwind4": "^1.0.6", "@solid-primitives/event-listener": "^2.3.0", "@solid-primitives/intersection-observer": "^2.1.3", "@solid-primitives/keyboard": "^1.2.5", "@solid-primitives/media": "^2.2.5", "@solid-primitives/props": "^3.1.8", "@solid-primitives/resize-observer": "^2.0.22", "@solid-primitives/scheduled": "^1.4.1", "@solid-primitives/scroll": "^2.0.20", "@solid-primitives/storage": "^2.1.1", "@solid-primitives/utils": "^6.2.1", "rsbuild-plugin-iconify": "^1.0.3", "solid-js": "^1.9.7" }, "peerDependencies": { "@felte/solid": "^1.2.0", "@felte/validator-zod": "^1.0.0", "@tanstack/solid-table": "^8.0.0", "popmotion": "^11.0.5", "zod": "^3.22.0" }, "optionalPeers": ["popmotion"] }, "sha512-fet8a20DcdoHH0zc7DoVczLl3EfA1He2WBnbOJOCIbsbvEaI09LQvo1D13e1L32232D49vlS83GlxkBJshDYsA=="],
+    "@pathscale/ui": ["@pathscale/ui@0.0.112", "", { "dependencies": { "@iconify/tailwind4": "^1.0.6", "@solid-primitives/event-listener": "^2.3.0", "@solid-primitives/intersection-observer": "^2.1.3", "@solid-primitives/keyboard": "^1.2.5", "@solid-primitives/media": "^2.2.5", "@solid-primitives/props": "^3.1.8", "@solid-primitives/resize-observer": "^2.0.22", "@solid-primitives/scheduled": "^1.4.1", "@solid-primitives/scroll": "^2.0.20", "@solid-primitives/storage": "^2.1.1", "@solid-primitives/utils": "^6.2.1", "rsbuild-plugin-iconify": "^1.0.3", "solid-js": "^1.9.7" }, "peerDependencies": { "@felte/solid": "^1.2.0", "@felte/validator-zod": "^1.0.0", "@tanstack/solid-table": "^8.0.0", "popmotion": "^11.0.5", "zod": "^3.22.0" }, "optionalPeers": ["popmotion"] }, "sha512-gdNCtxNVY5id1IDwGPvy/i+bQzBFV4gmBF5hctPgtK87WEttOHC78y1cujB+ILwGo8m94fo4sgZ6hRKIEyQzIw=="],
 
     "@rsbuild/core": ["@rsbuild/core@1.3.20", "", { "dependencies": { "@rspack/core": "1.3.10", "@rspack/lite-tapable": "~1.0.1", "@swc/helpers": "^0.5.17", "core-js": "~3.42.0", "jiti": "^2.4.2" }, "bin": { "rsbuild": "bin/rsbuild.js" } }, "sha512-5VxOddgGHaq5x4ONdKOZvLYLj8dhVfCAz+cERNLXrKLzBISouY1A9TJcbZBK4xoH/0DJrDtDzapNA+dI9Jr07Q=="],
 
