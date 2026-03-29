@@ -70,6 +70,15 @@ export const ROUTES = {
   TOGGLE: "/toggle",
   TOOLTIP: "/tooltip",
   WINDOW_MOCKUP: "/windowmockup",
+  RADIO_GROUP: "/radio-group",
+  TOGGLE_SETTING: "/toggle-setting",
+  EMPTY_STATE: "/empty-state",
+  LEVEL_METER: "/level-meter",
+  DROPDOWN_SELECT: "/dropdown-select",
+  FORM_ACTIONS: "/form-actions",
+  CONFIRM_DIALOG: "/confirm-dialog",
+  GLOW_CARD: "/glow-card",
+  SECTION_CARD: "/section-card",
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
