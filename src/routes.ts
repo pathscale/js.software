@@ -30,6 +30,7 @@ import DividerShowcase from "./components/DividerShowcase";
 import DockShowcase from "./components/DockShowcase";
 import DrawerShowcase from "./components/DrawerShowcase";
 import DropdownShowcase from "./components/DropdownShowcase";
+import FieldsetShowcase from "./components/FieldsetShowcase";
 import FileInputShowcase from "./components/FileInputShowcase";
 import FlexShowcase from "./components/FlexShowcase";
 import FooterShowcase from "./components/FooterShowcase";
@@ -78,7 +79,16 @@ import EmptyStateShowcase from "./components/EmptyStateShowcase";
 import DropdownSelectShowcase from "./components/DropdownSelectShowcase";
 import FormActionsShowcase from "./components/FormActionsShowcase";
 import ConfirmDialogShowcase from "./components/ConfirmDialogShowcase";
+import FloatingDockShowcase from "./components/FloatingDockShowcase";
+import GlassPanelShowcase from "./components/GlassPanelShowcase";
 import GlowCardShowcase from "./components/GlowCardShowcase";
+import ConnectionStatusShowcase from "./components/ConnectionStatusShowcase";
+import SkipLinkShowcase from "./components/SkipLinkShowcase";
+import SliderFieldShowcase from "./components/SliderFieldShowcase";
+import VideoPreviewShowcase from "./components/VideoPreviewShowcase";
+import NoiseBackgroundShowcase from "./components/NoiseBackgroundShowcase";
+import StatCardShowcase from "./components/StatCardShowcase";
+import StatusShowcase from "./components/StatusShowcase";
 
 export interface RouteConfig {
   name: string;
@@ -257,6 +267,12 @@ export const routes: RouteConfig[] = [
     path: ROUTES.DROPDOWN,
     component: DropdownShowcase,
     description: "Dropdown menu for displaying additional actions or options.",
+  },
+  {
+    name: "Fieldset",
+    path: ROUTES.FIELDSET,
+    component: FieldsetShowcase,
+    description: "Groups related form controls with a legend, description, and configurable gap.",
   },
   {
     name: "FileInput",
@@ -553,9 +569,63 @@ export const routes: RouteConfig[] = [
     description: "Modal confirmation dialog for destructive or important actions.",
   },
   {
+    name: "FloatingDock",
+    path: ROUTES.FLOATING_DOCK,
+    component: FloatingDockShowcase,
+    description: "macOS-style floating dock with spring magnification, tooltips, and mobile support.",
+  },
+  {
+    name: "GlassPanel",
+    path: ROUTES.GLASS_PANEL,
+    component: GlassPanelShowcase,
+    description: "Frosted-glass container with blur, collapsible sections, accent borders, and glow effects.",
+  },
+  {
     name: "GlowCard",
     path: ROUTES.GLOW_CARD,
     component: GlowCardShowcase,
     description: "Card with a cursor-tracking glow effect.",
+  },
+  {
+    name: "ConnectionStatus",
+    path: ROUTES.CONNECTION_STATUS,
+    component: ConnectionStatusShowcase,
+    description: "Displays real-time connection state with optional reconnect action.",
+  },
+  {
+    name: "SkipLink",
+    path: ROUTES.SKIP_LINK,
+    component: SkipLinkShowcase,
+    description: "Accessible skip navigation link that appears on focus for keyboard users.",
+  },
+  {
+    name: "SliderField",
+    path: ROUTES.SLIDER_FIELD,
+    component: SliderFieldShowcase,
+    description: "Labeled range slider with custom formatting, colors, and step control.",
+  },
+  {
+    name: "VideoPreview",
+    path: ROUTES.VIDEO_PREVIEW,
+    component: VideoPreviewShowcase,
+    description: "Live camera preview with optional mirroring for video streams.",
+  },
+  {
+    name: "StatCard",
+    path: ROUTES.STAT_CARD,
+    component: StatCardShowcase,
+    description: "Compound stat card with title, value, description, figure, and actions.",
+  },
+  {
+    name: "Status",
+    path: ROUTES.STATUS_COMP,
+    component: StatusShowcase,
+    description: "Small status indicator dot with color and size variants.",
+  },
+  {
+    name: "NoiseBackground",
+    path: ROUTES.NOISE_BACKGROUND,
+    component: NoiseBackgroundShowcase,
+    description: "Animated gradient background with noise texture overlay.",
   },
 ];

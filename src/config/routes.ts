@@ -28,6 +28,7 @@ export const ROUTES = {
   DOCK: "/dock",
   DRAWER: "/drawer",
   DROPDOWN: "/dropdown",
+  FIELDSET: "/fieldset",
   FILE_INPUT: "/file-input",
   FLEX: "/flex",
   FOOTER: "/footer",
@@ -76,7 +77,16 @@ export const ROUTES = {
   DROPDOWN_SELECT: "/dropdown-select",
   FORM_ACTIONS: "/form-actions",
   CONFIRM_DIALOG: "/confirm-dialog",
+  GLASS_PANEL: "/glass-panel",
+  FLOATING_DOCK: "/floating-dock",
   GLOW_CARD: "/glow-card",
+  CONNECTION_STATUS: "/connection-status",
+  SKIP_LINK: "/skip-link",
+  SLIDER_FIELD: "/slider-field",
+  VIDEO_PREVIEW: "/video-preview",
+  STAT_CARD: "/stat-card",
+  STATUS_COMP: "/status",
+  NOISE_BACKGROUND: "/noise-background",
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
