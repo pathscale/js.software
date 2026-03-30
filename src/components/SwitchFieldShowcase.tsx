@@ -1,11 +1,11 @@
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { ToggleSetting, Flex } from "@pathscale/ui";
+import { SwitchField, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function ToggleSettingShowcase() {
+export default function SwitchFieldShowcase() {
   const sections = [
     { id: "default", title: "Default" },
     { id: "with-description", title: "With Description" },
@@ -14,11 +14,11 @@ export default function ToggleSettingShowcase() {
     { id: "props", title: "Props" },
   ] as const;
 
-  const toggleSettingProps = [
+  const switchFieldProps = [
     {
       name: "label",
       type: "string",
-      description: "The main label text for the toggle setting",
+      description: "The main label text for the switch field",
     },
     {
       name: "description",
@@ -29,24 +29,24 @@ export default function ToggleSettingShowcase() {
       name: "checked",
       type: "boolean",
       default: "false",
-      description: "Whether the toggle is checked",
+      description: "Whether the switch is checked",
     },
     {
       name: "onChange",
       type: "(checked: boolean) => void",
-      description: "Callback when the toggle state changes",
+      description: "Callback when the switch state changes",
     },
     {
       name: "disabled",
       type: "boolean",
       default: "false",
-      description: "Whether the toggle setting is disabled",
+      description: "Whether the switch field is disabled",
     },
     {
       name: "size",
       type: '"xs" | "sm" | "md" | "lg" | "xl"',
       default: "undefined",
-      description: "Size of the toggle",
+      description: "Size of the switch",
     },
   ];
 
@@ -72,14 +72,14 @@ export default function ToggleSettingShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <div class="w-80">
-              <ToggleSetting
+              <SwitchField
                 label="Enable notifications"
                 checked={notifications()}
                 onChange={setNotifications}
               />
             </div>
             <CodeBlock
-              code={`<ToggleSetting
+              code={`<SwitchField
   label="Enable notifications"
   checked={notifications()}
   onChange={setNotifications}
@@ -91,26 +91,26 @@ export default function ToggleSettingShowcase() {
         <ShowcaseSection id="with-description" title="With Description">
           <Flex direction="col" gap="md">
             <div class="w-80 space-y-4">
-              <ToggleSetting
+              <SwitchField
                 label="Dark mode"
                 description="Use dark theme across the app"
                 checked={darkMode()}
                 onChange={setDarkMode}
               />
-              <ToggleSetting
+              <SwitchField
                 label="Auto-save"
                 description="Automatically save changes every 30 seconds"
                 checked={true}
               />
             </div>
             <CodeBlock
-              code={`<ToggleSetting
+              code={`<SwitchField
   label="Dark mode"
   description="Use dark theme across the app"
   checked={darkMode()}
   onChange={setDarkMode}
 />
-<ToggleSetting
+<SwitchField
   label="Auto-save"
   description="Automatically save changes every 30 seconds"
   checked={true}
@@ -122,12 +122,12 @@ export default function ToggleSettingShowcase() {
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
             <div class="w-80 space-y-4">
-              <ToggleSetting label="Disabled off" disabled />
-              <ToggleSetting label="Disabled on" disabled checked />
+              <SwitchField label="Disabled off" disabled />
+              <SwitchField label="Disabled on" disabled checked />
             </div>
             <CodeBlock
-              code={`<ToggleSetting label="Disabled off" disabled />
-<ToggleSetting label="Disabled on" disabled checked />`}
+              code={`<SwitchField label="Disabled off" disabled />
+<SwitchField label="Disabled on" disabled checked />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -135,24 +135,24 @@ export default function ToggleSettingShowcase() {
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
             <div class="w-80 space-y-4">
-              <ToggleSetting label="Extra small" size="xs" checked />
-              <ToggleSetting label="Small" size="sm" checked />
-              <ToggleSetting label="Medium" size="md" checked />
-              <ToggleSetting label="Large" size="lg" checked />
-              <ToggleSetting label="Extra large" size="xl" checked />
+              <SwitchField label="Extra small" size="xs" checked />
+              <SwitchField label="Small" size="sm" checked />
+              <SwitchField label="Medium" size="md" checked />
+              <SwitchField label="Large" size="lg" checked />
+              <SwitchField label="Extra large" size="xl" checked />
             </div>
             <CodeBlock
-              code={`<ToggleSetting label="Extra small" size="xs" checked />
-<ToggleSetting label="Small" size="sm" checked />
-<ToggleSetting label="Medium" size="md" checked />
-<ToggleSetting label="Large" size="lg" checked />
-<ToggleSetting label="Extra large" size="xl" checked />`}
+              code={`<SwitchField label="Extra small" size="xs" checked />
+<SwitchField label="Small" size="sm" checked />
+<SwitchField label="Medium" size="md" checked />
+<SwitchField label="Large" size="lg" checked />
+<SwitchField label="Extra large" size="xl" checked />`}
             />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
-          <PropsTable props={toggleSettingProps} />
+          <PropsTable props={switchFieldProps} />
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>

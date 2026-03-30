@@ -73,14 +73,12 @@ import TooltipShowcase from "./components/TooltipShowcase";
 import WindowMockupShowcase from "./components/WindowMockupShowcase";
 import ColorPickerShowcase from "./components/ColorPickerShowcase";
 import RadioGroupShowcase from "./components/RadioGroupShowcase";
-import ToggleSettingShowcase from "./components/ToggleSettingShowcase";
+import SwitchFieldShowcase from "./components/SwitchFieldShowcase";
 import EmptyStateShowcase from "./components/EmptyStateShowcase";
-import LevelMeterShowcase from "./components/LevelMeterShowcase";
 import DropdownSelectShowcase from "./components/DropdownSelectShowcase";
 import FormActionsShowcase from "./components/FormActionsShowcase";
 import ConfirmDialogShowcase from "./components/ConfirmDialogShowcase";
 import GlowCardShowcase from "./components/GlowCardShowcase";
-import SectionCardShowcase from "./components/SectionCardShowcase";
 
 export interface RouteConfig {
   name: string;
@@ -525,22 +523,16 @@ export const routes: RouteConfig[] = [
     description: "Radio button group for selecting a single option from a list.",
   },
   {
-    name: "ToggleSetting",
-    path: ROUTES.TOGGLE_SETTING,
-    component: ToggleSettingShowcase,
-    description: "Toggle with label and description for settings panels.",
+    name: "SwitchField",
+    path: ROUTES.SWITCH_FIELD,
+    component: SwitchFieldShowcase,
+    description: "Switch with label and description for settings panels.",
   },
   {
     name: "EmptyState",
     path: ROUTES.EMPTY_STATE,
     component: EmptyStateShowcase,
     description: "Placeholder for empty content areas with icon, title, and action.",
-  },
-  {
-    name: "LevelMeter",
-    path: ROUTES.LEVEL_METER,
-    component: LevelMeterShowcase,
-    description: "Visual level meter for audio or progress indication.",
   },
   {
     name: "DropdownSelect",
@@ -565,11 +557,5 @@ export const routes: RouteConfig[] = [
     path: ROUTES.GLOW_CARD,
     component: GlowCardShowcase,
     description: "Card with a cursor-tracking glow effect.",
-  },
-  {
-    name: "SectionCard",
-    path: ROUTES.SECTION_CARD,
-    component: SectionCardShowcase,
-    description: "Card section with optional title, actions, and configurable padding.",
   },
 ];
