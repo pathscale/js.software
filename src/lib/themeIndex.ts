@@ -13,6 +13,7 @@ export * from "../utils/theme/colorConversion";
 export * from "../utils/theme/contrastCalculation";
 export * from "../utils/theme/colorSelection";
 export * from "../utils/theme/themeUtils";
+export * from "./glassTokens";
 export * from "./themeGenerator";
 
 export { generateRandomTheme as randomizeThemeColors } from "./themeGenerator";

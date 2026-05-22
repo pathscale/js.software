@@ -16,6 +16,7 @@ import {
   generateRandomMaterialTheme,
   selectColorFromFamily,
 } from "../utils/theme/colorSelection";
+import { GLASS_THEME_DEFAULTS } from "./glassTokens";
 
 export function generateRandomTheme(
   palette: ColorPalette,
@@ -125,6 +126,8 @@ export function generateRandomTheme(
   newColors["--border"] = randomFrom([...BORDER_VALUES]);
   newColors["--depth"] = randomFrom([...THEME_PROPERTY_VALUES.depth]);
   newColors["--noise"] = randomFrom([...THEME_PROPERTY_VALUES.noise]);
+
+  Object.assign(newColors, GLASS_THEME_DEFAULTS);
 
   return newColors as Theme;
 }

@@ -1,6 +1,7 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginBabel } from "@rsbuild/plugin-babel";
 import { pluginSolid } from "@rsbuild/plugin-solid";
+import { BannerPlugin } from "@rspack/core";
 import CompressionPlugin from "compression-webpack-plugin";
 
 export default defineConfig({
@@ -29,7 +30,7 @@ export default defineConfig({
       plugins:
         process.env.NODE_ENV === "production"
           ? [
-              new (require("webpack").BannerPlugin)({
+              new BannerPlugin({
                 banner: () => "",
                 test: /\.js$/,
               }),

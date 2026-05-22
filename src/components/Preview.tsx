@@ -1,6 +1,5 @@
 import { createSignal } from "solid-js";
-import { Tabs } from "@pathscale/ui";
-import { TbApps, TbList, TbPalette } from "solid-icons/tb";
+import { Icon, Tabs } from "@pathscale/ui";
 import ComponentsDemo from "./ComponentsDemo";
 import ComponentVariants from "./ComponentVariants";
 import ColorPalette from "./ColorPalette";
@@ -21,19 +20,19 @@ export default function Preview(props: PreviewProps) {
             active={previewtabs() === "Components Demo"}
             onClick={() => setPreviewtabs("Components Demo")}
           >
-            <TbApps class="size-4" />
+            <Icon name="icon-[mdi--apps]" width={16} height={16} />
           </Tabs.Tab>
           <Tabs.Tab
             active={previewtabs() === "Component Variants"}
             onClick={() => setPreviewtabs("Component Variants")}
           >
-            <TbList class="size-4" />
+            <Icon name="icon-[mdi--format-list-bulleted]" width={16} height={16} />
           </Tabs.Tab>
           <Tabs.Tab
             active={previewtabs() === "Color Palette"}
             onClick={() => setPreviewtabs("Color Palette")}
           >
-            <TbPalette class="size-4" />
+            <Icon name="icon-[mdi--palette]" width={16} height={16} />
           </Tabs.Tab>
         </Tabs>
       </div>

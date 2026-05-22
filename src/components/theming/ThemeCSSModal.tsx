@@ -1,6 +1,10 @@
 import { Button, Icon, Modal } from "@pathscale/ui";
 import { createEffect, createSignal } from "solid-js";
-import { Theme } from "../../utils/themeUtils";
+import {
+  GLASS_THEME_DEFAULTS,
+  GLASS_THEME_TOKEN_ORDER,
+  Theme,
+} from "../../utils/themeUtils";
 
 interface ThemeCSSModalProps {
   isOpen: boolean;
@@ -41,7 +45,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       .map(key => `  ${key}: ${theme[key]};`);
 
     // Add default radius, size and effect values if not present
-    const defaultValues = {
+    const defaultValues: Record<string, string> = {
       "--radius-selector": "0.5rem",
       "--radius-field": "0.25rem",
       "--radius-box": "0.5rem",
@@ -49,7 +53,8 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       "--size-field": "0.25rem",
       "--border": "1px",
       "--depth": "1",
-      "--noise": "0"
+      "--noise": "0",
+      ...GLASS_THEME_DEFAULTS,
     };
 
     const radiusProps = [
@@ -69,12 +74,17 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       `  --noise: ${theme["--noise"] || defaultValues["--noise"]};`
     ];
 
+    const glassProps = GLASS_THEME_TOKEN_ORDER.map(
+      (key) => `  ${key}: ${theme[key] || defaultValues[key]};`
+    );
+
     const allProps = [
       ...baseProps,
       ...colorProps,
       ...radiusProps,
       ...sizeProps,
-      ...effectProps
+      ...effectProps,
+      ...glassProps
     ];
 
     return `@plugin "daisyui/theme" {\n${allProps.join("\n")}\n}`;

@@ -56,6 +56,7 @@ import {
   updateThemeProperty,
   oklchToHex,
   Theme,
+  withGlassThemeDefaults,
 } from "../utils/themeUtils";
 import ThemeEditor from "../components/theming/ThemeEditor";
 import ColorPickerPopover from "../components/theming/ColorPickerPopover";
@@ -63,7 +64,7 @@ import ThemeCSSModal from "../components/theming/ThemeCSSModal";
 import { ContentContainer } from "../components/content/ContentContainer";
 
 export default function Theming() {
-  const initialTheme = generateRandomTheme();
+  const initialTheme = withGlassThemeDefaults(generateRandomTheme());
   const [currentTheme, setCurrentTheme] = createSignal<Theme>(initialTheme);
   const [showColorPicker, setShowColorPicker] = createSignal(false);
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
@@ -108,7 +109,7 @@ export default function Theming() {
    * mathematical color harmony, and guaranteed accessibility.
    */
   const randomizeTheme = () => {
-    const newTheme = generateRandomTheme();
+    const newTheme = withGlassThemeDefaults(generateRandomTheme());
     setCurrentTheme(newTheme);
 
     const isDark = (newTheme as any)._themeType === "dark";

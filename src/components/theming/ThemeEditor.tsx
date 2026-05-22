@@ -4,6 +4,7 @@ import { Theme, COLOR_GROUPS } from "../../utils/themeUtils";
 import ColorGroup from "./ColorGroup";
 import RadiusSection from "./RadiusSection";
 import EffectsSection from "./EffectsSection";
+import GlassSection from "./GlassSection";
 import SizesSection from "./SizesSection";
 
 interface ThemeEditorProps {
@@ -83,6 +84,11 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       />
 
       <EffectsSection
+        theme={props.theme}
+        onThemeUpdate={props.onThemePropertyUpdate}
+      />
+
+      <GlassSection
         theme={props.theme}
         onThemeUpdate={props.onThemePropertyUpdate}
       />
