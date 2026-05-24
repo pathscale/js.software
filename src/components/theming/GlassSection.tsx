@@ -41,7 +41,7 @@ export default function GlassSection(props: GlassSectionProps) {
           <Icon name="icon-[mdi--blur]" width={16} height={16} class="opacity-40" />
           Glass
           <Button
-            size="xs"
+            size="sm"
             color="ghost"
             class="ml-auto"
             onClick={resetToHype4}

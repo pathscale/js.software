@@ -1,4 +1,11 @@
-import { Button, Icon, Modal } from "@pathscale/ui";
+import {
+  Button,
+  Icon,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "@pathscale/ui";
 import { createEffect, createSignal } from "solid-js";
 import {
   GLASS_THEME_DEFAULTS,
@@ -115,22 +122,22 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
 
   return (
     <Modal
-      open={props.isOpen}
-      onClose={props.onClose}
-      backdrop
-      position="middle"
-      closeOnEsc
-      closeOnOutsideClick
+      isOpen={props.isOpen}
+      onOpenChange={(open) => !open && props.onClose()}
+      backdrop="opaque"
+      placement="center"
+      shouldCloseOnEsc
+      shouldCloseOnBackdropClick
       class="w-11/12 max-w-4xl"
     >
-      <Modal.Header class="font-bold">
+      <ModalHeader class="font-bold">
         <div class="flex items-center gap-2">
           <Icon name="icon-[mdi--code-braces]" width={20} height={20} />
           CSS Theme
         </div>
-      </Modal.Header>
+      </ModalHeader>
 
-      <Modal.Body>
+      <ModalBody>
         <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)] mb-4">
           Copy this CSS to add your theme to DaisyUI
         </p>
@@ -162,16 +169,16 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
             )}
           </Button>
         </div>
-      </Modal.Body>
+      </ModalBody>
 
-      <Modal.Actions>
+      <ModalFooter>
         <Button
           onClick={props.onClose}
           class="mt-5"
         >
           Close
         </Button>
-      </Modal.Actions>
+      </ModalFooter>
     </Modal>
   );
 }

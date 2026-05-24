@@ -43,7 +43,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Apply to whole site</span>
           <Toggle 
-            size="xs"
+            size="sm"
             checked={applyToWholeSite()}
             onChange={(e: any) => setApplyToWholeSite(e.currentTarget.checked)}
           />
@@ -52,7 +52,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Remember this theme</span>
           <Toggle 
-            size="xs"
+            size="sm"
             checked={rememberTheme()}
             onChange={(e: any) => setRememberTheme(e.currentTarget.checked)}
           />
@@ -109,7 +109,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Default theme</span>
           <Toggle 
-            size="xs"
+            size="sm"
             checked={isDefault()}
             onChange={(e: any) => setIsDefault(e.currentTarget.checked)}
           />
@@ -118,7 +118,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Default dark theme</span>
           <Toggle 
-            size="xs"
+            size="sm"
             checked={isPrefersDark()}
             onChange={(e: any) => setIsPrefersDark(e.currentTarget.checked)}
           />
@@ -127,7 +127,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Dark color scheme</span>
           <Toggle 
-            size="xs"
+            size="sm"
             checked={colorScheme() === "dark"}
             onChange={(e: any) => setColorScheme(e.currentTarget.checked ? "dark" : "light")}
           />
