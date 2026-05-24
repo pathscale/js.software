@@ -9,16 +9,13 @@ export default function GlassPanelShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
-    { id: "blur-levels", title: "With Blur Levels" },
+    { id: "theme-tuning", title: "Theme Tuning" },
     { id: "collapsible", title: "Collapsible" },
-    { id: "accent-border", title: "With Accent Border" },
     { id: "transparent", title: "Transparent Variant" },
-    { id: "glow", title: "With Glow Effect" },
     { id: "props", title: "Props" },
   ] as const;
 
   const props = [
-    { name: "blur", type: '"none" | "sm" | "md" | "lg" | "xl" | "2xl"', description: "Backdrop blur intensity (default: none)" },
     { name: "collapsible", type: "boolean", description: "Whether the panel can be collapsed" },
     { name: "open", type: "boolean", description: "Controlled open state for collapsible panels" },
     { name: "defaultOpen", type: "boolean", description: "Initial open state for uncontrolled collapsible panels (default: true)" },
@@ -26,10 +23,28 @@ export default function GlassPanelShowcase() {
     { name: "title", type: "string", description: "Header title text (required for collapsible)" },
     { name: "icon", type: "JSX.Element", description: "Icon displayed next to the title" },
     { name: "size", type: '"xs" | "sm" | "md" | "lg" | "xl"', description: "Content padding size (default: md)" },
-    { name: "transparent", type: "boolean", description: "Removes background and border, making the panel fully transparent" },
-    { name: "glow", type: "boolean", description: "Adds a subtle inner glow effect" },
-    { name: "accent", type: "ComponentColor", description: "Adds a colored left border accent (primary, secondary, accent, info, success, warning, error, neutral, ghost)" },
+    { name: "transparent", type: "boolean", description: "Removes background, border, blur, and decorative chrome — renders as a plain container" },
+    { name: "paddingX", type: "string", description: "Custom horizontal padding utility class (overrides size)" },
+    { name: "paddingY", type: "string", description: "Custom vertical padding utility class (overrides size)" },
     { name: "class", type: "string", description: "Additional CSS classes" },
+  ];
+
+  const themeVars = [
+    { name: "--glass-blur", description: "Backdrop blur radius (e.g. 11px, 20px, 50px)" },
+    { name: "--glass-saturation", description: "Backdrop saturate filter (e.g. 1.2)" },
+    { name: "--glass-brightness", description: "Backdrop brightness filter (e.g. 1)" },
+    { name: "--glass-background-color", description: "Panel background tint (default: white)" },
+    { name: "--glass-background-opacity", description: "Panel background opacity (e.g. 38%)" },
+    { name: "--glass-border-color", description: "Panel border tint (default: white)" },
+    { name: "--glass-border-opacity", description: "Panel border opacity (e.g. 30%)" },
+    { name: "--glass-border-radius", description: "Panel corner radius (default: 20px)" },
+    { name: "--glass-shadow-depth", description: "Outer shadow layer (default: 0 8px 32px rgb(0 0 0 / 10%))" },
+    { name: "--glass-highlight-color", description: "Color of inner highlights and sheen" },
+    { name: "--glass-highlight-opacity", description: "Strength of the top inset highlight" },
+    { name: "--glass-rim-start-opacity", description: "Opacity of the rim gradient start" },
+    { name: "--glass-rim-end-opacity", description: "Opacity of the rim gradient end" },
+    { name: "--glass-depth-sheen-opacity", description: "Strength of the diagonal sheen overlay" },
+    { name: "--glass-inner-glow-alpha", description: "Alpha of the inner depth glow" },
   ];
 
   const SettingsIcon = () => (
@@ -64,25 +79,44 @@ export default function GlassPanelShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <GlassPanel>
-              <p>This is a basic glass panel with default settings. It provides a subtle frosted-glass container for your content.</p>
+              <p>This is a basic glass panel. Blur, saturation, opacity, and colors all come from the theme via CSS variables.</p>
             </GlassPanel>
             <CodeBlock code={`<GlassPanel>\n  <p>Your content here</p>\n</GlassPanel>`} />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="blur-levels" title="With Blur Levels">
+        <ShowcaseSection id="theme-tuning" title="Theme Tuning">
           <Flex direction="col" gap="md">
+            <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
+              Adjust glass per-panel or globally by setting CSS variables. The base panel reads <code>--glass-blur</code>, <code>--glass-saturation</code>, <code>--glass-background-opacity</code>, <code>--glass-border-opacity</code>, etc. from the cascade — set them on the panel, a parent, or <code>:root</code> in your theme.
+            </p>
             <div
               class="relative rounded-xl p-4 space-y-4"
               style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}
             >
-              {(["sm", "md", "lg", "xl"] as const).map((level) => (
-                <GlassPanel blur={level}>
-                  <p class="text-sm font-medium">Blur: {level}</p>
-                </GlassPanel>
-              ))}
+              <GlassPanel style={{ "--glass-blur": "4px" } as Record<string, string>}>
+                <p class="text-sm font-medium">--glass-blur: 4px</p>
+              </GlassPanel>
+              <GlassPanel style={{ "--glass-blur": "16px" } as Record<string, string>}>
+                <p class="text-sm font-medium">--glass-blur: 16px</p>
+              </GlassPanel>
+              <GlassPanel style={{ "--glass-blur": "40px" } as Record<string, string>}>
+                <p class="text-sm font-medium">--glass-blur: 40px</p>
+              </GlassPanel>
+              <GlassPanel
+                style={{
+                  "--glass-blur": "20px",
+                  "--glass-background-opacity": "15%",
+                  "--glass-border-opacity": "30%",
+                } as Record<string, string>}
+              >
+                <p class="text-sm font-medium">Hype4 reference defaults</p>
+                <p class="text-sm opacity-70">blur 20px, bg 15%, border 30%</p>
+              </GlassPanel>
             </div>
-            <CodeBlock code={`<GlassPanel blur="sm">...</GlassPanel>\n<GlassPanel blur="md">...</GlassPanel>\n<GlassPanel blur="lg">...</GlassPanel>\n<GlassPanel blur="xl">...</GlassPanel>`} />
+            <CodeBlock
+              code={`<GlassPanel style={{ "--glass-blur": "4px" }}>...</GlassPanel>\n<GlassPanel style={{ "--glass-blur": "16px" }}>...</GlassPanel>\n<GlassPanel style={{ "--glass-blur": "40px" }}>...</GlassPanel>\n\n// Global tuning via theme\n:root {\n  --glass-blur: 20px;\n  --glass-background-opacity: 15%;\n  --glass-border-opacity: 30%;\n}`}
+            />
           </Flex>
         </ShowcaseSection>
 
@@ -98,7 +132,6 @@ export default function GlassPanelShowcase() {
                     icon={<SettingsIcon />}
                     open={open()}
                     onToggle={setOpen}
-                    blur="sm"
                   >
                     <p class="text-sm">This panel can be expanded and collapsed by clicking the header. It uses a controlled open state.</p>
                   </GlassPanel>
@@ -107,7 +140,6 @@ export default function GlassPanelShowcase() {
                     title="Additional Information"
                     icon={<InfoIcon />}
                     defaultOpen={false}
-                    blur="sm"
                   >
                     <p class="text-sm">This panel starts collapsed and uses uncontrolled state with defaultOpen set to false.</p>
                   </GlassPanel>
@@ -115,24 +147,6 @@ export default function GlassPanelShowcase() {
               );
             })()}
             <CodeBlock code={`<GlassPanel collapsible title="Settings" icon={<Icon />} open={open()} onToggle={setOpen}>\n  <p>Collapsible content</p>\n</GlassPanel>\n\n<GlassPanel collapsible title="Info" defaultOpen={false}>\n  <p>Starts collapsed</p>\n</GlassPanel>`} />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="accent-border" title="With Accent Border">
-          <Flex direction="col" gap="md">
-            <GlassPanel accent="primary" blur="sm">
-              <p class="text-sm font-medium">Primary accent</p>
-              <p class="text-sm opacity-70">Panel with a primary-colored left border.</p>
-            </GlassPanel>
-            <GlassPanel accent="error" blur="sm">
-              <p class="text-sm font-medium">Error accent</p>
-              <p class="text-sm opacity-70">Panel with an error-colored left border for warnings or alerts.</p>
-            </GlassPanel>
-            <GlassPanel accent="success" blur="sm">
-              <p class="text-sm font-medium">Success accent</p>
-              <p class="text-sm opacity-70">Panel with a success-colored left border for positive states.</p>
-            </GlassPanel>
-            <CodeBlock code={`<GlassPanel accent="primary">...</GlassPanel>\n<GlassPanel accent="error">...</GlassPanel>\n<GlassPanel accent="success">...</GlassPanel>`} />
           </Flex>
         </ShowcaseSection>
 
@@ -144,29 +158,22 @@ export default function GlassPanelShowcase() {
             >
               <GlassPanel transparent>
                 <p class="text-sm font-medium">Transparent panel</p>
-                <p class="text-sm opacity-70">No background or border, just the content with padding.</p>
+                <p class="text-sm opacity-70">Removes background, border, blur, and decorative chrome — renders as a plain padded container.</p>
               </GlassPanel>
             </div>
-            <CodeBlock code={`<GlassPanel transparent>\n  <p>Fully transparent panel</p>\n</GlassPanel>`} />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="glow" title="With Glow Effect">
-          <Flex direction="col" gap="md">
-            <GlassPanel glow blur="md">
-              <p class="text-sm font-medium">Glow panel</p>
-              <p class="text-sm opacity-70">This panel has a subtle inner glow effect along the top edge, adding depth to the glass appearance.</p>
-            </GlassPanel>
-            <GlassPanel glow blur="lg" accent="primary">
-              <p class="text-sm font-medium">Glow with accent</p>
-              <p class="text-sm opacity-70">Combining glow effect with an accent border for a more pronounced look.</p>
-            </GlassPanel>
-            <CodeBlock code={`<GlassPanel glow blur="md">...</GlassPanel>\n<GlassPanel glow blur="lg" accent="primary">...</GlassPanel>`} />
+            <CodeBlock code={`<GlassPanel transparent>\n  <p>Bare container, no glass chrome</p>\n</GlassPanel>`} />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
           <PropsTable props={props} />
+          <div class="mt-6">
+            <h3 class="text-sm font-semibold mb-2">Theme CSS Variables</h3>
+            <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)] mb-3">
+              Glass appearance is driven entirely by these CSS variables. Set them on <code>:root</code>, a theme selector, a parent, or per-panel via inline style.
+            </p>
+            <PropsTable props={themeVars} />
+          </div>
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>
