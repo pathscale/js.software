@@ -30,21 +30,21 @@ export default function GlassPanelShowcase() {
   ];
 
   const themeVars = [
-    { name: "--glass-blur", description: "Backdrop blur radius (e.g. 11px, 20px, 50px)" },
-    { name: "--glass-saturation", description: "Backdrop saturate filter (e.g. 1.2)" },
-    { name: "--glass-brightness", description: "Backdrop brightness filter (e.g. 1)" },
-    { name: "--glass-background-color", description: "Panel background tint (default: white)" },
-    { name: "--glass-background-opacity", description: "Panel background opacity (e.g. 38%)" },
-    { name: "--glass-border-color", description: "Panel border tint (default: white)" },
-    { name: "--glass-border-opacity", description: "Panel border opacity (e.g. 30%)" },
-    { name: "--glass-border-radius", description: "Panel corner radius (default: 20px)" },
-    { name: "--glass-shadow-depth", description: "Outer shadow layer (default: 0 8px 32px rgb(0 0 0 / 10%))" },
-    { name: "--glass-highlight-color", description: "Color of inner highlights and sheen" },
-    { name: "--glass-highlight-opacity", description: "Strength of the top inset highlight" },
-    { name: "--glass-rim-start-opacity", description: "Opacity of the rim gradient start" },
-    { name: "--glass-rim-end-opacity", description: "Opacity of the rim gradient end" },
-    { name: "--glass-depth-sheen-opacity", description: "Strength of the diagonal sheen overlay" },
-    { name: "--glass-inner-glow-alpha", description: "Alpha of the inner depth glow" },
+    { name: "--glass-blur", type: "length", description: "Backdrop blur radius (e.g. 11px, 20px, 50px)" },
+    { name: "--glass-saturation", type: "number", description: "Backdrop saturate filter (e.g. 1.2)" },
+    { name: "--glass-brightness", type: "number", description: "Backdrop brightness filter (e.g. 1)" },
+    { name: "--glass-background-color", type: "color", description: "Panel background tint (default: white)" },
+    { name: "--glass-background-opacity", type: "percent", description: "Panel background opacity (e.g. 38%)" },
+    { name: "--glass-border-color", type: "color", description: "Panel border tint (default: white)" },
+    { name: "--glass-border-opacity", type: "percent", description: "Panel border opacity (e.g. 30%)" },
+    { name: "--glass-border-radius", type: "length", description: "Panel corner radius (default: 20px)" },
+    { name: "--glass-shadow-depth", type: "shadow", description: "Outer shadow layer (default: 0 8px 32px rgb(0 0 0 / 10%))" },
+    { name: "--glass-highlight-color", type: "color", description: "Color of inner highlights and sheen" },
+    { name: "--glass-highlight-opacity", type: "percent", description: "Strength of the top inset highlight" },
+    { name: "--glass-rim-start-opacity", type: "percent", description: "Opacity of the rim gradient start" },
+    { name: "--glass-rim-end-opacity", type: "percent", description: "Opacity of the rim gradient end" },
+    { name: "--glass-depth-sheen-opacity", type: "percent", description: "Strength of the diagonal sheen overlay" },
+    { name: "--glass-inner-glow-alpha", type: "number", description: "Alpha of the inner depth glow" },
   ];
 
   const SettingsIcon = () => (

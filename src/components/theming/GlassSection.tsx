@@ -1,4 +1,12 @@
-import { Icon } from "@pathscale/ui";
+import { Button, Icon } from "@pathscale/ui";
+import {
+  BLUR_MAX,
+  DEPTH_MAX,
+  HYPE4_DEFAULTS,
+  REFRACTION_MAX,
+  resolveGlassCssVariables,
+  tuningFromTheme,
+} from "../../lib/glassFormulas";
 import { Theme } from "../../utils/themeUtils";
 
 interface GlassSectionProps {
@@ -6,42 +14,41 @@ interface GlassSectionProps {
   onThemeUpdate: (key: string, value: string) => void;
 }
 
-const numberFromToken = (value: string | undefined, fallback: number) => {
-  if (!value) return fallback;
-
-  const parsed = Number.parseFloat(value);
-  return Number.isFinite(parsed) ? parsed : fallback;
-};
-
 export default function GlassSection(props: GlassSectionProps) {
-  const glassBlur = () => numberFromToken(props.theme["--glass-blur"], 11);
-  const glassOpacity = () =>
-    numberFromToken(props.theme["--glass-background-opacity"], 38);
-  const glassBorderOpacity = () =>
-    numberFromToken(props.theme["--glass-border-opacity"], 30);
-  const glassDepth = () =>
-    numberFromToken(props.theme["--glass-refraction-depth"], 5);
+  const tuning = () => tuningFromTheme(props.theme);
 
-  const updateDepth = (value: number) => {
-    props.onThemeUpdate("--glass-refraction-depth", `${value}px`);
-    props.onThemeUpdate("--glass-depth-sheen-opacity", `${Math.min(80, 20 + value * 2)}%`);
-    props.onThemeUpdate("--glass-depth-sheen-size", `${Math.min(85, 45 + value)}%`);
-    props.onThemeUpdate(
-      "--glass-depth-surface-opacity",
-      `${Math.min(24, 4 + value * 0.6)}%`,
-    );
-    props.onThemeUpdate(
-      "--glass-depth-surface-size",
-      `${Math.min(94, 70 + value * 0.8)}%`,
-    );
+  const applyTuning = (
+    next: Partial<{ blur: number; refraction: number; depth: number }>,
+  ) => {
+    const current = tuning();
+    const merged = {
+      blur: next.blur ?? current.blur,
+      refraction: next.refraction ?? current.refraction,
+      depth: next.depth ?? current.depth,
+    };
+    const cssVars = resolveGlassCssVariables(merged);
+    for (const [key, value] of Object.entries(cssVars)) {
+      props.onThemeUpdate(key, value);
+    }
   };
+
+  const resetToHype4 = () => applyTuning(HYPE4_DEFAULTS);
 
   return (
     <div class="w-full">
       <h3 class="divider divider-start text-xs">
-        <span class="flex gap-1.5">
+        <span class="flex items-center gap-1.5">
           <Icon name="icon-[mdi--blur]" width={16} height={16} class="opacity-40" />
           Glass
+          <Button
+            size="xs"
+            color="ghost"
+            class="ml-auto"
+            onClick={resetToHype4}
+            title="Reset to Hype4 defaults"
+          >
+            Hype4
+          </Button>
         </span>
       </h3>
 
@@ -49,63 +56,39 @@ export default function GlassSection(props: GlassSectionProps) {
         <label class="bg-base-200 rounded-box flex flex-col gap-1 p-2">
           <span class="flex items-center justify-between gap-2">
             <span class="text-base-content/70 text-xs">Blur</span>
-            <span class="text-base-content/50 font-mono text-xs">{glassBlur()}px</span>
-          </span>
-          <input
-            type="range"
-            class="range range-xs"
-            min={0}
-            max={48}
-            step={1}
-            value={glassBlur()}
-            onInput={(event) =>
-              props.onThemeUpdate("--glass-blur", `${event.currentTarget.value}px`)
-            }
-          />
-        </label>
-
-        <label class="bg-base-200 rounded-box flex flex-col gap-1 p-2">
-          <span class="flex items-center justify-between gap-2">
-            <span class="text-base-content/70 text-xs">Surface opacity</span>
             <span class="text-base-content/50 font-mono text-xs">
-              {(glassOpacity() / 100).toFixed(2)}
+              {tuning().blur}px
             </span>
           </span>
           <input
             type="range"
             class="range range-xs"
             min={0}
-            max={80}
+            max={BLUR_MAX}
             step={1}
-            value={glassOpacity()}
+            value={tuning().blur}
             onInput={(event) =>
-              props.onThemeUpdate(
-                "--glass-background-opacity",
-                `${event.currentTarget.value}%`,
-              )
+              applyTuning({ blur: Number(event.currentTarget.value) })
             }
           />
         </label>
 
         <label class="bg-base-200 rounded-box flex flex-col gap-1 p-2">
           <span class="flex items-center justify-between gap-2">
-            <span class="text-base-content/70 text-xs">Border opacity</span>
+            <span class="text-base-content/70 text-xs">Refraction</span>
             <span class="text-base-content/50 font-mono text-xs">
-              {(glassBorderOpacity() / 100).toFixed(2)}
+              {tuning().refraction.toFixed(2)}
             </span>
           </span>
           <input
             type="range"
             class="range range-xs"
             min={0}
-            max={80}
-            step={1}
-            value={glassBorderOpacity()}
+            max={REFRACTION_MAX}
+            step={0.01}
+            value={tuning().refraction}
             onInput={(event) =>
-              props.onThemeUpdate(
-                "--glass-border-opacity",
-                `${event.currentTarget.value}%`,
-              )
+              applyTuning({ refraction: Number(event.currentTarget.value) })
             }
           />
         </label>
@@ -113,16 +96,20 @@ export default function GlassSection(props: GlassSectionProps) {
         <label class="bg-base-200 rounded-box flex flex-col gap-1 p-2">
           <span class="flex items-center justify-between gap-2">
             <span class="text-base-content/70 text-xs">Depth</span>
-            <span class="text-base-content/50 font-mono text-xs">{glassDepth()}px</span>
+            <span class="text-base-content/50 font-mono text-xs">
+              {tuning().depth}
+            </span>
           </span>
           <input
             type="range"
             class="range range-xs"
             min={0}
-            max={30}
+            max={DEPTH_MAX}
             step={1}
-            value={glassDepth()}
-            onInput={(event) => updateDepth(Number(event.currentTarget.value))}
+            value={tuning().depth}
+            onInput={(event) =>
+              applyTuning({ depth: Number(event.currentTarget.value) })
+            }
           />
         </label>
       </div>
