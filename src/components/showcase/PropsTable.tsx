@@ -1,4 +1,4 @@
-import { PropsTable as UIPropsTable } from "@pathscale/ui";
+import { For } from "solid-js";
 
 interface PropDefinition {
   name: string;
@@ -14,6 +14,32 @@ interface PropsTableProps {
 
 export function PropsTable(props: PropsTableProps) {
   return (
-    <UIPropsTable props={props.props} />
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full text-sm">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <For each={props.props}>
+            {(p) => (
+              <tr>
+                <td class="font-mono">
+                  {p.name}
+                  {p.required ? <span class="text-error"> *</span> : null}
+                </td>
+                <td class="font-mono text-xs">{p.type}</td>
+                <td class="font-mono text-xs">{p.default ?? "-"}</td>
+                <td>{p.description ?? ""}</td>
+              </tr>
+            )}
+          </For>
+        </tbody>
+      </table>
+    </div>
   );
 }

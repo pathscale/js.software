@@ -42,13 +42,12 @@ export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
   return (
     <div class={`md:hidden ${props.className || ""}`}>
       <Dropdown>
-        <Dropdown.Toggle
+        <Dropdown.Trigger
           class="w-full flex items-center justify-between px-4 py-3 bg-base-100 border border-chromatic-border rounded-lg text-left"
-          button={false}
         >
           <span class="font-medium ">Docs » {getCurrentPageTitle()}</span>
           <ChevronDownIcon />
-        </Dropdown.Toggle>
+        </Dropdown.Trigger>
 
         <Dropdown.Menu class="w-full mt-2 border border-chromatic-border shadow-chromatic-lg">
           <For each={navigationItems}>

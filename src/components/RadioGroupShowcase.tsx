@@ -1,17 +1,19 @@
-import { createSignal } from "solid-js";
+import { createSignal, For } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { RadioGroup, Flex } from "@pathscale/ui";
+import { RadioGroup, Radio, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
+type Option = { value: string; label: string; disabled?: boolean };
+
 export default function RadioGroupShowcase() {
   const sections = [
     { id: "default", title: "Default" },
-    { id: "colors", title: "Colors" },
-    { id: "sizes", title: "Sizes" },
-    { id: "direction", title: "Direction" },
+    { id: "variants", title: "Variants" },
+    { id: "orientation", title: "Orientation" },
     { id: "disabled", title: "Disabled Options" },
+    { id: "invalid", title: "Invalid State" },
     { id: "props", title: "Props" },
   ] as const;
 
@@ -19,22 +21,32 @@ export default function RadioGroupShowcase() {
     {
       name: "name",
       type: "string",
-      description: "The name attribute for the radio group",
+      description: "The name attribute for the radio inputs in the group",
     },
     {
       name: "label",
-      type: "string",
-      description: "Optional label displayed as a legend above the group",
+      type: "JSX.Element",
+      description: "Optional label displayed above the group",
     },
     {
-      name: "options",
-      type: "RadioGroupOption[]",
-      description: "Array of { value, label, disabled? } objects",
+      name: "description",
+      type: "JSX.Element",
+      description: "Optional description text",
+    },
+    {
+      name: "errorMessage",
+      type: "JSX.Element",
+      description: "Optional error message displayed below",
     },
     {
       name: "value",
       type: "string",
-      description: "The currently selected value",
+      description: "The currently selected value (controlled)",
+    },
+    {
+      name: "defaultValue",
+      type: "string",
+      description: "The default selected value (uncontrolled)",
     },
     {
       name: "onChange",
@@ -42,32 +54,46 @@ export default function RadioGroupShowcase() {
       description: "Callback when selection changes",
     },
     {
-      name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      default: "undefined",
-      description: "Size of the radio buttons",
-    },
-    {
-      name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
-      default: "undefined",
-      description: "Color scheme of the radio buttons",
-    },
-    {
-      name: "direction",
-      type: '"horizontal" | "vertical"',
+      name: "orientation",
+      type: '"vertical" | "horizontal"',
       default: '"vertical"',
-      description: "Layout direction of the options",
+      description: "Layout direction of the radio items",
+    },
+    {
+      name: "variant",
+      type: '"primary" | "secondary"',
+      default: '"primary"',
+      description: "Visual variant of the radio buttons",
+    },
+    {
+      name: "isDisabled",
+      type: "boolean",
+      description: "Disables all radios in the group",
+    },
+    {
+      name: "isInvalid",
+      type: "boolean",
+      description: "Marks the group as invalid",
     },
   ];
 
-  const options = [
+  const options: Option[] = [
     { value: "apple", label: "Apple" },
     { value: "banana", label: "Banana" },
     { value: "cherry", label: "Cherry" },
   ];
 
   const [value, setValue] = createSignal("apple");
+
+  const renderOptions = (opts: Option[]) => (
+    <For each={opts}>
+      {(opt) => (
+        <Radio value={opt.value} isDisabled={opt.disabled}>
+          {opt.label}
+        </Radio>
+      )}
+    </For>
+  );
 
   return (
     <ShowcaseLayout>
@@ -91,76 +117,75 @@ export default function RadioGroupShowcase() {
               <RadioGroup
                 name="default-demo"
                 label="Pick a fruit"
-                options={options}
                 value={value()}
                 onChange={setValue}
-              />
+              >
+                {renderOptions(options)}
+              </RadioGroup>
             </Flex>
             <CodeBlock
-              code={`<RadioGroup
-  name="default-demo"
-  label="Pick a fruit"
-  options={[
-    { value: "apple", label: "Apple" },
-    { value: "banana", label: "Banana" },
-    { value: "cherry", label: "Cherry" },
-  ]}
-  value={value()}
-  onChange={setValue}
-/>`}
+              code={`<RadioGroup name="default-demo" label="Pick a fruit" value={value()} onChange={setValue}>
+  <Radio value="apple">Apple</Radio>
+  <Radio value="banana">Banana</Radio>
+  <Radio value="cherry">Cherry</Radio>
+</RadioGroup>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Colors">
+        <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex wrap="wrap" align="start" justify="start" gap="lg">
-              <RadioGroup name="c-primary" options={options} value="apple" color="primary" direction="horizontal" />
-              <RadioGroup name="c-secondary" options={options} value="apple" color="secondary" direction="horizontal" />
-              <RadioGroup name="c-accent" options={options} value="apple" color="accent" direction="horizontal" />
-              <RadioGroup name="c-success" options={options} value="apple" color="success" direction="horizontal" />
-              <RadioGroup name="c-warning" options={options} value="apple" color="warning" direction="horizontal" />
-              <RadioGroup name="c-error" options={options} value="apple" color="error" direction="horizontal" />
+              <RadioGroup
+                name="v-primary"
+                label="Primary"
+                defaultValue="apple"
+                variant="primary"
+                orientation="horizontal"
+              >
+                {renderOptions(options)}
+              </RadioGroup>
+              <RadioGroup
+                name="v-secondary"
+                label="Secondary"
+                defaultValue="apple"
+                variant="secondary"
+                orientation="horizontal"
+              >
+                {renderOptions(options)}
+              </RadioGroup>
             </Flex>
             <CodeBlock
-              code={`<RadioGroup name="c-primary" options={options} value="apple" color="primary" direction="horizontal" />
-<RadioGroup name="c-secondary" options={options} value="apple" color="secondary" direction="horizontal" />
-<RadioGroup name="c-accent" options={options} value="apple" color="accent" direction="horizontal" />
-<RadioGroup name="c-success" options={options} value="apple" color="success" direction="horizontal" />
-<RadioGroup name="c-warning" options={options} value="apple" color="warning" direction="horizontal" />
-<RadioGroup name="c-error" options={options} value="apple" color="error" direction="horizontal" />`}
+              code={`<RadioGroup name="v-primary" variant="primary" orientation="horizontal" defaultValue="apple">
+  <Radio value="apple">Apple</Radio>
+  <Radio value="banana">Banana</Radio>
+  <Radio value="cherry">Cherry</Radio>
+</RadioGroup>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="sizes" title="Sizes">
-          <Flex direction="col" gap="md">
-            <Flex wrap="wrap" align="start" justify="start" gap="lg">
-              <RadioGroup name="s-xs" options={options} value="apple" size="xs" direction="horizontal" />
-              <RadioGroup name="s-sm" options={options} value="apple" size="sm" direction="horizontal" />
-              <RadioGroup name="s-md" options={options} value="apple" size="md" direction="horizontal" />
-              <RadioGroup name="s-lg" options={options} value="apple" size="lg" direction="horizontal" />
-              <RadioGroup name="s-xl" options={options} value="apple" size="xl" direction="horizontal" />
-            </Flex>
-            <CodeBlock
-              code={`<RadioGroup name="s-xs" options={options} value="apple" size="xs" direction="horizontal" />
-<RadioGroup name="s-sm" options={options} value="apple" size="sm" direction="horizontal" />
-<RadioGroup name="s-md" options={options} value="apple" size="md" direction="horizontal" />
-<RadioGroup name="s-lg" options={options} value="apple" size="lg" direction="horizontal" />
-<RadioGroup name="s-xl" options={options} value="apple" size="xl" direction="horizontal" />`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="direction" title="Direction">
+        <ShowcaseSection id="orientation" title="Orientation">
           <Flex direction="col" gap="md">
             <Flex wrap="wrap" align="start" justify="start" gap="xl">
-              <RadioGroup name="d-vert" label="Vertical (default)" options={options} value="banana" />
-              <RadioGroup name="d-horiz" label="Horizontal" options={options} value="banana" direction="horizontal" />
+              <RadioGroup name="d-vert" label="Vertical (default)" defaultValue="banana">
+                {renderOptions(options)}
+              </RadioGroup>
+              <RadioGroup
+                name="d-horiz"
+                label="Horizontal"
+                defaultValue="banana"
+                orientation="horizontal"
+              >
+                {renderOptions(options)}
+              </RadioGroup>
             </Flex>
             <CodeBlock
-              code={`<RadioGroup name="d-vert" label="Vertical (default)" options={options} value="banana" />
-<RadioGroup name="d-horiz" label="Horizontal" options={options} value="banana" direction="horizontal" />`}
+              code={`<RadioGroup name="d-horiz" label="Horizontal" defaultValue="banana" orientation="horizontal">
+  <Radio value="apple">Apple</Radio>
+  <Radio value="banana">Banana</Radio>
+  <Radio value="cherry">Cherry</Radio>
+</RadioGroup>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -168,28 +193,47 @@ export default function RadioGroupShowcase() {
         <ShowcaseSection id="disabled" title="Disabled Options">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <RadioGroup
-                name="disabled-demo"
-                label="Some options disabled"
-                options={[
+              <RadioGroup name="disabled-demo" label="Some options disabled" defaultValue="a">
+                {renderOptions([
                   { value: "a", label: "Available" },
                   { value: "b", label: "Disabled", disabled: true },
                   { value: "c", label: "Also available" },
-                ]}
-                value="a"
-              />
+                ])}
+              </RadioGroup>
+            </Flex>
+            <CodeBlock
+              code={`<RadioGroup name="disabled-demo" label="Some options disabled" defaultValue="a">
+  <Radio value="a">Available</Radio>
+  <Radio value="b" isDisabled>Disabled</Radio>
+  <Radio value="c">Also available</Radio>
+</RadioGroup>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="invalid" title="Invalid State">
+          <Flex direction="col" gap="md">
+            <Flex align="start" justify="start" gap="lg">
+              <RadioGroup
+                name="invalid-demo"
+                label="Please pick a fruit"
+                isInvalid
+                errorMessage="A selection is required"
+              >
+                {renderOptions(options)}
+              </RadioGroup>
             </Flex>
             <CodeBlock
               code={`<RadioGroup
-  name="disabled-demo"
-  label="Some options disabled"
-  options={[
-    { value: "a", label: "Available" },
-    { value: "b", label: "Disabled", disabled: true },
-    { value: "c", label: "Also available" },
-  ]}
-  value="a"
-/>`}
+  name="invalid-demo"
+  label="Please pick a fruit"
+  isInvalid
+  errorMessage="A selection is required"
+>
+  <Radio value="apple">Apple</Radio>
+  <Radio value="banana">Banana</Radio>
+  <Radio value="cherry">Cherry</Radio>
+</RadioGroup>`}
             />
           </Flex>
         </ShowcaseSection>

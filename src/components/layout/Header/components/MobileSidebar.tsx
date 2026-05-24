@@ -36,9 +36,9 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
           <div class="flex items-center justify-between p-4 border-b border-base-300">
             <span class="text-xl font-bold">UI</span>
             <Button
-              color="ghost"
+              variant="ghost"
               size="sm"
-              shape="circle"
+              isIconOnly
               onClick={() => setIsOpen(false)}
             >
               <CloseIcon />

@@ -1,6 +1,6 @@
 import { Component, For } from "solid-js";
 import { ContentContainer } from "../components/content/ContentContainer";
-import { Card, Grid, Badge, Flex, Hero } from "@pathscale/ui";
+import { Card, Grid, Badge, Flex } from "@pathscale/ui";
 import { routes } from "../routes";
 import { ROUTES } from "../config/routes";
 
@@ -49,10 +49,10 @@ const Showcases: Component = () => {
           </p>
 
           <Flex gap="md" justify="center" wrap="wrap" class="mb-8">
-            <Badge color="primary" class="px-4 py-2">
+            <Badge color="accent" class="px-4 py-2">
               {showcaseRoutes.length} Interactive Demos
             </Badge>
-            <Badge color="secondary" class="px-4 py-2">
+            <Badge color="success" class="px-4 py-2">
               Live Code Examples
             </Badge>
             <Badge color="accent" class="px-4 py-2">

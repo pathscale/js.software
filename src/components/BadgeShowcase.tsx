@@ -8,10 +8,8 @@ export default function BadgeShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
-    { id: "brand-colors", title: "Brand Colors" },
+    { id: "colors", title: "Colors" },
     { id: "soft-style", title: "Soft Style" },
-    { id: "outline-style", title: "Outline Style" },
-    { id: "dash-style", title: "Dash Style" },
     { id: "sizes", title: "Sizes" },
     { id: "empty", title: "Empty Badges" },
     { id: "state-colors", title: "State Colors" },
@@ -23,39 +21,28 @@ export default function BadgeShowcase() {
   const props = [
     {
       name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      type: '"sm" | "md" | "lg"',
       description: "Size of the badge",
     },
     {
       name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "ghost" | "info" | "success" | "warning" | "error"',
+      type: '"default" | "accent" | "success" | "warning" | "danger"',
       description: "Color scheme of the badge",
     },
     {
       name: "variant",
-      type: '"soft" | "outline" | "dash"',
+      type: '"primary" | "secondary" | "soft"',
       description: "Visual style variant of the badge",
     },
     {
-      name: "responsive",
-      type: "boolean",
-      default: "false",
-      description: "Whether the badge should be responsive",
-    },
-    {
-      name: "dataTheme",
-      type: "string",
-      description: "Theme data attribute value",
+      name: "placement",
+      type: '"top-right" | "top-left" | "bottom-right" | "bottom-left"',
+      description: "Placement when used with BadgeAnchor",
     },
     {
       name: "class",
       type: "string",
       description: "Additional CSS classes",
-    },
-    {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias)",
     },
     {
       name: "style",
@@ -89,23 +76,21 @@ export default function BadgeShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="brand-colors" title="Brand Colors">
+        <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
             <Flex align="center" justify="start" gap="md" wrap="wrap">
               <Badge>default</Badge>
-              <Badge color="neutral">neutral</Badge>
-              <Badge color="primary">primary</Badge>
-              <Badge color="secondary">secondary</Badge>
               <Badge color="accent">accent</Badge>
-              <Badge color="ghost">ghost</Badge>
+              <Badge color="success">success</Badge>
+              <Badge color="warning">warning</Badge>
+              <Badge color="danger">danger</Badge>
             </Flex>
             <CodeBlock
               code={`<Badge>default</Badge>
-<Badge color="neutral">neutral</Badge>
-<Badge color="primary">primary</Badge>
-<Badge color="secondary">secondary</Badge>
 <Badge color="accent">accent</Badge>
-<Badge color="ghost">ghost</Badge>`}
+<Badge color="success">success</Badge>
+<Badge color="warning">warning</Badge>
+<Badge color="danger">danger</Badge>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -114,67 +99,25 @@ export default function BadgeShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Badge variant="soft">default</Badge>
-              <Badge variant="soft" color="primary">
-                primary
-              </Badge>
-              <Badge variant="soft" color="secondary">
-                secondary
-              </Badge>
               <Badge variant="soft" color="accent">
                 accent
+              </Badge>
+              <Badge variant="soft" color="success">
+                success
+              </Badge>
+              <Badge variant="soft" color="warning">
+                warning
+              </Badge>
+              <Badge variant="soft" color="danger">
+                danger
               </Badge>
             </Flex>
             <CodeBlock
               code={`<Badge variant="soft">default</Badge>
-<Badge variant="soft" color="primary">primary</Badge>
-<Badge variant="soft" color="secondary">secondary</Badge>
-<Badge variant="soft" color="accent">accent</Badge>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="outline-style" title="Outline Style">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Badge variant="outline">default</Badge>
-              <Badge variant="outline" color="primary">
-                primary
-              </Badge>
-              <Badge variant="outline" color="secondary">
-                secondary
-              </Badge>
-              <Badge variant="outline" color="accent">
-                accent
-              </Badge>
-            </Flex>
-            <CodeBlock
-              code={`<Badge variant="outline">default</Badge>
-<Badge variant="outline" color="primary">primary</Badge>
-<Badge variant="outline" color="secondary">secondary</Badge>
-<Badge variant="outline" color="accent">accent</Badge>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="dash-style" title="Dash Style">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Badge variant="dash">default</Badge>
-              <Badge variant="dash" color="primary">
-                primary
-              </Badge>
-              <Badge variant="dash" color="secondary">
-                secondary
-              </Badge>
-              <Badge variant="dash" color="accent">
-                accent
-              </Badge>
-            </Flex>
-            <CodeBlock
-              code={`<Badge variant="dash">default</Badge>
-<Badge variant="dash" color="primary">primary</Badge>
-<Badge variant="dash" color="secondary">secondary</Badge>
-<Badge variant="dash" color="accent">accent</Badge>`}
+<Badge variant="soft" color="accent">accent</Badge>
+<Badge variant="soft" color="success">success</Badge>
+<Badge variant="soft" color="warning">warning</Badge>
+<Badge variant="soft" color="danger">danger</Badge>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -185,13 +128,11 @@ export default function BadgeShowcase() {
               <Badge size="lg">987,654</Badge>
               <Badge size="md">987,654</Badge>
               <Badge size="sm">987,654</Badge>
-              <Badge size="xs">987,654</Badge>
             </Flex>
             <CodeBlock
               code={`<Badge size="lg">987,654</Badge>
 <Badge size="md">987,654</Badge>
-<Badge size="sm">987,654</Badge>
-<Badge size="xs">987,654</Badge>`}
+<Badge size="sm">987,654</Badge>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -199,16 +140,14 @@ export default function BadgeShowcase() {
         <ShowcaseSection id="empty" title="Empty Badges">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Badge size="lg" color="primary" />
-              <Badge size="md" color="primary" />
-              <Badge size="sm" color="primary" />
-              <Badge size="xs" color="primary" />
+              <Badge size="lg" color="accent" />
+              <Badge size="md" color="accent" />
+              <Badge size="sm" color="accent" />
             </Flex>
             <CodeBlock
-              code={`<Badge size="lg" color="primary" />
-<Badge size="md" color="primary" />
-<Badge size="sm" color="primary" />
-<Badge size="xs" color="primary" />`}
+              code={`<Badge size="lg" color="accent" />
+<Badge size="md" color="accent" />
+<Badge size="sm" color="accent" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -216,7 +155,7 @@ export default function BadgeShowcase() {
         <ShowcaseSection id="state-colors" title="State Colors">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Badge color="info" class="gap-2">
+              <Badge color="accent" class="gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -264,7 +203,7 @@ export default function BadgeShowcase() {
                 </svg>
                 warning
               </Badge>
-              <Badge color="error" class="gap-2">
+              <Badge color="danger" class="gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -278,11 +217,11 @@ export default function BadgeShowcase() {
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-                error
+                danger
               </Badge>
             </Flex>
             <CodeBlock
-              code={`<Badge color="info" class="gap-2">
+              code={`<Badge color="accent" class="gap-2">
   <svg>...</svg>
   info
 </Badge>
@@ -294,9 +233,9 @@ export default function BadgeShowcase() {
   <svg>...</svg>
   warning
 </Badge>
-<Badge color="error" class="gap-2">
+<Badge color="danger" class="gap-2">
   <svg>...</svg>
-  error
+  danger
 </Badge>`}
             />
           </Flex>
@@ -317,10 +256,6 @@ export default function BadgeShowcase() {
                 Heading
                 <Badge size="sm">NEW</Badge>
               </h4>
-              <h5 class="text-sm">
-                Heading
-                <Badge size="xs">NEW</Badge>
-              </h5>
             </Flex>
             <CodeBlock
               code={`<h2 class="text-xl">
@@ -334,11 +269,7 @@ export default function BadgeShowcase() {
 <h4 class="text-base">
   Heading
   <Badge size="sm">NEW</Badge>
-</h4>
-<h5 class="text-sm">
-  Heading
-  <Badge size="xs">NEW</Badge>
-</h5>`}
+</h4>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -352,7 +283,7 @@ export default function BadgeShowcase() {
               </Button>
               <Button>
                 Inbox
-                <Badge color="secondary">+99</Badge>
+                <Badge color="accent">+99</Badge>
               </Button>
             </Flex>
             <CodeBlock
@@ -362,7 +293,7 @@ export default function BadgeShowcase() {
 </Button>
 <Button>
   Inbox
-  <Badge color="secondary">+99</Badge>
+  <Badge color="accent">+99</Badge>
 </Button>`}
             />
           </Flex>

@@ -29,8 +29,8 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
       <Navbar.Row class="bg-base-100 shadow-sm px-4 py-1.5">
         <Navbar.Start class="lg:hidden">
           <Button
-            color="ghost"
-            shape="square"
+            variant="ghost"
+            isIconOnly
             onClick={() => navigation.setIsOpen(!navigation.isOpen())}
           >
             <HamburgerIcon />

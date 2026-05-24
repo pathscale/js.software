@@ -10,8 +10,7 @@ const AlertShowcase: Component = () => {
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
     { id: "status-colors", title: "Status Colors" },
-    { id: "variants", title: "Variants" },
-    { id: "layout", title: "Layout" },
+    { id: "custom-indicator", title: "Custom Indicator" },
     { id: "with-buttons", title: "With Buttons" },
     { id: "with-title", title: "With Title and Description" },
     { id: "props", title: "Props" },
@@ -20,23 +19,14 @@ const AlertShowcase: Component = () => {
   const alertProps = [
     {
       name: "status",
-      type: '"info" | "success" | "warning" | "error"',
+      type: '"default" | "accent" | "success" | "warning" | "danger"',
+      default: '"default"',
       description: "The status/color variant of the alert",
     },
     {
-      name: "variant",
-      type: '"soft" | "dash" | "outline"',
-      description: "The visual style variant of the alert",
-    },
-    {
-      name: "layout",
-      type: '"vertical" | "horizontal"',
-      description: "The layout direction of the alert content",
-    },
-    {
-      name: "icon",
+      name: "children",
       type: "JSX.Element",
-      description: "Optional icon element to display in the alert",
+      description: "Compound children: Alert.Indicator, Alert.Content, Alert.Title, Alert.Description",
     },
     {
       name: "class",
@@ -52,36 +42,6 @@ const AlertShowcase: Component = () => {
       name: "style",
       type: "JSX.CSSProperties",
       description: "Inline styles to apply",
-    },
-    {
-      name: "children",
-      type: "JSX.Element",
-      description: "Content of the alert",
-    },
-    {
-      name: "aria-atomic",
-      type: "boolean",
-      description: "Whether screen readers should present the entire alert as atomic",
-    },
-    {
-      name: "aria-live",
-      type: '"off" | "polite" | "assertive"',
-      description: "How screen readers should announce changes",
-    },
-    {
-      name: "aria-relevant",
-      type: "string",
-      description: "What changes are relevant for screen readers",
-    },
-    {
-      name: "aria-label",
-      type: "string",
-      description: "Accessibility label for the alert",
-    },
-    {
-      name: "aria-labelledby",
-      type: "string",
-      description: "ID of element that labels the alert",
     },
     {
       name: "dataTheme",
@@ -102,54 +62,6 @@ const AlertShowcase: Component = () => {
         stroke-linejoin="round"
         stroke-width="2"
         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-  );
-
-  const SuccessIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="stroke-current shrink-0 h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-  );
-
-  const WarningIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="stroke-current shrink-0 h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-      />
-    </svg>
-  );
-
-  const ErrorIcon = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="stroke-current shrink-0 h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
       />
     </svg>
   );
@@ -177,11 +89,21 @@ const AlertShowcase: Component = () => {
             justify="start"
             gap="md"
           >
-            <Alert icon={<InfoIcon />}>
-              <span>12 unread messages. Tap to see.</span>
+            <Alert>
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Description>12 unread messages. Tap to see.</Alert.Description>
+              </Alert.Content>
             </Alert>
           </Flex>
-          <CodeBlock code={`<Alert icon={<InfoIcon />}>…</Alert>`} />
+          <CodeBlock
+            code={`<Alert>
+  <Alert.Indicator />
+  <Alert.Content>
+    <Alert.Description>12 unread messages. Tap to see.</Alert.Description>
+  </Alert.Content>
+</Alert>`}
+          />
         </ShowcaseSection>
 
         <ShowcaseSection id="status-colors" title="Status Colors">
@@ -192,69 +114,73 @@ const AlertShowcase: Component = () => {
             gap="md"
           >
             <Flex direction="col" gap="md" class="w-full">
-              <Alert status="info" icon={<InfoIcon />}>
-                …
+              <Alert status="default">
+                <Alert.Indicator />
+                <Alert.Content>
+                  <Alert.Description>Default status alert</Alert.Description>
+                </Alert.Content>
               </Alert>
-              <Alert status="success" icon={<SuccessIcon />}>
-                …
+              <Alert status="accent">
+                <Alert.Indicator />
+                <Alert.Content>
+                  <Alert.Description>Accent status alert</Alert.Description>
+                </Alert.Content>
               </Alert>
-              <Alert status="warning" icon={<WarningIcon />}>
-                …
+              <Alert status="success">
+                <Alert.Indicator />
+                <Alert.Content>
+                  <Alert.Description>Success status alert</Alert.Description>
+                </Alert.Content>
               </Alert>
-              <Alert status="error" icon={<ErrorIcon />}>
-                …
+              <Alert status="warning">
+                <Alert.Indicator />
+                <Alert.Content>
+                  <Alert.Description>Warning status alert</Alert.Description>
+                </Alert.Content>
+              </Alert>
+              <Alert status="danger">
+                <Alert.Indicator />
+                <Alert.Content>
+                  <Alert.Description>Danger status alert</Alert.Description>
+                </Alert.Content>
               </Alert>
             </Flex>
           </Flex>
           <CodeBlock
-            code={`<Alert status="info" icon={<InfoIcon />}>…</Alert>`}
+            code={`<Alert status="success">
+  <Alert.Indicator />
+  <Alert.Content>
+    <Alert.Description>Success status alert</Alert.Description>
+  </Alert.Content>
+</Alert>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="variants" title="Variants">
+        <ShowcaseSection id="custom-indicator" title="Custom Indicator">
           <Flex
             class="w-full component-preview"
             align="start"
             justify="start"
             gap="md"
           >
-            <Flex direction="col" gap="md" class="w-full">
-              <Alert status="info" variant="soft" class="w-full">
-                …
-              </Alert>
-              <Alert status="success" variant="outline" class="w-full">
-                …
-              </Alert>
-              <Alert status="warning" variant="dash" class="w-full">
-                …
-              </Alert>
-              <Alert status="error" variant="soft" class="w-full">
-                …
-              </Alert>
-            </Flex>
-          </Flex>
-          <CodeBlock code={`<Alert status="info" variant="soft">…</Alert>`} />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="layout" title="Layout">
-          <Flex
-            class="w-full component-preview"
-            align="start"
-            justify="start"
-            gap="md"
-          >
-            <Flex direction="col" gap="md">
-              <Alert icon={<InfoIcon />} layout="horizontal">
-                …
-              </Alert>
-              <Alert icon={<InfoIcon />} layout="vertical">
-                …
-              </Alert>
-            </Flex>
+            <Alert status="accent">
+              <Alert.Indicator>
+                <InfoIcon />
+              </Alert.Indicator>
+              <Alert.Content>
+                <Alert.Description>Alert with a custom icon</Alert.Description>
+              </Alert.Content>
+            </Alert>
           </Flex>
           <CodeBlock
-            code={`<Alert layout="horizontal">…</Alert>
-<Alert layout="vertical">…</Alert>`}
+            code={`<Alert status="accent">
+  <Alert.Indicator>
+    <InfoIcon />
+  </Alert.Indicator>
+  <Alert.Content>
+    <Alert.Description>Alert with a custom icon</Alert.Description>
+  </Alert.Content>
+</Alert>`}
           />
         </ShowcaseSection>
 
@@ -265,8 +191,11 @@ const AlertShowcase: Component = () => {
             justify="start"
             gap="md"
           >
-            <Alert icon={<InfoIcon />} class="shadow-lg">
-              <span>we use cookies for no reason.</span>
+            <Alert class="shadow-lg">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Description>we use cookies for no reason.</Alert.Description>
+              </Alert.Content>
               <div class="space-x-1">
                 <Button size="sm">Deny</Button>
                 <Button size="sm" color="primary">
@@ -275,7 +204,16 @@ const AlertShowcase: Component = () => {
               </div>
             </Alert>
           </Flex>
-          <CodeBlock code={`<Alert icon={<InfoIcon />}>…</Alert>`} />
+          <CodeBlock
+            code={`<Alert>
+  <Alert.Indicator />
+  <Alert.Content>
+    <Alert.Description>we use cookies for no reason.</Alert.Description>
+  </Alert.Content>
+  <Button size="sm">Deny</Button>
+  <Button size="sm" color="primary">Accept</Button>
+</Alert>`}
+          />
         </ShowcaseSection>
 
         <ShowcaseSection id="with-title" title="With Title and Description">
@@ -285,15 +223,25 @@ const AlertShowcase: Component = () => {
             justify="start"
             gap="md"
           >
-            <Alert icon={<InfoIcon />} class="shadow-lg">
-              <div>
-                <h3 class="font-bold">New message!</h3>
-                <div class="text-xs">You have 1 unread message</div>
-              </div>
+            <Alert class="shadow-lg">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>New message!</Alert.Title>
+                <Alert.Description>You have 1 unread message</Alert.Description>
+              </Alert.Content>
               <Button size="sm">See</Button>
             </Alert>
           </Flex>
-          <CodeBlock code={`<Alert icon={<InfoIcon />}>…</Alert>`} />
+          <CodeBlock
+            code={`<Alert>
+  <Alert.Indicator />
+  <Alert.Content>
+    <Alert.Title>New message!</Alert.Title>
+    <Alert.Description>You have 1 unread message</Alert.Description>
+  </Alert.Content>
+  <Button size="sm">See</Button>
+</Alert>`}
+          />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

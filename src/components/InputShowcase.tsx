@@ -1,10 +1,11 @@
+// TODO[ui-1.2.2]: Input size narrowed to sm|md|lg (no xs/xl); removed variant and color props; leftIcon/rightIcon renamed to startIcon/endIcon
 import { createSignal } from "solid-js";
 import { Input, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
-import { FiLock, FiEye, FiEyeOff } from "solid-icons/fi";
+import { FiLock, FiEye } from "solid-icons/fi";
 
 export default function InputShowcase() {
   const [value, setValue] = createSignal("");
@@ -12,10 +13,8 @@ export default function InputShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "basic", title: "Basic Usage" },
-    { id: "colors", title: "Color Variants" },
     { id: "states", title: "States" },
     { id: "sizes", title: "Sizes" },
-    { id: "variants", title: "Variants" },
     { id: "icons", title: "With Icons" },
     { id: "props", title: "Props" },
   ] as const;
@@ -30,19 +29,9 @@ export default function InputShowcase() {
     },
     {
       name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
       description: "Size of the input",
-    },
-    {
-      name: "color",
-      type: '"primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
-      description: "Color variant of the input",
-    },
-    {
-      name: "variant",
-      type: '"bordered" | "ghost" | "flushed"',
-      default: '"bordered"',
-      description: "Visual variant of the input",
     },
     {
       name: "fullWidth",
@@ -56,54 +45,48 @@ export default function InputShowcase() {
       description: "Placeholder text",
     },
     {
-      name: "disabled",
+      name: "isDisabled",
       type: "boolean",
       default: "false",
-      description: "Disables the input",
+      description: "Disables the input (also accepts native `disabled`)",
     },
     {
-      name: "readonly",
-      type: "boolean", 
+      name: "isInvalid",
+      type: "boolean",
       default: "false",
-      description: "Makes the input readonly",
+      description: "Marks the input as invalid",
     },
     {
-      name: "leftIcon",
+      name: "label",
       type: "JSX.Element",
-      description: "Icon on the left inside the input",
+      description: "Optional label rendered above the input",
     },
     {
-      name: "rightIcon",
+      name: "helperText",
       type: "JSX.Element",
-      description: "Icon/button on the right (used with password toggle)",
+      description: "Helper text rendered below the input",
     },
+    {
+      name: "errorMessage",
+      type: "JSX.Element",
+      description: "Error message rendered below the input (implies invalid state)",
+    },
+    {
+      name: "startIcon",
+      type: "JSX.Element",
+      description: "Icon rendered at the start of the input",
+    },
+    {
+      name: "endIcon",
+      type: "JSX.Element",
+      description: "Icon rendered at the end of the input",
+    },
+    { name: "class", type: "string", description: "Additional CSS classes" },
+    { name: "className", type: "string", description: "Additional CSS classes (alias for class)" },
     {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value",
-    },
-    { name: "class", type: "string", description: "Additional CSS classes" },
-    { name: "className", type: "string", description: "Additional CSS classes (alias for class)" },
-    { name: "style", type: "JSX.CSSProperties", description: "Inline styles" },
-    {
-      name: "aria-label",
-      type: "string",
-      description: "Accessibility label",
-    },
-    {
-      name: "aria-describedby",
-      type: "string",
-      description: "ID of element that describes the input",
-    },
-    {
-      name: "aria-invalid",
-      type: "boolean",
-      description: "Indicates if the input has a validation error",
-    },
-    {
-      name: "aria-required",
-      type: "boolean",
-      description: "Indicates if the input is required",
     },
   ];
 
@@ -144,47 +127,21 @@ export default function InputShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Color Variants">
-          <Flex direction="col" gap="md">
-            <Flex direction="col" justify="start" align="start" gap="lg">
-              <Input placeholder="Default input" />
-              <Input color="primary" placeholder="Primary" />
-              <Input color="secondary" placeholder="Secondary" />
-              <Input color="accent" placeholder="Accent" />
-              <Input color="info" placeholder="Info" />
-              <Input color="success" placeholder="Success" />
-              <Input color="warning" placeholder="Warning" />
-              <Input color="error" placeholder="Error" />
-            </Flex>
-            <CodeBlock
-              code={`<Input placeholder="Default input" />
-<Input color="primary" placeholder="Primary" />
-<Input color="secondary" placeholder="Secondary" />
-<Input color="accent" placeholder="Accent" />
-<Input color="info" placeholder="Info" />
-<Input color="success" placeholder="Success" />
-<Input color="warning" placeholder="Warning" />
-<Input color="error" placeholder="Error" />`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Input placeholder="Loading state" />
-              <Input disabled placeholder="Disabled state" />
+              <Input placeholder="Default" />
+              <Input isDisabled placeholder="Disabled state" />
               <Input readonly value="Read-only value" />
-              <Input
-                type="password"
-                placeholder="Password with reveal"
-              />
+              <Input isInvalid placeholder="Invalid state" errorMessage="Required" />
+              <Input type="password" placeholder="Password" />
             </Flex>
             <CodeBlock
-              code={`<Input placeholder="Loading state" />
-<Input disabled placeholder="Disabled state" />
+              code={`<Input placeholder="Default" />
+<Input isDisabled placeholder="Disabled state" />
 <Input readonly value="Read-only value" />
-<Input type="password" placeholder="Password with reveal" />`}
+<Input isInvalid placeholder="Invalid state" errorMessage="Required" />
+<Input type="password" placeholder="Password" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -192,39 +149,14 @@ export default function InputShowcase() {
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Input size="xs" placeholder="Extra small" />
               <Input size="sm" placeholder="Small" />
               <Input size="md" placeholder="Medium (default)" />
               <Input size="lg" placeholder="Large" />
-              <Input size="xl" placeholder="Extra large" />
             </Flex>
             <CodeBlock
-              code={`<Input size="xs" placeholder="Extra small" />
-<Input size="sm" placeholder="Small" />
+              code={`<Input size="sm" placeholder="Small" />
 <Input size="md" placeholder="Medium (default)" />
-<Input size="lg" placeholder="Large" />
-<Input size="xl" placeholder="Extra large" />`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="variants" title="Variants">
-          <Flex direction="col" gap="md">
-            <Flex direction="col" justify="start" align="start" gap="lg">
-              <Input variant="bordered" placeholder="Bordered (default)" />
-              <Input variant="ghost" placeholder="Ghost variant" />
-              <Input variant="flushed" placeholder="Flushed variant" />
-              <div class="w-48">
-                <Input fullWidth={false} placeholder="Not full width" />
-              </div>
-            </Flex>
-            <CodeBlock
-              code={`<Input variant="bordered" placeholder="Bordered (default)" />
-<Input variant="ghost" placeholder="Ghost variant" />
-<Input variant="flushed" placeholder="Flushed variant" />
-<div class="w-48">
-  <Input fullWidth={false} placeholder="Not full width" />
-</div>`}
+<Input size="lg" placeholder="Large" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -232,24 +164,21 @@ export default function InputShowcase() {
         <ShowcaseSection id="icons" title="With Icons">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Input leftIcon={<FiLock />} placeholder="With left icon" />
+              <Input startIcon={<FiLock />} placeholder="With start icon" />
               <Input
                 type="password"
-                leftIcon={<FiLock />}
-                rightIcon={<FiEye />}
+                startIcon={<FiLock />}
+                endIcon={<FiEye />}
                 placeholder="Password with icons"
               />
             </Flex>
             <CodeBlock
-              code={`<Input
-  leftIcon={<FiLock />}
-  placeholder="With left icon"
-/>
+              code={`<Input startIcon={<FiLock />} placeholder="With start icon" />
 
 <Input
   type="password"
-  leftIcon={<FiLock />}
-  rightIcon={<FiEye />}
+  startIcon={<FiLock />}
+  endIcon={<FiEye />}
   placeholder="Password with icons"
 />`}
             />

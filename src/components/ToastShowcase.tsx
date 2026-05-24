@@ -1,12 +1,12 @@
-import { Alert, Button, Flex, Toast } from "@pathscale/ui";
-import { Component, createSignal } from "solid-js";
+import { Button, Flex, Toast } from "@pathscale/ui";
+import { Component, createSignal, For, Show } from "solid-js";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import ShowcaseLayout from "./ShowcaseLayout";
 
-type AlertStatus = "info" | "success" | "warning" | "error";
-type AlertItem = { text: string; status: AlertStatus; };
+type AlertStatus = "default" | "accent" | "success" | "warning" | "danger";
+type AlertItem = { text: string; status: AlertStatus };
 
 const ToastShowcase: Component = () => {
   const sections = [
@@ -22,20 +22,24 @@ const ToastShowcase: Component = () => {
 
   const toastProps = [
     {
-      name: "max",
-      type: "number",
-      default: "0",
-      description: "Maximum number of toasts to show (0 for unlimited)",
+      name: "variant",
+      type: '"default" | "accent" | "success" | "warning" | "danger"',
+      description: "Visual style/severity of the toast",
     },
     {
-      name: "horizontal",
-      type: '"start" | "center" | "end"',
-      description: "Horizontal position of the toast container",
+      name: "title",
+      type: "JSX.Element",
+      description: "Title content rendered when using the default body",
     },
     {
-      name: "vertical", 
-      type: '"top" | "middle" | "bottom"',
-      description: "Vertical position of the toast container",
+      name: "description",
+      type: "JSX.Element",
+      description: "Secondary description content",
+    },
+    {
+      name: "onClose",
+      type: "() => void",
+      description: "Renders a close button and is invoked when it is clicked",
     },
     {
       name: "class",
@@ -47,15 +51,30 @@ const ToastShowcase: Component = () => {
       type: "string",
       description: "Additional CSS classes (alias for class)",
     },
+  ];
+
+  const providerProps = [
     {
-      name: "style",
-      type: "JSX.CSSProperties",
-      description: "Inline styles to apply",
+      name: "placement",
+      type: '"top" | "top-start" | "top-end" | "bottom" | "bottom-start" | "bottom-end"',
+      default: '"bottom-end"',
+      description: "Where toasts are rendered within the provider region",
     },
     {
-      name: "dataTheme",
-      type: "string",
-      description: "Theme data attribute value",
+      name: "maxVisibleToasts",
+      type: "number",
+      description: "Maximum number of toasts visible at once",
+    },
+    {
+      name: "gap",
+      type: "number",
+      default: "12",
+      description: "Pixel gap between stacked toasts",
+    },
+    {
+      name: "width",
+      type: "number | string",
+      description: "Toast width (number is treated as px)",
     },
   ];
 
@@ -68,7 +87,7 @@ const ToastShowcase: Component = () => {
   const [limitedAlerts, setLimitedAlerts] = createSignal<AlertItem[]>([]);
   const [alertCounter, setAlertCounter] = createSignal(0);
   const [limitedAlertCounter, setLimitedAlertCounter] = createSignal(0);
-  const statuses: AlertStatus[] = ["info", "success", "warning", "error"];
+  const statuses: AlertStatus[] = ["accent", "success", "warning", "danger"];
 
   const addAlert = () => {
     const counter = alertCounter();
@@ -129,13 +148,15 @@ const ToastShowcase: Component = () => {
             >
               Show Default Toast
             </Button>
-            {showDefault() && (
-              <Toast>
-                <Alert status="info">Default toast message.</Alert>
-              </Toast>
-            )}
+            <Show when={showDefault()}>
+              <Toast.Provider>
+                <Toast variant="accent" title="Default toast message." />
+              </Toast.Provider>
+            </Show>
             <CodeBlock
-              code={`<Toast>\n  <Alert status="info">Default toast message.</Alert>\n</Toast>`}
+              code={`<Toast.Provider>
+  <Toast variant="accent" title="Default toast message." />
+</Toast.Provider>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -150,15 +171,15 @@ const ToastShowcase: Component = () => {
             >
               Show Toast with Alert
             </Button>
-            {showWithAlert() && (
-              <Toast>
-                <Alert status="success">
-                  <span>New message arrived.</span>
-                </Alert>
-              </Toast>
-            )}
+            <Show when={showWithAlert()}>
+              <Toast.Provider>
+                <Toast variant="success" title="New message arrived." />
+              </Toast.Provider>
+            </Show>
             <CodeBlock
-              code={`<Toast>\n  <Alert status="success">\n    <span>New message arrived.</span>\n  </Alert>\n</Toast>`}
+              code={`<Toast.Provider>
+  <Toast variant="success" title="New message arrived." />
+</Toast.Provider>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -173,15 +194,19 @@ const ToastShowcase: Component = () => {
             >
               Show Multiple Alerts
             </Button>
-            {showMultiple() && (
-              <Toast>
-                <Alert status="info">New message arrived.</Alert>
-                <Alert status="success">Message sent successfully.</Alert>
-                <Alert status="warning">Connection unstable.</Alert>
-              </Toast>
-            )}
+            <Show when={showMultiple()}>
+              <Toast.Provider>
+                <Toast variant="accent" title="New message arrived." />
+                <Toast variant="success" title="Message sent successfully." />
+                <Toast variant="warning" title="Connection unstable." />
+              </Toast.Provider>
+            </Show>
             <CodeBlock
-              code={`<Toast>\n  <Alert status="info">New message arrived.</Alert>\n  <Alert status="success">Message sent successfully.</Alert>\n  <Alert status="warning">Connection unstable.</Alert>\n</Toast>`}
+              code={`<Toast.Provider>
+  <Toast variant="accent" title="New message arrived." />
+  <Toast variant="success" title="Message sent successfully." />
+  <Toast variant="warning" title="Connection unstable." />
+</Toast.Provider>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -189,43 +214,29 @@ const ToastShowcase: Component = () => {
         <ShowcaseSection id="dynamic" title="Dynamic Alerts">
           <Flex direction="col" gap="md">
             <Button onClick={addAlert}>Add Toast</Button>
-            <Toast>
-              {alerts().map((alert, index) => (
-                <Alert
-                  status={alert.status}
-                  class="flex justify-between gap-4"
-                  style={{ "min-width": "16rem" }}
-                >
-                  <span>{alert.text}</span>
-                  <Button
-                    size="sm"
-                    color="ghost"
-                    onClick={() => removeAlert(index)}
-                  >
-                    ✕
-                  </Button>
-                </Alert>
-              ))}
-            </Toast>
+            <Toast.Provider>
+              <For each={alerts()}>
+                {(alert, index) => (
+                  <Toast
+                    variant={alert.status}
+                    title={alert.text}
+                    onClose={() => removeAlert(index())}
+                  />
+                )}
+              </For>
+            </Toast.Provider>
             <CodeBlock
-              code={`<Toast>
-  {alerts().map((alert, index) => (
-    <Alert
-      status={alert.status}
-      class="flex justify-between gap-4"
-      style="min-width: 16rem;"
-    >
-      <span>{alert.text}</span>
-      <Button
-        size="sm"
-        color="ghost"
-        onClick={() => removeAlert(index)}
-      >
-        ✕
-      </Button>
-    </Alert>
-  ))}
-</Toast>`}
+              code={`<Toast.Provider>
+  <For each={alerts()}>
+    {(alert, index) => (
+      <Toast
+        variant={alert.status}
+        title={alert.text}
+        onClose={() => removeAlert(index())}
+      />
+    )}
+  </For>
+</Toast.Provider>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -233,43 +244,29 @@ const ToastShowcase: Component = () => {
         <ShowcaseSection id="limited" title="Limited Dynamic Alerts">
           <Flex direction="col" gap="md">
             <Button onClick={addLimitedAlert}>Add Toast (Max 3)</Button>
-            <Toast max={3}>
-              {limitedAlerts().map((alert, index) => (
-                <Alert
-                  status={alert.status}
-                  class="flex justify-between gap-4"
-                  style={{ "min-width": "16rem" }}
-                >
-                  <span>{alert.text}</span>
-                  <Button
-                    size="sm"
-                    color="ghost"
-                    onClick={() => removeLimitedAlert(index)}
-                  >
-                    ✕
-                  </Button>
-                </Alert>
-              ))}
-            </Toast>
+            <Toast.Provider maxVisibleToasts={3}>
+              <For each={limitedAlerts()}>
+                {(alert, index) => (
+                  <Toast
+                    variant={alert.status}
+                    title={alert.text}
+                    onClose={() => removeLimitedAlert(index())}
+                  />
+                )}
+              </For>
+            </Toast.Provider>
             <CodeBlock
-              code={`<Toast max={3}>
-{limitedAlerts().map((alert, index) => (
-  <Alert
-    status={alert.status}
-    class="flex justify-between gap-4"
-    style="min-width: 16rem;"
-  >
-    <span>{alert.text}</span>
-    <Button
-      size="sm"
-      color="ghost"
-      onClick={() => removeLimitedAlert(index)}
-    >
-      ✕
-    </Button>
-  </Alert>
-))}
-</Toast>`}
+              code={`<Toast.Provider maxVisibleToasts={3}>
+  <For each={limitedAlerts()}>
+    {(alert, index) => (
+      <Toast
+        variant={alert.status}
+        title={alert.text}
+        onClose={() => removeLimitedAlert(index())}
+      />
+    )}
+  </For>
+</Toast.Provider>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -284,55 +281,57 @@ const ToastShowcase: Component = () => {
             >
               Show Toast in All Positions
             </Button>
-            {showPositions() && (
-              <>
-                <Toast vertical="top">
-                  <Alert status="info">Top</Alert>
-                </Toast>
-                <Toast vertical="bottom">
-                  <Alert status="info">Bottom</Alert>
-                </Toast>
-                <Toast vertical="top" horizontal="start">
-                  <Alert status="info">Top-left</Alert>
-                </Toast>
-                <Toast vertical="top" horizontal="end">
-                  <Alert status="info">Top-right</Alert>
-                </Toast>
-                <Toast vertical="bottom" horizontal="start">
-                  <Alert status="info">Bottom-left</Alert>
-                </Toast>
-                <Toast vertical="bottom" horizontal="end">
-                  <Alert status="info">Bottom-right</Alert>
-                </Toast>
-              </>
-            )}
+            <Show when={showPositions()}>
+              <Toast.Provider placement="top">
+                <Toast variant="accent" title="Top" />
+              </Toast.Provider>
+              <Toast.Provider placement="bottom">
+                <Toast variant="accent" title="Bottom" />
+              </Toast.Provider>
+              <Toast.Provider placement="top-start">
+                <Toast variant="accent" title="Top-left" />
+              </Toast.Provider>
+              <Toast.Provider placement="top-end">
+                <Toast variant="accent" title="Top-right" />
+              </Toast.Provider>
+              <Toast.Provider placement="bottom-start">
+                <Toast variant="accent" title="Bottom-left" />
+              </Toast.Provider>
+              <Toast.Provider placement="bottom-end">
+                <Toast variant="accent" title="Bottom-right" />
+              </Toast.Provider>
+            </Show>
             <CodeBlock
-              code={`<div>
-  <Toast vertical="top">
-    <Alert status="info">Top</Alert>
-  </Toast>
-  <Toast vertical="bottom">
-    <Alert status="info">Bottom</Alert>
-  </Toast>
-  <Toast vertical="top" horizontal="start">
-    <Alert status="info">Top-left</Alert>
-  </Toast>
-  <Toast vertical="top" horizontal="end">
-    <Alert status="info">Top-right</Alert>
-  </Toast>
-  <Toast vertical="bottom" horizontal="start">
-    <Alert status="info">Bottom-left</Alert>
-  </Toast>
-  <Toast vertical="bottom" horizontal="end">
-    <Alert status="info">Bottom-right</Alert>
-  </Toast>
-</div>`}
+              code={`<Toast.Provider placement="top">
+  <Toast variant="accent" title="Top" />
+</Toast.Provider>
+<Toast.Provider placement="bottom">
+  <Toast variant="accent" title="Bottom" />
+</Toast.Provider>
+<Toast.Provider placement="top-start">
+  <Toast variant="accent" title="Top-left" />
+</Toast.Provider>
+<Toast.Provider placement="top-end">
+  <Toast variant="accent" title="Top-right" />
+</Toast.Provider>
+<Toast.Provider placement="bottom-start">
+  <Toast variant="accent" title="Bottom-left" />
+</Toast.Provider>
+<Toast.Provider placement="bottom-end">
+  <Toast variant="accent" title="Bottom-right" />
+</Toast.Provider>`}
             />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
-          <PropsTable props={toastProps} />
+          <Flex direction="col" gap="md">
+            <h3 class="text-lg font-semibold">Toast</h3>
+            <PropsTable props={toastProps} />
+
+            <h3 class="text-lg font-semibold">Toast.Provider</h3>
+            <PropsTable props={providerProps} />
+          </Flex>
         </ShowcaseSection>
       </div>
     </ShowcaseLayout>

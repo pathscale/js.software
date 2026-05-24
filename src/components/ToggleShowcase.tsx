@@ -1,3 +1,4 @@
+// TODO[ui-1.2.2]: Toggle colors narrowed to default|accent|success|warning|danger; sizes narrowed to sm|md|lg (no xs/xl)
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Toggle, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
@@ -16,14 +17,14 @@ export default function ToggleShowcase() {
   const toggleProps = [
     {
       name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
-      default: "undefined",
+      type: '"default" | "accent" | "success" | "warning" | "danger"',
+      default: '"default"',
       description: "The color scheme of the toggle",
     },
     {
       name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      default: "undefined",
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
       description: "The size of the toggle",
     },
     {
@@ -92,24 +93,18 @@ export default function ToggleShowcase() {
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
             <Flex wrap="wrap" align="start" justify="start" gap="lg">
-              <Toggle color="primary" checked />
-              <Toggle color="secondary" checked />
+              <Toggle color="default" checked />
               <Toggle color="accent" checked />
-              <Toggle color="neutral" checked />
-              <Toggle color="info" checked />
               <Toggle color="success" checked />
               <Toggle color="warning" checked />
-              <Toggle color="error" checked />
+              <Toggle color="danger" checked />
             </Flex>
             <CodeBlock
-              code={`<Toggle color="primary" checked />
-<Toggle color="secondary" checked />
+              code={`<Toggle color="default" checked />
 <Toggle color="accent" checked />
-<Toggle color="neutral" checked />
-<Toggle color="info" checked />
 <Toggle color="success" checked />
 <Toggle color="warning" checked />
-<Toggle color="error" checked />`}
+<Toggle color="danger" checked />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -117,18 +112,14 @@ export default function ToggleShowcase() {
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Toggle size="xs" />
               <Toggle size="sm" />
               <Toggle size="md" />
               <Toggle size="lg" />
-              <Toggle size="xl" />
             </Flex>
             <CodeBlock
-              code={`<Toggle size="xs" />
-<Toggle size="sm" />
+              code={`<Toggle size="sm" />
 <Toggle size="md" />
-<Toggle size="lg" />
-<Toggle size="xl" />`}
+<Toggle size="lg" />`}
             />
           </Flex>
         </ShowcaseSection>

@@ -1,3 +1,4 @@
+// TODO[ui-1.2.2]: Textarea API simplified. Removed `color` and `size` props; now has `variant` ("primary" | "secondary"), `fullWidth`, `isInvalid`, `isDisabled`.
 import { Component, createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Textarea, Flex } from "@pathscale/ui";
@@ -11,30 +12,35 @@ const TextareaShowcase: Component = () => {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
-    { id: "colors", title: "Colors" },
-    { id: "sizes", title: "Sizes" },
-    { id: "form-control", title: "Form Control and Labels" },
+    { id: "variants", title: "Variants" },
     { id: "states", title: "States" },
     { id: "props", title: "Props" },
   ] as const;
 
   const textareaProps = [
     {
-      name: "color",
-      type: '"primary" | "secondary" | "accent" | "ghost" | "info" | "success" | "warning" | "error"',
-      description: "Color variant of the textarea",
+      name: "variant",
+      type: '"primary" | "secondary"',
+      default: '"primary"',
+      description: "Visual variant of the textarea",
     },
     {
-      name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      default: '"md"',
-      description: "Size of the textarea",
-    },
-    {
-      name: "disabled",
+      name: "fullWidth",
       type: "boolean",
       default: "false",
-      description: "Whether the textarea is disabled",
+      description: "Expands textarea to full width",
+    },
+    {
+      name: "isDisabled",
+      type: "boolean",
+      default: "false",
+      description: "Disables the textarea (also accepts native `disabled`)",
+    },
+    {
+      name: "isInvalid",
+      type: "boolean",
+      default: "false",
+      description: "Marks the textarea as invalid",
     },
     {
       name: "placeholder",
@@ -55,12 +61,6 @@ const TextareaShowcase: Component = () => {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
-    },
-    {
-      name: "resize",
-      type: '"none" | "both" | "horizontal" | "vertical"',
-      default: '"both"',
-      description: "Controls the resizable behavior of the textarea",
     },
   ];
 
@@ -102,50 +102,17 @@ const TextareaShowcase: Component = () => {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Colors">
+        <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start">
               <Flex direction="col" gap="sm" class="w-full">
-                <Textarea color="primary" placeholder="Primary" />
-                <Textarea color="secondary" placeholder="Secondary" />
-                <Textarea color="accent" placeholder="Accent" />
-                <Textarea color="ghost" placeholder="Ghost" />
-                <Textarea color="info" placeholder="Info" />
-                <Textarea color="success" placeholder="Success" />
-                <Textarea color="warning" placeholder="Warning" />
-                <Textarea color="error" placeholder="Error" />
+                <Textarea variant="primary" placeholder="Primary" />
+                <Textarea variant="secondary" placeholder="Secondary" />
               </Flex>
             </Flex>
             <CodeBlock
-              code={`<Textarea color="primary" placeholder="Primary" />
-<Textarea color="secondary" placeholder="Secondary" />
-<Textarea color="accent" placeholder="Accent" />
-<Textarea color="ghost" placeholder="Ghost" />
-<Textarea color="info" placeholder="Info" />
-<Textarea color="success" placeholder="Success" />
-<Textarea color="warning" placeholder="Warning" />
-<Textarea color="error" placeholder="Error" />`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="sizes" title="Sizes">
-          <Flex direction="col" gap="md">
-            <Flex align="start" justify="start">
-              <Flex direction="col" gap="sm">
-                <Textarea size="xs" placeholder="Extra small" />
-                <Textarea size="sm" placeholder="Small" />
-                <Textarea size="md" placeholder="Medium (default)" />
-                <Textarea size="lg" placeholder="Large" />
-                <Textarea size="xl" placeholder="Extra large" />
-              </Flex>
-            </Flex>
-            <CodeBlock
-              code={`<Textarea size="xs" placeholder="Extra small" />
-<Textarea size="sm" placeholder="Small" />
-<Textarea size="md" placeholder="Medium (default)" />
-<Textarea size="lg" placeholder="Large" />
-<Textarea size="xl" placeholder="Extra large" />`}
+              code={`<Textarea variant="primary" placeholder="Primary" />
+<Textarea variant="secondary" placeholder="Secondary" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -153,15 +120,14 @@ const TextareaShowcase: Component = () => {
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
             <Flex direction="col" align="start" justify="start" gap="sm">
-              <Textarea disabled placeholder="Disabled textarea" />
-              <Textarea
-                class="textarea-disabled"
-                placeholder="Disabled via class"
-              />
+              <Textarea isDisabled placeholder="Disabled textarea" />
+              <Textarea isInvalid placeholder="Invalid textarea" />
+              <Textarea fullWidth placeholder="Full width textarea" />
             </Flex>
             <CodeBlock
-              code={`<Textarea disabled placeholder="Disabled textarea" />
-<Textarea class="textarea-disabled" placeholder="Disabled via class" />`}
+              code={`<Textarea isDisabled placeholder="Disabled textarea" />
+<Textarea isInvalid placeholder="Invalid textarea" />
+<Textarea fullWidth placeholder="Full width textarea" />`}
             />
           </Flex>
         </ShowcaseSection>

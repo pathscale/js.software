@@ -7,7 +7,7 @@ import { ShowcaseSection } from "./showcase/ShowcaseSection";
 export default function ButtonShowcase() {
   const sections = [
     { id: "default", title: "Default" },
-    { id: "brand-colors", title: "Brand Colors" },
+    { id: "brand-colors", title: "Brand Variants" },
     { id: "soft-style", title: "Soft Style" },
     { id: "outline-style", title: "Outline Style" },
     { id: "dash-style", title: "Dash Style" },
@@ -34,39 +34,21 @@ export default function ButtonShowcase() {
   const buttonProps = [
     {
       name: "variant",
-      type: '"soft" | "dash" | "outline" | "link"',
-      default: "undefined",
+      type: '"primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger" | "danger-soft"',
+      default: '"primary"',
       description: "The visual style variant of the button",
     },
     {
-      name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error" | "ghost"',
-      default: "undefined",
-      description: "The color scheme of the button",
-    },
-    {
       name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      default: "undefined",
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
       description: "The size of the button",
     },
     {
-      name: "shape",
-      type: '"circle" | "square"',
-      default: "undefined",
-      description: "The shape of the button",
-    },
-    {
-      name: "glass",
+      name: "isIconOnly",
       type: "boolean",
       default: "false",
-      description: "Whether to apply a glass effect to the button",
-    },
-    {
-      name: "wide",
-      type: "boolean",
-      default: "false",
-      description: "Whether the button should be wider than normal",
+      description: "Whether the button only contains an icon (square shape)",
     },
     {
       name: "fullWidth",
@@ -75,29 +57,16 @@ export default function ButtonShowcase() {
       description: "Whether the button should take up the full width",
     },
     {
-      name: "responsive",
+      name: "isDisabled",
       type: "boolean",
       default: "false",
-      description:
-        "Whether the button should be responsive (changes size based on screen size)",
+      description: "Whether the button is disabled",
     },
     {
-      name: "animation",
-      type: "boolean",
-      default: "true",
-      description: "Whether to show click animations",
-    },
-    {
-      name: "loading",
+      name: "isPending",
       type: "boolean",
       default: "false",
-      description: "Whether the button is in a loading state",
-    },
-    {
-      name: "active",
-      type: "boolean",
-      default: "false",
-      description: "Whether the button is in an active state",
+      description: "Whether the button is in a loading/pending state",
     },
     {
       name: "startIcon",
@@ -110,31 +79,14 @@ export default function ButtonShowcase() {
       description: "Icon to show at the end of the button",
     },
     {
-      name: "disabled",
-      type: "boolean",
-      default: "false",
-      description: "Whether the button is disabled",
-    },
-    {
-      name: "as",
-      type: "ElementType",
-      default: '"button"',
-      description: "The HTML element to render as",
-    },
-    {
-      name: "dataTheme",
-      type: "string",
-      description: "Theme data attribute value",
-    },
-    {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
     },
     {
-      name: "style",
-      type: "JSX.CSSProperties",
-      description: "Inline styles to apply",
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
     },
   ];
 
@@ -163,64 +115,42 @@ export default function ButtonShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="brand-colors" title="Brand Colors">
+        {/* TODO[ui-1.2.2]: `color` prop removed; semantic palette collapsed into `variant`. info/success/warning have no direct equivalent. */}
+        <ShowcaseSection id="brand-colors" title="Brand Variants">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button>Default</Button>
-              <Button color="neutral">Neutral</Button>
-              <Button color="primary">Primary</Button>
-              <Button color="secondary">Secondary</Button>
-              <Button color="accent">Accent</Button>
-              <Button color="ghost">Ghost</Button>
-              <Button variant="link">Link</Button>
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="tertiary">Tertiary</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="danger">Danger</Button>
+              <Button variant="danger-soft">Danger Soft</Button>
             </Flex>
             <CodeBlock
               code={`<Button>Default</Button>
-<Button color="neutral">Neutral</Button>
-<Button color="primary">Primary</Button>
-<Button color="secondary">Secondary</Button>
-<Button color="accent">Accent</Button>
-<Button color="ghost">Ghost</Button>
-<Button variant="link">Link</Button>`}
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="tertiary">Tertiary</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="danger-soft">Danger Soft</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `variant="soft"` removed; closest match is `secondary` / `danger-soft`. */}
         <ShowcaseSection id="soft-style" title="Soft Style">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button variant="soft">Default</Button>
-              <Button variant="soft" color="primary">
-                Primary
-              </Button>
-              <Button variant="soft" color="secondary">
-                Secondary
-              </Button>
-              <Button variant="soft" color="accent">
-                Accent
-              </Button>
-              <Button variant="soft" color="info">
-                Info
-              </Button>
-              <Button variant="soft" color="success">
-                Success
-              </Button>
-              <Button variant="soft" color="warning">
-                Warning
-              </Button>
-              <Button variant="soft" color="error">
-                Error
-              </Button>
+              <Button variant="secondary">Secondary (soft)</Button>
+              <Button variant="danger-soft">Danger Soft</Button>
             </Flex>
             <CodeBlock
-              code={`<Button variant="soft">Default</Button>
-<Button variant="soft" color="primary">Primary</Button>
-<Button variant="soft" color="secondary">Secondary</Button>
-<Button variant="soft" color="accent">Accent</Button>
-<Button variant="soft" color="info">Info</Button>
-<Button variant="soft" color="success">Success</Button>
-<Button variant="soft" color="warning">Warning</Button>
-<Button variant="soft" color="error">Error</Button>`}
+              code={`<Button variant="secondary">Secondary (soft)</Button>
+<Button variant="danger-soft">Danger Soft</Button>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -228,168 +158,101 @@ export default function ButtonShowcase() {
         <ShowcaseSection id="outline-style" title="Outline Style">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button variant="outline">Default</Button>
-              <Button variant="outline" color="primary">
-                Primary
-              </Button>
-              <Button variant="outline" color="secondary">
-                Secondary
-              </Button>
-              <Button variant="outline" color="accent">
-                Accent
-              </Button>
-              <Button variant="outline" color="info">
-                Info
-              </Button>
-              <Button variant="outline" color="success">
-                Success
-              </Button>
-              <Button variant="outline" color="warning">
-                Warning
-              </Button>
-              <Button variant="outline" color="error">
-                Error
-              </Button>
+              <Button variant="outline">Outline</Button>
             </Flex>
-            <CodeBlock
-              code={`<Button variant="outline">Default</Button>
-<Button variant="outline" color="primary">Primary</Button>
-<Button variant="outline" color="secondary">Secondary</Button>
-<Button variant="outline" color="accent">Accent</Button>
-<Button variant="outline" color="info">Info</Button>
-<Button variant="outline" color="success">Success</Button>
-<Button variant="outline" color="warning">Warning</Button>
-<Button variant="outline" color="error">Error</Button>`}
-            />
+            <CodeBlock code={`<Button variant="outline">Outline</Button>`} />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `variant="dash"` removed; no replacement, falling back to outline. */}
         <ShowcaseSection id="dash-style" title="Dash Style">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button variant="dash">Default</Button>
-              <Button variant="dash" color="primary">
-                Primary
-              </Button>
-              <Button variant="dash" color="secondary">
-                Secondary
-              </Button>
-              <Button variant="dash" color="accent">
-                Accent
-              </Button>
-              <Button variant="dash" color="info">
-                Info
-              </Button>
-              <Button variant="dash" color="success">
-                Success
-              </Button>
-              <Button variant="dash" color="warning">
-                Warning
-              </Button>
-              <Button variant="dash" color="error">
-                Error
-              </Button>
+              <Button variant="outline">Outline (replaces dash)</Button>
             </Flex>
             <CodeBlock
-              code={`<Button variant="dash">Default</Button>
-<Button variant="dash" color="primary">Primary</Button>
-<Button variant="dash" color="secondary">Secondary</Button>
-<Button variant="dash" color="accent">Accent</Button>
-<Button variant="dash" color="info">Info</Button>
-<Button variant="dash" color="success">Success</Button>
-<Button variant="dash" color="warning">Warning</Button>
-<Button variant="dash" color="error">Error</Button>`}
+              code={`<Button variant="outline">Outline (replaces dash)</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `active` prop removed; consumers should toggle classes/aria-pressed themselves. */}
         <ShowcaseSection id="active-buttons" title="Active Buttons">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button active>Default</Button>
-              <Button active color="neutral">
-                Neutral
-              </Button>
-              <Button active color="primary">
+              <Button aria-pressed="true">Default</Button>
+              <Button variant="primary" aria-pressed="true">
                 Primary
               </Button>
-              <Button active color="secondary">
+              <Button variant="secondary" aria-pressed="true">
                 Secondary
               </Button>
-              <Button active color="accent">
-                Accent
-              </Button>
-              <Button active color="ghost">
+              <Button variant="ghost" aria-pressed="true">
                 Ghost
-              </Button>
-              <Button active variant="link">
-                Link
               </Button>
             </Flex>
             <CodeBlock
-              code={`<Button active>Default</Button>
-<Button active color="neutral">Neutral</Button>
-<Button active color="primary">Primary</Button>
-<Button active color="secondary">Secondary</Button>
-<Button active color="accent">Accent</Button>
-<Button active color="ghost">Ghost</Button>
-<Button active variant="link">Link</Button>`}
+              code={`<Button aria-pressed="true">Default</Button>
+<Button variant="primary" aria-pressed="true">Primary</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: info/success/warning colors removed; only danger remains as a semantic variant. */}
         <ShowcaseSection id="state-colors" title="State Colors">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button color="info">Info</Button>
-              <Button color="success">Success</Button>
-              <Button color="warning">Warning</Button>
-              <Button color="error">Error</Button>
+              <Button variant="danger">Danger</Button>
+              <Button variant="danger-soft">Danger Soft</Button>
             </Flex>
             <CodeBlock
-              code={`<Button color="info">Info</Button>
-<Button color="success">Success</Button>
-<Button color="warning">Warning</Button>
-<Button color="error">Error</Button>`}
+              code={`<Button variant="danger">Danger</Button>
+<Button variant="danger-soft">Danger Soft</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `size="xs"` and `size="xl"` removed; only sm/md/lg supported. */}
         <ShowcaseSection id="button-sizes" title="Button Sizes">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
               <Button size="lg">Large</Button>
               <Button>Normal</Button>
               <Button size="sm">Small</Button>
-              <Button size="xs">Tiny</Button>
             </Flex>
             <CodeBlock
               code={`<Button size="lg">Large</Button>
 <Button>Normal</Button>
-<Button size="sm">Small</Button>
-<Button size="xs">Tiny</Button>`}
+<Button size="sm">Small</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `responsive` prop removed; handle responsive sizing via class utilities. */}
         <ShowcaseSection id="responsive" title="Responsive">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Button responsive>Responsive</Button>
+              <Button class="sm:text-xs md:text-sm lg:text-base">
+                Responsive
+              </Button>
             </Flex>
-            <CodeBlock code={`<Button responsive>Responsive</Button>`} />
+            <CodeBlock
+              code={`<Button class="sm:text-xs md:text-sm lg:text-base">Responsive</Button>`}
+            />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `wide` prop removed; use a utility class for extra horizontal padding. */}
         <ShowcaseSection id="wide" title="Wide">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Button wide>Wide</Button>
+              <Button class="px-16">Wide</Button>
             </Flex>
-            <CodeBlock code={`<Button wide>Wide</Button>`} />
+            <CodeBlock code={`<Button class="px-16">Wide</Button>`} />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `glass` prop removed; compose with the GlassPanel component or a custom backdrop-blur class. */}
         <ShowcaseSection id="glass" title="Glass">
           <Flex direction="col" gap="md">
             <div
@@ -399,69 +262,78 @@ export default function ButtonShowcase() {
               }}
             >
               <Flex justify="start" align="start">
-                <Button glass>Glass button</Button>
+                <Button class="bg-white/20 backdrop-blur-md border border-white/30">
+                  Glass button
+                </Button>
               </Flex>
             </div>
-            <CodeBlock code={`<Button glass>Glass button</Button>`} />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="html-tags" title="Different HTML Tags">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button as="a" role="button">
-                Link
-              </Button>
-              <Button type="submit">Button</Button>
-              <Button as="input" type="button" value="Input" />
-              <Button as="input" type="submit" value="Submit" />
-              <Button as="button" type="button" aria-label="Radio" />
-              <Button as="button" type="button" aria-label="Checkbox" />
-              <Button as="input" type="reset" value="Reset" />
-            </Flex>
             <CodeBlock
-              code={`<Button as="a" role="button">Link</Button>
-<Button type="submit">Button</Button>
-<Button as="input" type="button" value="Input" />
-<Button as="input" type="submit" value="Submit" />
-<Button as="button" type="button" aria-label="Radio" />
-<Button as="button" type="button" aria-label="Checkbox" />
-<Button as="input" type="reset" value="Reset" />`}
+              code={`<Button class="bg-white/20 backdrop-blur-md border border-white/30">Glass button</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `as` polymorphic prop removed; render the underlying element directly when you need <a> or <input>. */}
+        <ShowcaseSection id="html-tags" title="Different HTML Tags">
+          <Flex direction="col" gap="md">
+            <Flex justify="start" align="start" gap="lg" wrap="wrap">
+              <a class="button button--primary button--md" role="button" href="#">
+                Link
+              </a>
+              <Button type="submit">Button</Button>
+              <input
+                class="button button--primary button--md"
+                type="button"
+                value="Input"
+              />
+              <input
+                class="button button--primary button--md"
+                type="submit"
+                value="Submit"
+              />
+              <input
+                class="button button--primary button--md"
+                type="reset"
+                value="Reset"
+              />
+            </Flex>
+            <CodeBlock
+              code={`<a class="button button--primary button--md" role="button" href="#">Link</a>
+<Button type="submit">Button</Button>
+<input class="button button--primary button--md" type="button" value="Input" />
+<input class="button button--primary button--md" type="submit" value="Submit" />
+<input class="button button--primary button--md" type="reset" value="Reset" />`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        {/* TODO[ui-1.2.2]: native `disabled` removed from the Button type; use `isDisabled` instead. */}
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button disabled>Disabled using attribute</Button>
+              <Button isDisabled>Disabled using prop</Button>
               <Button
-                class="btn btn-disabled"
+                class="opacity-50 pointer-events-none"
                 tabIndex={-1}
-                role="button"
                 aria-disabled="true"
               >
                 Disabled using class name
               </Button>
             </Flex>
             <CodeBlock
-              code={`<Button disabled>Disabled using attribute</Button>
-<Button
-  class="btn btn-disabled"
-  tabIndex={-1}
-  role="button"
-  aria-disabled="true"
->
+              code={`<Button isDisabled>Disabled using prop</Button>
+<Button class="opacity-50 pointer-events-none" tabIndex={-1} aria-disabled="true">
   Disabled using class name
 </Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `shape="square"` removed; use `isIconOnly` for square icon buttons. */}
         <ShowcaseSection id="square" title="Square Button">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button shape="square">
+              <Button isIconOnly>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-6 w-6"
@@ -477,7 +349,7 @@ export default function ButtonShowcase() {
                   />
                 </svg>
               </Button>
-              <Button shape="square" variant="outline">
+              <Button isIconOnly variant="outline">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-6 w-6"
@@ -495,24 +367,23 @@ export default function ButtonShowcase() {
               </Button>
             </Flex>
             <CodeBlock
-              code={`<Button shape="square">
+              code={`<Button isIconOnly>
   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
   </svg>
 </Button>
-<Button shape="square" variant="outline">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-  </svg>
+<Button isIconOnly variant="outline">
+  {/* ... */}
 </Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `shape="circle"` removed; add `rounded-full` to an icon-only button. */}
         <ShowcaseSection id="circle" title="Circle Button">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button shape="circle">
+              <Button isIconOnly class="rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-6 w-6"
@@ -528,7 +399,7 @@ export default function ButtonShowcase() {
                   />
                 </svg>
               </Button>
-              <Button shape="circle" variant="outline">
+              <Button isIconOnly variant="outline" class="rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-6 w-6"
@@ -546,15 +417,11 @@ export default function ButtonShowcase() {
               </Button>
             </Flex>
             <CodeBlock
-              code={`<Button shape="circle">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-  </svg>
+              code={`<Button isIconOnly class="rounded-full">
+  {/* ... */}
 </Button>
-<Button shape="circle" variant="outline">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-  </svg>
+<Button isIconOnly variant="outline" class="rounded-full">
+  {/* ... */}
 </Button>`}
             />
           </Flex>
@@ -585,15 +452,7 @@ export default function ButtonShowcase() {
               </Button>
             </Flex>
             <CodeBlock
-              code={`<Button
-  startIcon={
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-    </svg>
-  }
->
-  Button
-</Button>`}
+              code={`<Button startIcon={<svg .../>}>Button</Button>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -622,17 +481,7 @@ export default function ButtonShowcase() {
                 Button
               </Button>
             </Flex>
-            <CodeBlock
-              code={`<Button
-  endIcon={
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-    </svg>
-  }
->
-  Button
-</Button>`}
-            />
+            <CodeBlock code={`<Button endIcon={<svg .../>}>Button</Button>`} />
           </Flex>
         </ShowcaseSection>
 
@@ -645,46 +494,52 @@ export default function ButtonShowcase() {
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `loading` prop renamed to `isPending`. */}
         <ShowcaseSection id="loading" title="Loading States">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button loading shape="square" />
-              <Button loading>loading</Button>
+              <Button isPending isIconOnly />
+              <Button isPending>loading</Button>
             </Flex>
             <CodeBlock
-              code={`<Button loading shape="square" />
-<Button loading>loading</Button>`}
+              code={`<Button isPending isIconOnly />
+<Button isPending>loading</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `animation` prop removed; click animations are no longer toggleable per-button. */}
         <ShowcaseSection id="no-animation" title="Without Animation">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg" wrap="wrap">
-              <Button animation={false}>I don't have click animation</Button>
+              <Button class="transition-none active:scale-100">
+                I don't have click animation
+              </Button>
             </Flex>
             <CodeBlock
-              code={`<Button animation={false}>I don't have click animation</Button>`}
+              code={`<Button class="transition-none active:scale-100">I don't have click animation</Button>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `Button<"a">` polymorphic generic removed; render an <a> with button classes instead. */}
         <ShowcaseSection id="link" title="Link Button">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Button<"a">
-                as="a"
+              <a
+                class="button button--primary button--md"
+                role="button"
                 target="_blank"
                 rel="noopener"
                 href="https://daisyui.com/"
               >
                 Link
-              </Button>
+              </a>
             </Flex>
             <CodeBlock
-              code={`<Button<"a"> as="a" target="_blank" rel="noopener" href="https://daisyui.com/">
-    Link
-  </Button>`}
+              code={`<a class="button button--primary button--md" role="button" target="_blank" rel="noopener" href="https://daisyui.com/">
+  Link
+</a>`}
             />
           </Flex>
         </ShowcaseSection>

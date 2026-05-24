@@ -1,3 +1,4 @@
+// TODO[ui-1.2.2]: Select rewritten as compound component (Root/Trigger/Value/Indicator/Popover/Listbox/Option). Removed `color` and `size` props; old `<option>` children pattern replaced with Select.Option. onChange now receives `string | string[] | null`.
 import { createSignal } from "solid-js";
 import { Select, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
@@ -5,63 +6,87 @@ import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 
+type Option = { value: string; label: string };
+
+const Trigger = () => (
+  <Select.Trigger>
+    <Select.Value />
+    <Select.Indicator />
+  </Select.Trigger>
+);
+
+const Listbox = (props: { options: Option[] }) => (
+  <Select.Popover>
+    <Select.Listbox>
+      {props.options.map((opt) => (
+        <Select.Option value={opt.value}>{opt.label}</Select.Option>
+      ))}
+    </Select.Listbox>
+  </Select.Popover>
+);
+
 export default function SelectShowcase() {
-  const [selected, setSelected] = createSignal("");
-  const [colorSelected, setColorSelected] = createSignal("");
-  const [sizeSelected, setSizeSelected] = createSignal("");
+  const [selected, setSelected] = createSignal<string | null>(null);
 
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "basic", title: "Basic Usage" },
-    { id: "colors", title: "Color Variants" },
-    { id: "sizes", title: "Size Variants" },
-    { id: "states", title: "States" },
     { id: "variants", title: "Variants" },
+    { id: "states", title: "States" },
+    { id: "multiple", title: "Multiple Selection" },
     { id: "props", title: "Props" },
   ] as const;
 
   const props = [
     {
       name: "value",
-      type: "string | number | null",
-      description: "Current selected value",
+      type: "string | string[] | null",
+      description: "Controlled selected value(s)",
+    },
+    {
+      name: "defaultValue",
+      type: "string | string[] | null",
+      description: "Uncontrolled initial value",
     },
     {
       name: "onChange",
-      type: "JSX.EventHandlerUnion<HTMLSelectElement, Event>",
-      description: "Fired when value changes",
+      type: "(value: string | string[] | null) => void",
+      description: "Fired when selection changes",
     },
     {
       name: "placeholder",
       type: "string",
-      description: "Placeholder option shown when value is empty",
+      description: "Placeholder shown when nothing is selected",
     },
     {
-      name: "size",
-      type: '"sm" | "md" | "lg"',
-      default: '"md"',
-      description: "Size of the select input",
+      name: "variant",
+      type: '"primary" | "secondary"',
+      default: '"primary"',
+      description: "Visual variant of the trigger",
     },
     {
-      name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
-      description: "Color scheme of the select input",
+      name: "selectionMode",
+      type: '"single" | "multiple"',
+      default: '"single"',
+      description: "Whether one or many options can be selected",
     },
     {
-      name: "disabled",
+      name: "isDisabled",
       type: "boolean",
       default: "false",
-      description: "Disable the select input",
+      description: "Disable the select",
     },
     {
-      name: "class",
-      type: "string",
-      description: "Additional CSS classes to apply",
+      name: "fullWidth",
+      type: "boolean",
+      default: "false",
+      description: "Expand the trigger to full width",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias for class)",
+      name: "placement",
+      type: '"top" | "bottom" | ...',
+      default: '"bottom"',
+      description: "Popover placement",
     },
     {
       name: "dataTheme",
@@ -70,7 +95,7 @@ export default function SelectShowcase() {
     },
   ];
 
-  const fruitOptions = [
+  const fruitOptions: Option[] = [
     { value: "apple", label: "Apple" },
     { value: "banana", label: "Banana" },
     { value: "orange", label: "Orange" },
@@ -79,31 +104,7 @@ export default function SelectShowcase() {
     { value: "kiwi", label: "Kiwi" },
   ];
 
-  const colorOptions = [
-    { value: "red", label: "Ruby Red" },
-    { value: "blue", label: "Ocean Blue" },
-    { value: "green", label: "Forest Green" },
-    { value: "purple", label: "Royal Purple" },
-    { value: "orange", label: "Sunset Orange" },
-  ];
-
-  const sizeOptions = [
-    { value: "xs", label: "Extra Small" },
-    { value: "sm", label: "Small" },
-    { value: "md", label: "Medium" },
-    { value: "lg", label: "Large" },
-    { value: "xl", label: "Extra Large" },
-  ];
-
-  const categoryOptions = [
-    { value: "electronics", label: "Electronics" },
-    { value: "clothing", label: "Clothing" },
-    { value: "books", label: "Books" },
-    { value: "sports", label: "Sports" },
-    { value: "home", label: "Home & Garden" },
-  ];
-
-  const animalOptions = [
+  const animalOptions: Option[] = [
     { value: "cat", label: "Cat" },
     { value: "dog", label: "Dog" },
     { value: "rabbit", label: "Rabbit" },
@@ -133,173 +134,32 @@ export default function SelectShowcase() {
               <Select
                 placeholder="Select a fruit"
                 value={selected()}
-                onChange={(e) => setSelected(e.currentTarget.value)}
+                onChange={(v) => setSelected(typeof v === "string" ? v : null)}
               >
-                {fruitOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
+                <Trigger />
+                <Listbox options={fruitOptions} />
               </Select>
               <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
-                Selected fruit: {selected() || "(none)"}
+                Selected fruit: {selected() ?? "(none)"}
               </div>
             </Flex>
             <CodeBlock
-              code={`const [selected, setSelected] = createSignal("");
-
-const fruitOptions = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "orange", label: "Orange" },
-  { value: "grape", label: "Grape" },
-  { value: "mango", label: "Mango" },
-  { value: "kiwi", label: "Kiwi" },
-];
-
-<Select
+              code={`<Select
   placeholder="Select a fruit"
   value={selected()}
-  onChange={(e) => setSelected(e.currentTarget.value)}
+  onChange={(v) => setSelected(v as string | null)}
 >
-  {fruitOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="colors" title="Color Variants">
-          <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
-              <Select
-                placeholder="Select a color"
-                color="primary"
-                value={colorSelected()}
-                onChange={(e) => setColorSelected(e.currentTarget.value)}
-              >
-                {colorOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select placeholder="Select a category" color="info">
-                {categoryOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select placeholder="Select a fruit" color="success">
-                {fruitOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select placeholder="Select a size" color="warning">
-                {sizeOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select placeholder="Select an animal" color="error">
-                {animalOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-            </Flex>
-            <CodeBlock
-              code={`<Select placeholder="Select a color" color="primary">
-  {colorOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select placeholder="Select a category" color="info">
-  {categoryOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select placeholder="Select a fruit" color="success">
-  {fruitOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select placeholder="Select a size" color="warning">
-  {sizeOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select placeholder="Select an animal" color="error">
-  {animalOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="sizes" title="Size Variants">
-          <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
-              <Select
-                size="sm"
-                placeholder="Small size"
-                value={sizeSelected()}
-                onChange={(e) => setSizeSelected(e.currentTarget.value)}
-              >
-                {sizeOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select size="md" placeholder="Medium size">
-                {animalOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select size="lg" placeholder="Large size">
-                {fruitOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-            </Flex>
-            <CodeBlock
-              code={`<Select size="sm" placeholder="Small size">
-  {sizeOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select size="md" placeholder="Medium size">
-  {animalOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select size="lg" placeholder="Large size">
-  {fruitOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="states" title="States">
-          <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg">
-              <Select disabled placeholder="Disabled state">
-                {fruitOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select placeholder="Loading state">
-                {animalOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-            </Flex>
-            <CodeBlock
-              code={`<Select disabled placeholder="Disabled state">
-  {fruitOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select placeholder="Loading state">
-  {animalOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
+  <Select.Trigger>
+    <Select.Value />
+    <Select.Indicator />
+  </Select.Trigger>
+  <Select.Popover>
+    <Select.Listbox>
+      {fruitOptions.map((opt) => (
+        <Select.Option value={opt.value}>{opt.label}</Select.Option>
+      ))}
+    </Select.Listbox>
+  </Select.Popover>
 </Select>`}
             />
           </Flex>
@@ -308,38 +168,51 @@ const fruitOptions = [
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Select placeholder="Rounded corners">
-                {colorOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
+              <Select variant="primary" placeholder="Primary">
+                <Trigger />
+                <Listbox options={fruitOptions} />
               </Select>
-              <Select placeholder="Full width">
-                {categoryOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
-              </Select>
-              <Select placeholder="Multiple visible options">
-                {animalOptions.map((opt) => (
-                  <option value={opt.value}>{opt.label}</option>
-                ))}
+              <Select variant="secondary" placeholder="Secondary">
+                <Trigger />
+                <Listbox options={animalOptions} />
               </Select>
             </Flex>
             <CodeBlock
-              code={`<Select placeholder="Rounded corners">
-  {colorOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select placeholder="Full width">
-  {categoryOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>
-<Select placeholder="Multiple visible options">
-  {animalOptions.map((opt) => (
-    <option value={opt.value}>{opt.label}</option>
-  ))}
-</Select>`}
+              code={`<Select variant="primary"> ... </Select>
+<Select variant="secondary"> ... </Select>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="states" title="States">
+          <Flex direction="col" gap="md">
+            <Flex align="start" justify="start" gap="lg">
+              <Select isDisabled placeholder="Disabled">
+                <Trigger />
+                <Listbox options={fruitOptions} />
+              </Select>
+              <Select fullWidth placeholder="Full width">
+                <Trigger />
+                <Listbox options={animalOptions} />
+              </Select>
+            </Flex>
+            <CodeBlock
+              code={`<Select isDisabled> ... </Select>
+<Select fullWidth> ... </Select>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="multiple" title="Multiple Selection">
+          <Flex direction="col" gap="md">
+            <Flex align="start" justify="start" gap="lg">
+              <Select selectionMode="multiple" placeholder="Pick several fruits">
+                <Trigger />
+                <Listbox options={fruitOptions} />
+              </Select>
+            </Flex>
+            <CodeBlock
+              code={`<Select selectionMode="multiple"> ... </Select>`}
             />
           </Flex>
         </ShowcaseSection>

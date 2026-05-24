@@ -1,3 +1,4 @@
+// TODO[ui-1.2.2]: Fieldset rewritten as compound (Root/Legend/Group/Actions). Removed props: legend, description, gap. Use Fieldset.Legend and Fieldset.Group instead.
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Fieldset, Input, Checkbox, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
@@ -9,47 +10,36 @@ export default function FieldsetShowcase() {
     { id: "default", title: "Default with Legend" },
     { id: "description", title: "With Description" },
     { id: "disabled", title: "Disabled State" },
-    { id: "gap-sizes", title: "Gap Sizes" },
+    { id: "gap-sizes", title: "Custom Gap" },
     { id: "props", title: "Props" },
   ] as const;
 
   const fieldsetProps = [
     {
-      name: "legend",
-      type: "JSX.Element | string",
-      description: "Legend content displayed at the top of the fieldset",
-    },
-    {
-      name: "description",
-      type: "string",
-      description: "Optional description text below the legend",
+      name: "children",
+      type: "JSX.Element",
+      description: "Child elements rendered inside the <fieldset> element",
     },
     {
       name: "disabled",
       type: "boolean",
       default: "false",
-      description: "Disables all form controls within the fieldset",
+      description: "Native fieldset disabled attribute; disables all form controls within",
     },
     {
-      name: "gap",
-      type: '"none" | "xs" | "sm" | "md" | "lg" | "xl"',
-      default: "undefined",
-      description: "Spacing between child elements",
+      name: "class",
+      type: "string",
+      description: "Additional CSS classes (use Tailwind gap-* utilities to control spacing)",
     },
     {
-      name: "children",
-      type: "JSX.Element",
-      description: "Child elements rendered inside the fieldset",
+      name: "className",
+      type: "string",
+      description: "Additional CSS classes (alias for class)",
     },
     {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value (from IComponentBaseProps)",
-    },
-    {
-      name: "class",
-      type: "string",
-      description: "Additional CSS classes",
     },
   ];
 
@@ -72,17 +62,23 @@ export default function FieldsetShowcase() {
         <ShowcaseSection id="default" title="Default with Legend">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Fieldset legend="Personal Information">
-                <Input placeholder="First name" />
-                <Input placeholder="Last name" />
-                <Input placeholder="Email" />
+              <Fieldset>
+                <Fieldset.Legend>Personal Information</Fieldset.Legend>
+                <Fieldset.Group>
+                  <Input placeholder="First name" />
+                  <Input placeholder="Last name" />
+                  <Input placeholder="Email" />
+                </Fieldset.Group>
               </Fieldset>
             </Flex>
             <CodeBlock
-              code={`<Fieldset legend="Personal Information">
-  <Input placeholder="First name" />
-  <Input placeholder="Last name" />
-  <Input placeholder="Email" />
+              code={`<Fieldset>
+  <Fieldset.Legend>Personal Information</Fieldset.Legend>
+  <Fieldset.Group>
+    <Input placeholder="First name" />
+    <Input placeholder="Last name" />
+    <Input placeholder="Email" />
+  </Fieldset.Group>
 </Fieldset>`}
             />
           </Flex>
@@ -91,23 +87,29 @@ export default function FieldsetShowcase() {
         <ShowcaseSection id="description" title="With Description">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Fieldset
-                legend="Notification Preferences"
-                description="Choose how you would like to receive notifications."
-              >
-                <Checkbox>Email notifications</Checkbox>
-                <Checkbox>SMS notifications</Checkbox>
-                <Checkbox>Push notifications</Checkbox>
+              <Fieldset>
+                <Fieldset.Legend>Notification Preferences</Fieldset.Legend>
+                <p class="text-sm text-base-content/70">
+                  Choose how you would like to receive notifications.
+                </p>
+                <Fieldset.Group>
+                  <Checkbox>Email notifications</Checkbox>
+                  <Checkbox>SMS notifications</Checkbox>
+                  <Checkbox>Push notifications</Checkbox>
+                </Fieldset.Group>
               </Fieldset>
             </Flex>
             <CodeBlock
-              code={`<Fieldset
-  legend="Notification Preferences"
-  description="Choose how you would like to receive notifications."
->
-  <Checkbox>Email notifications</Checkbox>
-  <Checkbox>SMS notifications</Checkbox>
-  <Checkbox>Push notifications</Checkbox>
+              code={`<Fieldset>
+  <Fieldset.Legend>Notification Preferences</Fieldset.Legend>
+  <p class="text-sm text-base-content/70">
+    Choose how you would like to receive notifications.
+  </p>
+  <Fieldset.Group>
+    <Checkbox>Email notifications</Checkbox>
+    <Checkbox>SMS notifications</Checkbox>
+    <Checkbox>Push notifications</Checkbox>
+  </Fieldset.Group>
 </Fieldset>`}
             />
           </Flex>
@@ -116,58 +118,64 @@ export default function FieldsetShowcase() {
         <ShowcaseSection id="disabled" title="Disabled State">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Fieldset legend="Account Settings" description="These fields are currently locked." disabled>
-                <Input placeholder="Username" value="johndoe" />
-                <Input placeholder="Email" value="john@example.com" />
+              <Fieldset disabled>
+                <Fieldset.Legend>Account Settings</Fieldset.Legend>
+                <p class="text-sm text-base-content/70">These fields are currently locked.</p>
+                <Fieldset.Group>
+                  <Input placeholder="Username" value="johndoe" />
+                  <Input placeholder="Email" value="john@example.com" />
+                </Fieldset.Group>
               </Fieldset>
             </Flex>
             <CodeBlock
-              code={`<Fieldset legend="Account Settings" description="These fields are currently locked." disabled>
-  <Input placeholder="Username" value="johndoe" />
-  <Input placeholder="Email" value="john@example.com" />
+              code={`<Fieldset disabled>
+  <Fieldset.Legend>Account Settings</Fieldset.Legend>
+  <Fieldset.Group>
+    <Input placeholder="Username" value="johndoe" />
+    <Input placeholder="Email" value="john@example.com" />
+  </Fieldset.Group>
 </Fieldset>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="gap-sizes" title="Gap Sizes">
+        <ShowcaseSection id="gap-sizes" title="Custom Gap">
           <Flex direction="col" gap="md">
+            <p class="text-sm text-base-content/70">
+              The `gap` prop was removed; control spacing with Tailwind `gap-*` utilities on
+              Fieldset.Group.
+            </p>
             <Flex wrap="wrap" align="start" justify="start" gap="lg">
-              <Fieldset legend="gap=none" gap="none">
-                <Input placeholder="Field A" />
-                <Input placeholder="Field B" />
+              <Fieldset>
+                <Fieldset.Legend>gap-0</Fieldset.Legend>
+                <Fieldset.Group class="gap-0">
+                  <Input placeholder="Field A" />
+                  <Input placeholder="Field B" />
+                </Fieldset.Group>
               </Fieldset>
-              <Fieldset legend="gap=xs" gap="xs">
-                <Input placeholder="Field A" />
-                <Input placeholder="Field B" />
+              <Fieldset>
+                <Fieldset.Legend>gap-4</Fieldset.Legend>
+                <Fieldset.Group class="gap-4">
+                  <Input placeholder="Field A" />
+                  <Input placeholder="Field B" />
+                </Fieldset.Group>
               </Fieldset>
-              <Fieldset legend="gap=sm" gap="sm">
-                <Input placeholder="Field A" />
-                <Input placeholder="Field B" />
-              </Fieldset>
-              <Fieldset legend="gap=md" gap="md">
-                <Input placeholder="Field A" />
-                <Input placeholder="Field B" />
-              </Fieldset>
-              <Fieldset legend="gap=lg" gap="lg">
-                <Input placeholder="Field A" />
-                <Input placeholder="Field B" />
-              </Fieldset>
-              <Fieldset legend="gap=xl" gap="xl">
-                <Input placeholder="Field A" />
-                <Input placeholder="Field B" />
+              <Fieldset>
+                <Fieldset.Legend>gap-8</Fieldset.Legend>
+                <Fieldset.Group class="gap-8">
+                  <Input placeholder="Field A" />
+                  <Input placeholder="Field B" />
+                </Fieldset.Group>
               </Fieldset>
             </Flex>
             <CodeBlock
-              code={`<Fieldset legend="gap=none" gap="none">
-  <Input placeholder="Field A" />
-  <Input placeholder="Field B" />
-</Fieldset>
-<Fieldset legend="gap=xs" gap="xs">...</Fieldset>
-<Fieldset legend="gap=sm" gap="sm">...</Fieldset>
-<Fieldset legend="gap=md" gap="md">...</Fieldset>
-<Fieldset legend="gap=lg" gap="lg">...</Fieldset>
-<Fieldset legend="gap=xl" gap="xl">...</Fieldset>`}
+              code={`<Fieldset>
+  <Fieldset.Legend>gap-4</Fieldset.Legend>
+  <Fieldset.Group class="gap-4">
+    <Input placeholder="Field A" />
+    <Input placeholder="Field B" />
+  </Fieldset.Group>
+</Fieldset>`}
             />
           </Flex>
         </ShowcaseSection>

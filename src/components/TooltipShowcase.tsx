@@ -9,60 +9,68 @@ export default function TooltipShowcase() {
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
     { id: "force-open", title: "Force Open" },
-    { id: "positions", title: "Positions" },
-    { id: "colors", title: "Colors" },
-    { id: "statuses", title: "Statuses" },
+    { id: "placements", title: "Placements" },
+    { id: "with-arrow", title: "With Arrow" },
     { id: "props", title: "Props" },
   ] as const;
 
   const tooltipProps = [
     {
-      name: "message",
-      type: "string",
-      required: true,
-      description: "The text content of the tooltip",
-    },
-    {
-      name: "open",
-      type: "boolean",
-      default: "false",
-      description: "Whether the tooltip should always be visible",
-    },
-    {
-      name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error" | "ghost"',
-      description: "The color scheme of the tooltip",
-    },
-    {
-      name: "position",
+      name: "placement",
       type: '"top" | "bottom" | "left" | "right"',
       default: '"top"',
-      description: "The position of the tooltip relative to its trigger",
+      description: "The preferred placement of the tooltip relative to its trigger",
+    },
+    {
+      name: "autoFlip",
+      type: "boolean",
+      default: "true",
+      description: "Whether to flip the tooltip placement if there is not enough space",
+    },
+    {
+      name: "sideOffset",
+      type: "number",
+      default: "12",
+      description: "Distance between the trigger and the tooltip content",
+    },
+    {
+      name: "showArrow",
+      type: "boolean",
+      default: "false",
+      description: "Whether to show the tooltip arrow",
+    },
+    {
+      name: "delay",
+      type: "number",
+      default: "0",
+      description: "Delay (ms) before the tooltip opens",
+    },
+    {
+      name: "closeDelay",
+      type: "number",
+      default: "100",
+      description: "Delay (ms) before the tooltip closes",
+    },
+    {
+      name: "isOpen",
+      type: "boolean",
+      description: "Controlled open state",
+    },
+    {
+      name: "defaultOpen",
+      type: "boolean",
+      default: "false",
+      description: "Default open state when uncontrolled",
+    },
+    {
+      name: "onOpenChange",
+      type: "(isOpen: boolean) => void",
+      description: "Callback fired when the open state changes",
     },
     {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value",
-    },
-    {
-      name: "class",
-      type: "string",
-      description: "Additional CSS classes",
-    },
-    {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias)",
-    },
-    {
-      name: "style",
-      type: "JSX.CSSProperties",
-      description: "Inline styles to apply",
-    },
-    {
-      name: "children",
-      type: "JSX.Element",
-      description: "The element the tooltip is attached to",
     },
   ];
 
@@ -85,13 +93,19 @@ export default function TooltipShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" class="my-16">
-              <Tooltip message="hello">
-                <Button>Hover me</Button>
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <Button>Hover me</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>hello</Tooltip.Content>
               </Tooltip>
             </Flex>
             <CodeBlock
-              code={`<Tooltip message="hello">
-  <Button>Hover me</Button>
+              code={`<Tooltip>
+  <Tooltip.Trigger>
+    <Button>Hover me</Button>
+  </Tooltip.Trigger>
+  <Tooltip.Content>hello</Tooltip.Content>
 </Tooltip>`}
             />
           </Flex>
@@ -100,116 +114,94 @@ export default function TooltipShowcase() {
         <ShowcaseSection id="force-open" title="Force Open">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" class="my-16">
-              <Tooltip message="hello" open>
-                <Button>Hover me</Button>
+              <Tooltip isOpen>
+                <Tooltip.Trigger>
+                  <Button>Always open</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>hello</Tooltip.Content>
               </Tooltip>
             </Flex>
             <CodeBlock
-              code={`<Tooltip message="hello" open>
-  <Button>Hover me</Button>
+              code={`<Tooltip isOpen>
+  <Tooltip.Trigger>
+    <Button>Always open</Button>
+  </Tooltip.Trigger>
+  <Tooltip.Content>hello</Tooltip.Content>
 </Tooltip>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="positions" title="Positions">
+        <ShowcaseSection id="placements" title="Placements">
           <Flex direction="col" gap="md">
             <Flex gap="xl" align="start" justify="start" class="my-16">
-              <Tooltip message="top" position="top">
-                <Button size="sm">Top</Button>
+              <Tooltip placement="top">
+                <Tooltip.Trigger>
+                  <Button size="sm">Top</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>top</Tooltip.Content>
               </Tooltip>
-              <Tooltip message="bottom" position="bottom">
-                <Button size="sm">Bottom</Button>
+              <Tooltip placement="bottom">
+                <Tooltip.Trigger>
+                  <Button size="sm">Bottom</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>bottom</Tooltip.Content>
               </Tooltip>
-              <Tooltip message="left" position="left">
-                <Button size="sm">Left</Button>
+              <Tooltip placement="left">
+                <Tooltip.Trigger>
+                  <Button size="sm">Left</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>left</Tooltip.Content>
               </Tooltip>
-              <Tooltip message="right" position="right">
-                <Button size="sm">Right</Button>
+              <Tooltip placement="right">
+                <Tooltip.Trigger>
+                  <Button size="sm">Right</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>right</Tooltip.Content>
               </Tooltip>
             </Flex>
             <CodeBlock
-              code={`<Tooltip message="top" position="top">
-  <Button size="sm">Top</Button>
-</Tooltip>
-<Tooltip message="bottom" position="bottom">
-  <Button size="sm">Bottom</Button>
-</Tooltip>
-<Tooltip message="left" position="left">
-  <Button size="sm">Left</Button>
-</Tooltip>
-<Tooltip message="right" position="right">
-  <Button size="sm">Right</Button>
+              code={`<Tooltip placement="top">
+  <Tooltip.Trigger>
+    <Button size="sm">Top</Button>
+  </Tooltip.Trigger>
+  <Tooltip.Content>top</Tooltip.Content>
 </Tooltip>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Colors">
+        <ShowcaseSection id="with-arrow" title="With Arrow">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg" class="my-16">
-              <Tooltip color="primary" message="primary" open>
-                <Button color="primary">Primary</Button>
+              <Tooltip isOpen showArrow placement="top">
+                <Tooltip.Trigger>
+                  <Button>Top with arrow</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  Tip text
+                  <Tooltip.Arrow />
+                </Tooltip.Content>
               </Tooltip>
-
-              <Tooltip color="secondary" message="secondary" open>
-                <Button color="secondary">Secondary</Button>
-              </Tooltip>
-
-              <Tooltip color="accent" message="accent" open>
-                <Button color="accent">Accent</Button>
+              <Tooltip isOpen showArrow placement="bottom">
+                <Tooltip.Trigger>
+                  <Button>Bottom with arrow</Button>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  Tip text
+                  <Tooltip.Arrow />
+                </Tooltip.Content>
               </Tooltip>
             </Flex>
             <CodeBlock
-              code={`<Tooltip color="primary" message="primary" open>
-  <Button color="primary">Primary</Button>
-</Tooltip>
-
-<Tooltip color="secondary" message="secondary" open>
-  <Button color="secondary">Secondary</Button>
-</Tooltip>
-
-<Tooltip color="accent" message="accent" open>
-  <Button color="accent">Accent</Button>
-</Tooltip>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="statuses" title="Statuses">
-          <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="lg" class="my-16">
-              <Tooltip color="info" message="info" open>
-                <Button color="info">Info</Button>
-              </Tooltip>
-
-              <Tooltip color="success" message="success" open>
-                <Button color="success">Success</Button>
-              </Tooltip>
-
-              <Tooltip color="warning" message="warning" open>
-                <Button color="warning">Warning</Button>
-              </Tooltip>
-
-              <Tooltip color="error" message="error" open>
-                <Button color="error">Error</Button>
-              </Tooltip>
-            </Flex>
-            <CodeBlock
-              code={`<Tooltip color="info" message="info" open>
-  <Button color="info">Info</Button>
-</Tooltip>
-
-<Tooltip color="success" message="success" open>
-  <Button color="success">Success</Button>
-</Tooltip>
-
-<Tooltip color="warning" message="warning" open>
-  <Button color="warning">Warning</Button>
-</Tooltip>
-
-<Tooltip color="error" message="error" open>
-  <Button color="error">Error</Button>
+              code={`<Tooltip isOpen showArrow placement="top">
+  <Tooltip.Trigger>
+    <Button>Top with arrow</Button>
+  </Tooltip.Trigger>
+  <Tooltip.Content>
+    Tip text
+    <Tooltip.Arrow />
+  </Tooltip.Content>
 </Tooltip>`}
             />
           </Flex>

@@ -17,36 +17,43 @@ export default function AccordionShowcase() {
 
   const props = [
     {
-      name: "name",
-      type: "string",
-      description:
-        "Name attribute for radio input, used for grouping accordions",
+      name: "selectionMode",
+      type: '"single" | "multiple"',
+      default: '"single"',
+      description: "Whether one or many items can be expanded at the same time",
     },
     {
-      name: "icon",
-      type: '"arrow" | "plus"',
-      description: "Icon type to show for the accordion",
+      name: "value",
+      type: "string | string[]",
+      description: "Controlled expanded item value(s)",
     },
     {
-      name: "checked",
+      name: "defaultValue",
+      type: "string | string[]",
+      description: "Initially expanded item value(s) (uncontrolled)",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string[]) => void",
+      description: "Callback fired when expanded items change",
+    },
+    {
+      name: "variant",
+      type: '"default" | "surface"',
+      default: '"default"',
+      description: "Visual style of the accordion root",
+    },
+    {
+      name: "hideSeparator",
       type: "boolean",
       default: "false",
-      description: "Whether the accordion is expanded by default",
+      description: "Hide separators between items",
     },
     {
-      name: "mode",
-      type: '"radio" | "checkbox" | "controlled"',
-      description: "Interaction mode for the accordion",
-    },
-    {
-      name: "expanded",
+      name: "isDisabled",
       type: "boolean",
-      description: "Whether the accordion is expanded (for controlled mode)",
-    },
-    {
-      name: "onToggle",
-      type: "() => void",
-      description: "Callback function called when accordion state changes",
+      default: "false",
+      description: "Disable the entire accordion",
     },
     {
       name: "class",
@@ -62,21 +69,6 @@ export default function AccordionShowcase() {
       name: "style",
       type: "JSX.CSSProperties",
       description: "Inline styles to apply",
-    },
-    {
-      name: "aria-label",
-      type: "string",
-      description: "Accessibility label for the accordion",
-    },
-    {
-      name: "aria-describedby",
-      type: "string",
-      description: "ID of element describing the accordion",
-    },
-    {
-      name: "aria-labelledby",
-      type: "string",
-      description: "ID of element labeling the accordion",
     },
     {
       name: "dataTheme",
@@ -103,122 +95,139 @@ export default function AccordionShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex wrap="wrap" gap="md">
-              <Accordion class="bg-base-200" checked>
-                <Accordion.Title class="text-xl font-medium">
+            <Accordion class="bg-base-200" defaultValue="a">
+              <Accordion.Item value="a">
+                <Accordion.Trigger class="text-xl font-medium">
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="b">
+                <Accordion.Trigger class="text-xl font-medium">
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="c">
+                <Accordion.Trigger class="text-xl font-medium">
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-            </Flex>
+              </Accordion.Item>
+            </Accordion>
             <CodeBlock
-              code={`<Accordion class="bg-base-200" checked>
-  <Accordion.Title class="text-xl font-medium">
-    Click to open this one and close others
-  </Accordion.Title>
-  <Accordion.Content>
-    <p>hello</p>
-  </Accordion.Content>
+              code={`<Accordion class="bg-base-200" defaultValue="a">
+  <Accordion.Item value="a">
+    <Accordion.Trigger class="text-xl font-medium">
+      Click to open this one and close others
+    </Accordion.Trigger>
+    <Accordion.Content>
+      <p>hello</p>
+    </Accordion.Content>
+  </Accordion.Item>
 </Accordion>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `icon="arrow"` removed; built-in indicator is now a chevron via <Accordion.Indicator/>. Section kept to show default chevron behavior. */}
         <ShowcaseSection id="with-arrow" title="With Arrow">
           <Flex direction="col" gap="md">
-            <Flex wrap="wrap" gap="md">
-              <Accordion class="bg-base-200" icon="arrow" checked>
-                <Accordion.Title class="text-xl font-medium">
+            <Accordion class="bg-base-200" defaultValue="a">
+              <Accordion.Item value="a">
+                <Accordion.Trigger class="text-xl font-medium">
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" icon="arrow">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="b">
+                <Accordion.Trigger class="text-xl font-medium">
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" icon="arrow">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="c">
+                <Accordion.Trigger class="text-xl font-medium">
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-            </Flex>
+              </Accordion.Item>
+            </Accordion>
             <CodeBlock
-              code={`<Accordion class="bg-base-200" icon="arrow" checked>
-  <Accordion.Title class="text-xl font-medium">
-    Click to open this one and close others
-  </Accordion.Title>
-  <Accordion.Content>
-    <p>hello</p>
-  </Accordion.Content>
+              code={`<Accordion class="bg-base-200" defaultValue="a">
+  <Accordion.Item value="a">
+    <Accordion.Trigger class="text-xl font-medium">
+      Click to open this one and close others
+    </Accordion.Trigger>
+    <Accordion.Content>
+      <p>hello</p>
+    </Accordion.Content>
+  </Accordion.Item>
 </Accordion>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `icon="plus"` removed; pass a custom indicator via <Accordion.Trigger indicator={...}> to render plus/minus. */}
         <ShowcaseSection id="with-plus" title="With Plus/Minus">
           <Flex direction="col" gap="md">
-            <Flex wrap="wrap" gap="md">
-              <Accordion class="bg-base-200" icon="plus" checked>
-                <Accordion.Title class="text-xl font-medium">
+            <Accordion class="bg-base-200" defaultValue="a">
+              <Accordion.Item value="a">
+                <Accordion.Trigger
+                  class="text-xl font-medium"
+                  indicator={<span aria-hidden="true">+</span>}
+                >
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" icon="plus">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="b">
+                <Accordion.Trigger
+                  class="text-xl font-medium"
+                  indicator={<span aria-hidden="true">+</span>}
+                >
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" icon="plus">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="c">
+                <Accordion.Trigger
+                  class="text-xl font-medium"
+                  indicator={<span aria-hidden="true">+</span>}
+                >
                   Click to open this one and close others
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-            </Flex>
+              </Accordion.Item>
+            </Accordion>
             <CodeBlock
-              code={`<Accordion class="bg-base-200" icon="plus" checked>
-  <Accordion.Title class="text-xl font-medium">
-    Click to open this one and close others
-  </Accordion.Title>
-  <Accordion.Content>
-    <p>hello</p>
-  </Accordion.Content>
+              code={`<Accordion class="bg-base-200" defaultValue="a">
+  <Accordion.Item value="a">
+    <Accordion.Trigger class="text-xl font-medium" indicator={<span>+</span>}>
+      Click to open this one and close others
+    </Accordion.Trigger>
+    <Accordion.Content>
+      <p>hello</p>
+    </Accordion.Content>
+  </Accordion.Item>
 </Accordion>`}
             />
           </Flex>
@@ -229,119 +238,127 @@ export default function AccordionShowcase() {
             <Join class="w-full" vertical>
               <Accordion
                 class="border border-base-300 join-item"
-                icon="arrow"
-                checked
+                defaultValue="a"
               >
-                <Accordion.Title class="text-xl font-medium">
-                  Click to open this one and close others
-                </Accordion.Title>
-                <Accordion.Content>
-                  <p>hello</p>
-                </Accordion.Content>
-              </Accordion>
-              <Accordion class="border border-base-300 join-item" icon="arrow">
-                <Accordion.Title class="text-xl font-medium">
-                  Click to open this one and close others
-                </Accordion.Title>
-                <Accordion.Content>
-                  <p>hello</p>
-                </Accordion.Content>
-              </Accordion>
-              <Accordion class="border border-base-300 join-item" icon="arrow">
-                <Accordion.Title class="text-xl font-medium">
-                  Click to open this one and close others
-                </Accordion.Title>
-                <Accordion.Content>
-                  <p>hello</p>
-                </Accordion.Content>
+                <Accordion.Item value="a">
+                  <Accordion.Trigger class="text-xl font-medium">
+                    Click to open this one and close others
+                  </Accordion.Trigger>
+                  <Accordion.Content>
+                    <p>hello</p>
+                  </Accordion.Content>
+                </Accordion.Item>
+                <Accordion.Item value="b">
+                  <Accordion.Trigger class="text-xl font-medium">
+                    Click to open this one and close others
+                  </Accordion.Trigger>
+                  <Accordion.Content>
+                    <p>hello</p>
+                  </Accordion.Content>
+                </Accordion.Item>
+                <Accordion.Item value="c">
+                  <Accordion.Trigger class="text-xl font-medium">
+                    Click to open this one and close others
+                  </Accordion.Trigger>
+                  <Accordion.Content>
+                    <p>hello</p>
+                  </Accordion.Content>
+                </Accordion.Item>
               </Accordion>
             </Join>
             <CodeBlock
               code={`<Join class="w-full" vertical>
-  <Accordion class="border border-base-300 join-item" icon="arrow" checked>
-    <Accordion.Title class="text-xl font-medium">
-      Click to open this one and close others
-    </Accordion.Title>
-    <Accordion.Content>
-      <p>hello</p>
-    </Accordion.Content>
+  <Accordion class="border border-base-300 join-item" defaultValue="a">
+    <Accordion.Item value="a">
+      <Accordion.Trigger class="text-xl font-medium">
+        Click to open this one and close others
+      </Accordion.Trigger>
+      <Accordion.Content>
+        <p>hello</p>
+      </Accordion.Content>
+    </Accordion.Item>
+    {/* ... other items ... */}
   </Accordion>
-  {/* ... other accordions ... */}
 </Join>`}
             />
           </Flex>
         </ShowcaseSection>
 
+        {/* TODO[ui-1.2.2]: `name`-based radio grouping removed; each <Accordion> root with selectionMode="single" is its own group. */}
         <ShowcaseSection id="multiple" title="Multiple Groups">
           <Flex direction="col" gap="md">
-            <Flex wrap="wrap" gap="md">
-              <Accordion class="bg-base-200" name="groupA" checked>
-                <Accordion.Title class="text-xl font-medium">
+            <Accordion class="bg-base-200" defaultValue="a1">
+              <Accordion.Item value="a1">
+                <Accordion.Trigger class="text-xl font-medium">
                   Group A
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" name="groupA">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="a2">
+                <Accordion.Trigger class="text-xl font-medium">
                   Group A
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" name="groupA">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="a3">
+                <Accordion.Trigger class="text-xl font-medium">
                   Group A
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-            </Flex>
+              </Accordion.Item>
+            </Accordion>
 
-            <Flex wrap="wrap" gap="md">
-              <Accordion class="bg-base-200" name="groupB" checked>
-                <Accordion.Title class="text-xl font-medium">
+            <Accordion class="bg-base-200" defaultValue="b1">
+              <Accordion.Item value="b1">
+                <Accordion.Trigger class="text-xl font-medium">
                   Group B
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" name="groupB">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="b2">
+                <Accordion.Trigger class="text-xl font-medium">
                   Group B
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-              <Accordion class="bg-base-200" name="groupB">
-                <Accordion.Title class="text-xl font-medium">
+              </Accordion.Item>
+              <Accordion.Item value="b3">
+                <Accordion.Trigger class="text-xl font-medium">
                   Group B
-                </Accordion.Title>
+                </Accordion.Trigger>
                 <Accordion.Content>
                   <p>hello</p>
                 </Accordion.Content>
-              </Accordion>
-            </Flex>
+              </Accordion.Item>
+            </Accordion>
             <CodeBlock
               code={`{/* Group A */}
-<Accordion class="bg-base-200" name="groupA" checked>
-  <Accordion.Title class="text-xl font-medium">Group A</Accordion.Title>
-  <Accordion.Content>
-    <p>hello</p>
-  </Accordion.Content>
+<Accordion class="bg-base-200" defaultValue="a1">
+  <Accordion.Item value="a1">
+    <Accordion.Trigger class="text-xl font-medium">Group A</Accordion.Trigger>
+    <Accordion.Content>
+      <p>hello</p>
+    </Accordion.Content>
+  </Accordion.Item>
 </Accordion>
 
 {/* Group B */}
-<Accordion class="bg-base-200" name="groupB" checked>
-  <Accordion.Title class="text-xl font-medium">Group B</Accordion.Title>
-  <Accordion.Content>
-    <p>hello</p>
-  </Accordion.Content>
+<Accordion class="bg-base-200" defaultValue="b1">
+  <Accordion.Item value="b1">
+    <Accordion.Trigger class="text-xl font-medium">Group B</Accordion.Trigger>
+    <Accordion.Content>
+      <p>hello</p>
+    </Accordion.Content>
+  </Accordion.Item>
 </Accordion>`}
             />
           </Flex>

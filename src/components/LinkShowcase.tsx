@@ -9,23 +9,37 @@ const LinkShowcase: Component = () => {
   const sections = [
     { id: "default", title: "Default" },
     { id: "with-href", title: "With Href" },
-    { id: "colors", title: "Colors" },
-    { id: "hover", title: "Hover Effect" },
+    { id: "external", title: "External" },
+    { id: "underline", title: "Underline" },
+    { id: "disabled", title: "Disabled" },
+    { id: "with-icon", title: "With Icon" },
     { id: "props", title: "Props" },
   ] as const;
 
   const linkProps = [
     {
-      name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
-      default: "undefined",
-      description: "The color scheme of the link",
+      name: "variant",
+      type: '"default"',
+      default: '"default"',
+      description: "The visual variant of the link",
     },
     {
-      name: "hover",
+      name: "underline",
+      type: '"always" | "hover" | "none"',
+      default: '"always"',
+      description: "Controls the underline behavior",
+    },
+    {
+      name: "isExternal",
       type: "boolean",
-      default: "true",
-      description: "Whether to show hover effect",
+      default: "false",
+      description: 'Mark as external link (sets target="_blank" and rel attributes)',
+    },
+    {
+      name: "isDisabled",
+      type: "boolean",
+      default: "false",
+      description: "Disables the link",
     },
     {
       name: "href",
@@ -89,42 +103,68 @@ const LinkShowcase: Component = () => {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Colors">
+        <ShowcaseSection id="external" title="External">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg">
-              <Link>Default</Link>
-              <Link color="neutral">Neutral</Link>
-              <Link color="primary">Primary</Link>
-              <Link color="secondary">Secondary</Link>
-              <Link color="accent">Accent</Link>
-              <Link color="info">Info</Link>
-              <Link color="success">Success</Link>
-              <Link color="warning">Warning</Link>
-              <Link color="error">Error</Link>
+              <Link href="https://google.com" isExternal>
+                External link
+              </Link>
+              <Link href="https://google.com" isExternal>
+                <Link.Icon />
+                With icon
+              </Link>
             </Flex>
             <CodeBlock
-              code={`<Link>Default</Link>
-<Link color="neutral">Neutral</Link>
-<Link color="primary">Primary</Link>
-<Link color="secondary">Secondary</Link>
-<Link color="accent">Accent</Link>
-<Link color="info">Info</Link>
-<Link color="success">Success</Link>
-<Link color="warning">Warning</Link>
-<Link color="error">Error</Link>`}
+              code={`<Link href="https://google.com" isExternal>External link</Link>
+<Link href="https://google.com" isExternal>
+  <Link.Icon />
+  With icon
+</Link>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="hover" title="Hover Effect">
+        <ShowcaseSection id="underline" title="Underline">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg">
-              <Link hover>With hover effect (default)</Link>
-              <Link hover={false}>Without hover effect</Link>
+              <Link underline="always">Always</Link>
+              <Link underline="hover">On hover</Link>
+              <Link underline="none">None</Link>
             </Flex>
             <CodeBlock
-              code={`<Link hover>With hover effect (default)</Link>
-<Link hover={false}>Without hover effect</Link>`}
+              code={`<Link underline="always">Always</Link>
+<Link underline="hover">On hover</Link>
+<Link underline="none">None</Link>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="disabled" title="Disabled">
+          <Flex direction="col" gap="md">
+            <Flex justify="start" align="start" gap="lg">
+              <Link href="https://google.com" isDisabled>
+                Disabled link
+              </Link>
+            </Flex>
+            <CodeBlock
+              code={`<Link href="https://google.com" isDisabled>Disabled link</Link>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="with-icon" title="With Icon">
+          <Flex direction="col" gap="md">
+            <Flex justify="start" align="start" gap="lg">
+              <Link href="https://google.com">
+                Default icon
+                <Link.Icon />
+              </Link>
+            </Flex>
+            <CodeBlock
+              code={`<Link href="https://google.com">
+  Default icon
+  <Link.Icon />
+</Link>`}
             />
           </Flex>
         </ShowcaseSection>

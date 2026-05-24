@@ -1,3 +1,4 @@
+// TODO[ui-1.2.2]: Loading is now an alias for Spinner; colors narrowed to current|accent|success|warning|danger (no primary/secondary/info/ghost/neutral/error)
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Loading, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
@@ -22,7 +23,8 @@ export default function LoadingShowcase() {
     },
     {
       name: "color",
-      type: '"neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error" | "ghost"',
+      type: '"current" | "accent" | "success" | "warning" | "danger"',
+      default: '"current"',
       description: "Color of the loading indicator",
     },
     {
@@ -107,25 +109,19 @@ export default function LoadingShowcase() {
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
               <Loading class="m-1" />
-              <Loading class="m-1" color="primary" />
-              <Loading class="m-1" color="secondary" />
+              <Loading class="m-1" color="current" />
+              <Loading class="m-1" color="accent" />
               <Loading class="m-1" color="success" />
               <Loading class="m-1" color="warning" />
-              <Loading class="m-1" color="error" />
-              <Loading class="m-1" color="info" />
-              <Loading class="m-1" color="accent" />
-              <Loading class="m-1" color="ghost" />
+              <Loading class="m-1" color="danger" />
             </Flex>
             <CodeBlock
               code={`<Loading class="m-1" />
-<Loading class="m-1" color="primary" />
-<Loading class="m-1" color="secondary" />
+<Loading class="m-1" color="current" />
+<Loading class="m-1" color="accent" />
 <Loading class="m-1" color="success" />
 <Loading class="m-1" color="warning" />
-<Loading class="m-1" color="error" />
-<Loading class="m-1" color="info" />
-<Loading class="m-1" color="accent" />
-<Loading class="m-1" color="ghost" />`}
+<Loading class="m-1" color="danger" />`}
             />
           </Flex>
         </ShowcaseSection>

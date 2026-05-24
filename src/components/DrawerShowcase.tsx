@@ -1,5 +1,5 @@
-import { Button, Drawer, Flex, Menu, Navbar } from "@pathscale/ui";
-import { createSignal } from "solid-js";
+// TODO[ui-1.2.2]: Drawer rebuilt as a compound component (Root/Trigger/Backdrop/Content/Dialog/Header/Body/Footer). Old `open`, `side`, `sideClassName`, `contentClassName`, `end`, `onClickOverlay` props removed.
+import { Button, Drawer, Flex, Menu } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
@@ -9,50 +9,61 @@ export default function DrawerShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
-    { id: "responsive", title: "Responsive" },
-    { id: "navbar", title: "With Navbar" },
     { id: "right", title: "Right Side" },
+    { id: "with-header", title: "With Header / Footer" },
     { id: "props", title: "Props" },
   ] as const;
 
   const props = [
-    { name: "side", type: "JSX.Element", description: "Drawer content" },
-    { name: "open", type: "boolean", description: "Whether drawer is open" },
-    { name: "end", type: "boolean", description: "Aligns drawer to right" },
     {
-      name: "onClickOverlay",
-      type: "() => void",
-      description: "Close on overlay click",
+      name: "isOpen",
+      type: "boolean",
+      description: "Controlled open state of the drawer",
     },
     {
-      name: "sideClassName",
-      type: "string",
-      description: "Classes for drawer side",
+      name: "defaultOpen",
+      type: "boolean",
+      description: "Uncontrolled initial open state",
     },
     {
-      name: "contentClassName",
-      type: "string",
-      description: "Classes for drawer content",
+      name: "onOpenChange",
+      type: "(isOpen: boolean) => void",
+      description: "Callback fired when the drawer opens or closes",
     },
     {
-      name: "toggleClassName",
-      type: "string",
-      description: "Classes for drawer checkbox toggle",
+      name: "placement",
+      type: '"left" | "right" | "top" | "bottom"',
+      description: "Edge the drawer slides in from",
     },
     {
-      name: "overlayClassName",
-      type: "string",
-      description: "Classes for drawer overlay",
+      name: "size",
+      type: '"sm" | "md" | "lg" | "xl" | "full"',
+      description: "Drawer dialog size",
     },
     {
-      name: "class",
-      type: "string",
-      description: "Additional container classes",
+      name: "backdrop",
+      type: '"opaque" | "blur" | "transparent" | "none"',
+      description: "Backdrop variant rendered behind the drawer",
+    },
+    {
+      name: "isDismissable",
+      type: "boolean",
+      description: "Whether the drawer can be closed via overlay or Esc",
+    },
+    {
+      name: "shouldCloseOnEsc",
+      type: "boolean",
+      description: "Whether pressing Esc closes the drawer",
+    },
+    {
+      name: "shouldCloseOnBackdropClick",
+      type: "boolean",
+      description: "Whether clicking the backdrop closes the drawer",
     },
   ];
 
-  const Sidebar = () => (
-    <Menu class="p-4 w-80 h-full bg-base-200 text-base-content">
+  const SidebarMenu = () => (
+    <Menu class="p-4 w-full">
       <Menu.Item>
         <a>Sidebar Item 1</a>
       </Menu.Item>
@@ -80,138 +91,93 @@ export default function DrawerShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            {(() => {
-              const [open, setOpen] = createSignal(false);
-              return (
-                <Drawer
-                  open={open()}
-                  onClickOverlay={() => setOpen(false)}
-                  side={<Sidebar />}
-                  sideClassName="h-full absolute"
-                  contentClassName="flex h-56 items-center justify-center"
-                >
-                  <Button color="primary" onClick={() => setOpen(true)}>
-                    Open drawer
-                  </Button>
-                </Drawer>
-              );
-            })()}
-            <CodeBlock code={`<Drawer open={open} side={<Sidebar />} ... />`} />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="responsive" title="Responsive">
-          <Flex direction="col" gap="md">
-            {(() => {
-              const [open, setOpen] = createSignal(false);
-              return (
-                <Drawer
-                  open={open()}
-                  onClickOverlay={() => setOpen(false)}
-                  side={<Sidebar />}
-                  class="lg:drawer-open"
-                  sideClassName="h-full absolute"
-                  contentClassName="flex h-56 items-center justify-center"
-                >
-                  <Button
-                    color="primary"
-                    onClick={() => setOpen(true)}
-                    class="lg:hidden"
-                  >
-                    Open drawer
-                  </Button>
-                </Drawer>
-              );
-            })()}
-            <CodeBlock code={`<Drawer class="lg:drawer-open" ... />`} />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="navbar" title="With Navbar">
-          <Flex direction="col" gap="md">
-            {(() => {
-              const [open, setOpen] = createSignal(false);
-              return (
-                <Drawer
-                  open={open()}
-                  onClickOverlay={() => setOpen(false)}
-                  side={
-                    <Menu class="p-4 w-60 md:w-80 h-full bg-base-200">
-                      <Menu.Item>
-                        <a>Sidebar Item 1</a>
-                      </Menu.Item>
-                      <Menu.Item>
-                        <a>Sidebar Item 2</a>
-                      </Menu.Item>
-                    </Menu>
-                  }
-                  class="h-56 rounded overflow-hidden"
-                  contentClassName="flex flex-col"
-                >
-                  <Navbar class="w-full bg-base-300">
-                    <div class="flex-none lg:hidden">
-                      <Button
-                        shape="square"
-                        color="ghost"
-                        onClick={() => setOpen(true)}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          class="w-6 h-6 stroke-current"
-                          fill="none"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"
-                          />
-                        </svg>
-                      </Button>
-                    </div>
-                    <div class="flex-1 px-2 mx-2">Navbar Title</div>
-                    <div class="flex-none hidden lg:block">
-                      <Menu horizontal>
-                        <Menu.Item>
-                          <a>Navbar Item 1</a>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <a>Navbar Item 2</a>
-                        </Menu.Item>
-                      </Menu>
-                    </div>
-                  </Navbar>
-                  <Flex grow align="center" justify="center">
-                    Content
-                  </Flex>
-                </Drawer>
-              );
-            })()}
-            <CodeBlock code={`<Drawer><Navbar>...</Navbar></Drawer>`} />
+            <Drawer placement="left" size="md">
+              <Drawer.Trigger>
+                <Button color="primary">Open drawer</Button>
+              </Drawer.Trigger>
+              <Drawer.Backdrop>
+                <Drawer.Content>
+                  <Drawer.Dialog>
+                    <Drawer.Body>
+                      <SidebarMenu />
+                    </Drawer.Body>
+                  </Drawer.Dialog>
+                </Drawer.Content>
+              </Drawer.Backdrop>
+            </Drawer>
+            <CodeBlock
+              code={`<Drawer placement="left" size="md">
+  <Drawer.Trigger>
+    <Button color="primary">Open drawer</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop>
+    <Drawer.Content>
+      <Drawer.Dialog>
+        <Drawer.Body><SidebarMenu /></Drawer.Body>
+      </Drawer.Dialog>
+    </Drawer.Content>
+  </Drawer.Backdrop>
+</Drawer>`}
+            />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="right" title="Right Side">
           <Flex direction="col" gap="md">
-            {(() => {
-              const [open, setOpen] = createSignal(false);
-              return (
-                <Drawer
-                  open={open()}
-                  end
-                  onClickOverlay={() => setOpen(false)}
-                  side={<Sidebar />}
-                  sideClassName="h-full absolute ms-[-100vw] w-[stretch]"
-                  contentClassName="flex h-56 items-center justify-center"
-                >
-                  <Button color="primary" onClick={() => setOpen(true)}>
-                    Open drawer
-                  </Button>
-                </Drawer>
-              );
-            })()}
-            <CodeBlock code={`<Drawer end side={...} />`} />
+            <Drawer placement="right" size="md">
+              <Drawer.Trigger>
+                <Button color="primary">Open from right</Button>
+              </Drawer.Trigger>
+              <Drawer.Backdrop>
+                <Drawer.Content>
+                  <Drawer.Dialog>
+                    <Drawer.Body>
+                      <SidebarMenu />
+                    </Drawer.Body>
+                  </Drawer.Dialog>
+                </Drawer.Content>
+              </Drawer.Backdrop>
+            </Drawer>
+            <CodeBlock code={`<Drawer placement="right" size="md"> ... </Drawer>`} />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="with-header" title="With Header / Footer">
+          <Flex direction="col" gap="md">
+            <Drawer placement="left" size="md">
+              <Drawer.Trigger>
+                <Button color="primary">Open with header</Button>
+              </Drawer.Trigger>
+              <Drawer.Backdrop>
+                <Drawer.Content>
+                  <Drawer.Dialog>
+                    <Drawer.Header>
+                      <Drawer.Heading>Drawer title</Drawer.Heading>
+                    </Drawer.Header>
+                    <Drawer.Body>
+                      <p>Body content goes here.</p>
+                    </Drawer.Body>
+                    <Drawer.Footer>
+                      <Drawer.CloseTrigger>Close</Drawer.CloseTrigger>
+                    </Drawer.Footer>
+                  </Drawer.Dialog>
+                </Drawer.Content>
+              </Drawer.Backdrop>
+            </Drawer>
+            <CodeBlock
+              code={`<Drawer placement="left" size="md">
+  <Drawer.Trigger><Button>Open</Button></Drawer.Trigger>
+  <Drawer.Backdrop>
+    <Drawer.Content>
+      <Drawer.Dialog>
+        <Drawer.Header><Drawer.Heading>Title</Drawer.Heading></Drawer.Header>
+        <Drawer.Body>Body</Drawer.Body>
+        <Drawer.Footer><Drawer.CloseTrigger>Close</Drawer.CloseTrigger></Drawer.Footer>
+      </Drawer.Dialog>
+    </Drawer.Content>
+  </Drawer.Backdrop>
+</Drawer>`}
+            />
           </Flex>
         </ShowcaseSection>
 

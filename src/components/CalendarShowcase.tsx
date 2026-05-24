@@ -1,4 +1,5 @@
 import { Calendar, Flex } from "@pathscale/ui";
+import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -8,47 +9,98 @@ export default function CalendarShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
-    { id: "as-input", title: "As Input" },
-    { id: "sizes", title: "Sizes" },
     { id: "controlled", title: "Controlled Value" },
+    { id: "range", title: "Range Selection" },
     { id: "disabled", title: "Disabled" },
-    { id: "custom-content", title: "Custom Content" },
+    { id: "min-max", title: "Min / Max" },
     { id: "props", title: "Props" },
   ] as const;
 
   const props = [
     {
       name: "value",
+      type: "Date",
+      description: "Currently selected date (controlled).",
+    },
+    {
+      name: "defaultValue",
+      type: "Date",
+      description: "Initial selected date (uncontrolled).",
+    },
+    {
+      name: "onChange",
+      type: "(value: Date) => void",
+      description: "Callback fired when the selected date changes.",
+    },
+    {
+      name: "onDaySelect",
+      type: "(date: Date) => void",
+      description: "Callback fired when a day is clicked.",
+    },
+    {
+      name: "onDayHover",
+      type: "(date?: Date) => void",
+      description: "Callback fired when a day is hovered.",
+    },
+    {
+      name: "selectionMode",
+      type: '"single" | "range"',
+      default: "single",
+      description: "Selection behavior for the calendar.",
+    },
+    {
+      name: "rangeStart",
+      type: "Date",
+      description: "Start of the currently selected range.",
+    },
+    {
+      name: "rangeEnd",
+      type: "Date",
+      description: "End of the currently selected range.",
+    },
+    {
+      name: "rangePreview",
+      type: "Date",
+      description: "Hover-driven end of the range preview.",
+    },
+    {
+      name: "minValue",
+      type: "Date",
+      description: "Earliest selectable date.",
+    },
+    {
+      name: "maxValue",
+      type: "Date",
+      description: "Latest selectable date.",
+    },
+    {
+      name: "isDateUnavailable",
+      type: "(date: Date) => boolean",
+      description: "Predicate to mark dates as unavailable.",
+    },
+    {
+      name: "locale",
       type: "string",
-      description: "Initial calendar value in ISO format (`yyyy-mm-dd`).",
+      default: "en-US",
+      description: "BCP 47 locale used for formatting.",
     },
     {
-      name: "onDateSelect",
-      type: "(value: string) => void",
-      description: "Callback triggered when a date is selected.",
+      name: "weekdayFormat",
+      type: '"narrow" | "short" | "long"',
+      default: "short",
+      description: "Format of weekday header labels.",
     },
     {
-      name: "asInput",
+      name: "showOutsideDays",
       type: "boolean",
-      default: "false",
-      description: "If true, the calendar behaves like a dropdown input.",
+      default: "true",
+      description: "Whether to render days from adjacent months.",
     },
     {
-      name: "placeholder",
-      type: "string",
-      description: "Text to display when no date is selected.",
-    },
-    {
-      name: "disabled",
+      name: "isDisabled",
       type: "boolean",
       default: "false",
       description: "Disables calendar interaction if true.",
-    },
-    {
-      name: "size",
-      type: '"xs" | "sm" | "md" | "lg"',
-      default: "md",
-      description: "Controls calendar sizing — font, spacing, and width.",
     },
     {
       name: "dataTheme",
@@ -61,6 +113,38 @@ export default function CalendarShowcase() {
       description: "Additional CSS classes to apply to the calendar.",
     },
   ];
+
+  const [selectedDate, setSelectedDate] = createSignal<Date | undefined>(
+    new Date(2025, 5, 15),
+  );
+
+  const [rangeStart, setRangeStart] = createSignal<Date | undefined>();
+  const [rangeEnd, setRangeEnd] = createSignal<Date | undefined>();
+  const [rangePreview, setRangePreview] = createSignal<Date | undefined>();
+
+  const handleRangeDaySelect = (date: Date) => {
+    const start = rangeStart();
+    const end = rangeEnd();
+
+    if (!start || (start && end)) {
+      setRangeStart(date);
+      setRangeEnd(undefined);
+      setRangePreview(undefined);
+      return;
+    }
+
+    if (date < start) {
+      setRangeStart(date);
+      setRangeEnd(start);
+    } else {
+      setRangeEnd(date);
+    }
+    setRangePreview(undefined);
+  };
+
+  const today = new Date();
+  const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
 
   return (
     <ShowcaseLayout>
@@ -85,52 +169,51 @@ export default function CalendarShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="as-input" title="As Input">
+        <ShowcaseSection id="controlled" title="Controlled Value">
           <Flex direction="col" gap="md">
             <Calendar
-              asInput
-              placeholder="Select a date"
-              onDateSelect={(value) => console.log("Selected date:", value)}
+              value={selectedDate()}
+              onChange={(value) => setSelectedDate(value)}
             />
             <CodeBlock
-              code={`<Calendar
-  asInput
-  placeholder="Select a date"
-  onDateSelect={(value) => console.log("Selected date:", value)}
+              code={`const [selectedDate, setSelectedDate] = createSignal<Date | undefined>(
+  new Date(2025, 5, 15),
+);
+
+<Calendar
+  value={selectedDate()}
+  onChange={(value) => setSelectedDate(value)}
 />`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="sizes" title="Sizes">
-          <Flex direction="col" gap="md">
-            <Flex direction="col" gap="md">
-              <Calendar asInput size="xs" placeholder="XS" />
-              <Calendar asInput size="sm" placeholder="SM" />
-              <Calendar asInput size="md" placeholder="MD" />
-              <Calendar asInput size="lg" placeholder="LG" />
-            </Flex>
-            <CodeBlock
-              code={`<Calendar asInput size="xs" placeholder="XS" />
-<Calendar asInput size="sm" placeholder="SM" />
-<Calendar asInput size="md" placeholder="MD" />
-<Calendar asInput size="lg" placeholder="LG" />`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="controlled" title="Controlled Value">
+        <ShowcaseSection id="range" title="Range Selection">
           <Flex direction="col" gap="md">
             <Calendar
-              asInput
-              value="2025-06-15"
-              onDateSelect={(val) => console.log("Controlled:", val)}
+              selectionMode="range"
+              rangeStart={rangeStart()}
+              rangeEnd={rangeEnd()}
+              rangePreview={rangePreview()}
+              onDaySelect={handleRangeDaySelect}
+              onDayHover={(date) => {
+                if (rangeStart() && !rangeEnd()) {
+                  setRangePreview(date);
+                }
+              }}
             />
             <CodeBlock
               code={`<Calendar
-  asInput
-  value="2025-06-15"
-  onDateSelect={(val) => console.log("Controlled:", val)}
+  selectionMode="range"
+  rangeStart={rangeStart()}
+  rangeEnd={rangeEnd()}
+  rangePreview={rangePreview()}
+  onDaySelect={handleRangeDaySelect}
+  onDayHover={(date) => {
+    if (rangeStart() && !rangeEnd()) {
+      setRangePreview(date);
+    }
+  }}
 />`}
             />
           </Flex>
@@ -138,28 +221,20 @@ export default function CalendarShowcase() {
 
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
-            <Calendar asInput placeholder="Disabled input" disabled />
-            <Calendar disabled />
-            <CodeBlock
-              code={`<Calendar asInput placeholder="Disabled input" disabled />
-<Calendar disabled />`}
-            />
+            <Calendar isDisabled />
+            <CodeBlock code={`<Calendar isDisabled />`} />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="custom-content" title="Custom Content">
+        <ShowcaseSection id="min-max" title="Min / Max">
           <Flex direction="col" gap="md">
-            <Calendar asInput placeholder="Select a date">
-              <div class="mt-2 text-sm text-center text-base-content/60">
-                You can add custom content here.
-              </div>
-            </Calendar>
+            <Calendar minValue={minDate} maxValue={maxDate} />
             <CodeBlock
-              code={`<Calendar asInput placeholder="Select a date">
-  <div class="mt-2 text-sm text-center text-base-content/60">
-    You can add custom content here.
-  </div>
-</Calendar>`}
+              code={`const today = new Date();
+const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
+const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+
+<Calendar minValue={minDate} maxValue={maxDate} />`}
             />
           </Flex>
         </ShowcaseSection>

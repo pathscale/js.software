@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Hero, Card, Flex, Badge } from "@pathscale/ui";
+import { Card, Flex, Badge } from "@pathscale/ui";
 import { ContentContainer } from "../components/content/ContentContainer";
 import {
   HiOutlineShieldCheck,
@@ -12,11 +12,11 @@ import { ROUTES } from "../config/routes";
 const Home: Component = () => {
   return (
     <div>
-      <Hero class="min-h-[80vh] bg-gradient-to-br from-primary to-base-200">
-        <Hero.Content center>
+      <div class="min-h-[80vh] bg-gradient-to-br from-primary to-base-200 flex items-center justify-center">
+        <div class="w-full">
           <ContentContainer maxWidth="xl" prose={false} className="text-center">
             <div class="mb-8">
-              <Badge color="primary" class="mb-6 px-4 py-2">
+              <Badge color="accent" class="mb-6 px-4 py-2">
                 <HiOutlineShieldCheck class="w-4 h-4 mr-2" />
                 Crafted with SolidJS & Modern Web Standards
               </Badge>
@@ -70,8 +70,8 @@ const Home: Component = () => {
               </Flex>
             </div>
           </ContentContainer>
-        </Hero.Content>
-      </Hero>
+        </div>
+      </div>
 
       <ContentContainer maxWidth="xl" prose={false}>
         <div class="text-center mb-16">

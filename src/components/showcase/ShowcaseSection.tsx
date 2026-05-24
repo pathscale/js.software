@@ -1,4 +1,3 @@
-import { ShowcaseSection as UIShowcaseSection } from "@pathscale/ui";
 import type { ParentComponent } from "solid-js";
 
 interface ShowcaseSectionProps {
@@ -11,12 +10,9 @@ export const ShowcaseSection: ParentComponent<ShowcaseSectionProps> = (
   props
 ) => {
   return (
-    <UIShowcaseSection
-      id={props.id}
-      title={props.title}
-      class={props.class}
-    >
-      {props.children}
-    </UIShowcaseSection>
+    <section id={props.id} class={props.class}>
+      <h2 class="text-2xl font-semibold mb-4">{props.title}</h2>
+      <div class="space-y-4">{props.children}</div>
+    </section>
   );
 };

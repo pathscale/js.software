@@ -7,56 +7,130 @@ import { ShowcaseSection } from "./showcase/ShowcaseSection";
 export default function MenuShowcase() {
   const sections = [
     { id: "default", title: "Default" },
-    { id: "responsive", title: "Responsive" },
-    { id: "icon-only", title: "Icon Only" },
-    { id: "horizontal", title: "Horizontal" },
-    { id: "sizes", title: "Sizes" },
+    { id: "single-selection", title: "Single Selection" },
+    { id: "multiple-selection", title: "Multiple Selection" },
     { id: "disabled", title: "Disabled Items" },
     { id: "icons", title: "With Icons" },
-    { id: "icons-and-badge", title: "Icons and Badge" },
-    { id: "title", title: "With Title" },
-    { id: "submenu", title: "Submenu" },
-    { id: "collapsible", title: "Collapsible Submenu" },
-    { id: "file-tree", title: "File Tree" },
-    { id: "active", title: "Active Item" },
-    { id: "mega-menu", title: "Mega Menu" },
+    { id: "sections", title: "Sections" },
+    { id: "items-prop", title: "Items Prop" },
     { id: "props", title: "Props" },
   ] as const;
 
   const menuProps = [
     {
-      name: "vertical",
-      type: "boolean",
-      default: "true",
-      description: "Vertical menu (default)",
+      name: "selectionMode",
+      type: '"none" | "single" | "multiple"',
+      default: '"none"',
+      description: 'Selection behavior. "none" makes the menu action-only',
     },
     {
-      name: "horizontal",
-      type: "boolean",
-      default: "false",
-      description: "Horizontal menu",
+      name: "selectedKeys",
+      type: "Iterable<string | number>",
+      description: "Controlled set of selected keys",
     },
     {
-      name: "responsive",
-      type: "boolean",
-      default: "false",
-      description: "Makes the menu responsive",
+      name: "defaultSelectedKeys",
+      type: "Iterable<string | number>",
+      description: "Default set of selected keys (uncontrolled)",
     },
     {
-      name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      description: "Size of the menu",
+      name: "disabledKeys",
+      type: "Iterable<string | number>",
+      description: "Set of keys that are disabled",
+    },
+    {
+      name: "disallowEmptySelection",
+      type: "boolean",
+      description: "Prevent deselecting the last selected item",
+    },
+    {
+      name: "onSelectionChange",
+      type: "(keys: Set<string>) => void",
+      description: "Callback fired when selection changes",
+    },
+    {
+      name: "onAction",
+      type: "(key: string) => void",
+      description: "Callback fired when an item is activated",
+    },
+    {
+      name: "items",
+      type: "readonly T[]",
+      description: "Data source for rendering items via children render fn",
+    },
+    {
+      name: "isDisabled",
+      type: "boolean",
+      description: "Disables every item in the menu",
     },
     {
       name: "class",
       type: "string",
-      description: "Additional CSS classes to apply",
+      description: "Additional CSS classes",
     },
     {
       name: "dataTheme",
       type: "string",
       description: "Theme data attribute value",
     },
+  ];
+
+  const IconHome = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+      />
+    </svg>
+  );
+
+  const IconInfo = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  );
+
+  const IconStats = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+      />
+    </svg>
+  );
+
+  type FileItem = { id: string; name: string };
+  const fileItems: readonly FileItem[] = [
+    { id: "readme", name: "README.md" },
+    { id: "package", name: "package.json" },
+    { id: "tsconfig", name: "tsconfig.json" },
   ];
 
   return (
@@ -78,195 +152,88 @@ export default function MenuShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu>
-                <Menu.Item>
-                  <a>Item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>Item 2</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>Item 3</a>
-                </Menu.Item>
+              <Menu class="w-56 bg-base-200 rounded-box">
+                <Menu.Item>Item 1</Menu.Item>
+                <Menu.Item>Item 2</Menu.Item>
+                <Menu.Item>Item 3</Menu.Item>
               </Menu>
             </Flex>
             <CodeBlock
               code={`<Menu>
-  <Menu.Item><a>Item 1</a></Menu.Item>
-  <Menu.Item><a>Item 2</a></Menu.Item>
-  <Menu.Item><a>Item 3</a></Menu.Item>
+  <Menu.Item>Item 1</Menu.Item>
+  <Menu.Item>Item 2</Menu.Item>
+  <Menu.Item>Item 3</Menu.Item>
 </Menu>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="responsive" title="Responsive">
+        <ShowcaseSection id="single-selection" title="Single Selection">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu responsive>
-                <Menu.Item>
-                  <a>Item 1</a>
+              <Menu
+                selectionMode="single"
+                defaultSelectedKeys={["item-2"]}
+                class="w-56 bg-base-200 rounded-box"
+              >
+                <Menu.Item id="item-1">
+                  <Menu.ItemIndicator />
+                  Item 1
                 </Menu.Item>
-                <Menu.Item>
-                  <a>Item 2</a>
+                <Menu.Item id="item-2">
+                  <Menu.ItemIndicator />
+                  Item 2
                 </Menu.Item>
-                <Menu.Item>
-                  <a>Item 3</a>
+                <Menu.Item id="item-3">
+                  <Menu.ItemIndicator />
+                  Item 3
                 </Menu.Item>
               </Menu>
             </Flex>
             <CodeBlock
-              code={`<Menu responsive>
-  <Menu.Item><a>Item 1</a></Menu.Item>
-  <Menu.Item><a>Item 2</a></Menu.Item>
-  <Menu.Item><a>Item 3</a></Menu.Item>
-</Menu>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="icon-only" title="Icon Only">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start">
-              <Menu>
-                <Menu.Item>
-                  <a>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      />
-                    </svg>
-                  </a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                      />
-                    </svg>
-                  </a>
-                </Menu.Item>
-              </Menu>
-            </Flex>
-            <CodeBlock
-              code={`<Menu>
-  <Menu.Item>
-    <a>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-    </a>
+              code={`<Menu selectionMode="single" defaultSelectedKeys={["item-2"]}>
+  <Menu.Item id="item-1">
+    <Menu.ItemIndicator />
+    Item 1
   </Menu.Item>
-  {/* ... other menu items with icons ... */}
+  <Menu.Item id="item-2">
+    <Menu.ItemIndicator />
+    Item 2
+  </Menu.Item>
+  <Menu.Item id="item-3">
+    <Menu.ItemIndicator />
+    Item 3
+  </Menu.Item>
 </Menu>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="horizontal" title="Horizontal">
+        <ShowcaseSection id="multiple-selection" title="Multiple Selection">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu horizontal>
-                <Menu.Item>
-                  <a>Item 1</a>
+              <Menu
+                selectionMode="multiple"
+                defaultSelectedKeys={["a", "c"]}
+                class="w-56 bg-base-200 rounded-box"
+              >
+                <Menu.Item id="a">
+                  <Menu.ItemIndicator />A
                 </Menu.Item>
-                <Menu.Item>
-                  <a>Item 2</a>
+                <Menu.Item id="b">
+                  <Menu.ItemIndicator />B
                 </Menu.Item>
-                <Menu.Item>
-                  <a>Item 3</a>
+                <Menu.Item id="c">
+                  <Menu.ItemIndicator />C
                 </Menu.Item>
               </Menu>
             </Flex>
             <CodeBlock
-              code={`<Menu horizontal>
-  <Menu.Item><a>Item 1</a></Menu.Item>
-  <Menu.Item><a>Item 2</a></Menu.Item>
-  <Menu.Item><a>Item 3</a></Menu.Item>
+              code={`<Menu selectionMode="multiple" defaultSelectedKeys={["a", "c"]}>
+  <Menu.Item id="a"><Menu.ItemIndicator />A</Menu.Item>
+  <Menu.Item id="b"><Menu.ItemIndicator />B</Menu.Item>
+  <Menu.Item id="c"><Menu.ItemIndicator />C</Menu.Item>
 </Menu>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="sizes" title="Sizes">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
-              <Menu size="xs" class="w-56 bg-base-200 rounded-box">
-                <Menu.Item>
-                  <a>xs item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>xs item 2</a>
-                </Menu.Item>
-              </Menu>
-              <Menu size="sm" class="w-56 bg-base-200 rounded-box">
-                <Menu.Item>
-                  <a>sm item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>sm item 2</a>
-                </Menu.Item>
-              </Menu>
-              <Menu size="md" class="w-56 bg-base-200 rounded-box">
-                <Menu.Item>
-                  <a>md item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>md item 2</a>
-                </Menu.Item>
-              </Menu>
-              <Menu size="lg" class="w-56 bg-base-200 rounded-box">
-                <Menu.Item>
-                  <a>lg item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>lg item 2</a>
-                </Menu.Item>
-              </Menu>
-            </Flex>
-            <CodeBlock
-              code={`<Menu size="xs">
-  <Menu.Item><a>xs item 1</a></Menu.Item>
-  <Menu.Item><a>xs item 2</a></Menu.Item>
-</Menu>
-{/* ... other sizes ... */}`}
             />
           </Flex>
         </ShowcaseSection>
@@ -274,23 +241,17 @@ export default function MenuShowcase() {
         <ShowcaseSection id="disabled" title="Disabled Items">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu>
-                <Menu.Item>
-                  <a>Enabled item</a>
-                </Menu.Item>
-                <Menu.Item disabled>
-                  <a>Disabled item</a>
-                </Menu.Item>
-                <Menu.Item disabled>
-                  <a>Disabled item</a>
-                </Menu.Item>
+              <Menu class="w-56 bg-base-200 rounded-box">
+                <Menu.Item>Enabled item</Menu.Item>
+                <Menu.Item isDisabled>Disabled item</Menu.Item>
+                <Menu.Item isDisabled>Disabled item</Menu.Item>
               </Menu>
             </Flex>
             <CodeBlock
               code={`<Menu>
-  <Menu.Item><a>Enabled item</a></Menu.Item>
-  <Menu.Item disabled><a>Disabled item</a></Menu.Item>
-  <Menu.Item disabled><a>Disabled item</a></Menu.Item>
+  <Menu.Item>Enabled item</Menu.Item>
+  <Menu.Item isDisabled>Disabled item</Menu.Item>
+  <Menu.Item isDisabled>Disabled item</Menu.Item>
 </Menu>`}
             />
           </Flex>
@@ -299,259 +260,84 @@ export default function MenuShowcase() {
         <ShowcaseSection id="icons" title="With Icons">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu>
+              <Menu class="w-56 bg-base-200 rounded-box">
                 <Menu.Item>
-                  <a>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      />
-                    </svg>
-                    Item 1
-                  </a>
-                </Menu.Item>
-                {/* Similar items with icons */}
-              </Menu>
-            </Flex>
-            <CodeBlock
-              code={`<Menu>
-  <Menu.Item>
-    <a>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-      Item 1
-    </a>
-  </Menu.Item>
-</Menu>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="submenu" title="Submenu">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start">
-              <Menu>
-                <Menu.Item>
-                  <a>Item 1</a>
+                  <Flex gap="sm" align="center">
+                    <IconHome />
+                    Home
+                  </Flex>
                 </Menu.Item>
                 <Menu.Item>
-                  <a>Parent</a>
-                  <Menu>
-                    <Menu.Item>
-                      <a>Level 2 Item 1</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Level 2 Item 2</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Parent</a>
-                      <Menu>
-                        <Menu.Item>
-                          <a>Level 3 Item 1</a>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <a>Level 3 Item 2</a>
-                        </Menu.Item>
-                      </Menu>
-                    </Menu.Item>
-                  </Menu>
+                  <Flex gap="sm" align="center">
+                    <IconInfo />
+                    About
+                  </Flex>
                 </Menu.Item>
                 <Menu.Item>
-                  <a>Item 3</a>
+                  <Flex gap="sm" align="center">
+                    <IconStats />
+                    Stats
+                  </Flex>
                 </Menu.Item>
               </Menu>
             </Flex>
             <CodeBlock
               code={`<Menu>
-  <Menu.Item><a>Item 1</a></Menu.Item>
   <Menu.Item>
-    <a>Parent</a>
-    <Menu>
-      <Menu.Item><a>Level 2 Item 1</a></Menu.Item>
-      <Menu.Item><a>Level 2 Item 2</a></Menu.Item>
-      <Menu.Item>
-        <a>Parent</a>
-        <Menu>
-          <Menu.Item><a>Level 3 Item 1</a></Menu.Item>
-          <Menu.Item><a>Level 3 Item 2</a></Menu.Item>
-        </Menu>
-      </Menu.Item>
-    </Menu>
+    <Flex gap="sm" align="center">
+      <IconHome />
+      Home
+    </Flex>
   </Menu.Item>
-  <Menu.Item><a>Item 3</a></Menu.Item>
+  ...
 </Menu>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="collapsible" title="Collapsible Submenu">
+        <ShowcaseSection id="sections" title="Sections">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu>
-                <Menu.Item>
-                  <a>Item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <Menu.Details open={true} label="Parent">
-                    <Menu.Item>
-                      <a>Level 2 Item 1</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Level 2 Item 2</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <Menu.Details open={true} label="Parent">
-                        <Menu.Item>
-                          <a>Level 3 Item 1</a>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <a>Level 3 Item 2</a>
-                        </Menu.Item>
-                      </Menu.Details>
-                    </Menu.Item>
-                  </Menu.Details>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>Item 3</a>
-                </Menu.Item>
+              <Menu class="w-56 bg-base-200 rounded-box">
+                <Menu.Section title="Account">
+                  <Menu.Item>Profile</Menu.Item>
+                  <Menu.Item>Settings</Menu.Item>
+                </Menu.Section>
+                <Menu.Section title="Workspace">
+                  <Menu.Item>Members</Menu.Item>
+                  <Menu.Item>Billing</Menu.Item>
+                </Menu.Section>
               </Menu>
             </Flex>
             <CodeBlock
               code={`<Menu>
-  <Menu.Item><a>Item 1</a></Menu.Item>
-  <Menu.Item>
-    <Menu.Details open={true} label="Parent">
-      <Menu.Item><a>Level 2 Item 1</a></Menu.Item>
-      <Menu.Item><a>Level 2 Item 2</a></Menu.Item>
-      <Menu.Item>
-        <Menu.Details open={true} label="Parent">
-          <Menu.Item><a>Level 3 Item 1</a></Menu.Item>
-          <Menu.Item><a>Level 3 Item 2</a></Menu.Item>
-        </Menu.Details>
-      </Menu.Item>
-    </Menu.Details>
-  </Menu.Item>
-  <Menu.Item><a>Item 3</a></Menu.Item>
+  <Menu.Section title="Account">
+    <Menu.Item>Profile</Menu.Item>
+    <Menu.Item>Settings</Menu.Item>
+  </Menu.Section>
+  <Menu.Section title="Workspace">
+    <Menu.Item>Members</Menu.Item>
+    <Menu.Item>Billing</Menu.Item>
+  </Menu.Section>
 </Menu>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="active" title="Active Item">
+        <ShowcaseSection id="items-prop" title="Items Prop">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu>
-                <Menu.Item>
-                  <a>Item 1</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a class="active">Item 2</a>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>Item 3</a>
-                </Menu.Item>
+              <Menu
+                items={fileItems}
+                class="w-56 bg-base-200 rounded-box"
+                onAction={(key) => console.log("activated", key)}
+              >
+                {(item) => <Menu.Item id={(item as FileItem).id}>{(item as FileItem).name}</Menu.Item>}
               </Menu>
             </Flex>
             <CodeBlock
-              code={`<Menu>
-  <Menu.Item><a>Item 1</a></Menu.Item>
-  <Menu.Item><a class="active">Item 2</a></Menu.Item>
-  <Menu.Item><a>Item 3</a></Menu.Item>
-</Menu>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="mega-menu" title="Mega Menu">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start">
-              <Menu responsive>
-                <Menu.Item>
-                  <a>Solutions</a>
-                  <Menu>
-                    <Menu.Item>
-                      <a>Design</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Development</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Hosting</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Domain register</a>
-                    </Menu.Item>
-                  </Menu>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>Enterprise</a>
-                  <Menu>
-                    <Menu.Item>
-                      <a>CRM software</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Marketing management</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Security</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Consulting</a>
-                    </Menu.Item>
-                  </Menu>
-                </Menu.Item>
-                <Menu.Item>
-                  <a>Products</a>
-                  <Menu>
-                    <Menu.Item>
-                      <a>UI Kit</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Wordpress themes</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Wordpress plugins</a>
-                    </Menu.Item>
-                    <Menu.Item>
-                      <a>Open source</a>
-                      <Menu>
-                        <Menu.Item>
-                          <a>Auth management system</a>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <a>VScode theme</a>
-                        </Menu.Item>
-                        <Menu.Item>
-                          <a>Color picker app</a>
-                        </Menu.Item>
-                      </Menu>
-                    </Menu.Item>
-                  </Menu>
-                </Menu.Item>
-              </Menu>
-            </Flex>
-            <CodeBlock
-              code={`<Menu responsive>
-  <Menu.Item>
-    <a>Solutions</a>
-    <Menu>
-      <Menu.Item><a>Design</a></Menu.Item>
-      <Menu.Item><a>Development</a></Menu.Item>
-      <Menu.Item><a>Hosting</a></Menu.Item>
-      <Menu.Item><a>Domain register</a></Menu.Item>
-    </Menu>
-  </Menu.Item>
-  {/* ... other menu items ... */}
+              code={`<Menu items={fileItems} onAction={(key) => console.log(key)}>
+  {(item) => <Menu.Item id={item.id}>{item.name}</Menu.Item>}
 </Menu>`}
             />
           </Flex>

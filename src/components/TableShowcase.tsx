@@ -1,112 +1,90 @@
-import {
-  Badge,
-  Button,
-  Checkbox,
-  Flex,
-  Mask,
-  Select,
-  Table,
-} from "@pathscale/ui";
-import { createSignal, For } from "solid-js";
+import { Badge, Button, Checkbox, Flex, Table } from "@pathscale/ui";
+import { For } from "solid-js";
 
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
+// TODO[ui-1.2.2]: Many Table v0 features (size, zebra, hover, pinRows, pinCols, active row,
+// Mask avatars, Badge "ghost" color, Button size "xs") are no longer part of the public API.
+// The new compound: Table -> ScrollContainer -> Content -> Header/Column + Body/Row/Cell.
 export default function TableShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
-    { id: "active", title: "Active Row" },
-    { id: "zebra", title: "Zebra" },
     { id: "visuals", title: "With Visual Elements" },
   ] as const;
 
-  const sizes = ["xs", "sm", "md", "lg", "xl"] as const;
-  const [size, setSize] = createSignal<(typeof sizes)[number]>("md");
-  const sizeOptions = sizes.map((s) => ({ value: s, label: s }));
-
   const tableProps = [
     {
-      name: "size",
-      type: `"xs" | "sm" | "md" | "lg" | "xl"`,
-      default: `"md"`,
-      description: "Sets the size of the table.",
+      name: "variant",
+      type: `"primary" | "secondary"`,
+      default: `"primary"`,
+      description: "Visual variant of the table surface.",
     },
     {
-      name: "zebra",
-      type: "boolean",
-      default: "false",
-      description: "Enables zebra-striping for alternate rows (table-zebra).",
-    },
-    {
-      name: "pinRows",
-      type: "boolean",
-      default: "false",
-      description: "Pins the table header rows when scrolling.",
-    },
-    {
-      name: "pinCols",
-      type: "boolean",
-      default: "false",
-      description: "Pins the table columns on horizontal scroll.",
-    },
-    {
-      name: "dataTheme",
-      type: "string",
+      name: "children",
+      type: "JSX.Element",
       default: "—",
-      description: "Applies a specific theme to the table.",
+      description: "Typically Table.ScrollContainer wrapping Table.Content.",
     },
   ];
 
-  const headProps = [
+  const contentProps = [
+    {
+      name: "sortDescriptor",
+      type: `{ column: string; direction: "ascending" | "descending" }`,
+      default: "—",
+      description: "Current sort state propagated to sortable columns.",
+    },
+    {
+      name: "onSortChange",
+      type: "(descriptor) => void",
+      default: "—",
+      description: "Fired when a sortable column is toggled.",
+    },
+  ];
+
+  const headerProps = [
     {
       name: "children",
-      type: "JSX.Element | JSX.Element[]",
+      type: "JSX.Element",
       default: "—",
-      description: "Content of the table head, typically <th> cells.",
+      description: "Typically one or more <Table.Column> cells.",
+    },
+  ];
+
+  const columnProps = [
+    {
+      name: "id",
+      type: "string",
+      default: "—",
+      description: "Unique column identifier used for sorting and data-attributes.",
+    },
+    {
+      name: "allowsSorting",
+      type: "boolean",
+      default: "false",
+      description: "Marks the column as sortable; click/Enter toggles direction.",
     },
   ];
 
   const bodyProps = [
     {
       name: "children",
-      type: "JSX.Element | JSX.Element[]",
+      type: "JSX.Element",
       default: "—",
-      description:
-        "Content of the table body, typically one or more <Table.Row>.",
-    },
-  ];
-
-  const footerProps = [
-    {
-      name: "children",
-      type: "JSX.Element | JSX.Element[]",
-      default: "—",
-      description: "Content of the table footer, typically <td> cells.",
+      description: "One or more <Table.Row>.",
     },
   ];
 
   const rowProps = [
     {
-      name: "active",
-      type: "boolean",
-      default: "false",
-      description: "Highlights the row visually as active.",
-    },
-    {
-      name: "noCell",
-      type: "boolean",
-      default: "false",
-      description:
-        "Prevents children from being automatically wrapped in <td> or <th>.",
-    },
-    {
       name: "children",
-      type: "JSX.Element | JSX.Element[]",
+      type: "JSX.Element",
       default: "—",
-      description: "Row content. Can include text or any components.",
+      description: "Row content; usually <Table.Cell> elements.",
     },
   ];
 
@@ -115,685 +93,273 @@ export default function TableShowcase() {
       <div class="space-y-8">
         <ShowcaseSection id="contents" title="Contents">
           <nav class="space-y-1">
-            {sections.map((section) => (
-              <a
-                href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
-              >
-                {section.title}
-              </a>
-            ))}
+            <For each={sections}>
+              {(section) => (
+                <a
+                  href={`#${section.id}`}
+                  class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
+                >
+                  {section.title}
+                </a>
+              )}
+            </For>
           </nav>
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <div class="overflow-x-auto">
-              <Table>
-                <Table.Head>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>1</Table.Cell>
-                    <Table.Cell>Cy Ganderton</Table.Cell>
-                    <Table.Cell>Quality Control Specialist</Table.Cell>
-                    <Table.Cell>Blue</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>2</Table.Cell>
-                    <Table.Cell>Hart Hagerty</Table.Cell>
-                    <Table.Cell>Desktop Support Technician</Table.Cell>
-                    <Table.Cell>Purple</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>3</Table.Cell>
-                    <Table.Cell>Brice Swyre</Table.Cell>
-                    <Table.Cell>Tax Accountant</Table.Cell>
-                    <Table.Cell>Red</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </div>
+            <Table>
+              <Table.ScrollContainer>
+                <Table.Content>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.Column id="idx" />
+                      <Table.Column id="name">Name</Table.Column>
+                      <Table.Column id="job">Job</Table.Column>
+                      <Table.Column id="color">Favorite Color</Table.Column>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell>1</Table.Cell>
+                      <Table.Cell>Cy Ganderton</Table.Cell>
+                      <Table.Cell>Quality Control Specialist</Table.Cell>
+                      <Table.Cell>Blue</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell>2</Table.Cell>
+                      <Table.Cell>Hart Hagerty</Table.Cell>
+                      <Table.Cell>Desktop Support Technician</Table.Cell>
+                      <Table.Cell>Purple</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell>3</Table.Cell>
+                      <Table.Cell>Brice Swyre</Table.Cell>
+                      <Table.Cell>Tax Accountant</Table.Cell>
+                      <Table.Cell>Red</Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table.Content>
+              </Table.ScrollContainer>
+            </Table>
             <CodeBlock
               code={`<Table>
-  <Table.Head>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-  </Table.Head>
-  <Table.Body>
-    <Table.Row>
-      <Table.Cell>1</Table.Cell>
-      <Table.Cell>Cy Ganderton</Table.Cell>
-      <Table.Cell>Quality Control Specialist</Table.Cell>
-      <Table.Cell>Blue</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>2</Table.Cell>
-      <Table.Cell>Hart Hagerty</Table.Cell>
-      <Table.Cell>Desktop Support Technician</Table.Cell>
-      <Table.Cell>Purple</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>3</Table.Cell>
-      <Table.Cell>Brice Swyre</Table.Cell>
-      <Table.Cell>Tax Accountant</Table.Cell>
-      <Table.Cell>Red</Table.Cell>
-    </Table.Row>
-  </Table.Body>
+  <Table.ScrollContainer>
+    <Table.Content>
+      <Table.Header>
+        <Table.Row>
+          <Table.Column id="idx" />
+          <Table.Column id="name">Name</Table.Column>
+          <Table.Column id="job">Job</Table.Column>
+          <Table.Column id="color">Favorite Color</Table.Column>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>1</Table.Cell>
+          <Table.Cell>Cy Ganderton</Table.Cell>
+          <Table.Cell>Quality Control Specialist</Table.Cell>
+          <Table.Cell>Blue</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Content>
+  </Table.ScrollContainer>
 </Table>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="active" title="Active Row">
+        <ShowcaseSection id="visuals" title="With Visual Elements">
           <Flex direction="col" gap="md">
-            <div class="overflow-x-auto">
-              <Table>
-                <Table.Head>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  <Table.Row active>
-                    <Table.Cell>1</Table.Cell>
-                    <Table.Cell>Cy Ganderton</Table.Cell>
-                    <Table.Cell>Quality Control Specialist</Table.Cell>
-                    <Table.Cell>Blue</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>2</Table.Cell>
-                    <Table.Cell>Hart Hagerty</Table.Cell>
-                    <Table.Cell>Desktop Support Technician</Table.Cell>
-                    <Table.Cell>Purple</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>3</Table.Cell>
-                    <Table.Cell>Brice Swyre</Table.Cell>
-                    <Table.Cell>Tax Accountant</Table.Cell>
-                    <Table.Cell>Red</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </div>
+            <Table>
+              <Table.ScrollContainer>
+                <Table.Content class="rounded-box">
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.Column id="select">
+                        <Checkbox />
+                      </Table.Column>
+                      <Table.Column id="name">Name</Table.Column>
+                      <Table.Column id="job">Job</Table.Column>
+                      <Table.Column id="color">Favorite Color</Table.Column>
+                      <Table.Column id="actions" />
+                    </Table.Row>
+                  </Table.Header>
+
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell>
+                        <Checkbox />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Flex align="center" gap="md" class="truncate">
+                          <img
+                            src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                            alt="Hart Hagerty"
+                            class="w-12 h-12 rounded-full object-cover"
+                          />
+                          <div>
+                            <div class="font-bold">Hart Hagerty</div>
+                            <div class="text-sm opacity-50">United States</div>
+                          </div>
+                        </Flex>
+                      </Table.Cell>
+                      <Table.Cell>
+                        Zemlak, Daniel and Leannon
+                        <br />
+                        <Badge color="default" size="sm">
+                          Desktop Support Technician
+                        </Badge>
+                      </Table.Cell>
+                      <Table.Cell>Purple</Table.Cell>
+                      <Table.Cell>
+                        <Button variant="ghost" size="sm">
+                          details
+                        </Button>
+                      </Table.Cell>
+                    </Table.Row>
+
+                    <Table.Row>
+                      <Table.Cell>
+                        <Checkbox />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Flex align="center" gap="md" class="truncate">
+                          <img
+                            src="https://img.daisyui.com/images/profile/demo/3@94.webp"
+                            alt="Brice Swyre"
+                            class="w-12 h-12 rounded-full object-cover"
+                          />
+                          <div>
+                            <div class="font-bold">Brice Swyre</div>
+                            <div class="text-sm opacity-50">China</div>
+                          </div>
+                        </Flex>
+                      </Table.Cell>
+                      <Table.Cell>
+                        Carrol Group
+                        <br />
+                        <Badge color="default" size="sm">
+                          Tax Accountant
+                        </Badge>
+                      </Table.Cell>
+                      <Table.Cell>Red</Table.Cell>
+                      <Table.Cell>
+                        <Button variant="ghost" size="sm">
+                          details
+                        </Button>
+                      </Table.Cell>
+                    </Table.Row>
+
+                    <Table.Row>
+                      <Table.Cell>
+                        <Checkbox />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Flex align="center" gap="md" class="truncate">
+                          <img
+                            src="https://img.daisyui.com/images/profile/demo/4@94.webp"
+                            alt="Marjy Ferencz"
+                            class="w-12 h-12 rounded-full object-cover"
+                          />
+                          <div>
+                            <div class="font-bold">Marjy Ferencz</div>
+                            <div class="text-sm opacity-50">Russia</div>
+                          </div>
+                        </Flex>
+                      </Table.Cell>
+                      <Table.Cell>
+                        Rowe-Schoen
+                        <br />
+                        <Badge color="default" size="sm">
+                          Office Assistant I
+                        </Badge>
+                      </Table.Cell>
+                      <Table.Cell>Crimson</Table.Cell>
+                      <Table.Cell>
+                        <Button variant="ghost" size="sm">
+                          details
+                        </Button>
+                      </Table.Cell>
+                    </Table.Row>
+
+                    <Table.Row>
+                      <Table.Cell>
+                        <Checkbox />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Flex align="center" gap="md" class="truncate">
+                          <img
+                            src="https://img.daisyui.com/images/profile/demo/5@94.webp"
+                            alt="Yancy Tear"
+                            class="w-12 h-12 rounded-full object-cover"
+                          />
+                          <div>
+                            <div class="font-bold">Yancy Tear</div>
+                            <div class="text-sm opacity-50">Brazil</div>
+                          </div>
+                        </Flex>
+                      </Table.Cell>
+                      <Table.Cell>
+                        Wyman-Ledner
+                        <br />
+                        <Badge color="default" size="sm">
+                          Community Outreach Specialist
+                        </Badge>
+                      </Table.Cell>
+                      <Table.Cell>Indigo</Table.Cell>
+                      <Table.Cell>
+                        <Button variant="ghost" size="sm">
+                          details
+                        </Button>
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table.Content>
+              </Table.ScrollContainer>
+              <Table.Footer>Footer content area</Table.Footer>
+            </Table>
+
             <CodeBlock
               code={`<Table>
-  <Table.Head>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-  </Table.Head>
-  <Table.Body>
-    <Table.Row active>
-      <Table.Cell>1</Table.Cell>
-      <Table.Cell>Cy Ganderton</Table.Cell>
-      <Table.Cell>Quality Control Specialist</Table.Cell>
-      <Table.Cell>Blue</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>2</Table.Cell>
-      <Table.Cell>Hart Hagerty</Table.Cell>
-      <Table.Cell>Desktop Support Technician</Table.Cell>
-      <Table.Cell>Purple</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>3</Table.Cell>
-      <Table.Cell>Brice Swyre</Table.Cell>
-      <Table.Cell>Tax Accountant</Table.Cell>
-      <Table.Cell>Red</Table.Cell>
-    </Table.Row>
-  </Table.Body>
-</Table>`}
-            />
-          </Flex>
-        </ShowcaseSection>
+  <Table.ScrollContainer>
+    <Table.Content class="rounded-box">
+      <Table.Header>
+        <Table.Row>
+          <Table.Column id="select"><Checkbox /></Table.Column>
+          <Table.Column id="name">Name</Table.Column>
+          <Table.Column id="job">Job</Table.Column>
+          <Table.Column id="color">Favorite Color</Table.Column>
+          <Table.Column id="actions" />
+        </Table.Row>
+      </Table.Header>
 
-        <ShowcaseSection id="zebra" title="Zebra">
-          <Flex direction="col" gap="md">
-            <div class="overflow-x-auto">
-              <Table zebra>
-                <Table.Head>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>1</Table.Cell>
-                    <Table.Cell>Cy Ganderton</Table.Cell>
-                    <Table.Cell>Quality Control Specialist</Table.Cell>
-                    <Table.Cell>Blue</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>2</Table.Cell>
-                    <Table.Cell>Hart Hagerty</Table.Cell>
-                    <Table.Cell>Desktop Support Technician</Table.Cell>
-                    <Table.Cell>Purple</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>3</Table.Cell>
-                    <Table.Cell>Brice Swyre</Table.Cell>
-                    <Table.Cell>Tax Accountant</Table.Cell>
-                    <Table.Cell>Red</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </div>
-            <CodeBlock
-              code={`<Table zebra>
-  <Table.Head>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-  </Table.Head>
-  <Table.Body>
-    <Table.Row>
-      <Table.Cell>1</Table.Cell>
-      <Table.Cell>Cy Ganderton</Table.Cell>
-      <Table.Cell>Quality Control Specialist</Table.Cell>
-      <Table.Cell>Blue</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>2</Table.Cell>
-      <Table.Cell>Hart Hagerty</Table.Cell>
-      <Table.Cell>Desktop Support Technician</Table.Cell>
-      <Table.Cell>Purple</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>3</Table.Cell>
-      <Table.Cell>Brice Swyre</Table.Cell>
-      <Table.Cell>Tax Accountant</Table.Cell>
-      <Table.Cell>Red</Table.Cell>
-    </Table.Row>
-  </Table.Body>
-</Table>
-`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="hover" title="Hover">
-          <Flex direction="col" gap="md">
-            <div class="overflow-x-auto">
-              <Table hover>
-                <Table.Head>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>1</Table.Cell>
-                    <Table.Cell>Cy Ganderton</Table.Cell>
-                    <Table.Cell>Quality Control Specialist</Table.Cell>
-                    <Table.Cell>Blue</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>2</Table.Cell>
-                    <Table.Cell>Hart Hagerty</Table.Cell>
-                    <Table.Cell>Desktop Support Technician</Table.Cell>
-                    <Table.Cell>Purple</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>3</Table.Cell>
-                    <Table.Cell>Brice Swyre</Table.Cell>
-                    <Table.Cell>Tax Accountant</Table.Cell>
-                    <Table.Cell>Red</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </div>
-            <CodeBlock
-              code={`<Table hover>
-  <Table.Head>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-  </Table.Head>
-  <Table.Body>
-    <Table.Row>
-      <Table.Cell>1</Table.Cell>
-      <Table.Cell>Cy Ganderton</Table.Cell>
-      <Table.Cell>Quality Control Specialist</Table.Cell>
-      <Table.Cell>Blue</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>2</Table.Cell>
-      <Table.Cell>Hart Hagerty</Table.Cell>
-      <Table.Cell>Desktop Support Technician</Table.Cell>
-      <Table.Cell>Purple</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>3</Table.Cell>
-      <Table.Cell>Brice Swyre</Table.Cell>
-      <Table.Cell>Tax Accountant</Table.Cell>
-      <Table.Cell>Red</Table.Cell>
-    </Table.Row>
-  </Table.Body>
-</Table>
-`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="with-visual-elements" title="With visual elements">
-          <Flex direction="col" gap="md">
-            <div class="overflow-x-auto">
-              <Table class="rounded-box">
-                <Table.Head>
-                  <Checkbox />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                  <Table.HeadCell />
-                </Table.Head>
-
-                <Table.Body>
-                  <Table.Row>
-                    <Checkbox />
-                    <Flex align="center" gap="md" class="truncate">
-                      <Mask
-                        variant="squircle"
-                        src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                        class="w-12 h-12"
-                      />
-                      <div>
-                        <div class="font-bold">Hart Hagerty</div>
-                        <div class="text-sm opacity-50">United States</div>
-                      </div>
-                    </Flex>
-                    <div>
-                      Zemlak, Daniel and Leannon
-                      <br />
-                      <Badge color="ghost" size="sm">
-                        Desktop Support Technician
-                      </Badge>
-                    </div>
-                    <div>Purple</div>
-                    <Button color="ghost" size="xs">
-                      details
-                    </Button>
-                  </Table.Row>
-
-                  <Table.Row>
-                    <Checkbox />
-                    <Flex align="center" gap="md" class="truncate">
-                      <Mask
-                        variant="squircle"
-                        src="https://img.daisyui.com/images/profile/demo/3@94.webp"
-                        class="w-12 h-12"
-                      />
-                      <div>
-                        <div class="font-bold">Brice Swyre</div>
-                        <div class="text-sm opacity-50">China</div>
-                      </div>
-                    </Flex>
-                    <div>
-                      Carrol Group
-                      <br />
-                      <Badge color="ghost" size="sm">
-                        Tax Accountant
-                      </Badge>
-                    </div>
-                    <div>Red</div>
-                    <Button color="ghost" size="xs">
-                      details
-                    </Button>
-                  </Table.Row>
-
-                  <Table.Row>
-                    <Checkbox />
-                    <Flex align="center" gap="md" class="truncate">
-                      <Mask
-                        variant="squircle"
-                        src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-                        class="w-12 h-12"
-                      />
-                      <div>
-                        <div class="font-bold">Marjy Ferencz</div>
-                        <div class="text-sm opacity-50">Russia</div>
-                      </div>
-                    </Flex>
-                    <div>
-                      Rowe-Schoen
-                      <br />
-                      <Badge color="ghost" size="sm">
-                        Office Assistant I
-                      </Badge>
-                    </div>
-                    <div>Crimson</div>
-                    <Button color="ghost" size="xs">
-                      details
-                    </Button>
-                  </Table.Row>
-
-                  <Table.Row>
-                    <Checkbox />
-                    <Flex align="center" gap="md" class="truncate">
-                      <Mask
-                        variant="squircle"
-                        src="https://img.daisyui.com/images/profile/demo/5@94.webp"
-                        class="w-12 h-12"
-                      />
-                      <div>
-                        <div class="font-bold">Yancy Tear</div>
-                        <div class="text-sm opacity-50">Brazil</div>
-                      </div>
-                    </Flex>
-                    <div>
-                      Wyman-Ledner
-                      <br />
-                      <Badge color="ghost" size="sm">
-                        Community Outreach Specialist
-                      </Badge>
-                    </div>
-                    <div>Indigo</div>
-                    <Button color="ghost" size="xs">
-                      details
-                    </Button>
-                  </Table.Row>
-                </Table.Body>
-
-                <Table.Footer>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                  <Table.HeadCell />
-                </Table.Footer>
-              </Table>
-            </div>
-
-            <CodeBlock
-              code={`<Table class="rounded-box">
-  <Table.Head>
-    <Checkbox />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-    <Table.HeadCell />
-  </Table.Head>
-
-  <Table.Body>
-    <Table.Row>
-      <Checkbox />
-      <Flex align="center" gap="md" class="truncate">
-        <Mask
-          variant="squircle"
-          src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-          class="w-12 h-12"
-        />
-        <div>
-          <div class="font-bold">Hart Hagerty</div>
-          <div class="text-sm opacity-50">United States</div>
-        </div>
-      </Flex>
-      <div>
-        Zemlak, Daniel and Leannon
-        <br />
-        <Badge color="ghost" size="sm">Desktop Support Technician</Badge>
-      </div>
-      <div>Purple</div>
-      <Button color="ghost" size="xs">details</Button>
-    </Table.Row>
-
-    <Table.Row>
-      <Checkbox />
-      <Flex align="center" gap="md" class="truncate">
-        <Mask
-          variant="squircle"
-          src="https://img.daisyui.com/images/profile/demo/3@94.webp"
-          class="w-12 h-12"
-        />
-        <div>
-          <div class="font-bold">Brice Swyre</div>
-          <div class="text-sm opacity-50">China</div>
-        </div>
-      </Flex>
-      <div>
-        Carrol Group
-        <br />
-        <Badge color="ghost" size="sm">Tax Accountant</Badge>
-      </div>
-      <div>Red</div>
-      <Button color="ghost" size="xs">details</Button>
-    </Table.Row>
-
-    <Table.Row>
-      <Checkbox />
-      <Flex align="center" gap="md" class="truncate">
-        <Mask
-          variant="squircle"
-          src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-          class="w-12 h-12"
-        />
-        <div>
-          <div class="font-bold">Marjy Ferencz</div>
-          <div class="text-sm opacity-50">Russia</div>
-        </div>
-      </Flex>
-      <div>
-        Rowe-Schoen
-        <br />
-        <Badge color="ghost" size="sm">Office Assistant I</Badge>
-      </div>
-      <div>Crimson</div>
-      <Button color="ghost" size="xs">details</Button>
-    </Table.Row>
-
-    <Table.Row>
-      <Checkbox />
-      <Flex align="center" gap="md" class="truncate">
-        <Mask
-          variant="squircle"
-          src="https://img.daisyui.com/images/profile/demo/5@94.webp"
-          class="w-12 h-12"
-        />
-        <div>
-          <div class="font-bold">Yancy Tear</div>
-          <div class="text-sm opacity-50">Brazil</div>
-        </div>
-      </Flex>
-      <div>
-        Wyman-Ledner
-        <br />
-        <Badge color="ghost" size="sm">Community Outreach Specialist</Badge>
-      </div>
-      <div>Indigo</div>
-      <Button color="ghost" size="xs">details</Button>
-    </Table.Row>
-  </Table.Body>
-
-  <Table.Footer>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-    <Table.HeadCell />
-  </Table.Footer>
-</Table>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="table-size" title="Size">
-          <Flex direction="col" gap="md">
-            <Flex gap="sm" class="mb-2">
-              <label for="table-size-select" class="font-medium">
-                Select size:
-              </label>
-              <Select
-                id="table-size-select"
-                value={size()}
-                onChange={(e) =>
-                  setSize(e.currentTarget.value as (typeof sizes)[number])
-                }
-              >
-                <For each={sizeOptions}>
-                  {(opt) => <option value={opt.value}>{opt.label}</option>}
-                </For>
-              </Select>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell><Checkbox /></Table.Cell>
+          <Table.Cell>
+            <Flex align="center" gap="md" class="truncate">
+              <img src="..." class="w-12 h-12 rounded-full" />
+              <div>
+                <div class="font-bold">Hart Hagerty</div>
+                <div class="text-sm opacity-50">United States</div>
+              </div>
             </Flex>
-
-            <div class="overflow-x-auto">
-              <Table size={size()}>
-                <Table.Head>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Company</Table.HeadCell>
-                  <Table.HeadCell>Location</Table.HeadCell>
-                  <Table.HeadCell>Last Login</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>1</Table.Cell>
-                    <Table.Cell>Cy Ganderton</Table.Cell>
-                    <Table.Cell>Quality Control Specialist</Table.Cell>
-                    <Table.Cell>Littel, Schaden and Vandervort</Table.Cell>
-                    <Table.Cell>Canada</Table.Cell>
-                    <Table.Cell>12/16/2020</Table.Cell>
-                    <Table.Cell>Blue</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>2</Table.Cell>
-                    <Table.Cell>Hart Hagerty</Table.Cell>
-                    <Table.Cell>Desktop Support Technician</Table.Cell>
-                    <Table.Cell>Zemlak, Daniel and Leannon</Table.Cell>
-                    <Table.Cell>United States</Table.Cell>
-                    <Table.Cell>12/5/2020</Table.Cell>
-                    <Table.Cell>Purple</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>3</Table.Cell>
-                    <Table.Cell>Brice Swyre</Table.Cell>
-                    <Table.Cell>Tax Accountant</Table.Cell>
-                    <Table.Cell>Carroll Group</Table.Cell>
-                    <Table.Cell>China</Table.Cell>
-                    <Table.Cell>8/15/2020</Table.Cell>
-                    <Table.Cell>Red</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-                <Table.Footer>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Company</Table.HeadCell>
-                  <Table.HeadCell>Location</Table.HeadCell>
-                  <Table.HeadCell>Last Login</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                </Table.Footer>
-              </Table>
-            </div>
-
-            <CodeBlock
-              code={`<Table size={size()}>
-  <Table.Head>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Company</Table.HeadCell>
-    <Table.HeadCell>Location</Table.HeadCell>
-    <Table.HeadCell>Last Login</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-  </Table.Head>
-  <Table.Body>
-    <Table.Row>
-      <Table.Cell>1</Table.Cell>
-      <Table.Cell>Cy Ganderton</Table.Cell>
-      <Table.Cell>Quality Control Specialist</Table.Cell>
-      <Table.Cell>Littel, Schaden and Vandervort</Table.Cell>
-      <Table.Cell>Canada</Table.Cell>
-      <Table.Cell>12/16/2020</Table.Cell>
-      <Table.Cell>Blue</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>2</Table.Cell>
-      <Table.Cell>Hart Hagerty</Table.Cell>
-      <Table.Cell>Desktop Support Technician</Table.Cell>
-      <Table.Cell>Zemlak, Daniel and Leannon</Table.Cell>
-      <Table.Cell>United States</Table.Cell>
-      <Table.Cell>12/5/2020</Table.Cell>
-      <Table.Cell>Purple</Table.Cell>
-    </Table.Row>
-    <Table.Row>
-      <Table.Cell>3</Table.Cell>
-      <Table.Cell>Brice Swyre</Table.Cell>
-      <Table.Cell>Tax Accountant</Table.Cell>
-      <Table.Cell>Carroll Group</Table.Cell>
-      <Table.Cell>China</Table.Cell>
-      <Table.Cell>8/15/2020</Table.Cell>
-      <Table.Cell>Red</Table.Cell>
-    </Table.Row>
-  </Table.Body>
-  <Table.Footer>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Company</Table.HeadCell>
-    <Table.HeadCell>Location</Table.HeadCell>
-    <Table.HeadCell>Last Login</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-  </Table.Footer>
-</Table>
-`}
-            />
-          </Flex>
-        </ShowcaseSection>
-        <ShowcaseSection id="table-pinned" title="Pinned Rows and Columns">
-          <Flex direction="col" gap="md">
-            <div class="overflow-x-auto max-h-96">
-              <Table pinRows pinCols>
-                <Table.Head>
-                  <Table.HeadCell />
-                  <Table.HeadCell>Name</Table.HeadCell>
-                  <Table.HeadCell>Job</Table.HeadCell>
-                  <Table.HeadCell>Favorite Color</Table.HeadCell>
-                </Table.Head>
-                <Table.Body>
-                  <For each={Array.from({ length: 10 })}>
-                    {(_, i) => (
-                      <Table.Row>
-                        <Table.Cell>{i() + 1}</Table.Cell>
-                        <Table.Cell>Cy Ganderton</Table.Cell>
-                        <Table.Cell>Quality Control Specialist</Table.Cell>
-                        <Table.Cell>Blue</Table.Cell>
-                      </Table.Row>
-                    )}
-                  </For>
-                </Table.Body>
-              </Table>
-            </div>
-            <CodeBlock
-              code={`<Table pinRows pinCols>
-  <Table.Head>
-    <Table.HeadCell />
-    <Table.HeadCell>Name</Table.HeadCell>
-    <Table.HeadCell>Job</Table.HeadCell>
-    <Table.HeadCell>Favorite Color</Table.HeadCell>
-  </Table.Head>
-  <Table.Body>
-     <Table.Row>
-        <Table.Cell>{1}</Table.Cell>
-        <Table.Cell>Cy Ganderton</Table.Cell>
-        <Table.Cell>Quality Control Specialist</Table.Cell>
-        <Table.Cell>Blue</Table.Cell>
-     </Table.Row>
-     {/* ...more rows... */}
-  </Table.Body>
+          </Table.Cell>
+          <Table.Cell>
+            Zemlak, Daniel and Leannon
+            <br />
+            <Badge color="default" size="sm">Desktop Support Technician</Badge>
+          </Table.Cell>
+          <Table.Cell>Purple</Table.Cell>
+          <Table.Cell>
+            <Button variant="ghost" size="sm">details</Button>
+          </Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Content>
+  </Table.ScrollContainer>
+  <Table.Footer>Footer content area</Table.Footer>
 </Table>`}
             />
           </Flex>
@@ -801,17 +367,20 @@ export default function TableShowcase() {
 
         <ShowcaseSection id="table-props" title="Props">
           <Flex direction="col" gap="md">
-            <h3 class="text-lg font-semibold">Table</h3>
+            <h3 class="text-lg font-semibold">Table (Root)</h3>
             <PropsTable props={tableProps} />
 
-            <h3 class="text-lg font-semibold mt-4">Table.Head</h3>
-            <PropsTable props={headProps} />
+            <h3 class="text-lg font-semibold mt-4">Table.Content</h3>
+            <PropsTable props={contentProps} />
+
+            <h3 class="text-lg font-semibold mt-4">Table.Header</h3>
+            <PropsTable props={headerProps} />
+
+            <h3 class="text-lg font-semibold mt-4">Table.Column</h3>
+            <PropsTable props={columnProps} />
 
             <h3 class="text-lg font-semibold mt-4">Table.Body</h3>
             <PropsTable props={bodyProps} />
-
-            <h3 class="text-lg font-semibold mt-4">Table.Footer</h3>
-            <PropsTable props={footerProps} />
 
             <h3 class="text-lg font-semibold mt-4">Table.Row</h3>
             <PropsTable props={rowProps} />

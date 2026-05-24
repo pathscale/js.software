@@ -10,50 +10,43 @@ export default function DropdownShowcase() {
     { id: "as-card", title: "As Card" },
     { id: "in-navbar", title: "In Navbar" },
     { id: "helper", title: "Helper" },
-    { id: "details", title: "Details" },
-    { id: "positioning", title: "Positioning" },
-    { id: "full-width", title: "Full Width" },
+    { id: "placement", title: "Placement" },
+    { id: "align", title: "Alignment" },
     { id: "props", title: "Props" },
   ] as const;
 
   const dropdownProps = [
     {
-      name: "horizontal",
-      type: '"left" | "right"',
-      description: "Horizontal alignment of the dropdown menu",
+      name: "placement",
+      type: '"top" | "bottom" | "left" | "right"',
+      description: "Where the menu opens relative to the trigger",
     },
     {
-      name: "vertical",
-      type: '"top" | "bottom"',
-      description: "Vertical alignment of the dropdown menu",
-    },
-    {
-      name: "end",
+      name: "autoFlip",
       type: "boolean",
-      default: "false",
-      description: "Align dropdown menu to the right (legacy)",
-    },
-    {
-      name: "hover",
-      type: "boolean",
-      default: "false",
-      description: "Open dropdown on hover instead of click",
+      default: "true",
+      description: "Flip placement when there is no room",
     },
     {
       name: "open",
       type: "boolean",
-      description: "Force open/close state of the dropdown",
+      description: "Controlled open state",
     },
     {
-      name: "fullWidth",
+      name: "defaultOpen",
       type: "boolean",
       default: "false",
-      description: "Make dropdown container full width",
+      description: "Initial open state (uncontrolled)",
     },
     {
-      name: "item",
-      type: "JSX.Element",
-      description: "Content to render as dropdown items",
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description: "Fired when the menu opens or closes",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      description: "Disable the dropdown",
     },
     {
       name: "dataTheme",
@@ -64,41 +57,6 @@ export default function DropdownShowcase() {
       name: "class",
       type: "string",
       description: "Additional CSS classes to apply",
-    },
-    {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias for class)",
-    },
-    {
-      name: "style",
-      type: "JSX.CSSProperties",
-      description: "Inline styles to apply",
-    },
-    {
-      name: "aria-label",
-      type: "string",
-      description: "Accessibility label",
-    },
-    {
-      name: "aria-describedby",
-      type: "string",
-      description: "ID of element that describes the dropdown",
-    },
-    {
-      name: "aria-expanded",
-      type: "boolean",
-      description: "Indicates if dropdown is expanded",
-    },
-    {
-      name: "aria-haspopup",
-      type: "boolean | string",
-      description: "Indicates dropdown has popup menu",
-    },
-    {
-      name: "aria-labelledby",
-      type: "string",
-      description: "ID of element that labels the dropdown",
     },
   ];
 
@@ -122,7 +80,7 @@ export default function DropdownShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" class="my-16">
               <Dropdown>
-                <Dropdown.Toggle>Click</Dropdown.Toggle>
+                <Dropdown.Trigger>Click</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
                   <Dropdown.Item>Item 2</Dropdown.Item>
@@ -131,7 +89,7 @@ export default function DropdownShowcase() {
             </Flex>
             <CodeBlock
               code={`<Dropdown>
-  <Dropdown.Toggle>Click</Dropdown.Toggle>
+  <Dropdown.Trigger>Click</Dropdown.Trigger>
   <Dropdown.Menu class="w-52">
     <Dropdown.Item>Item 1</Dropdown.Item>
     <Dropdown.Item>Item 2</Dropdown.Item>
@@ -145,10 +103,11 @@ export default function DropdownShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" class="my-16">
               <Dropdown>
-                <Dropdown.Toggle>Click</Dropdown.Toggle>
-                <Dropdown.Menu class="card card-compact w-64 p-2 shadow bg-primary text-primary-content m-1">
+                <Dropdown.Trigger>Click</Dropdown.Trigger>
+                <Dropdown.Menu class="w-64 p-2 shadow bg-primary text-primary-content">
                   <Card.Body>
-                    <Card.Title tag="h3">Card title!</Card.Title>
+                    {/* TODO[ui-1.2.2]: Card.Title removed; using header text instead */}
+                    <h3 class="font-bold">Card title!</h3>
                     <p>you can use any element as a dropdown.</p>
                   </Card.Body>
                 </Dropdown.Menu>
@@ -156,10 +115,10 @@ export default function DropdownShowcase() {
             </Flex>
             <CodeBlock
               code={`<Dropdown>
-  <Dropdown.Toggle>Click</Dropdown.Toggle>
-  <Dropdown.Menu class="card card-compact w-64 p-2 shadow bg-primary text-primary-content m-1">
+  <Dropdown.Trigger>Click</Dropdown.Trigger>
+  <Dropdown.Menu class="w-64 p-2 shadow bg-primary text-primary-content">
     <Card.Body>
-      <Card.Title tag="h3">Card title!</Card.Title>
+      <h3 class="font-bold">Card title!</h3>
       <p>you can use any element as a dropdown.</p>
     </Card.Body>
   </Dropdown.Menu>
@@ -175,15 +134,12 @@ export default function DropdownShowcase() {
                 <span class="text-lg font-bold">daisyUI</span>
               </Navbar.Start>
               <Navbar.End>
-                <Button color="ghost">Button</Button>
-                <Dropdown end>
-                  <Dropdown.Toggle
-                    class="btn btn-ghost rounded-btn"
-                    button={false}
-                  >
+                <Button variant="ghost">Button</Button>
+                <Dropdown placement="bottom">
+                  <Dropdown.Trigger class="btn btn-ghost rounded-btn">
                     Dropdown
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu class="w-52 mt-4">
+                  </Dropdown.Trigger>
+                  <Dropdown.Menu align="end" class="w-52 mt-4">
                     <Dropdown.Item>Item 1</Dropdown.Item>
                     <Dropdown.Item>Item 2</Dropdown.Item>
                   </Dropdown.Menu>
@@ -196,12 +152,12 @@ export default function DropdownShowcase() {
     <span class="text-lg font-bold">daisyUI</span>
   </Navbar.Start>
   <Navbar.End>
-    <Button color="ghost">Button</Button>
-    <Dropdown end>
-      <Dropdown.Toggle class="btn btn-ghost rounded-btn" button={false}>
+    <Button variant="ghost">Button</Button>
+    <Dropdown placement="bottom">
+      <Dropdown.Trigger class="btn btn-ghost rounded-btn">
         Dropdown
-      </Dropdown.Toggle>
-      <Dropdown.Menu class="w-52 mt-4">
+      </Dropdown.Trigger>
+      <Dropdown.Menu align="end" class="w-52 mt-4">
         <Dropdown.Item>Item 1</Dropdown.Item>
         <Dropdown.Item>Item 2</Dropdown.Item>
       </Dropdown.Menu>
@@ -216,11 +172,8 @@ export default function DropdownShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" class="my-16">
               A normal text and a helper dropdown
-              <Dropdown end>
-                <Dropdown.Toggle
-                  button={false}
-                  class="btn btn-circle btn-ghost btn-xs text-info"
-                >
+              <Dropdown placement="bottom">
+                <Dropdown.Trigger class="btn btn-circle btn-ghost btn-xs text-info">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -232,12 +185,16 @@ export default function DropdownShowcase() {
                       stroke-linejoin="round"
                       stroke-width="2"
                       d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    ></path>
+                    />
                   </svg>
-                </Dropdown.Toggle>
-                <Dropdown.Menu class="card compact w-64 !p-0 shadow bg-base-100 rounded-box">
+                </Dropdown.Trigger>
+                <Dropdown.Menu
+                  align="end"
+                  class="w-64 !p-0 shadow bg-base-100 rounded-box"
+                >
                   <Card.Body>
-                    <Card.Title tag="h2">You needed more info?</Card.Title>
+                    {/* TODO[ui-1.2.2]: Card.Title removed; using header text instead */}
+                    <h2 class="text-lg font-bold">You needed more info?</h2>
                     <p>Here is a description!</p>
                   </Card.Body>
                 </Dropdown.Menu>
@@ -246,28 +203,13 @@ export default function DropdownShowcase() {
             <CodeBlock
               code={`<Flex justify="start" align="start" class="my-16">
   A normal text and a helper dropdown
-  <Dropdown end>
-    <Dropdown.Toggle
-      button={false}
-      class="btn btn-circle btn-ghost btn-xs text-info"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        class="w-4 h-4 stroke-current"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        ></path>
-      </svg>
-    </Dropdown.Toggle>
-    <Dropdown.Menu class="card compact w-64 !p-0 shadow bg-base-100 rounded-box">
+  <Dropdown placement="bottom">
+    <Dropdown.Trigger class="btn btn-circle btn-ghost btn-xs text-info">
+      <svg ...><path d="..." /></svg>
+    </Dropdown.Trigger>
+    <Dropdown.Menu align="end" class="w-64 !p-0 shadow bg-base-100 rounded-box">
       <Card.Body>
-        <Card.Title tag="h2">You needed more info?</Card.Title>
+        <h2 class="text-lg font-bold">You needed more info?</h2>
         <p>Here is a description!</p>
       </Card.Body>
     </Dropdown.Menu>
@@ -277,58 +219,35 @@ export default function DropdownShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="details" title="Details">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" class="my-16">
-              <Dropdown.Details>
-                <Dropdown.Details.Toggle>Click</Dropdown.Details.Toggle>
-                <Dropdown.Menu class="w-52">
-                  <Dropdown.Item>Item 1</Dropdown.Item>
-                  <Dropdown.Item>Item 2</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown.Details>
-            </Flex>
-            <CodeBlock
-              code={`<Dropdown.Details>
-  <Dropdown.Details.Toggle>Click</Dropdown.Details.Toggle>
-  <Dropdown.Menu class="w-52">
-    <Dropdown.Item>Item 1</Dropdown.Item>
-    <Dropdown.Item>Item 2</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown.Details>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="positioning" title="Positioning">
+        <ShowcaseSection id="placement" title="Placement">
           <Flex direction="col" gap="md">
             <Flex justify="center" align="center" gap="md" class="my-16">
-              <Dropdown horizontal="left">
-                <Dropdown.Toggle>Left</Dropdown.Toggle>
+              <Dropdown placement="left">
+                <Dropdown.Trigger>Left</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
                   <Dropdown.Item>Item 2</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              
-              <Dropdown horizontal="right">
-                <Dropdown.Toggle>Right</Dropdown.Toggle>
+
+              <Dropdown placement="right">
+                <Dropdown.Trigger>Right</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
                   <Dropdown.Item>Item 2</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              
-              <Dropdown vertical="top">
-                <Dropdown.Toggle>Top</Dropdown.Toggle>
+
+              <Dropdown placement="top">
+                <Dropdown.Trigger>Top</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
                   <Dropdown.Item>Item 2</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              
-              <Dropdown vertical="bottom">
-                <Dropdown.Toggle>Bottom</Dropdown.Toggle>
+
+              <Dropdown placement="bottom">
+                <Dropdown.Trigger>Bottom</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
                   <Dropdown.Item>Item 2</Dropdown.Item>
@@ -336,39 +255,22 @@ export default function DropdownShowcase() {
               </Dropdown>
             </Flex>
             <CodeBlock
-              code={`<Dropdown horizontal="left">
-  <Dropdown.Toggle>Left</Dropdown.Toggle>
-  <Dropdown.Menu class="w-52">
-    <Dropdown.Item>Item 1</Dropdown.Item>
-    <Dropdown.Item>Item 2</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
-
-<Dropdown horizontal="right">
-  <Dropdown.Toggle>Right</Dropdown.Toggle>
-  <Dropdown.Menu class="w-52">
-    <Dropdown.Item>Item 1</Dropdown.Item>
-    <Dropdown.Item>Item 2</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>
-
-<Dropdown vertical="top">
-  <Dropdown.Toggle>Top</Dropdown.Toggle>
-  <Dropdown.Menu class="w-52">
-    <Dropdown.Item>Item 1</Dropdown.Item>
-    <Dropdown.Item>Item 2</Dropdown.Item>
-  </Dropdown.Menu>
-</Dropdown>`}
+              code={`<Dropdown placement="left">...</Dropdown>
+<Dropdown placement="right">...</Dropdown>
+<Dropdown placement="top">...</Dropdown>
+<Dropdown placement="bottom">...</Dropdown>`}
             />
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="full-width" title="Full Width">
+        <ShowcaseSection id="align" title="Alignment">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" class="my-16">
-              <Dropdown fullWidth>
-                <Dropdown.Toggle class="w-full justify-start">Full Width Dropdown</Dropdown.Toggle>
-                <Dropdown.Menu class="w-full">
+              <Dropdown placement="bottom">
+                <Dropdown.Trigger class="w-full justify-start">
+                  Aligned Dropdown
+                </Dropdown.Trigger>
+                <Dropdown.Menu align="start" class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
                   <Dropdown.Item>Item 2</Dropdown.Item>
                   <Dropdown.Item>Item 3</Dropdown.Item>
@@ -376,9 +278,11 @@ export default function DropdownShowcase() {
               </Dropdown>
             </Flex>
             <CodeBlock
-              code={`<Dropdown fullWidth>
-  <Dropdown.Toggle class="w-full justify-start">Full Width Dropdown</Dropdown.Toggle>
-  <Dropdown.Menu class="w-full">
+              code={`<Dropdown placement="bottom">
+  <Dropdown.Trigger class="w-full justify-start">
+    Aligned Dropdown
+  </Dropdown.Trigger>
+  <Dropdown.Menu align="start" class="w-52">
     <Dropdown.Item>Item 1</Dropdown.Item>
     <Dropdown.Item>Item 2</Dropdown.Item>
     <Dropdown.Item>Item 3</Dropdown.Item>

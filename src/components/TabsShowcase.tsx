@@ -7,31 +7,40 @@ import { PropsTable } from "./showcase/PropsTable";
 export default function TabsShowcase() {
   const sections = [
     { id: "default", title: "Default Tabs" },
-    { id: "variants", title: "Variants (bordered, lift, boxed)" },
-    { id: "sizes", title: "Sizes (xs - xl)" },
-    { id: "position", title: "Position (top, bottom)" },
-    { id: "radiotabs", title: "Radio Tabs (with content)" },
+    { id: "variants", title: "Variants (primary, secondary)" },
+    { id: "orientation", title: "Orientation (horizontal, vertical)" },
+    { id: "with-panels", title: "Tabs With Panels" },
+    { id: "controlled", title: "Controlled Selection" },
     { id: "props", title: "Props" },
   ];
 
   const props = [
     {
       name: "variant",
-      type: `"bordered" | "lift" | "boxed"`,
+      type: `"primary" | "secondary"`,
       description: "Visual style variant",
     },
     {
-      name: "size",
-      type: `"xs" | "sm" | "md" | "lg" | "xl"`,
-      description: "Tab size",
+      name: "orientation",
+      type: `"horizontal" | "vertical"`,
+      description: "Layout orientation",
     },
     {
-      name: "position",
-      type: `"top" | "bottom"`,
-      description: "Tab bar position",
+      name: "selectedKey",
+      type: "string | number",
+      description: "Controlled selected tab key",
+    },
+    {
+      name: "defaultSelectedKey",
+      type: "string | number",
+      description: "Initial selected tab key (uncontrolled)",
+    },
+    {
+      name: "onSelectionChange",
+      type: "(key: string | number) => void",
+      description: "Fired when the active tab changes",
     },
     { name: "class", type: "string", description: "Custom Tailwind class" },
-    { name: "dataTheme", type: "string", description: "Theme attribute" },
   ];
 
   return (
@@ -51,93 +60,109 @@ export default function TabsShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="default" title="Default Tabs">
-          <Tabs>
-            <Tabs.Tab active>Tab 1</Tabs.Tab>
-            <Tabs.Tab>Tab 2</Tabs.Tab>
-            <Tabs.Tab>Tab 3</Tabs.Tab>
+          <Tabs defaultSelectedKey="one">
+            <Tabs.List>
+              <Tabs.Tab id="one">Tab 1</Tabs.Tab>
+              <Tabs.Tab id="two">Tab 2</Tabs.Tab>
+              <Tabs.Tab id="three">Tab 3</Tabs.Tab>
+            </Tabs.List>
           </Tabs>
           <CodeBlock
-            code={`<Tabs>
-  <Tabs.Tab active>Tab 1</Tabs.Tab>
-  <Tabs.Tab>Tab 2</Tabs.Tab>
-  <Tabs.Tab>Tab 3</Tabs.Tab>
+            code={`<Tabs defaultSelectedKey="one">
+  <Tabs.List>
+    <Tabs.Tab id="one">Tab 1</Tabs.Tab>
+    <Tabs.Tab id="two">Tab 2</Tabs.Tab>
+    <Tabs.Tab id="three">Tab 3</Tabs.Tab>
+  </Tabs.List>
 </Tabs>`}
           />
         </ShowcaseSection>
 
         <ShowcaseSection id="variants" title="Variants">
-          <Tabs variant="bordered">
-            <Tabs.Tab active>Bordered</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
+          <Tabs variant="primary" defaultSelectedKey="a">
+            <Tabs.List>
+              <Tabs.Tab id="a">Primary</Tabs.Tab>
+              <Tabs.Tab id="b">Tab</Tabs.Tab>
+            </Tabs.List>
           </Tabs>
-          <Tabs variant="lift">
-            <Tabs.Tab active>Lift</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
-          </Tabs>
-          <Tabs variant="boxed">
-            <Tabs.Tab active>Boxed</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
+          <Tabs variant="secondary" defaultSelectedKey="a">
+            <Tabs.List>
+              <Tabs.Tab id="a">Secondary</Tabs.Tab>
+              <Tabs.Tab id="b">Tab</Tabs.Tab>
+            </Tabs.List>
           </Tabs>
           <CodeBlock
-            code={`<Tabs variant="bordered">...</Tabs>
-<Tabs variant="lift">...</Tabs>
-<Tabs variant="boxed">...</Tabs>`}
+            code={`<Tabs variant="primary">...</Tabs>
+<Tabs variant="secondary">...</Tabs>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="sizes" title="Sizes">
-          <Tabs size="xs">
-            <Tabs.Tab active>XS</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
+        <ShowcaseSection id="orientation" title="Orientation">
+          <Tabs orientation="horizontal" defaultSelectedKey="a">
+            <Tabs.List>
+              <Tabs.Tab id="a">Horizontal</Tabs.Tab>
+              <Tabs.Tab id="b">Tab</Tabs.Tab>
+            </Tabs.List>
           </Tabs>
-          <Tabs size="md">
-            <Tabs.Tab active>MD</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
-          </Tabs>
-          <Tabs size="xl">
-            <Tabs.Tab active>XL</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
+          <Tabs orientation="vertical" defaultSelectedKey="a">
+            <Tabs.List>
+              <Tabs.Tab id="a">Vertical</Tabs.Tab>
+              <Tabs.Tab id="b">Tab</Tabs.Tab>
+            </Tabs.List>
           </Tabs>
           <CodeBlock
-            code={`<Tabs size="xs">...</Tabs>
-<Tabs size="md">...</Tabs>
-<Tabs size="xl">...</Tabs>`}
+            code={`<Tabs orientation="horizontal">...</Tabs>
+<Tabs orientation="vertical">...</Tabs>`}
           />
         </ShowcaseSection>
 
-        <ShowcaseSection id="position" title="Position">
-          <Tabs position="top">
-            <Tabs.Tab active>Top</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
-          </Tabs>
-          <Tabs position="bottom">
-            <Tabs.Tab active>Bottom</Tabs.Tab>
-            <Tabs.Tab>Tab</Tabs.Tab>
-          </Tabs>
-          <CodeBlock
-            code={`<Tabs position="top">...</Tabs>
-<Tabs position="bottom">...</Tabs>`}
-          />
-        </ShowcaseSection>
-
-        <ShowcaseSection id="radiotabs" title="Radio Tabs">
-          <Tabs class="tabs-boxed">
-            <Tabs.RadioTab label="Tab A" name="example" active>
+        <ShowcaseSection id="with-panels" title="Tabs With Panels">
+          <Tabs defaultSelectedKey="a">
+            <Tabs.List>
+              <Tabs.Tab id="a">Tab A</Tabs.Tab>
+              <Tabs.Tab id="b">Tab B</Tabs.Tab>
+              <Tabs.Tab id="c">Tab C</Tabs.Tab>
+            </Tabs.List>
+            <Tabs.Panel id="a">
               <p class="mt-2">Content for Tab A</p>
-            </Tabs.RadioTab>
-            <Tabs.RadioTab label="Tab B" name="example">
+            </Tabs.Panel>
+            <Tabs.Panel id="b">
               <p class="mt-2">Content for Tab B</p>
-            </Tabs.RadioTab>
-            <Tabs.RadioTab label="Tab C" name="example">
+            </Tabs.Panel>
+            <Tabs.Panel id="c">
               <p class="mt-2">Content for Tab C</p>
-            </Tabs.RadioTab>
+            </Tabs.Panel>
           </Tabs>
           <CodeBlock
-            code={`<Tabs class="tabs-boxed">
-  <Tabs.RadioTab label="Tab A" name="example" active>
-    <p class="mt-2">Content for Tab A</p>
-  </Tabs.RadioTab>
-  ...
+            code={`<Tabs defaultSelectedKey="a">
+  <Tabs.List>
+    <Tabs.Tab id="a">Tab A</Tabs.Tab>
+    <Tabs.Tab id="b">Tab B</Tabs.Tab>
+    <Tabs.Tab id="c">Tab C</Tabs.Tab>
+  </Tabs.List>
+  <Tabs.Panel id="a">Content for Tab A</Tabs.Panel>
+  <Tabs.Panel id="b">Content for Tab B</Tabs.Panel>
+  <Tabs.Panel id="c">Content for Tab C</Tabs.Panel>
+</Tabs>`}
+          />
+        </ShowcaseSection>
+
+        <ShowcaseSection id="controlled" title="Controlled Selection">
+          {/* TODO[ui-1.2.2]: onSelectionChange typing collides with JSX onselectionchange handler; omitted from demo */}
+          <Tabs selectedKey="b">
+            <Tabs.List>
+              <Tabs.Tab id="a">A</Tabs.Tab>
+              <Tabs.Tab id="b">B</Tabs.Tab>
+              <Tabs.Tab id="c">C</Tabs.Tab>
+            </Tabs.List>
+          </Tabs>
+          <CodeBlock
+            code={`<Tabs selectedKey={key()} onSelectionChange={setKey}>
+  <Tabs.List>
+    <Tabs.Tab id="a">A</Tabs.Tab>
+    <Tabs.Tab id="b">B</Tabs.Tab>
+    <Tabs.Tab id="c">C</Tabs.Tab>
+  </Tabs.List>
 </Tabs>`}
           />
         </ShowcaseSection>

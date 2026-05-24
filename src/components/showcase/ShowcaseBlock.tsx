@@ -1,6 +1,5 @@
 import { ParentComponent, Show } from "solid-js";
 import { CodeBlock } from "./CodeBlock";
-import { ShowcaseBlock as UIShowcaseBlock } from "@pathscale/ui";
 
 interface ShowcaseBlockProps {
   title: string;
@@ -11,18 +10,20 @@ interface ShowcaseBlockProps {
 
 const ShowcaseBlock: ParentComponent<ShowcaseBlockProps> = (props) => {
   return (
-    <UIShowcaseBlock
-      title={props.title}
-      description={props.description}
-      preview={props.preview}
-    >
-      {props.children}
+    <div class="space-y-3">
+      <div>
+        <h3 class="text-lg font-medium">{props.title}</h3>
+        <Show when={props.description}>
+          <p class="text-sm text-base-content/70">{props.description}</p>
+        </Show>
+      </div>
+      <div>{props.children}</div>
       <Show when={props.code}>
         <div class="pt-4">
           <CodeBlock code={props.code!} />
         </div>
       </Show>
-    </UIShowcaseBlock>
+    </div>
   );
 };
 

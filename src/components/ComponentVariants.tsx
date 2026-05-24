@@ -8,47 +8,32 @@ import {
 export default function ComponentVariants() {
   return (
     <Flex direction="col" gap="lg">
-      <Card size="sm" class="bg-base-100">
+      <Card class="bg-base-100">
         <Card.Body>
-          <Card.Title tag="h5">Buttons</Card.Title>
+          <h5 class="text-lg font-semibold mb-2">Buttons</h5>
           <Flex gap="sm" class="flex-wrap">
             <Button>Button</Button>
-            <Button color="primary">Primary</Button>
-            <Button color="secondary">Secondary</Button>
-            <Button color="accent">Accent</Button>
-            <Button color="info">Info</Button>
-            <Button color="success">Success</Button>
-            <Button color="warning">Warning</Button>
-            <Button color="error">Error</Button>
-            <Button color="ghost">Ghost</Button>
+            <Button variant="primary">Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="tertiary">Tertiary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="danger">Danger</Button>
+            <Button variant="danger-soft">Danger Soft</Button>
           </Flex>
         </Card.Body>
       </Card>
 
-      <Card size="sm" class="bg-base-100">
+      <Card class="bg-base-100">
         <Card.Body>
-          <Card.Title tag="h5">Inputs</Card.Title>
+          <h5 class="text-lg font-semibold mb-2">Inputs</h5>
           <Flex gap="sm" class="flex-wrap">
             <Input placeholder="Input" class="max-w-32" />
-            <Input
-              placeholder="Primary"
-              color="error"
-              class="max-w-32"
-            />
-            <Input placeholder="Secondary" class="max-w-32" />
-            <Input placeholder="Accent" class="max-w-32" />
-            <Input placeholder="Info" class="max-w-32" />
-            <Input
-              placeholder="Success"
-              color="success"
-              class="max-w-32"
-            />
-            <Input
-              placeholder="Warning"
-              color="warning"
-              class="max-w-32"
-            />
-            <Input placeholder="Error" color="error" class="max-w-32" />
+            <Input placeholder="Invalid" isInvalid class="max-w-32" />
+            <Input placeholder="Disabled" isDisabled class="max-w-32" />
+            <Input placeholder="Small" size="sm" class="max-w-32" />
+            <Input placeholder="Medium" size="md" class="max-w-32" />
+            <Input placeholder="Large" size="lg" class="max-w-32" />
           </Flex>
         </Card.Body>
       </Card>

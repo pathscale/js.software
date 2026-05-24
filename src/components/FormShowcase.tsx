@@ -1,16 +1,18 @@
 import {
   Form,
+  FormField,
+  FormSubmitButton,
   Input,
+  Label,
   Button,
   Flex,
   Grid,
-  useFormValidation,
+  createForm,
 } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
-import { Show } from "solid-js";
 import { z } from "zod";
 
 export default function FormShowcase() {
@@ -18,7 +20,7 @@ export default function FormShowcase() {
     { id: "basic", title: "Basic Form" },
     { id: "inline", title: "Inline Form" },
     { id: "grid", title: "Two-Column Layout" },
-    { id: "validation", title: "With Validation Styles" },
+    { id: "validation", title: "Validated Form" },
     { id: "props", title: "Props" },
   ];
 
@@ -27,41 +29,35 @@ export default function FormShowcase() {
     { name: "className", type: "string", description: "Alias for class" },
     { name: "dataTheme", type: "string", description: "Theme identifier" },
     { name: "children", type: "JSX.Element", description: "Form content" },
+    {
+      name: "form",
+      type: "FormApi (from createForm())",
+      description: "When provided, switches to context mode: registers the form for FormField/FormSubmitButton",
+    },
   ];
 
   const labelProps = [
-    { name: "title", type: "string", description: "Text label" },
+    { name: "for", type: "string", description: "Associated input id" },
+    { name: "htmlFor", type: "string", description: "Alias for for" },
+    { name: "isRequired", type: "boolean", description: "Marks the label as required" },
+    { name: "isDisabled", type: "boolean", description: "Marks the label as disabled" },
+    { name: "isInvalid", type: "boolean", description: "Marks the label as invalid" },
     { name: "class", type: "string", description: "Custom classes" },
-    { name: "className", type: "string", description: "Alias for class" },
-    { name: "dataTheme", type: "string", description: "Theme identifier" },
-    { name: "children", type: "JSX.Element", description: "Input/control" },
+    { name: "children", type: "JSX.Element", description: "Label content" },
   ];
 
-  function UsernameField() {
-    const { errors, touched } = useFormValidation();
-    return (
-      <Flex direction="col" gap="sm">
-        <Form.Label title="Username" />
-        <Input name="username" class="input-bordered w-full" />
-        <Show when={touched("username") && errors("username")}>
-          <span class="text-error text-sm">{errors("username")}</span>
-        </Show>
-      </Flex>
-    );
-  }
+  const validationSchema = z.object({
+    username: z.string().min(1, "Username is required"),
+    email: z.string().email("Invalid email"),
+  });
 
-  function EmailField() {
-    const { errors, touched } = useFormValidation();
-    return (
-      <Flex direction="col" gap="sm">
-        <Form.Label title="Email" />
-        <Input name="email" type="email" class="input-bordered w-full" />
-        <Show when={touched("email") && errors("email")}>
-          <span class="text-error text-sm">{errors("email")}</span>
-        </Show>
-      </Flex>
-    );
-  }
+  const validatedForm = createForm({
+    defaultValues: { username: "", email: "" },
+    schema: validationSchema,
+    onSubmit: (value) => {
+      console.log("Submitted:", value);
+    },
+  });
 
   return (
     <ShowcaseLayout>
@@ -84,16 +80,18 @@ export default function FormShowcase() {
             <Form class="bg-base-100 p-6 rounded-lg shadow-md max-w-md w-full mx-auto">
               <Flex direction="col" gap="md">
                 <Flex direction="col" gap="sm">
-                  <Form.Label title="Email" />
+                  <Label for="basic-email">Email</Label>
                   <Input
+                    id="basic-email"
                     type="email"
                     placeholder="Enter your email"
                     class="input-bordered w-full"
                   />
                 </Flex>
                 <Flex direction="col" gap="sm">
-                  <Form.Label title="Password" />
+                  <Label for="basic-password">Password</Label>
                   <Input
+                    id="basic-password"
                     type="password"
                     placeholder="Enter your password"
                     class="input-bordered w-full"
@@ -109,12 +107,12 @@ export default function FormShowcase() {
               code={`<Form class="...">
   <Flex direction="col" gap="md">
     <Flex direction="col" gap="sm">
-      <Form.Label title="Email" />
-      <Input type="email" class="input-bordered w-full" />
+      <Label for="email">Email</Label>
+      <Input id="email" type="email" class="input-bordered w-full" />
     </Flex>
     <Flex direction="col" gap="sm">
-      <Form.Label title="Password" />
-      <Input type="password" class="input-bordered w-full" />
+      <Label for="password">Password</Label>
+      <Input id="password" type="password" class="input-bordered w-full" />
     </Flex>
     <Button class="w-full">Submit</Button>
   </Flex>
@@ -128,8 +126,9 @@ export default function FormShowcase() {
             <Form class="bg-base-100 p-4 rounded-md shadow-md w-full max-w-xl mx-auto">
               <Flex direction="row" gap="md" align="end">
                 <Flex direction="col" gap="sm" class="w-full">
-                  <Form.Label title="Email" />
+                  <Label for="inline-email">Email</Label>
                   <Input
+                    id="inline-email"
                     type="email"
                     placeholder="email"
                     class="input-bordered w-full"
@@ -145,8 +144,8 @@ export default function FormShowcase() {
               code={`<Form class="...">
   <Flex direction="row" gap="md" align="end">
     <Flex direction="col" gap="sm" class="w-full">
-      <Form.Label title="Email" />
-      <Input type="email" class="input-bordered w-full" />
+      <Label for="email">Email</Label>
+      <Input id="email" type="email" class="input-bordered w-full" />
     </Flex>
     <Button>Subscribe</Button>
   </Flex>
@@ -160,20 +159,20 @@ export default function FormShowcase() {
             <Form class="bg-base-100 p-6 rounded-lg shadow-md max-w-2xl w-full mx-auto space-y-4">
               <Grid cols="2" gap="md">
                 <Flex direction="col" gap="sm">
-                  <Form.Label title="First Name" />
-                  <Input type="text" class="input-bordered w-full" />
+                  <Label for="grid-first">First Name</Label>
+                  <Input id="grid-first" type="text" class="input-bordered w-full" />
                 </Flex>
                 <Flex direction="col" gap="sm">
-                  <Form.Label title="Last Name" />
-                  <Input type="text" class="input-bordered w-full" />
+                  <Label for="grid-last">Last Name</Label>
+                  <Input id="grid-last" type="text" class="input-bordered w-full" />
                 </Flex>
                 <Flex direction="col" gap="sm" class="col-span-2">
-                  <Form.Label title="Email" />
-                  <Input type="email" class="input-bordered w-full" />
+                  <Label for="grid-email">Email</Label>
+                  <Input id="grid-email" type="email" class="input-bordered w-full" />
                 </Flex>
                 <Flex direction="col" gap="sm" class="col-span-2">
-                  <Form.Label title="Phone" />
-                  <Input type="tel" class="input-bordered w-full" />
+                  <Label for="grid-phone">Phone</Label>
+                  <Input id="grid-phone" type="tel" class="input-bordered w-full" />
                 </Flex>
               </Grid>
               <Button type="submit" color="primary" class="w-full">
@@ -185,21 +184,10 @@ export default function FormShowcase() {
               code={`<Form class="...">
   <Grid cols="2" gap="md">
     <Flex direction="col" gap="sm">
-      <Form.Label title="First Name" />
-      <Input class="input-bordered w-full" />
+      <Label for="first">First Name</Label>
+      <Input id="first" class="input-bordered w-full" />
     </Flex>
-    <Flex direction="col" gap="sm">
-      <Form.Label title="Last Name" />
-      <Input class="input-bordered w-full" />
-    </Flex>
-    <Flex direction="col" gap="sm" class="col-span-2">
-      <Form.Label title="Email" />
-      <Input class="input-bordered w-full" />
-    </Flex>
-    <Flex direction="col" gap="sm" class="col-span-2">
-      <Form.Label title="Phone" />
-      <Input class="input-bordered w-full" />
-    </Flex>
+    ...
   </Grid>
   <Button class="w-full">Continue</Button>
 </Form>`}
@@ -207,60 +195,40 @@ export default function FormShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection
-          id="validation"
-          title="Validated Form using Felte and Zod"
-        >
+        <ShowcaseSection id="validation" title="Validated Form (createForm + Zod)">
           <Flex direction="col" gap="md">
-            <Form.Validated
+            <Form
+              form={validatedForm}
               class="bg-base-100 p-6 rounded-lg shadow-md max-w-md w-full mx-auto space-y-4"
-              schema={z.object({
-                username: z.string().min(1, "Username is required"),
-                email: z.string().email("Invalid email"),
-              })}
-              onSubmit={(values) => {
-                console.log("Submitted:", values);
-              }}
             >
-              <UsernameField />
-              <EmailField />
-              <Button type="submit" class="w-full" color="primary">
+              <FormField name="username" label="Username" />
+              <FormField
+                name="email"
+                label="Email"
+                inputProps={{ type: "email" }}
+              />
+              <FormSubmitButton class="w-full" color="primary">
                 Submit
-              </Button>
-            </Form.Validated>
+              </FormSubmitButton>
+            </Form>
 
             <CodeBlock
-              code={`<Form.Validated
-  schema={z.object({
+              code={`const form = createForm({
+  defaultValues: { username: "", email: "" },
+  schema: z.object({
     username: z.string().min(1, "Username is required"),
     email: z.string().email("Invalid email"),
-  })}
-  class="bg-base-100 p-6 rounded-lg shadow-md max-w-md w-full mx-auto space-y-4"
->
-  <Flex direction="col" gap="sm">
-    <Form.Label title="Username" />
-    <Input name="username" class="input-bordered w-full" />
-    <Show when={useFormValidation().touched("username") && useFormValidation().errors("username")}>
-      <span class="text-error text-sm">
-        {useFormValidation().errors("username")}
-      </span>
-    </Show>
-  </Flex>
+  }),
+  onSubmit: (value) => {
+    console.log("Submitted:", value);
+  },
+});
 
-  <Flex direction="col" gap="sm">
-    <Form.Label title="Email" />
-    <Input name="email" type="email" class="input-bordered w-full" />
-    <Show when={useFormValidation().touched("email") && useFormValidation().errors("email")}>
-      <span class="text-error text-sm">
-        {useFormValidation().errors("email")}
-      </span>
-    </Show>
-  </Flex>
-
-  <Button type="submit" class="w-full">
-    Submit
-  </Button>
-</Form.Validated>`}
+<Form form={form} class="space-y-4">
+  <FormField name="username" label="Username" />
+  <FormField name="email" label="Email" inputProps={{ type: "email" }} />
+  <FormSubmitButton class="w-full" color="primary">Submit</FormSubmitButton>
+</Form>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -270,7 +238,7 @@ export default function FormShowcase() {
             <h3 class="text-lg font-semibold">Form</h3>
             <PropsTable props={formProps} />
 
-            <h3 class="text-lg font-semibold mt-4">Form.Label</h3>
+            <h3 class="text-lg font-semibold mt-4">Label</h3>
             <PropsTable props={labelProps} />
           </Flex>
         </ShowcaseSection>
