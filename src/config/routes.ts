@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: "/",
   DOCS: "/docs",
   DOCS_INSTALLATION: "/docs/installation",
+  DOCS_USAGE: "/docs/usage",
   THEMING: "/theming",
   SHOWCASES: "/showcases",
   
@@ -100,5 +101,6 @@ export const isValidRoute = (path: string): boolean =>
 export const EXTERNAL_ROUTES = {
   GITHUB: "https://github.com/pathscale/ui",
   GITHUB_DISCUSSIONS: "https://github.com/pathscale/ui/discussions",
+  UI_USAGE_DOC: "https://github.com/pathscale/ui/blob/master/docs/ui-usage.md",
   DISCORD: "https://discord.gg/pathscale",
 } as const;

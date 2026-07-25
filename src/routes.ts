@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Theming from "./pages/Theming";
 import DocsIndex from "./pages/docs/Index";
 import DocsInstallation from "./pages/docs/Installation";
+import DocsUsage from "./pages/docs/Usage";
 import Showcases from "./pages/Showcases";
 
 import AccordionShowcase from "./components/AccordionShowcase";
@@ -121,6 +122,13 @@ export const routes: RouteConfig[] = [
     path: ROUTES.DOCS_INSTALLATION,
     component: DocsInstallation,
     description: "Get started with @pathscale/ui installation and setup.",
+  },
+  {
+    name: "Usage Cheatsheet",
+    path: ROUTES.DOCS_USAGE,
+    component: DocsUsage,
+    description:
+      "Conventions, forms, tables, toasts, icons and dates — the reference to check while you work.",
   },
   {
     name: "Showcases",
