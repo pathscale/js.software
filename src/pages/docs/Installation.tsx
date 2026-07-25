@@ -25,13 +25,21 @@ const Installation: Component = () => {
             have these core dependencies installed:
           </p>
           <ul class="space-y-2 pl-4">
-            <li>• SolidJS ^1.8.0 - Our reactive foundation</li>
-            <li>• TailwindCSS ^3.0.0 - For utility-first styling</li>
+            <li>• SolidJS ^1.9 - Our reactive foundation</li>
+            <li>
+              • TailwindCSS ^4.0 (optional) - For utility-first styling
+              alongside the library
+            </li>
             <li>
               • TypeScript (recommended) - For enhanced type safety and
               developer experience
             </li>
           </ul>
+          <p class="mt-4">
+            The library also declares @solid-primitives/*, @tanstack/solid-form
+            and @tanstack/solid-table as peer dependencies; popmotion and
+            @standard-schema/spec are optional.
+          </p>
         </Callout>
       </section>
 
@@ -43,6 +51,11 @@ const Installation: Component = () => {
         </p>
 
         <div class="space-y-6">
+          <div>
+            <h3 class="text-xl font-medium mb-3">Using Bun</h3>
+            <CodeBlock language="bash" code="bun add @pathscale/ui" />
+          </div>
+
           <div>
             <h3 class="text-xl font-medium mb-3">Using NPM</h3>
             <CodeBlock language="bash" code="npm install @pathscale/ui" />
@@ -66,26 +79,30 @@ const Installation: Component = () => {
         <div class="mb-8">
           <h3 class="text-xl font-medium mb-3">1. Import Styles</h3>
           <p class="text-base-content/70 mb-4">
-            Import the required styles in your main entry file (e.g., main.tsx
-            or App.tsx):
+            One stylesheet carries the design tokens, both themes, base styles
+            and icons. Import it in your entry file (e.g., main.tsx or App.tsx):
           </p>
           <CodeBlock
             language="typescript"
-            code={`import "@pathscale/ui/styles.css";`}
+            code={`import "@pathscale/ui/index.css";`}
           />
         </div>
 
         <div class="mb-8">
-          <h3 class="text-xl font-medium mb-3">2. Configure TailwindCSS</h3>
+          <h3 class="text-xl font-medium mb-3">
+            2. Configure TailwindCSS (optional)
+          </h3>
           <p class="text-base-content/70 mb-4">
-            Add our preset to your tailwind.config.js:
+            Only needed if your app uses Tailwind. The library targets Tailwind
+            v4, which is configured from CSS rather than a{" "}
+            <code class="text-sm">tailwind.config.js</code> — there is no preset
+            to require. Point <code class="text-sm">@source</code> at the
+            package so Tailwind scans the classes it ships:
           </p>
           <CodeBlock
-            language="javascript"
-            code={`module.exports = {
-  presets: [require("@pathscale/ui/tailwind")],
-  // ... your config
-};`}
+            language="css"
+            code={`@import "tailwindcss";
+@source "../node_modules/@pathscale/ui/";`}
           />
         </div>
 
@@ -117,6 +134,9 @@ function App() {
         <Flex gap="lg" wrap="wrap">
           <a href={ROUTES.SHOWCASES} class="btn btn-primary">
             Explore Components
+          </a>
+          <a href={ROUTES.DOCS_USAGE} class="btn btn-outline">
+            Usage Cheatsheet
           </a>
           <a href={ROUTES.THEMING} class="btn btn-outline">
             Customize Theme
