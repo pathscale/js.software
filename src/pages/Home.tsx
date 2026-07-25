@@ -41,6 +41,9 @@ const Home: Component = () => {
               <a href={ROUTES.SHOWCASES} class="btn btn-outline btn-lg">
                 Explore Components
               </a>
+              <a href={ROUTES.DOCS_USAGE} class="btn btn-ghost btn-lg">
+                Usage Cheatsheet
+              </a>
             </Flex>
 
             <div class="text-center">
