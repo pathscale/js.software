@@ -48,6 +48,7 @@ import {
   LanguageSwitcher,
   LiveChatBubble,
   ThemeColorPicker,
+  Kbd,
   createI18n,
 } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
@@ -90,6 +91,17 @@ const EXAMPLES: Example[] = [
     ),
   },
   { name: "CloseButton", render: () => <CloseButton /> },
+  {
+    // Kbd itself is shown on its own page, but its Abbr is used nowhere: it
+    // renders a glyph for a named key and titles itself with that key's name.
+    name: "Kbd.Abbr",
+    render: () => (
+      <Kbd>
+        <Kbd.Abbr keyValue="command" />
+        <Kbd.Content>K</Kbd.Content>
+      </Kbd>
+    ),
+  },
   { name: "Description", render: () => <Description>Helper text.</Description> },
   {
     name: "Disclosure",
