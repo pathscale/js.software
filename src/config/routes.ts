@@ -58,6 +58,7 @@ export const ROUTES = {
   SELECT: "/select",
   SIDENAV: "/sidenav",
   SKELETON: "/skeleton",
+  COVERAGE: "/coverage",
   STACK: "/stack",
   STATS: "/stats",
   STEPS: "/steps",
