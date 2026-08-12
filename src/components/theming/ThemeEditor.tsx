@@ -33,7 +33,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           <Icon name="icon-[mdi--dice]" width={16} height={16} class="group-active:scale-95" />
           Random
         </Button>
-        <Button color="neutral" onClick={() => props.onExportCSS(isDefault(), isPrefersDark(), colorScheme())}>
+        <Button variant="secondary" onClick={() => props.onExportCSS(isDefault(), isPrefersDark(), colorScheme())}>
           <Icon name="icon-[mdi--code-braces]" width={16} height={16} />
           CSS
         </Button>

@@ -198,7 +198,7 @@ const AlertShowcase: Component = () => {
               </Alert.Content>
               <div class="space-x-1">
                 <Button size="sm">Deny</Button>
-                <Button size="sm" color="primary">
+                <Button size="sm" variant="primary">
                   Accept
                 </Button>
               </div>

@@ -153,7 +153,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
           <Button
             class="absolute top-2 right-5"
             size="sm"
-            color={isClipboardButtonPressed() ? "success" : "neutral"}
+            variant={isClipboardButtonPressed() ? "primary" : "secondary"}
             onClick={copyThemeCSSToClipboard}
           >
             {isClipboardButtonPressed() ? (

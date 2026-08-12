@@ -42,7 +42,7 @@ export default function GlassSection(props: GlassSectionProps) {
           Glass
           <Button
             size="sm"
-            color="ghost"
+            variant="ghost"
             class="ml-auto"
             onClick={resetToHype4}
             title="Reset to Hype4 defaults"

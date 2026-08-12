@@ -24,7 +24,7 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
           <For each={componentsItem?.subcategories || []}>
             {(subcategory) => (
               <Button
-                color="ghost"
+                variant="ghost"
                 size="sm"
                 onClick={() => {
                   setActiveCategory(subcategory.title);
