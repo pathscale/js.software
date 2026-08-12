@@ -59,6 +59,7 @@ import RatingShowcase from "./components/RatingShowcase";
 import SelectShowcase from "./components/SelectShowcase";
 import SidenavShowcase from "./components/SidenavShowcase";
 import SkeletonShowcase from "./components/SkeletonShowcase";
+import CoverageShowcase from "./components/CoverageShowcase";
 import StackShowcase from "./components/StackShowcase";
 import StatsShowcase from "./components/StatsShowcase";
 import StepsShowcase from "./components/StepsShowcase";
@@ -459,6 +460,13 @@ export const routes: RouteConfig[] = [
     path: ROUTES.SKELETON,
     component: SkeletonShowcase,
     description: "Placeholder content while loading.",
+  },
+  {
+    name: "Coverage",
+    path: ROUTES.COVERAGE,
+    component: CoverageShowcase,
+    description:
+      "Every component no other page renders, so a port can be checked in a browser rather than only typechecked.",
   },
   {
     name: "Stack",
