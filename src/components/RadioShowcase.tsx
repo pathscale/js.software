@@ -8,7 +8,7 @@ import { ShowcaseSection } from "./showcase/ShowcaseSection";
 const RadioShowcase: Component = () => {
   const sections = [
     { id: "default", title: "Default" },
-    { id: "colors", title: "Colors" },
+    { id: "description", title: "Description and validation" },
     { id: "disabled", title: "Disabled" },
     { id: "with-labels", title: "With Labels and Form" },
     { id: "props", title: "Props" },
@@ -33,9 +33,20 @@ const RadioShowcase: Component = () => {
       description: "Name attribute for the radio input, used for grouping",
     },
     {
-      name: "color",
-      type: '"primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error"',
-      description: "Color variant of the radio",
+      name: "description",
+      type: "JSX.Element",
+      description: "Supporting text rendered under the label",
+    },
+    {
+      name: "isInvalid",
+      type: "boolean",
+      default: "false",
+      description: "Marks the radio as failing validation",
+    },
+    {
+      name: "indicator",
+      type: "JSX.Element",
+      description: "Replaces the dot drawn inside the control",
     },
     {
       name: "dataTheme",
@@ -48,10 +59,10 @@ const RadioShowcase: Component = () => {
       description: "Additional CSS classes to apply",
     },
     {
-      name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      default: '"md"',
-      description: "Size of the radio button",
+      name: "isDisabled",
+      type: "boolean",
+      default: "false",
+      description: "Disables the radio",
     },
   ];
 
@@ -86,27 +97,26 @@ const RadioShowcase: Component = () => {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Colors">
+        <ShowcaseSection
+          id="description"
+          title="Description and validation"
+        >
           <Flex direction="col" gap="md">
-            <Flex align="start" justify="start" gap="sm">
-              <Radio checked color="primary" name="radio2" />
-              <Radio checked color="secondary" name="radio3" />
-              <Radio checked color="accent" name="radio4" />
-              <Radio checked color="success" name="radio5" />
-              <Radio checked color="warning" name="radio6" />
-              <Radio checked color="info" name="radio7" />
-              <Radio checked color="error" name="radio8" />
+            <Flex direction="col" align="start" justify="start" gap="sm">
+              <Radio name="radio2" description="Billed once a year.">
+                Annual
+              </Radio>
+              <Radio name="radio2" isInvalid description="Unavailable in your region.">
+                Monthly
+              </Radio>
             </Flex>
             <CodeBlock
-              code={`<Flex align="start" justify="start" gap="sm">
-  <Radio checked color="primary" name="radio2" />
-  <Radio checked color="secondary" name="radio3" />
-  <Radio checked color="accent" name="radio4" />
-  <Radio checked color="success" name="radio5" />
-  <Radio checked color="warning" name="radio6" />
-  <Radio checked color="info" name="radio7" />
-  <Radio checked color="error" name="radio8" />
-</Flex>`}
+              code={`<Radio name="plan" description="Billed once a year.">
+  Annual
+</Radio>
+<Radio name="plan" isInvalid description="Unavailable in your region.">
+  Monthly
+</Radio>`}
             />
           </Flex>
         </ShowcaseSection>

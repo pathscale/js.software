@@ -71,7 +71,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
           </div>
         </Modal.Body>
         <Modal.Footer class="bg-base-100">
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={props.onClose} variant="primary">
             Done
           </Button>
         </Modal.Footer>

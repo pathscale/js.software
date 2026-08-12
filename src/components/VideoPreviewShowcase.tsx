@@ -92,11 +92,11 @@ export default function VideoPreviewShowcase() {
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
               {stream() ? (
-                <Button color="error" onClick={stopCamera}>
+                <Button variant="danger" onClick={stopCamera}>
                   Stop Camera
                 </Button>
               ) : (
-                <Button color="primary" onClick={startCamera}>
+                <Button variant="primary" onClick={startCamera}>
                   Start Camera
                 </Button>
               )}
@@ -126,7 +126,7 @@ const startCamera = async () => {
             </p>
             <Flex align="start" justify="start" gap="lg">
               {!stream() && (
-                <Button color="primary" onClick={startCamera}>
+                <Button variant="primary" onClick={startCamera}>
                   Start Camera
                 </Button>
               )}

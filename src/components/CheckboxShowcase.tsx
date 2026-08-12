@@ -9,8 +9,7 @@ export default function CheckboxShowcase() {
     { id: "default", title: "Default" },
     { id: "indeterminate", title: "Indeterminate" },
     { id: "form-control", title: "Form Control" },
-    { id: "colors", title: "Colors" },
-    { id: "sizes", title: "Sizes" },
+    { id: "variants", title: "Variants" },
     { id: "disabled", title: "Disabled States" },
   ] as const;
 
@@ -33,16 +32,10 @@ export default function CheckboxShowcase() {
       description: "Disables the checkbox",
     },
     {
-      name: "size",
-      type: '"xs" | "sm" | "md" | "lg" | "xl"',
-      default: '"md"',
-      description: "Size of the checkbox",
-    },
-    {
-      name: "color",
-      type: '"primary" | "secondary" | "accent" | "neutral" | "success" | "warning" | "info" | "error"',
+      name: "variant",
+      type: '"primary" | "secondary"',
       default: '"primary"',
-      description: "Color variant of the checkbox",
+      description: "Visual variant of the checkbox",
     },
   ];
 
@@ -104,49 +97,16 @@ export default function CheckboxShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        <ShowcaseSection id="colors" title="Colors">
+        <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg">
-              <Checkbox checked color="primary" />
-              <Checkbox checked color="secondary" />
-              <Checkbox checked color="accent" />
-              <Checkbox checked color="neutral" />
-              <Checkbox checked color="success" />
-              <Checkbox checked color="warning" />
-              <Checkbox checked color="info" />
-              <Checkbox checked color="error" />
+              <Checkbox checked variant="primary" />
+              <Checkbox checked variant="secondary" />
             </Flex>
             <CodeBlock
               code={`<div class="flex flex-row items-center gap-2">
-  <Checkbox checked color="primary" />
-  <Checkbox checked color="secondary" />
-  <Checkbox checked color="accent" />
-  <Checkbox checked color="neutral" />
-  <Checkbox checked color="success" />
-  <Checkbox checked color="warning" />
-  <Checkbox checked color="info" />
-  <Checkbox checked color="error" />
-</div>`}
-            />
-          </Flex>
-        </ShowcaseSection>
-
-        <ShowcaseSection id="sizes" title="Sizes">
-          <Flex direction="col" gap="md">
-            <Flex justify="start" align="start" gap="lg">
-              <Checkbox checked size="xs" />
-              <Checkbox checked size="sm" />
-              <Checkbox checked size="md" />
-              <Checkbox checked size="lg" />
-              <Checkbox checked size="xl" />
-            </Flex>
-            <CodeBlock
-              code={`<div class="flex flex-row items-center gap-2">
-  <Checkbox checked size="xs" />
-  <Checkbox checked size="sm" />
-  <Checkbox checked size="md" />
-  <Checkbox checked size="lg" />
-  <Checkbox checked size="xl" />
+  <Checkbox checked variant="primary" />
+  <Checkbox checked variant="secondary" />
 </div>`}
             />
           </Flex>

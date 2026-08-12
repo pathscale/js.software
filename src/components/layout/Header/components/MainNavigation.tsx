@@ -28,7 +28,7 @@ export const MainNavigation: Component<MainNavigationProps> = (props) => {
               </a>
             ) : (
               <Button
-                color="ghost"
+                variant="ghost"
                 size="lg"
                 onClick={() => {
                   setActiveCategory(

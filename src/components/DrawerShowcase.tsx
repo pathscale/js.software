@@ -93,7 +93,7 @@ export default function DrawerShowcase() {
           <Flex direction="col" gap="md">
             <Drawer placement="left" size="md">
               <Drawer.Trigger>
-                <Button color="primary">Open drawer</Button>
+                <Button variant="primary">Open drawer</Button>
               </Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
@@ -126,7 +126,7 @@ export default function DrawerShowcase() {
           <Flex direction="col" gap="md">
             <Drawer placement="right" size="md">
               <Drawer.Trigger>
-                <Button color="primary">Open from right</Button>
+                <Button variant="primary">Open from right</Button>
               </Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
@@ -146,7 +146,7 @@ export default function DrawerShowcase() {
           <Flex direction="col" gap="md">
             <Drawer placement="left" size="md">
               <Drawer.Trigger>
-                <Button color="primary">Open with header</Button>
+                <Button variant="primary">Open with header</Button>
               </Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
