@@ -35,6 +35,20 @@ import {
   TimeField,
   DateField,
   Popover,
+  ColorPicker,
+  ColorArea,
+  ColorField,
+  ColorSlider,
+  ComboBox,
+  DatePicker,
+  DateRangePicker,
+  RangeCalendar,
+  Header,
+  Toolbar,
+  LanguageSwitcher,
+  LiveChatBubble,
+  ThemeColorPicker,
+  createI18n,
 } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 
@@ -174,11 +188,89 @@ const EXAMPLES: Example[] = [
   { name: "DateField", render: () => <DateField /> },
 ];
 
+/**
+ * The components that need more than a tag to render: a provider, a data
+ * source, or both.
+ *
+ * Three of these were assumed to need a provider and do not — LanguageSwitcher,
+ * ThemeColorPicker and LiveChat are used bare in nofilter.io and honey.id. The
+ * assumption is what kept them uncovered, which is the same mistake as deriving
+ * an API from a recipe instead of from a call site.
+ */
+const COMPOSED: Example[] = [
+  {
+    name: "ColorPicker",
+    render: () => (
+      <ColorPicker value="#6366f1">
+        <ColorPicker.Area />
+        <ColorPicker.Slider />
+        <ColorPicker.Field />
+      </ColorPicker>
+    ),
+  },
+  {
+    name: "ColorArea",
+    render: () => <ColorArea value={{ h: 250, s: 0.7, v: 0.9 }} />,
+  },
+  { name: "ColorField", render: () => <ColorField value="#6366f1" /> },
+  { name: "ColorSlider", render: () => <ColorSlider value={250} type="hue" /> },
+  {
+    name: "ComboBox",
+    render: () => (
+      <ComboBox
+        items={[
+          { id: "a", label: "Alpha" },
+          { id: "b", label: "Beta" },
+        ]}
+      >
+        <ComboBox.InputGroup>
+          <ComboBox.Input />
+          <ComboBox.Trigger />
+        </ComboBox.InputGroup>
+      </ComboBox>
+    ),
+  },
+  { name: "DatePicker", render: () => <DatePicker value={new Date()} /> },
+  {
+    name: "DateRangePicker",
+    render: () => <DateRangePicker value={{ start: new Date(), end: new Date() }} />,
+  },
+  {
+    name: "RangeCalendar",
+    render: () => <RangeCalendar value={{ start: new Date(), end: new Date() }} />,
+  },
+  { name: "Header", render: () => <Header>Header content</Header> },
+  { name: "Toolbar", render: () => <Toolbar>Toolbar content</Toolbar> },
+  {
+    // Needs an i18n store. The library exports the factory for it, so the
+    // example builds one rather than faking the shape.
+    name: "LanguageSwitcher",
+    render: () => (
+      <LanguageSwitcher
+        i18n={createI18n({
+          languages: [
+            { code: "en", name: "English" },
+            { code: "es", name: "Espanol" },
+          ],
+          storageKey: "coverage-locale",
+        })}
+      />
+    ),
+  },
+  { name: "ThemeColorPicker", render: () => <ThemeColorPicker /> },
+  {
+    // There is no `LiveChat` export — the tracker names components after their
+    // recipe file, and this one ships as a bubble and a panel.
+    name: "LiveChatBubble",
+    render: () => <LiveChatBubble />,
+  },
+];
+
 export default function CoverageShowcase() {
   return (
     <ShowcaseLayout>
       <Flex direction="col" gap="lg" id="gallery">
-        <For each={EXAMPLES}>
+        <For each={[...EXAMPLES, ...COMPOSED]}>
           {(example) => (
             <div
               data-coverage={example.name}
