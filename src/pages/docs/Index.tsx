@@ -51,7 +51,8 @@ const DocsIndex: Component = () => {
           Get started quickly with a simple npm install:
         </p>
 
-        <CodeBlock code="npm install @pathscale/ui" language="bash" copyable={true} className="mb-6" />
+        <CodeBlock code={`npm install @pathscale/ui solid-layouts
+npm install --save-dev rsbuild-plugin-solid-layouts`} language="bash" copyable={true} className="mb-6" />
         
         <Callout type="info" title="Complete Setup Guide" className="mb-6">
           For detailed installation instructions, prerequisites, and configuration steps, 
@@ -87,7 +88,7 @@ function App() {
             Start building beautiful interfaces with our component library.
           </p>
           <Flex gap="md">
-            <Button color="primary">Get Started</Button>
+            <Button variant="primary">Get Started</Button>
             <Button variant="outline">Learn More</Button>
           </Flex>
         </Card.Body>

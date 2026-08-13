@@ -6,7 +6,7 @@ import {
   Input,
   Flex,
   Checkbox,
-  Badge,
+  Tag,
   Avatar,
   Menu,
   Tabs,
@@ -29,6 +29,9 @@ import {
   Radio,
   Icon,
   Pagination,
+  ProgressBar,
+  Slider,
+  Spinner,
 } from "@pathscale/ui";
 import { ROUTES } from "../config/routes";
 
@@ -51,8 +54,8 @@ export default function ComponentsDemo() {
               </Button>
             </Flex>
             <Flex gap="sm" class="mt-3 flex-wrap">
-              <Badge color="accent">Shoes</Badge>
-              <Badge color="default">Bags</Badge>
+              <Tag>Shoes</Tag>
+              <Tag>Bags</Tag>
             </Flex>
             <Flex direction="col" gap="sm" class="mt-4">
               <Flex justify="between" align="center">
@@ -60,36 +63,36 @@ export default function ComponentsDemo() {
                   <Checkbox />
                   <span class="text-sm">Hoodies</span>
                 </Flex>
-                <Badge size="sm" variant="soft">
+                <Tag size="sm" variant="surface">
                   25
-                </Badge>
+                </Tag>
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Checkbox checked />
                   <span class="text-sm">Bags</span>
                 </Flex>
-                <Badge size="sm" variant="soft" color="accent">
+                <Tag size="sm" variant="surface">
                   3
-                </Badge>
+                </Tag>
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Checkbox />
                   <span class="text-sm">Shoes</span>
                 </Flex>
-                <Badge size="sm" variant="soft">
+                <Tag size="sm" variant="surface">
                   12
-                </Badge>
+                </Tag>
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Checkbox />
                   <span class="text-sm">Accessories</span>
                 </Flex>
-                <Badge size="sm" variant="soft">
+                <Tag size="sm" variant="surface">
                   4
-                </Badge>
+                </Tag>
               </Flex>
             </Flex>
           </Card.Body>
@@ -159,9 +162,9 @@ export default function ComponentsDemo() {
                 <Card.Body class="p-2">
                   <Flex justify="between" align="center">
                     <span class="text-sm font-medium">Team meeting</span>
-                    <Badge size="sm" color="accent">
+                    <Tag size="sm">
                       2h
-                    </Badge>
+                    </Tag>
                   </Flex>
                 </Card.Body>
               </Card>
@@ -195,8 +198,7 @@ export default function ComponentsDemo() {
               <Icon name="icon-[mdi--currency-usd]" width={16} height={16} />
               <span class="font-semibold">Price Range</span>
             </Flex>
-            {/* TODO[ui-1.2.2]: Range component removed */}
-            <input type="range" min={0} max={100} value={25} step={25} class="w-full" />
+            <Slider value={25} min={0} max={100} step={25} onChange={() => {}} />
             <Flex justify="between" class="w-full text-xs px-2">
               <span>$0</span>
               <span>$25</span>
@@ -217,7 +219,6 @@ export default function ComponentsDemo() {
           </Card.Body>
         </Card>
 
-        {/* TODO[ui-1.2.2]: Stats, RadialProgress components removed */}
         <Card class="bg-base-100">
           <Card.Body>
             <Flex direction="col" gap="sm">
@@ -238,27 +239,27 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1234</span>
-                <Badge color="accent" size="sm">
+                <Tag size="sm">
                   Sent
-                </Badge>
+                </Tag>
               </Flex>
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1235</span>
-                <Badge color="danger" size="sm">
+                <Tag size="sm">
                   Failed
-                </Badge>
+                </Tag>
               </Flex>
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1236</span>
-                <Badge color="warning" size="sm">
+                <Tag size="sm">
                   In progress
-                </Badge>
+                </Tag>
               </Flex>
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1237</span>
-                <Badge color="success" size="sm">
+                <Tag size="sm">
                   Completed
-                </Badge>
+                </Tag>
               </Flex>
             </Flex>
           </Card.Body>
@@ -281,7 +282,7 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex direction="col" gap="sm">
               <Flex align="center" gap="sm">
-                {/* TODO[ui-1.2.2]: Loading component removed */}
+                <Spinner size="sm" />
                 <span class="text-sm">Processing...</span>
               </Flex>
               <Skeleton class="h-4 w-3/4" />
@@ -298,7 +299,7 @@ export default function ComponentsDemo() {
         <Card class="bg-base-100">
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-3">
-              <Avatar size="sm" color="accent">
+              <Avatar size="sm">
                 <Icon name="icon-[mdi--package-variant]" width={16} height={16} />
               </Avatar>
               <Flex direction="col">
@@ -306,8 +307,7 @@ export default function ComponentsDemo() {
                 <span class="text-xs opacity-60">In Stock</span>
               </Flex>
             </Flex>
-            {/* TODO[ui-1.2.2]: Progress component removed */}
-            <progress value={75} max={100} class="w-full" />
+            <ProgressBar value={75} />
             <Flex justify="between" align="center" class="mt-2">
               <span class="text-xs">75% sold</span>
               <span class="font-bold text-primary">$99.99</span>
@@ -344,7 +344,6 @@ export default function ComponentsDemo() {
           </Card.Body>
         </Card>
 
-        {/* TODO[ui-1.2.2]: Timeline component removed */}
         <Card class="bg-base-100">
           <Card.Body>
             <Flex direction="col" gap="sm" class="mt-3">
@@ -422,41 +421,41 @@ export default function ComponentsDemo() {
                     <Table.Row>
                       <Table.Cell>
                         <Flex align="center" gap="sm">
-                          <Avatar size="sm" color="accent">
+                          <Avatar size="sm">
                             <span>JD</span>
                           </Avatar>
                           <span class="text-sm">John Doe</span>
                         </Flex>
                       </Table.Cell>
                       <Table.Cell>
-                        <Badge size="sm" color="accent">
+                        <Tag size="sm">
                           Admin
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                       <Table.Cell>
-                        <Badge size="sm" color="success">
+                        <Tag size="sm">
                           Active
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                     </Table.Row>
                     <Table.Row>
                       <Table.Cell>
                         <Flex align="center" gap="sm">
-                          <Avatar size="sm" color="default">
+                          <Avatar size="sm">
                             <span>JS</span>
                           </Avatar>
                           <span class="text-sm">Jane Smith</span>
                         </Flex>
                       </Table.Cell>
                       <Table.Cell>
-                        <Badge size="sm" color="default">
+                        <Tag size="sm">
                           Editor
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                       <Table.Cell>
-                        <Badge size="sm" color="warning">
+                        <Tag size="sm">
                           Away
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>
@@ -509,18 +508,16 @@ export default function ComponentsDemo() {
                   </TooltipTrigger>
                   <TooltipContent>Click to expand</TooltipContent>
                 </Tooltip>
-                {/* TODO[ui-1.2.2]: Indicator component removed */}
                 <Flex align="center" gap="sm">
-                  <Badge size="sm" color="danger">
+                  <Tag size="sm">
                     3
-                  </Badge>
+                  </Tag>
                   <Button size="sm" variant="outline" isIconOnly>
                     <Icon name="icon-[mdi--bell]" width={16} height={16} />
                   </Button>
                 </Flex>
               </Flex>
               <Flex gap="sm">
-                {/* TODO[ui-1.2.2]: Swap component removed */}
                 <Toggle />
                 <span class="text-sm">Theme Toggle</span>
               </Flex>
@@ -538,7 +535,7 @@ export default function ComponentsDemo() {
                   John Doe
                   <ChatBubble.Time>12:45</ChatBubble.Time>
                 </ChatBubble.Header>
-                <ChatBubble.Avatar fallback="JD" size="sm" color="accent" />
+                <ChatBubble.Avatar fallback="JD" size="sm" />
                 <ChatBubble.Message>Hey! How are you doing?</ChatBubble.Message>
               </ChatBubble>
               <ChatBubble end>
@@ -546,7 +543,7 @@ export default function ComponentsDemo() {
                   You
                   <ChatBubble.Time>12:46</ChatBubble.Time>
                 </ChatBubble.Header>
-                <ChatBubble.Avatar fallback="ME" size="sm" color="accent" />
+                <ChatBubble.Avatar fallback="ME" size="sm" />
                 <ChatBubble.Message color="primary">
                   I'm doing great! Thanks for asking.
                 </ChatBubble.Message>
@@ -575,9 +572,9 @@ export default function ComponentsDemo() {
                     <Icon name="icon-[mdi--database]" width={16} height={16} />
                     <span>Database</span>
                   </Flex>
-                  <Badge size="sm" color="accent">
+                  <Tag size="sm">
                     2
-                  </Badge>
+                  </Tag>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="products">
@@ -586,9 +583,9 @@ export default function ComponentsDemo() {
                     <Icon name="icon-[mdi--package-variant]" width={16} height={16} />
                     <span>Products</span>
                   </Flex>
-                  <Badge size="sm" color="success">
+                  <Tag size="sm">
                     12
-                  </Badge>
+                  </Tag>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="messages">
@@ -597,9 +594,9 @@ export default function ComponentsDemo() {
                     <Icon name="icon-[mdi--message-text]" width={16} height={16} />
                     <span>Messages</span>
                   </Flex>
-                  <Badge size="sm" color="warning">
+                  <Tag size="sm">
                     5
-                  </Badge>
+                  </Tag>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="tokens">
@@ -647,7 +644,7 @@ export default function ComponentsDemo() {
                 <span class="font-medium text-sm">Song Title</span>
                 <span class="text-xs opacity-60">Artist Name</span>
               </Flex>
-              <progress value={45} max={100} class="w-full mt-2" />
+              <ProgressBar value={45} />
               <Flex justify="between" class="text-xs opacity-60">
                 <span>2:34</span>
                 <span>5:55</span>
@@ -656,7 +653,6 @@ export default function ComponentsDemo() {
           </Card.Body>
         </Card>
 
-        {/* TODO[ui-1.2.2]: CodeMockup component removed */}
         <Card class="bg-base-100">
           <Card.Body class="p-0">
             <pre class="bg-base-200 p-4 text-xs font-mono rounded">
@@ -694,7 +690,6 @@ export default function ComponentsDemo() {
           </Card.Body>
         </Card>
 
-        {/* TODO[ui-1.2.2]: Steps component removed */}
         <Card class="bg-base-100">
           <Card.Body>
             <Flex direction="col" gap="sm">
@@ -760,7 +755,6 @@ export default function ComponentsDemo() {
               </Form>
               <Form>
                 <span class="text-sm font-medium">Rate your experience</span>
-                {/* TODO[ui-1.2.2]: Rating component removed */}
                 <Flex gap="sm">
                   <Icon name="icon-[mdi--star]" width={16} height={16} class="text-warning" />
                   <Icon name="icon-[mdi--star]" width={16} height={16} class="text-warning" />

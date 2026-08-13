@@ -74,7 +74,7 @@ export const Search: Component<SearchProps> = (props) => {
     {
       title: "Installation",
       href: ROUTES.DOCS_INSTALLATION,
-      excerpt: "Install @pathscale/ui in your React, Vue, or Solid project",
+      excerpt: "Install @pathscale/ui and Solid Layouts in a SolidJS project",
       category: "Overview",
     },
     {

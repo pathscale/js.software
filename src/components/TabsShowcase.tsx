@@ -148,7 +148,6 @@ export default function TabsShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="controlled" title="Controlled Selection">
-          {/* TODO[ui-1.2.2]: onSelectionChange typing collides with JSX onselectionchange handler; omitted from demo */}
           <Tabs selectedKey="b">
             <Tabs.List>
               <Tabs.Tab id="a">A</Tabs.Tab>

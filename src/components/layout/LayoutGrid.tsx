@@ -29,13 +29,7 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
 
   return (
     <div class="min-h-screen">
-      <div
-        class={`fixed top-0 left-0 right-0 z-50 ${
-          hasAnySidebar()
-            ? "border-b border-base-300 bg-base-100"
-            : "bg-base-100/80 backdrop-blur-sm"
-        }`}
-      >
+      <div class="fixed top-0 left-0 right-0 z-50">
         {props.header && <props.header />}
       </div>
 

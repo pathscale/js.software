@@ -1,4 +1,3 @@
-// TODO[ui-1.2.2]: Textarea API simplified. Removed `color` and `size` props; now has `variant` ("primary" | "secondary"), `fullWidth`, `isInvalid`, `isDisabled`.
 import { Component, createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Textarea, Flex } from "@pathscale/ui";

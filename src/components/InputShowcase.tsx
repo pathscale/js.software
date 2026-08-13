@@ -1,4 +1,3 @@
-// TODO[ui-1.2.2]: Input size narrowed to sm|md|lg (no xs/xl); removed variant and color props; leftIcon/rightIcon renamed to startIcon/endIcon
 import { createSignal } from "solid-js";
 import { Input, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";

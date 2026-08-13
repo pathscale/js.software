@@ -1,4 +1,3 @@
-// TODO[ui-1.2.2]: Tabs API changed: variants narrowed to primary|secondary, no `size`, Tab uses `id`+`isDisabled` driven by Root state instead of `active`/`onClick`.
 import { Icon, Tabs } from "@pathscale/ui";
 import ComponentsDemo from "./ComponentsDemo";
 import ComponentVariants from "./ComponentVariants";
@@ -28,7 +27,6 @@ export default function Preview(props: PreviewProps) {
     <div class="text-base-content pt-6 transition-colors duration-500 bg-base-300">
       <div class="flex items-center justify-between gap-4 px-8 ps-10">
         <h2 class="font-title text-lg md:max-lg:hidden">{TAB_TITLES[selectedKey()]}</h2>
-        {/* TODO[ui-1.2.2]: onSelectionChange typing collides with JSX onselectionchange handler; cast required */}
         <Tabs
           variant="primary"
           selectedKey={selectedKey()}

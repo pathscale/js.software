@@ -1,4 +1,3 @@
-// TODO[ui-1.2.2]: Select rewritten as compound component (Root/Trigger/Value/Indicator/Popover/Listbox/Option). Removed `color` and `size` props; old `<option>` children pattern replaced with Select.Option. onChange now receives `string | string[] | null`.
 import { createSignal } from "solid-js";
 import { Select, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";

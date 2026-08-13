@@ -7,7 +7,6 @@ export const DefaultSection = () => (
   <ShowcaseSection id="default" title="Default">
     <Flex direction="col" gap="md">
       <Navbar class="bg-base-100 shadow-xl rounded-box">
-        {/* TODO[ui-1.2.2]: Button no longer supports `as` prop; using anchor with btn classes */}
         <a class="btn btn-ghost text-xl normal-case" href="#">
           daisyUI
         </a>
@@ -33,7 +32,6 @@ export const TitleAndIconSection = () => (
           </a>
         </Flex>
         <Flex shrink={false}>
-          {/* TODO[ui-1.2.2]: Button no longer supports `shape`; using isIconOnly */}
           <Button variant="ghost" isIconOnly>
             <DotsIcon />
           </Button>
@@ -96,7 +94,6 @@ export const MenuSubmenuSection = () => (
           </a>
         </Flex>
         <Flex shrink={false}>
-          {/* TODO[ui-1.2.2]: Menu component no longer supports `horizontal`; rendering plain ul */}
           <ul class="menu menu-horizontal px-1">
             <li>
               <a>Link</a>
@@ -203,12 +200,11 @@ export const IconIndicatorSection = () => (
         </Flex>
         <Flex shrink={false} gap="md">
           <Dropdown placement="bottom">
-            {/* TODO[ui-1.2.2]: Indicator component removed; using absolute-positioned Badge */}
-            <Dropdown.Trigger class="btn btn-ghost btn-circle relative">
-              <Badge size="sm" class="absolute top-0 right-0">
-                8
-              </Badge>
-              <CartIcon />
+            <Dropdown.Trigger class="btn btn-ghost btn-circle">
+              <Badge.Anchor>
+                <CartIcon />
+                <Badge size="sm">8</Badge>
+              </Badge.Anchor>
             </Dropdown.Trigger>
             <Dropdown.Menu
               align="end"
@@ -217,7 +213,6 @@ export const IconIndicatorSection = () => (
               <Card.Body>
                 <span class="font-bold text-lg">8 Items</span>
                 <span class="text-info">Subtotal: $999</span>
-                {/* TODO[ui-1.2.2]: Card.Actions removed; using plain Flex */}
                 <Flex justify="end" class="mt-2">
                   <Button variant="primary" fullWidth>
                     View cart
@@ -248,9 +243,8 @@ export const IconIndicatorSection = () => (
   <Flex grow><a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a></Flex>
   <Flex shrink={false} gap="md">
     <Dropdown placement="bottom">
-      <Dropdown.Trigger class="btn btn-ghost btn-circle relative">
-        <Badge size="sm" class="absolute top-0 right-0">8</Badge>
-        <CartIcon />
+      <Dropdown.Trigger class="btn btn-ghost btn-circle">
+        <Badge.Anchor><CartIcon /><Badge size="sm">8</Badge></Badge.Anchor>
       </Dropdown.Trigger>
       <Dropdown.Menu align="end" class="mt-3 z-[1] card card-compact w-52 !p-0">
         <Card.Body>
@@ -297,11 +291,12 @@ export const DropdownCenterSection = () => (
           <Button variant="ghost" isIconOnly>
             <SearchIcon />
           </Button>
-          <Button variant="ghost" isIconOnly class="relative">
-            {/* TODO[ui-1.2.2]: Indicator component removed; using absolute-positioned dot */}
-            <span class="absolute top-1 right-1 size-2 rounded-full bg-accent" />
-            <BellIcon />
-          </Button>
+          <Badge.Anchor>
+            <Button variant="ghost" isIconOnly>
+              <BellIcon />
+            </Button>
+            <Badge size="sm" color="accent" />
+          </Badge.Anchor>
         </Navbar.End>
       </Navbar>
       <CodeBlock
@@ -321,10 +316,10 @@ export const DropdownCenterSection = () => (
   </Navbar.Center>
   <Navbar.End>
     <Button variant="ghost" isIconOnly><SearchIcon /></Button>
-    <Button variant="ghost" isIconOnly class="relative">
-      <span class="absolute top-1 right-1 size-2 rounded-full bg-accent" />
-      <BellIcon />
-    </Button>
+    <Badge.Anchor>
+      <Button variant="ghost" isIconOnly><BellIcon /></Button>
+      <Badge size="sm" color="accent" />
+    </Badge.Anchor>
   </Navbar.End>
 </Navbar>`}
       />
@@ -352,7 +347,6 @@ export const ResponsiveSection = () => (
           </a>
         </Navbar.Start>
         <Navbar.Center class="hidden lg:flex">
-          {/* TODO[ui-1.2.2]: Menu component no longer supports `horizontal`; rendering plain ul */}
           <ul class="menu menu-horizontal px-1">
             <li>
               <a>Item 1</a>

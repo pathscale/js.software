@@ -3,9 +3,14 @@ import { pluginBabel } from "@rsbuild/plugin-babel";
 import { pluginSolid } from "@rsbuild/plugin-solid";
 import { BannerPlugin } from "@rspack/core";
 import CompressionPlugin from "compression-webpack-plugin";
+import { pluginSolidLayoutsApplication } from "rsbuild-plugin-solid-layouts";
 
 export default defineConfig({
-  plugins: [pluginBabel({ include: /\.(?:jsx|tsx|ts)$/ }), pluginSolid()],
+  plugins: [
+    pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] }),
+    pluginBabel({ include: /\.(?:jsx|tsx|ts)$/ }),
+    pluginSolid(),
+  ],
   source: {
     alias: { "~": "./src" },
     define: {

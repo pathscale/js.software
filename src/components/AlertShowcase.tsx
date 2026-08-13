@@ -211,7 +211,7 @@ const AlertShowcase: Component = () => {
     <Alert.Description>we use cookies for no reason.</Alert.Description>
   </Alert.Content>
   <Button size="sm">Deny</Button>
-  <Button size="sm" color="primary">Accept</Button>
+  <Button size="sm" variant="primary">Accept</Button>
 </Alert>`}
           />
         </ShowcaseSection>

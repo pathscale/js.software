@@ -1,4 +1,3 @@
-// TODO[ui-1.2.2]: Drawer rebuilt as a compound component (Root/Trigger/Backdrop/Content/Dialog/Header/Body/Footer). Old `open`, `side`, `sideClassName`, `contentClassName`, `end`, `onClickOverlay` props removed.
 import { Button, Drawer, Flex, Menu } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -108,7 +107,7 @@ export default function DrawerShowcase() {
             <CodeBlock
               code={`<Drawer placement="left" size="md">
   <Drawer.Trigger>
-    <Button color="primary">Open drawer</Button>
+    <Button variant="primary">Open drawer</Button>
   </Drawer.Trigger>
   <Drawer.Backdrop>
     <Drawer.Content>

@@ -106,7 +106,6 @@ export default function DropdownShowcase() {
                 <Dropdown.Trigger>Click</Dropdown.Trigger>
                 <Dropdown.Menu class="w-64 p-2 shadow bg-primary text-primary-content">
                   <Card.Body>
-                    {/* TODO[ui-1.2.2]: Card.Title removed; using header text instead */}
                     <h3 class="font-bold">Card title!</h3>
                     <p>you can use any element as a dropdown.</p>
                   </Card.Body>
@@ -193,7 +192,6 @@ export default function DropdownShowcase() {
                   class="w-64 !p-0 shadow bg-base-100 rounded-box"
                 >
                   <Card.Body>
-                    {/* TODO[ui-1.2.2]: Card.Title removed; using header text instead */}
                     <h2 class="text-lg font-bold">You needed more info?</h2>
                     <p>Here is a description!</p>
                   </Card.Body>
