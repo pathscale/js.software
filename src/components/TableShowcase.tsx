@@ -1,4 +1,4 @@
-import { Badge, Button, Checkbox, Flex, Table } from "@pathscale/ui";
+import { Tag, Button, Checkbox, Flex, Table } from "@pathscale/ui";
 import { For } from "solid-js";
 
 import ShowcaseLayout from "./ShowcaseLayout";
@@ -6,8 +6,7 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-// TODO[ui-1.2.2]: Many Table v0 features (size, zebra, hover, pinRows, pinCols, active row,
-// Mask avatars, Badge "ghost" color, Button size "xs") are no longer part of the public API.
+// Mask avatars, Tag "ghost" color, Button size "xs") are no longer part of the public API.
 // The new compound: Table -> ScrollContainer -> Content -> Header/Column + Body/Row/Cell.
 export default function TableShowcase() {
   const sections = [
@@ -207,9 +206,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Zemlak, Daniel and Leannon
                         <br />
-                        <Badge color="default" size="sm">
+                        <Tag size="sm">
                           Desktop Support Technician
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                       <Table.Cell>Purple</Table.Cell>
                       <Table.Cell>
@@ -239,9 +238,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Carrol Group
                         <br />
-                        <Badge color="default" size="sm">
+                        <Tag size="sm">
                           Tax Accountant
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                       <Table.Cell>Red</Table.Cell>
                       <Table.Cell>
@@ -271,9 +270,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Rowe-Schoen
                         <br />
-                        <Badge color="default" size="sm">
+                        <Tag size="sm">
                           Office Assistant I
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                       <Table.Cell>Crimson</Table.Cell>
                       <Table.Cell>
@@ -303,9 +302,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Wyman-Ledner
                         <br />
-                        <Badge color="default" size="sm">
+                        <Tag size="sm">
                           Community Outreach Specialist
-                        </Badge>
+                        </Tag>
                       </Table.Cell>
                       <Table.Cell>Indigo</Table.Cell>
                       <Table.Cell>
@@ -349,7 +348,7 @@ export default function TableShowcase() {
           <Table.Cell>
             Zemlak, Daniel and Leannon
             <br />
-            <Badge color="default" size="sm">Desktop Support Technician</Badge>
+            <Tag size="sm">Desktop Support Technician</Tag>
           </Table.Cell>
           <Table.Cell>Purple</Table.Cell>
           <Table.Cell>

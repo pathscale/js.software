@@ -46,29 +46,33 @@ const Installation: Component = () => {
       <section class="mb-8">
         <h2 class="text-3xl font-semibold mb-4">Installation</h2>
         <p class="text-lg text-base-content/70 mb-6 max-w-3xl">
-          Choose your preferred package manager to install JS.Software UI. We
-          support all major package managers for your convenience:
+          Install the published UI bundle, the Solid Layouts runtime, and the
+          application compiler integration:
         </p>
 
         <div class="space-y-6">
           <div>
             <h3 class="text-xl font-medium mb-3">Using Bun</h3>
-            <CodeBlock language="bash" code="bun add @pathscale/ui" />
+            <CodeBlock language="bash" code={`bun add @pathscale/ui solid-layouts
+bun add -d rsbuild-plugin-solid-layouts`} />
           </div>
 
           <div>
             <h3 class="text-xl font-medium mb-3">Using NPM</h3>
-            <CodeBlock language="bash" code="npm install @pathscale/ui" />
+            <CodeBlock language="bash" code={`npm install @pathscale/ui solid-layouts
+npm install --save-dev rsbuild-plugin-solid-layouts`} />
           </div>
 
           <div>
             <h3 class="text-xl font-medium mb-3">Using Yarn</h3>
-            <CodeBlock language="bash" code="yarn add @pathscale/ui" />
+            <CodeBlock language="bash" code={`yarn add @pathscale/ui solid-layouts
+yarn add --dev rsbuild-plugin-solid-layouts`} />
           </div>
 
           <div>
             <h3 class="text-xl font-medium mb-3">Using PNPM</h3>
-            <CodeBlock language="bash" code="pnpm add @pathscale/ui" />
+            <CodeBlock language="bash" code={`pnpm add @pathscale/ui solid-layouts
+pnpm add --save-dev rsbuild-plugin-solid-layouts`} />
           </div>
         </div>
       </section>
@@ -77,7 +81,25 @@ const Installation: Component = () => {
         <h2 class="text-3xl font-semibold mb-6">Setup</h2>
 
         <div class="mb-8">
-          <h3 class="text-xl font-medium mb-3">1. Import Styles</h3>
+          <h3 class="text-xl font-medium mb-3">1. Configure the Layouts compiler</h3>
+          <p class="text-base-content/70 mb-4">
+            Add the application compiler before the Babel Solid transform in your Rsbuild plugins.
+          </p>
+          <CodeBlock
+            language="typescript"
+            code={`import { pluginSolidLayoutsApplication } from "rsbuild-plugin-solid-layouts";
+
+export default defineConfig({
+  plugins: [
+    pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] }),
+    pluginBabel({ /* SolidJS options */ }),
+  ],
+});`}
+          />
+        </div>
+
+        <div class="mb-8">
+          <h3 class="text-xl font-medium mb-3">2. Import Styles</h3>
           <p class="text-base-content/70 mb-4">
             One stylesheet carries the design tokens, both themes, base styles
             and icons. Import it in your entry file (e.g., main.tsx or App.tsx):
@@ -90,7 +112,7 @@ const Installation: Component = () => {
 
         <div class="mb-8">
           <h3 class="text-xl font-medium mb-3">
-            2. Configure TailwindCSS (optional)
+            3. Configure TailwindCSS (optional)
           </h3>
           <p class="text-base-content/70 mb-4">
             Only needed if your app uses Tailwind. The library targets Tailwind
@@ -107,7 +129,7 @@ const Installation: Component = () => {
         </div>
 
         <div>
-          <h3 class="text-xl font-medium mb-3">3. Start Using Components</h3>
+          <h3 class="text-xl font-medium mb-3">4. Start Using Components</h3>
           <p class="text-base-content/70 mb-4">
             Import and use components in your application:
           </p>
@@ -120,7 +142,7 @@ function App() {
     <Card>
       <Card.Body>
         <h2>Welcome!</h2>
-        <Button color="primary">Get Started</Button>
+        <Button variant="primary">Get Started</Button>
       </Card.Body>
     </Card>
   );
@@ -137,6 +159,9 @@ function App() {
           </a>
           <a href={ROUTES.DOCS_USAGE} class="btn btn-outline">
             Usage Cheatsheet
+          </a>
+          <a href={ROUTES.DOCS_LAYOUTS} class="btn btn-outline">
+            Solid Layouts
           </a>
           <a href={ROUTES.THEMING} class="btn btn-outline">
             Customize Theme

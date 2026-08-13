@@ -1,4 +1,3 @@
-// TODO[ui-1.2.2]: Toggle colors narrowed to default|accent|success|warning|danger; sizes narrowed to sm|md|lg (no xs/xl)
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Toggle, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";

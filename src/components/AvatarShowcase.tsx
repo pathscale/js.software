@@ -1,5 +1,4 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-// TODO[ui-1.2.2]: Mask is no longer exported from @pathscale/ui
 import { Avatar, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -187,9 +186,6 @@ export default function AvatarShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        {/* TODO[ui-1.2.2]: Avatar.Group is no longer exposed via the compound component; AvatarGroup is not re-exported from @pathscale/ui */}
-        {/* TODO[ui-1.2.2]: Mask helper removed from @pathscale/ui */}
-        {/* TODO[ui-1.2.2]: shape, border, borderColor, online/offline, innerClass, letters, src props removed in v1.2.2 */}
 
         <ShowcaseSection id="props" title="Props">
           <PropsTable props={props} />

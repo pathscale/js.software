@@ -1,6 +1,6 @@
 import { Component, For } from "solid-js";
 import { ContentContainer } from "../components/content/ContentContainer";
-import { Card, Grid, Badge, Flex } from "@pathscale/ui";
+import { Tag, Flex, GlassPanel, Grid } from "@pathscale/ui";
 import { routes } from "../routes";
 import { ROUTES } from "../config/routes";
 
@@ -39,28 +39,27 @@ const Showcases: Component = () => {
 
   return (
     <ContentContainer maxWidth="2xl" prose={false}>
-      <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl py-20 mb-16">
+      <GlassPanel size="lg" tone="secondary" highlight>
         <div class="text-center">
           <h1 class="text-5xl font-bold mb-6">Component Showcases</h1>
           <p class="text-xl text-base-content/70 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Interactive demonstrations of all {showcaseRoutes.length} components
-            in @pathscale/ui. Explore real examples, copy code snippets, and see
-            components in action.
+            {showcaseRoutes.length} focused family demonstrations plus a complete
+            coverage lab for the current @pathscale/ui 2.x public surface.
           </p>
 
           <Flex gap="md" justify="center" wrap="wrap" class="mb-8">
-            <Badge color="accent" class="px-4 py-2">
+            <Tag class="px-4 py-2">
               {showcaseRoutes.length} Interactive Demos
-            </Badge>
-            <Badge color="success" class="px-4 py-2">
+            </Tag>
+            <Tag class="px-4 py-2">
               Live Code Examples
-            </Badge>
-            <Badge color="accent" class="px-4 py-2">
+            </Tag>
+            <Tag class="px-4 py-2">
               Copy & Paste Ready
-            </Badge>
+            </Tag>
           </Flex>
         </div>
-      </div>
+      </GlassPanel>
 
       <div class="mb-16">
         <h2 class="text-3xl font-bold mb-6">Featured Components</h2>
@@ -73,8 +72,8 @@ const Showcases: Component = () => {
           <For each={featuredRoutes}>
             {(route) => (
               <a href={route.path} class="block">
-                <Card class="hover:shadow-xl transition-all duration-300 group cursor-pointer">
-                  <Card.Body class="p-6">
+                <GlassPanel size="md" tone="secondary" highlight interactive>
+                  <div>
                     <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
                       {route.name}
                     </h3>
@@ -84,8 +83,8 @@ const Showcases: Component = () => {
                     <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
                       View Demo →
                     </span>
-                  </Card.Body>
-                </Card>
+                  </div>
+                </GlassPanel>
               </a>
             )}
           </For>
@@ -103,8 +102,8 @@ const Showcases: Component = () => {
           <For each={otherRoutes}>
             {(route) => (
               <a href={route.path} class="block">
-                <Card class="hover:shadow-lg transition-shadow duration-200 cursor-pointer group">
-                  <Card.Body class="p-6">
+                <GlassPanel size="md" tone="secondary" interactive>
+                  <div>
                     <h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
                       {route.name}
                     </h3>
@@ -114,8 +113,8 @@ const Showcases: Component = () => {
                     <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
                       Explore →
                     </span>
-                  </Card.Body>
-                </Card>
+                  </div>
+                </GlassPanel>
               </a>
             )}
           </For>

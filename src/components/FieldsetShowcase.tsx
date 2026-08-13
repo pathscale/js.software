@@ -1,4 +1,3 @@
-// TODO[ui-1.2.2]: Fieldset rewritten as compound (Root/Legend/Group/Actions). Removed props: legend, description, gap. Use Fieldset.Legend and Fieldset.Group instead.
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Fieldset, Input, Checkbox, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";

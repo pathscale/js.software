@@ -136,7 +136,6 @@ export default function AccordionShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        {/* TODO[ui-1.2.2]: `icon="arrow"` removed; built-in indicator is now a chevron via <Accordion.Indicator/>. Section kept to show default chevron behavior. */}
         <ShowcaseSection id="with-arrow" title="With Arrow">
           <Flex direction="col" gap="md">
             <Accordion class="bg-base-200" defaultValue="a">
@@ -180,7 +179,6 @@ export default function AccordionShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        {/* TODO[ui-1.2.2]: `icon="plus"` removed; pass a custom indicator via <Accordion.Trigger indicator={...}> to render plus/minus. */}
         <ShowcaseSection id="with-plus" title="With Plus/Minus">
           <Flex direction="col" gap="md">
             <Accordion class="bg-base-200" defaultValue="a">
@@ -284,7 +282,6 @@ export default function AccordionShowcase() {
           </Flex>
         </ShowcaseSection>
 
-        {/* TODO[ui-1.2.2]: `name`-based radio grouping removed; each <Accordion> root with selectionMode="single" is its own group. */}
         <ShowcaseSection id="multiple" title="Multiple Groups">
           <Flex direction="col" gap="md">
             <Accordion class="bg-base-200" defaultValue="a1">

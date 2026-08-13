@@ -109,7 +109,7 @@ export default function CardShowcase() {
     <h2 class="text-lg font-semibold">Shoes!</h2>
     <p>If a dog chews shoes whose shoes does he choose?</p>
     <Flex justify="end" class="mt-4">
-      <Button color="primary">Buy Now</Button>
+      <Button variant="primary">Buy Now</Button>
     </Flex>
   </Card.Body>
 </Card>`}
@@ -144,7 +144,7 @@ export default function CardShowcase() {
   <Card.Footer>
     <Flex justify="end" gap="sm">
       <Button variant="ghost">Cancel</Button>
-      <Button color="primary">Confirm</Button>
+      <Button variant="primary">Confirm</Button>
     </Flex>
   </Card.Footer>
 </Card>`}
@@ -179,7 +179,7 @@ export default function CardShowcase() {
     <h2 class="text-lg font-semibold">Shoes!</h2>
     <p>If a dog chews shoes whose shoes does he choose?</p>
     <Flex justify="end" class="mt-4">
-      <Button color="primary">Buy Now</Button>
+      <Button variant="primary">Buy Now</Button>
     </Flex>
   </Card.Body>
 </Card>`}

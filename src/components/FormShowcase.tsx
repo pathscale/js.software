@@ -227,7 +227,7 @@ export default function FormShowcase() {
 <Form form={form} class="space-y-4">
   <FormField name="username" label="Username" />
   <FormField name="email" label="Email" inputProps={{ type: "email" }} />
-  <FormSubmitButton class="w-full" color="primary">Submit</FormSubmitButton>
+  <FormSubmitButton class="w-full">Submit</FormSubmitButton>
 </Form>`}
             />
           </Flex>

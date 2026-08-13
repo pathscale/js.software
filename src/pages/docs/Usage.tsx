@@ -43,7 +43,12 @@ const Usage: Component = () => {
           @tanstack/solid-form and @tanstack/solid-table, plus popmotion and
           @standard-schema/spec (both optional).
         </p>
-        <CodeBlock language="bash" code="bun add @pathscale/ui" className="mb-6" />
+        <CodeBlock
+          language="bash"
+          code={`bun add @pathscale/ui solid-layouts
+bun add -d rsbuild-plugin-solid-layouts`}
+          className="mb-6"
+        />
         <p class="text-base-content/70 mb-4 max-w-3xl">
           Everything is exported from the root barrel, and one stylesheet brings
           in tokens, themes, base styles and icons:
@@ -51,7 +56,10 @@ const Usage: Component = () => {
         <CodeBlock
           language="typescript"
           code={`import { Button, Flex, Modal, toast } from "@pathscale/ui";
-import "@pathscale/ui/index.css";`}
+import "@pathscale/ui/index.css";
+
+// rsbuild.config.ts
+pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
           className="mb-6"
         />
         <p class="text-base-content/70 max-w-3xl">
@@ -165,7 +173,7 @@ import "@pathscale/ui/index.css";`}
         <CodeBlock
           language="tsx"
           code={`<Flex direction="col" gap="sm">
-  <Button color="primary" size="md" isPending={saving()}>Save</Button>
+  <Button variant="primary" size="md" isPending={saving()}>Save</Button>
 </Flex>`}
         />
       </section>
@@ -286,7 +294,7 @@ const form = createForm({
         </p>
         <CodeBlock
           language="tsx"
-          code={`import { useTableModel, useTableSorting, useTablePagination, TableRoot, TableContent } from "@pathscale/ui";
+          code={`import { Table, useTableModel, useTableSorting, useTablePagination } from "@pathscale/ui";
 
 const sorting = useTableSorting();
 const pagination = useTablePagination();          // default page sizes [10,25,50,100]
@@ -298,7 +306,7 @@ const table = useTableModel({
 });
 
 // render table.getHeaderGroups() / getRowModel().rows into:
-// <TableContent sortDescriptor={sorting.sortDescriptor()} onSortChange={sorting.setSortDescriptor}>…`}
+// <Table.Content sortDescriptor={sorting.sortDescriptor()} onSortChange={sorting.setSortDescriptor}>…`}
           className="mb-6"
         />
         <ul class="space-y-3 text-base-content/70 mb-6 max-w-3xl">
@@ -312,9 +320,9 @@ const table = useTableModel({
             <code class="text-sm">useTableExpansion</code>.
           </li>
           <li>
-            • <strong>Parts:</strong> TableRoot, ScrollContainer, Content,
-            Header, Column, Body, Row, Cell, ExpandedRow, Footer, PageSize,
-            ResizableContainer, ColumnResizer, LoadMore(+Content), plus
+            • <strong>Parts:</strong> Table.Root, Table.ScrollContainer,
+            Table.Content, Header, Column, Body, Row, Cell, ExpandedRow, Footer,
+            PageSize, ResizableContainer, ColumnResizer, LoadMore(+Content), plus
             SortIcon, ExpandToggle, InlineConfirm, MobileListView (a responsive
             card fallback) and VirtualSpacerRow.
           </li>

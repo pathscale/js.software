@@ -1,11 +1,10 @@
-// TODO[ui-1.2.2]: Loading is now an alias for Spinner; colors narrowed to current|accent|success|warning|danger (no primary/secondary/info/ghost/neutral/error)
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Loading, Flex } from "@pathscale/ui";
+import { Flex, Spinner } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function LoadingShowcase() {
+export default function SpinnerShowcase() {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
@@ -99,29 +98,29 @@ export default function LoadingShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Loading variant="spinner" />
+              <Spinner variant="spinner" />
             </Flex>
-            <CodeBlock code={`<Loading variant="spinner" />`} />
+            <CodeBlock code={`<Spinner variant="spinner" />`} />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Loading class="m-1" />
-              <Loading class="m-1" color="current" />
-              <Loading class="m-1" color="accent" />
-              <Loading class="m-1" color="success" />
-              <Loading class="m-1" color="warning" />
-              <Loading class="m-1" color="danger" />
+              <Spinner />
+              <Spinner color="current" />
+              <Spinner color="accent" />
+              <Spinner color="success" />
+              <Spinner color="warning" />
+              <Spinner color="danger" />
             </Flex>
             <CodeBlock
-              code={`<Loading class="m-1" />
-<Loading class="m-1" color="current" />
-<Loading class="m-1" color="accent" />
-<Loading class="m-1" color="success" />
-<Loading class="m-1" color="warning" />
-<Loading class="m-1" color="danger" />`}
+              code={`<Spinner />
+<Spinner color="current" />
+<Spinner color="accent" />
+<Spinner color="success" />
+<Spinner color="warning" />
+<Spinner color="danger" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -129,20 +128,20 @@ export default function LoadingShowcase() {
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Loading variant="spinner" />
-              <Loading variant="dots" />
-              <Loading variant="ring" />
-              <Loading variant="ball" />
-              <Loading variant="bars" />
-              <Loading variant="infinity" />
+              <Spinner variant="spinner" />
+              <Spinner variant="dots" />
+              <Spinner variant="ring" />
+              <Spinner variant="ball" />
+              <Spinner variant="bars" />
+              <Spinner variant="infinity" />
             </Flex>
             <CodeBlock
-              code={`<Loading variant="spinner" />
-<Loading variant="dots" />
-<Loading variant="ring" />
-<Loading variant="ball" />
-<Loading variant="bars" />
-<Loading variant="infinity" />`}
+              code={`<Spinner variant="spinner" />
+<Spinner variant="dots" />
+<Spinner variant="ring" />
+<Spinner variant="ball" />
+<Spinner variant="bars" />
+<Spinner variant="infinity" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -150,18 +149,18 @@ export default function LoadingShowcase() {
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Loading size="xs" />
-              <Loading size="sm" />
-              <Loading size="md" />
-              <Loading size="lg" />
-              <Loading size="xl" />
+              <Spinner size="xs" />
+              <Spinner size="sm" />
+              <Spinner size="md" />
+              <Spinner size="lg" />
+              <Spinner size="xl" />
             </Flex>
             <CodeBlock
-              code={`<Loading size="xs" />
-<Loading size="sm" />
-<Loading size="md" />
-<Loading size="lg" />
-<Loading size="xl" />`}
+              code={`<Spinner size="xs" />
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+<Spinner size="xl" />`}
             />
           </Flex>
         </ShowcaseSection>

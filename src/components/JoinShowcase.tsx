@@ -1,5 +1,25 @@
+import { Button, Join } from "@pathscale/ui";
+import ShowcaseLayout from "./ShowcaseLayout";
+import { CodeBlock } from "./showcase/CodeBlock";
+import { ShowcaseSection } from "./showcase/ShowcaseSection";
+
 export default function JoinShowcase() {
   return (
-    <div>Component no longer in @pathscale/ui. TODO[ui-1.2.2]: re-evaluate.</div>
+    <ShowcaseLayout>
+      <ShowcaseSection id="join" title="Join">
+        <Join>
+          <Button variant="outline">Previous</Button>
+          <Button variant="outline">Current</Button>
+          <Button variant="outline">Next</Button>
+        </Join>
+        <CodeBlock
+          code={`<Join>
+  <Button variant="outline">Previous</Button>
+  <Button variant="outline">Current</Button>
+  <Button variant="outline">Next</Button>
+</Join>`}
+        />
+      </ShowcaseSection>
+    </ShowcaseLayout>
   );
 }
