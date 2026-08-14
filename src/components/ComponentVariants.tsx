@@ -8,13 +8,13 @@ export default function ComponentVariants() {
           <h5 class="text-lg font-semibold mb-2">Buttons</h5>
           <Flex gap="sm" class="flex-wrap">
             <Button>Button</Button>
-            <Button variant="primary">Primary</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="tertiary">Tertiary</Button>
+            <Button flavor="primary">Primary</Button>
+            <Button flavor="secondary">Secondary</Button>
+            <Button flavor="tertiary">Tertiary</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="ghost">Ghost</Button>
-            <Button variant="danger">Danger</Button>
-            <Button variant="danger-soft">Danger Soft</Button>
+            <Button flavor="destructive">Danger</Button>
+            <Button flavor="destructive" variant="soft">Danger Soft</Button>
           </Flex>
         </Card.Body>
       </Card>

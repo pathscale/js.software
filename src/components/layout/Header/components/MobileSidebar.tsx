@@ -38,7 +38,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
             <Button
               variant="ghost"
               size="sm"
-              isIconOnly
+              width="square"
               onClick={() => setIsOpen(false)}
             >
               <CloseIcon />

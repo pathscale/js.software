@@ -9,7 +9,7 @@ export interface BreadcrumbItem {
 }
 
 export interface BreadcrumbsProps {
-  className?: string;
+  class?: string;
   items?: BreadcrumbItem[];
 }
 
@@ -65,7 +65,7 @@ export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
   return (
     <nav
       aria-label="Breadcrumb"
-      class={`flex items-center space-x-2 text-sm ${props.className || ""}`}
+      class={`flex items-center space-x-2 text-sm ${props.class || ""}`}
     >
       <ol class="flex items-center space-x-2">
         <For each={breadcrumbItems()}>

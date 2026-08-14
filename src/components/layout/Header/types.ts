@@ -15,5 +15,6 @@ export interface NavigationComponentItem {
 }
 
 export interface MarketingHeaderProps {
+  class?: string;
   className?: string;
 }

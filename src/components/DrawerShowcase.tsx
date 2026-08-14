@@ -93,7 +93,7 @@ export default function DrawerShowcase() {
           <Flex direction="col" gap="md">
             <Drawer placement="left" size="md">
               <Drawer.Trigger>
-                <Button variant="primary">Open drawer</Button>
+                <Button flavor="primary">Open drawer</Button>
               </Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
@@ -108,7 +108,7 @@ export default function DrawerShowcase() {
             <CodeBlock
               code={`<Drawer placement="left" size="md">
   <Drawer.Trigger>
-    <Button variant="primary">Open drawer</Button>
+    <Button flavor="primary">Open drawer</Button>
   </Drawer.Trigger>
   <Drawer.Backdrop>
     <Drawer.Content>
@@ -126,7 +126,7 @@ export default function DrawerShowcase() {
           <Flex direction="col" gap="md">
             <Drawer placement="right" size="md">
               <Drawer.Trigger>
-                <Button variant="primary">Open from right</Button>
+                <Button flavor="primary">Open from right</Button>
               </Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
@@ -146,7 +146,7 @@ export default function DrawerShowcase() {
           <Flex direction="col" gap="md">
             <Drawer placement="left" size="md">
               <Drawer.Trigger>
-                <Button variant="primary">Open with header</Button>
+                <Button flavor="primary">Open with header</Button>
               </Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>

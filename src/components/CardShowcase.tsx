@@ -99,7 +99,7 @@ export default function CardShowcase() {
                 <h2 class="text-lg font-semibold">Shoes!</h2>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <Flex justify="end" class="mt-4">
-                  <Button variant="primary">Buy Now</Button>
+                  <Button flavor="primary">Buy Now</Button>
                 </Flex>
               </Card.Body>
             </Card>
@@ -109,7 +109,7 @@ export default function CardShowcase() {
     <h2 class="text-lg font-semibold">Shoes!</h2>
     <p>If a dog chews shoes whose shoes does he choose?</p>
     <Flex justify="end" class="mt-4">
-      <Button variant="primary">Buy Now</Button>
+      <Button flavor="primary">Buy Now</Button>
     </Flex>
   </Card.Body>
 </Card>`}
@@ -119,7 +119,7 @@ export default function CardShowcase() {
 
         <ShowcaseSection id="with-header-footer" title="Header & Footer">
           <Flex direction="col" gap="md">
-            <Card variant="bordered">
+            <Card variant="outline">
               <Card.Header>
                 <h2 class="text-lg font-semibold">Card Title</h2>
               </Card.Header>
@@ -129,12 +129,12 @@ export default function CardShowcase() {
               <Card.Footer>
                 <Flex justify="end" gap="sm">
                   <Button variant="ghost">Cancel</Button>
-                  <Button variant="primary">Confirm</Button>
+                  <Button flavor="primary">Confirm</Button>
                 </Flex>
               </Card.Footer>
             </Card>
             <CodeBlock
-              code={`<Card variant="bordered">
+              code={`<Card variant="outline">
   <Card.Header>
     <h2 class="text-lg font-semibold">Card Title</h2>
   </Card.Header>
@@ -144,7 +144,7 @@ export default function CardShowcase() {
   <Card.Footer>
     <Flex justify="end" gap="sm">
       <Button variant="ghost">Cancel</Button>
-      <Button variant="primary">Confirm</Button>
+      <Button flavor="primary">Confirm</Button>
     </Flex>
   </Card.Footer>
 </Card>`}
@@ -164,7 +164,7 @@ export default function CardShowcase() {
                 <h2 class="text-lg font-semibold">Shoes!</h2>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <Flex justify="end" class="mt-4">
-                  <Button variant="primary">Buy Now</Button>
+                  <Button flavor="primary">Buy Now</Button>
                 </Flex>
               </Card.Body>
             </Card>
@@ -179,7 +179,7 @@ export default function CardShowcase() {
     <h2 class="text-lg font-semibold">Shoes!</h2>
     <p>If a dog chews shoes whose shoes does he choose?</p>
     <Flex justify="end" class="mt-4">
-      <Button variant="primary">Buy Now</Button>
+      <Button flavor="primary">Buy Now</Button>
     </Flex>
   </Card.Body>
 </Card>`}
@@ -190,25 +190,25 @@ export default function CardShowcase() {
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Card variant="default">
+              <Card variant="solid">
                 <Card.Body>
                   <h2 class="text-lg font-semibold">Default</h2>
                   <p>Default card variant</p>
                 </Card.Body>
               </Card>
-              <Card variant="flat">
+              <Card variant="soft">
                 <Card.Body>
                   <h2 class="text-lg font-semibold">Flat</h2>
                   <p>Flat card with no elevation</p>
                 </Card.Body>
               </Card>
-              <Card variant="bordered">
+              <Card variant="outline">
                 <Card.Body>
                   <h2 class="text-lg font-semibold">Bordered</h2>
                   <p>Card with a border around it</p>
                 </Card.Body>
               </Card>
-              <Card variant="shadow">
+              <Card elevation="lg">
                 <Card.Body>
                   <h2 class="text-lg font-semibold">Shadow</h2>
                   <p>Card with an elevated shadow</p>
@@ -216,24 +216,24 @@ export default function CardShowcase() {
               </Card>
             </Flex>
             <CodeBlock
-              code={`<Card variant="default">...</Card>
-<Card variant="flat">...</Card>
-<Card variant="bordered">...</Card>
-<Card variant="shadow">...</Card>`}
+              code={`<Card variant="solid">...</Card>
+<Card variant="soft">...</Card>
+<Card variant="outline">...</Card>
+<Card elevation="lg">...</Card>`}
             />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="hoverable" title="Hoverable">
           <Flex direction="col" gap="md">
-            <Card isHoverable>
+            <Card isInteractive>
               <Card.Body>
                 <h2 class="text-lg font-semibold">Hover me</h2>
                 <p>Hover state adds an interactive treatment.</p>
               </Card.Body>
             </Card>
             <CodeBlock
-              code={`<Card isHoverable>
+              code={`<Card isInteractive>
   <Card.Body>
     <h2 class="text-lg font-semibold">Hover me</h2>
     <p>Hover state adds an interactive treatment.</p>
@@ -246,8 +246,7 @@ export default function CardShowcase() {
         <ShowcaseSection id="pressable" title="Pressable">
           <Flex direction="col" gap="md">
             <Card
-              isPressable
-              isHoverable
+              isInteractive
               onClick={() => console.log("card pressed")}
             >
               <Card.Body>
@@ -257,8 +256,8 @@ export default function CardShowcase() {
             </Card>
             <CodeBlock
               code={`<Card
-  isPressable
-  isHoverable
+  isInteractive
+  isInteractive
   onClick={() => console.log("card pressed")}
 >
   <Card.Body>

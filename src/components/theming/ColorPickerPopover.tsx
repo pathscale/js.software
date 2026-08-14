@@ -3,7 +3,7 @@ import { Button, Dialog } from "@pathscale/ui";
 import { MATERIAL_COLORS } from "../../utils/themeUtils";
 
 interface ColorPickerPopoverProps {
-  isOpen: boolean;
+  open: boolean;
   onClose: () => void;
   onColorSelect: (color: string) => void;
   initialColor: string;
@@ -24,7 +24,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
 
   return (
     <Dialog
-      open={props.isOpen}
+      open={props.open}
       onOpenChange={(open) => {
         if (!open) props.onClose();
       }}
@@ -71,7 +71,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
           </div>
         </Dialog.Body>
         <Dialog.Footer class="bg-base-100">
-          <Button onClick={props.onClose} variant="primary">
+          <Button onClick={props.onClose} flavor="primary">
             Done
           </Button>
         </Dialog.Footer>

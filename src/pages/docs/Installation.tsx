@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
 import { ContentContainer } from "../../components/content/ContentContainer";
 import { CodeBlock } from "../../components/showcase/CodeBlock";
-import { Flex } from "@pathscale/ui";
+import { Card, Flex } from "@pathscale/ui";
 import { Callout } from "../../components/content/Callout";
 import { ROUTES } from "../../config/routes";
 
@@ -142,7 +142,7 @@ function App() {
     <Card>
       <Card.Body>
         <h2>Welcome!</h2>
-        <Button variant="primary">Get Started</Button>
+        <Button flavor="primary">Get Started</Button>
       </Card.Body>
     </Card>
   );

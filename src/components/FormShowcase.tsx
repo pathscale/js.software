@@ -87,7 +87,7 @@ export default function FormShowcase() {
                     class="input-bordered w-full"
                   />
                 </Flex>
-                <Button variant="primary" class="w-full" type="submit">
+                <Button flavor="primary" class="w-full" type="submit">
                   Submit
                 </Button>
               </Flex>
@@ -124,7 +124,7 @@ export default function FormShowcase() {
                     class="input-bordered w-full"
                   />
                 </Flex>
-                <Button type="submit" variant="primary">
+                <Button type="submit" flavor="primary">
                   Subscribe
                 </Button>
               </Flex>
@@ -165,7 +165,7 @@ export default function FormShowcase() {
                   <Input id="grid-phone" type="tel" class="input-bordered w-full" />
                 </Flex>
               </Grid>
-              <Button type="submit" variant="primary" class="w-full">
+              <Button type="submit" flavor="primary" class="w-full">
                 Continue
               </Button>
             </Form>
@@ -197,7 +197,7 @@ export default function FormShowcase() {
                 label="Email"
                 inputProps={{ type: "email" }}
               />
-              <FormSubmitButton class="w-full" variant="primary">
+              <FormSubmitButton class="w-full" flavor="primary">
                 Submit
               </FormSubmitButton>
             </Form>

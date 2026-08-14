@@ -114,7 +114,7 @@ export default function TooltipShowcase() {
         <ShowcaseSection id="force-open" title="Force Open">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" class="my-16">
-              <Tooltip isOpen>
+              <Tooltip open>
                 <Tooltip.Trigger>
                   <Button>Always open</Button>
                 </Tooltip.Trigger>
@@ -122,7 +122,7 @@ export default function TooltipShowcase() {
               </Tooltip>
             </Flex>
             <CodeBlock
-              code={`<Tooltip isOpen>
+              code={`<Tooltip open>
   <Tooltip.Trigger>
     <Button>Always open</Button>
   </Tooltip.Trigger>
@@ -174,7 +174,7 @@ export default function TooltipShowcase() {
         <ShowcaseSection id="with-arrow" title="With Arrow">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg" class="my-16">
-              <Tooltip isOpen showArrow placement="top">
+              <Tooltip open showArrow placement="top">
                 <Tooltip.Trigger>
                   <Button>Top with arrow</Button>
                 </Tooltip.Trigger>
@@ -183,7 +183,7 @@ export default function TooltipShowcase() {
                   <Tooltip.Arrow />
                 </Tooltip.Content>
               </Tooltip>
-              <Tooltip isOpen showArrow placement="bottom">
+              <Tooltip open showArrow placement="bottom">
                 <Tooltip.Trigger>
                   <Button>Bottom with arrow</Button>
                 </Tooltip.Trigger>
@@ -194,7 +194,7 @@ export default function TooltipShowcase() {
               </Tooltip>
             </Flex>
             <CodeBlock
-              code={`<Tooltip isOpen showArrow placement="top">
+              code={`<Tooltip open showArrow placement="top">
   <Tooltip.Trigger>
     <Button>Top with arrow</Button>
   </Tooltip.Trigger>

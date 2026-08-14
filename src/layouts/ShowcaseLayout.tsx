@@ -5,7 +5,7 @@ export interface ShowcaseLayoutProps {
   header?: Component;
   sidebar?: Component;
   toc?: Component;
-  className?: string;
+  class?: string;
 }
 
 export const ShowcaseLayout: ParentComponent<ShowcaseLayoutProps> = (props) => {
@@ -14,7 +14,7 @@ export const ShowcaseLayout: ParentComponent<ShowcaseLayoutProps> = (props) => {
       header={props.header}
       sidebar={props.sidebar}
       toc={props.toc}
-      class={`showcase-layout ${props.className || ""}`}
+      class={`showcase-layout ${props.class || ""}`}
     >
       <div class="w-full px-6">
         <div class="max-w-7xl mx-auto">{props.children}</div>

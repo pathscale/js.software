@@ -7,7 +7,7 @@ export interface BaseLayoutProps {
   header?: Component;
   sidebar?: Component;
   toc?: Component;
-  className?: string;
+  class?: string;
 }
 
 export const BaseLayout: ParentComponent<BaseLayoutProps> = (props) => {
@@ -24,7 +24,7 @@ export const BaseLayout: ParentComponent<BaseLayoutProps> = (props) => {
         sidebar={props.sidebar}
         toc={props.toc}
         footer={Footer}
-        class={props.className}
+        class={props.class}
       >
         {props.children}
       </LayoutGrid>

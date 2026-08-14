@@ -1,4 +1,4 @@
-import { Button, Flex, GlassPanel } from "@pathscale/ui";
+import { Button, Card, Flex } from "@pathscale/ui";
 import { ContentContainer } from "../../components/content/ContentContainer";
 import { Callout } from "../../components/content/Callout";
 import { CodeBlock } from "../../components/showcase/CodeBlock";
@@ -20,7 +20,7 @@ export default function Layouts() {
           </p>
         </header>
 
-        <GlassPanel flavor="secondary" highlight>
+        <Card material="glass" flavor="secondary">
           <Flex direction="col" gap="md">
             <h2 class="text-2xl font-semibold">The two compiler passes</h2>
             <CodeBlock
@@ -40,7 +40,7 @@ C + D + E -> F`}
               E in their build. Applications do not compile PathScale UI source themselves.
             </p>
           </Flex>
-        </GlassPanel>
+        </Card>
 
         <section>
           <h2 class="text-3xl font-semibold">Install</h2>
@@ -92,14 +92,14 @@ import "@pathscale/ui/index.css";
 export function Actions() {
   return (
     <Flex gap="md" align="center">
-      <Button variant="primary" size="lg">Continue</Button>
+      <Button flavor="primary" size="lg">Continue</Button>
       <Button variant="outline" size="lg">Cancel</Button>
     </Flex>
   );
 }`}
           />
           <Flex gap="md" align="center" wrap="wrap">
-            <Button variant="primary" size="lg">Continue</Button>
+            <Button flavor="primary" size="lg">Continue</Button>
             <Button variant="outline" size="lg">Cancel</Button>
           </Flex>
         </section>
@@ -122,7 +122,7 @@ export function Actions() {
             code={`const SaveActions = () => (
   <Flex gap="sm" justify="end">
     <Button variant="ghost">Cancel</Button>
-    <Button variant="primary">Save</Button>
+    <Button flavor="primary">Save</Button>
   </Flex>
 );
 

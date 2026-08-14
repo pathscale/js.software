@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Flex, GlassPanel, Chip } from "@pathscale/ui";
+import { Card, Chip, Flex } from "@pathscale/ui";
 import { ContentContainer } from "../components/content/ContentContainer";
 import {
   HiOutlineShieldCheck,
@@ -15,7 +15,7 @@ const Home: Component = () => {
       <div class="min-h-[80vh] bg-gradient-to-br from-primary to-base-200 flex items-center justify-center">
         <div class="w-full">
           <ContentContainer maxWidth="xl" prose={false} class="text-center">
-            <GlassPanel size="lg" flavor="secondary" highlight>
+            <Card material="glass" padding="lg" flavor="secondary">
               <div class="mb-8">
                 <Chip class="mb-6 px-4 py-2">
                   <HiOutlineShieldCheck class="w-4 h-4 mr-2" />
@@ -69,7 +69,7 @@ const Home: Component = () => {
                   <div class="text-lg font-bold text-base-content/70">Rsbuild</div>
                 </Flex>
               </div>
-            </GlassPanel>
+            </Card>
           </ContentContainer>
         </div>
       </div>
@@ -87,7 +87,7 @@ const Home: Component = () => {
         </div>
 
         <div class="grid gap-8 md:grid-cols-3 mb-24">
-          <GlassPanel size="lg" flavor="secondary" highlight interactive>
+          <Card material="glass" padding="lg" flavor="secondary" isInteractive>
             <div class="text-center">
               <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineBolt class="w-8 h-8 text-white" />
@@ -99,9 +99,9 @@ const Home: Component = () => {
                 without virtual DOM overhead.
               </p>
             </div>
-          </GlassPanel>
+          </Card>
 
-          <GlassPanel size="lg" flavor="secondary" highlight interactive>
+          <Card material="glass" padding="lg" flavor="secondary" isInteractive>
             <div class="text-center">
               <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineCheckCircle class="w-8 h-8 text-white" />
@@ -113,9 +113,9 @@ const Home: Component = () => {
                 definitions and intelligent autocompletion.
               </p>
             </div>
-          </GlassPanel>
+          </Card>
 
-          <GlassPanel size="lg" flavor="secondary" highlight interactive>
+          <Card material="glass" padding="lg" flavor="secondary" isInteractive>
             <div class="text-center">
               <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineHeart class="w-8 h-8 text-white" />
@@ -126,7 +126,7 @@ const Home: Component = () => {
                 examples. Built by developers, for developers.
               </p>
             </div>
-          </GlassPanel>
+          </Card>
         </div>
 
         <div class="text-center mb-16">
@@ -138,7 +138,7 @@ const Home: Component = () => {
           </p>
 
           <div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto mb-12">
-            <GlassPanel size="md" flavor="secondary" highlight interactive>
+            <Card material="glass" padding="md" flavor="secondary" isInteractive>
               <h3 class="font-bold text-lg mb-3 text-primary">
                 Visual Testing
               </h3>
@@ -146,8 +146,8 @@ const Home: Component = () => {
                 Consistent design tokens and theming system across all
                 components
               </p>
-            </GlassPanel>
-            <GlassPanel size="md" flavor="secondary" highlight interactive>
+            </Card>
+            <Card material="glass" padding="md" flavor="secondary" isInteractive>
               <h3 class="font-bold text-lg mb-3 text-secondary">
                 Accessibility
               </h3>
@@ -155,14 +155,14 @@ const Home: Component = () => {
                 WCAG compliant components with keyboard navigation and screen
                 reader support
               </p>
-            </GlassPanel>
-            <GlassPanel size="md" flavor="secondary" highlight interactive>
+            </Card>
+            <Card material="glass" padding="md" flavor="secondary" isInteractive>
               <h3 class="font-bold text-lg mb-3 text-accent">Interactive</h3>
               <p class="text-base-content/70">
                 Rich interactions and animations built-in, no external
                 dependencies
               </p>
-            </GlassPanel>
+            </Card>
           </div>
 
           <a href={ROUTES.SHOWCASES} class="btn btn-primary btn-lg">
@@ -170,7 +170,7 @@ const Home: Component = () => {
           </a>
         </div>
 
-        <GlassPanel size="lg" flavor="secondary" highlight>
+        <Card material="glass" padding="lg" flavor="secondary">
           <div class="text-center py-16">
             <h2 class="text-4xl lg:text-5xl font-bold mb-6">
               Start building amazing UIs today
@@ -188,7 +188,7 @@ const Home: Component = () => {
               </a>
             </Flex>
           </div>
-        </GlassPanel>
+        </Card>
       </ContentContainer>
     </div>
   );

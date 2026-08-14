@@ -26,7 +26,7 @@ const AlertShowcase: Component = () => {
     {
       name: "children",
       type: "JSX.Element",
-      description: "Compound children: Alert.Indicator, Alert.Content, Alert.Title, Alert.Description",
+      description: "Flat in 2.3: title, icon and onDismiss are props, and the body is the children",
     },
     {
       name: "class",
@@ -90,19 +90,13 @@ const AlertShowcase: Component = () => {
             gap="md"
           >
             <Alert>
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Description>12 unread messages. Tap to see.</Alert.Description>
-              </Alert.Content>
-            </Alert>
+              12 unread messages. Tap to see.
+              </Alert>
           </Flex>
           <CodeBlock
             code={`<Alert>
-  <Alert.Indicator />
-  <Alert.Content>
-    <Alert.Description>12 unread messages. Tap to see.</Alert.Description>
-  </Alert.Content>
-</Alert>`}
+  12 unread messages. Tap to see.
+  </Alert>`}
           />
         </ShowcaseSection>
 
@@ -114,45 +108,27 @@ const AlertShowcase: Component = () => {
             gap="md"
           >
             <Flex direction="col" gap="md" class="w-full">
-              <Alert status="default">
-                <Alert.Indicator />
-                <Alert.Content>
-                  <Alert.Description>Default status alert</Alert.Description>
-                </Alert.Content>
-              </Alert>
-              <Alert status="accent">
-                <Alert.Indicator />
-                <Alert.Content>
-                  <Alert.Description>Accent status alert</Alert.Description>
-                </Alert.Content>
-              </Alert>
-              <Alert status="success">
-                <Alert.Indicator />
-                <Alert.Content>
-                  <Alert.Description>Success status alert</Alert.Description>
-                </Alert.Content>
-              </Alert>
-              <Alert status="warning">
-                <Alert.Indicator />
-                <Alert.Content>
-                  <Alert.Description>Warning status alert</Alert.Description>
-                </Alert.Content>
-              </Alert>
-              <Alert status="danger">
-                <Alert.Indicator />
-                <Alert.Content>
-                  <Alert.Description>Danger status alert</Alert.Description>
-                </Alert.Content>
-              </Alert>
+              <Alert flavor="neutral">
+                Default status alert
+                </Alert>
+              <Alert flavor="accent">
+                Accent status alert
+                </Alert>
+              <Alert flavor="success">
+                Success status alert
+                </Alert>
+              <Alert flavor="warning">
+                Warning status alert
+                </Alert>
+              <Alert flavor="destructive">
+                Danger status alert
+                </Alert>
             </Flex>
           </Flex>
           <CodeBlock
-            code={`<Alert status="success">
-  <Alert.Indicator />
-  <Alert.Content>
-    <Alert.Description>Success status alert</Alert.Description>
-  </Alert.Content>
-</Alert>`}
+            code={`<Alert flavor="success">
+  Success status alert
+  </Alert>`}
           />
         </ShowcaseSection>
 
@@ -163,24 +139,16 @@ const AlertShowcase: Component = () => {
             justify="start"
             gap="md"
           >
-            <Alert status="accent">
-              <Alert.Indicator>
-                <InfoIcon />
-              </Alert.Indicator>
-              <Alert.Content>
-                <Alert.Description>Alert with a custom icon</Alert.Description>
-              </Alert.Content>
-            </Alert>
+            <Alert flavor="accent">
+              <InfoIcon />
+              Alert with a custom icon
+              </Alert>
           </Flex>
           <CodeBlock
-            code={`<Alert status="accent">
-  <Alert.Indicator>
-    <InfoIcon />
-  </Alert.Indicator>
-  <Alert.Content>
-    <Alert.Description>Alert with a custom icon</Alert.Description>
-  </Alert.Content>
-</Alert>`}
+            code={`<Alert flavor="accent">
+  <InfoIcon />
+  Alert with a custom icon
+  </Alert>`}
           />
         </ShowcaseSection>
 
@@ -192,13 +160,10 @@ const AlertShowcase: Component = () => {
             gap="md"
           >
             <Alert class="shadow-lg">
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Description>we use cookies for no reason.</Alert.Description>
-              </Alert.Content>
+              we use cookies for no reason.
               <div class="space-x-1">
                 <Button size="sm">Deny</Button>
-                <Button size="sm" variant="primary">
+                <Button size="sm" flavor="primary">
                   Accept
                 </Button>
               </div>
@@ -206,12 +171,9 @@ const AlertShowcase: Component = () => {
           </Flex>
           <CodeBlock
             code={`<Alert>
-  <Alert.Indicator />
-  <Alert.Content>
-    <Alert.Description>we use cookies for no reason.</Alert.Description>
-  </Alert.Content>
+  we use cookies for no reason.
   <Button size="sm">Deny</Button>
-  <Button size="sm" variant="primary">Accept</Button>
+  <Button size="sm" flavor="primary">Accept</Button>
 </Alert>`}
           />
         </ShowcaseSection>
@@ -224,21 +186,13 @@ const AlertShowcase: Component = () => {
             gap="md"
           >
             <Alert class="shadow-lg">
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Title>New message!</Alert.Title>
-                <Alert.Description>You have 1 unread message</Alert.Description>
-              </Alert.Content>
+              You have 1 unread message
               <Button size="sm">See</Button>
             </Alert>
           </Flex>
           <CodeBlock
             code={`<Alert>
-  <Alert.Indicator />
-  <Alert.Content>
-    <Alert.Title>New message!</Alert.Title>
-    <Alert.Description>You have 1 unread message</Alert.Description>
-  </Alert.Content>
+  You have 1 unread message
   <Button size="sm">See</Button>
 </Alert>`}
           />

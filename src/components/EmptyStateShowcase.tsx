@@ -11,14 +11,14 @@ export default function EmptyStateShowcase() {
           <Empty.Title>No projects yet</Empty.Title>
           <Empty.Description>Create a project to start building.</Empty.Description>
           <Empty.Actions>
-            <Button variant="primary">Create project</Button>
+            <Button flavor="primary">Create project</Button>
           </Empty.Actions>
         </Empty>
         <CodeBlock
           code={`<Empty>
   <Empty.Title>No projects yet</Empty.Title>
   <Empty.Description>Create a project to start building.</Empty.Description>
-  <Empty.Actions><Button variant="primary">Create project</Button></Empty.Actions>
+  <Empty.Actions><Button flavor="primary">Create project</Button></Empty.Actions>
 </Empty>`}
         />
       </ShowcaseSection>

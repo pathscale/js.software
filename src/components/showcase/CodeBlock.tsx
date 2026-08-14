@@ -11,7 +11,7 @@ interface CodeBlockProps {
   code: string;
   language?: string;
   copyable?: boolean;
-  className?: string;
+  class?: string;
 }
 
 export function CodeBlock(props: CodeBlockProps) {
@@ -26,7 +26,7 @@ export function CodeBlock(props: CodeBlockProps) {
   });
 
   return (
-    <div class={cn("relative group", props.className)}>
+    <div class={cn("relative group", props.class)}>
       {props.copyable !== false && (
         <CopyButton
           text={props.code}

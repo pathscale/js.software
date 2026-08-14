@@ -7,7 +7,7 @@ import {
 } from "../../utils/themeUtils";
 
 interface ThemeCSSModalProps {
-  isOpen: boolean;
+  open: boolean;
   onClose: () => void;
   theme: Theme;
   isDefault?: boolean;
@@ -91,14 +91,14 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
   };
 
   createEffect(() => {
-    if (props.isOpen) {
+    if (props.open) {
       setCssText(generateCSS(props.theme));
     }
   });
 
   // Update CSS when options change
   createEffect(() => {
-    if (props.isOpen) {
+    if (props.open) {
       setCssText(generateCSS(props.theme));
     }
   });
@@ -115,7 +115,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
 
   return (
     <Dialog
-      open={props.isOpen}
+      open={props.open}
       onOpenChange={(open) => !open && props.onClose()}
       backdrop="opaque"
       placement="center"
@@ -146,7 +146,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
           <Button
             class="absolute top-2 right-5"
             size="sm"
-            variant={isClipboardButtonPressed() ? "primary" : "secondary"}
+            flavor={isClipboardButtonPressed() ? "primary" : "secondary"}
             onClick={copyThemeCSSToClipboard}
           >
             {isClipboardButtonPressed() ? (

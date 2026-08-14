@@ -31,7 +31,7 @@ export default function ComponentsDemo() {
                   <Checkbox />
                   <span class="text-sm">Hoodies</span>
                 </Flex>
-                <Chip size="sm" variant="surface">
+                <Chip size="sm" variant="flat">
                   25
                 </Chip>
               </Flex>
@@ -40,7 +40,7 @@ export default function ComponentsDemo() {
                   <Checkbox checked />
                   <span class="text-sm">Bags</span>
                 </Flex>
-                <Chip size="sm" variant="surface">
+                <Chip size="sm" variant="flat">
                   3
                 </Chip>
               </Flex>
@@ -49,7 +49,7 @@ export default function ComponentsDemo() {
                   <Checkbox />
                   <span class="text-sm">Shoes</span>
                 </Flex>
-                <Chip size="sm" variant="surface">
+                <Chip size="sm" variant="flat">
                   12
                 </Chip>
               </Flex>
@@ -58,7 +58,7 @@ export default function ComponentsDemo() {
                   <Checkbox />
                   <span class="text-sm">Accessories</span>
                 </Flex>
-                <Chip size="sm" variant="surface">
+                <Chip size="sm" variant="flat">
                   4
                 </Chip>
               </Flex>
@@ -107,7 +107,7 @@ export default function ComponentsDemo() {
                 <Button size="sm" variant="outline" class="p-2">
                   4
                 </Button>
-                <Button size="sm" variant="primary" class="p-2">
+                <Button size="sm" flavor="primary" class="p-2">
                   5
                 </Button>
                 <Button size="sm" variant="outline" class="p-2">
@@ -180,7 +180,7 @@ export default function ComponentsDemo() {
                 <span class="text-sm opacity-60">to</span>
                 <Input placeholder="Max" size="sm" />
               </Flex>
-              <Button size="sm" variant="primary" fullWidth>
+              <Button size="sm" flavor="primary" width="full">
                 Apply
               </Button>
             </Flex>
@@ -255,7 +255,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Skeleton class="h-4 w-3/4" />
               <Skeleton class="h-4 w-1/2" />
-              <Button size="sm" isPending>
+              <Button size="sm" state="loading">
                 Submitting
               </Button>
             </Flex>
@@ -286,13 +286,13 @@ export default function ComponentsDemo() {
         <Card class="bg-base-100">
           <Card.Body>
             <Flex direction="col" gap="sm">
-              <Alert status="default">
+              <Alert flavor="neutral">
                 <span class="text-xs">New software update available</span>
               </Alert>
-              <Alert status="success">
+              <Alert flavor="success">
                 <span class="text-xs">Verification completed</span>
               </Alert>
-              <Alert status="warning">
+              <Alert flavor="warning">
                 <span class="text-xs">
                   <Button variant="ghost" size="sm" class="p-0 h-auto">
                     Click
@@ -300,7 +300,7 @@ export default function ComponentsDemo() {
                   to verify email
                 </span>
               </Alert>
-              <Alert status="danger">
+              <Alert flavor="destructive">
                 <Flex justify="between" align="center" class="w-full">
                   <span class="text-xs">Access denied</span>
                   <Button variant="ghost" size="sm">
@@ -368,7 +368,7 @@ export default function ComponentsDemo() {
                   <span class="text-sm opacity-50">Advanced analytics</span>
                 </Flex>
               </Flex>
-              <Button variant="primary" fullWidth class="mt-4">
+              <Button flavor="primary" width="full" class="mt-4">
                 Choose Plan
               </Button>
             </Flex>
@@ -453,7 +453,7 @@ export default function ComponentsDemo() {
                   <Dialog.Footer>
                     <Flex gap="sm" class="mt-2">
                       <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-                      <Button variant="primary" onClick={() => setModalOpen(false)}>
+                      <Button flavor="primary" onClick={() => setModalOpen(false)}>
                         Confirm
                       </Button>
                     </Flex>
@@ -480,7 +480,7 @@ export default function ComponentsDemo() {
                   <Chip size="sm">
                     3
                   </Chip>
-                  <Button size="sm" variant="outline" isIconOnly>
+                  <Button size="sm" variant="outline" width="square">
                     <Icon src="mdi--bell" width={16} height={16} />
                   </Button>
                 </Flex>
@@ -518,13 +518,13 @@ export default function ComponentsDemo() {
               </ChatBubble>
             </Flex>
             <Flex gap="sm" class="mt-4 justify-center">
-              <Button size="sm" variant="outline" isIconOnly>
+              <Button size="sm" variant="outline" width="square">
                 <Icon src="mdi--phone" width={16} height={16} />
               </Button>
-              <Button size="sm" variant="outline" isIconOnly>
+              <Button size="sm" variant="outline" width="square">
                 <Icon src="mdi--message" width={16} height={16} />
               </Button>
-              <Button size="sm" variant="outline" isIconOnly>
+              <Button size="sm" variant="outline" width="square">
                 <Icon src="mdi--cog" width={16} height={16} />
               </Button>
             </Flex>
@@ -594,13 +594,13 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Button size="sm" isIconOnly>
+                  <Button size="sm" width="square">
                     <Icon src="mdi--skip-previous" width={16} height={16} />
                   </Button>
-                  <Button size="sm" isIconOnly variant="primary">
+                  <Button size="sm" width="square" flavor="primary">
                     <Icon src="mdi--play" width={16} height={16} />
                   </Button>
-                  <Button size="sm" isIconOnly>
+                  <Button size="sm" width="square">
                     <Icon src="mdi--skip-next" width={16} height={16} />
                   </Button>
                 </Flex>
@@ -635,7 +635,7 @@ export default function ComponentsDemo() {
               <Navbar.Start>
                 <Dropdown>
                   <Dropdown.Trigger>
-                    <Button variant="ghost" isIconOnly size="sm">
+                    <Button variant="ghost" width="square" size="sm">
                       <Icon src="mdi--menu" width={16} height={16} />
                     </Button>
                   </Dropdown.Trigger>
@@ -650,7 +650,7 @@ export default function ComponentsDemo() {
                 <span class="font-bold text-sm">Brand</span>
               </Navbar.Center>
               <Navbar.End>
-                <Button variant="ghost" isIconOnly size="sm">
+                <Button variant="ghost" width="square" size="sm">
                   <Icon src="mdi--account" width={16} height={16} />
                 </Button>
               </Navbar.End>
@@ -688,7 +688,7 @@ export default function ComponentsDemo() {
                 <Button class="join-item" size="sm">
                   Button 1
                 </Button>
-                <Button class="join-item" size="sm" variant="primary">
+                <Button class="join-item" size="sm" flavor="primary">
                   Button 2
                 </Button>
                 <Button class="join-item" size="sm">
@@ -701,7 +701,7 @@ export default function ComponentsDemo() {
                   class="join-item flex-1"
                   size="sm"
                 />
-                <Button class="join-item" size="sm" variant="primary">
+                <Button class="join-item" size="sm" flavor="primary">
                   <Icon src="mdi--magnify" width={16} height={16} />
                 </Button>
               </Join>
@@ -735,7 +735,7 @@ export default function ComponentsDemo() {
                 <Radio name="recommend" checked />
                 <span class="text-sm">Would recommend</span>
               </Flex>
-              <Button size="sm" variant="primary">
+              <Button size="sm" flavor="primary">
                 Submit
               </Button>
             </Flex>

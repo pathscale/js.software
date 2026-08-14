@@ -4,7 +4,7 @@ interface ContentContainerProps {
   children: any;
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
   prose?: boolean;
-  className?: string;
+  class?: string;
 }
 
 export const ContentContainer: Component<ContentContainerProps> = (props) => {
@@ -33,7 +33,7 @@ export const ContentContainer: Component<ContentContainerProps> = (props) => {
     <div
       class={`mx-auto px-4 sm:px-6 lg:px-8 mt-16 ${maxWidthClass()} ${
         isProse() ? "prose prose-lg max-w-none" : ""
-      } ${props.className || ""}`}
+      } ${props.class || ""}`}
     >
       {props.children}
     </div>
