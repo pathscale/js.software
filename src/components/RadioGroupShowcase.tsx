@@ -204,7 +204,7 @@ export default function RadioGroupShowcase() {
             <CodeBlock
               code={`<RadioGroup name="disabled-demo" label="Some options disabled" defaultValue="a">
   <Radio value="a">Available</Radio>
-  <Radio value="b" isDisabled>Disabled</Radio>
+  <Radio value="b" state="disabled">Disabled</Radio>
   <Radio value="c">Also available</Radio>
 </RadioGroup>`}
             />
@@ -217,7 +217,7 @@ export default function RadioGroupShowcase() {
               <RadioGroup
                 name="invalid-demo"
                 label="Please pick a fruit"
-                isInvalid
+                state="invalid"
                 errorMessage="A selection is required"
               >
                 {renderOptions(options)}
@@ -227,7 +227,7 @@ export default function RadioGroupShowcase() {
               code={`<RadioGroup
   name="invalid-demo"
   label="Please pick a fruit"
-  isInvalid
+  state="invalid"
   errorMessage="A selection is required"
 >
   <Radio value="apple">Apple</Radio>

@@ -1,5 +1,5 @@
 import { createSignal, createEffect, For } from "solid-js";
-import { Button, Modal } from "@pathscale/ui";
+import { Button, Dialog } from "@pathscale/ui";
 import { MATERIAL_COLORS } from "../../utils/themeUtils";
 
 interface ColorPickerPopoverProps {
@@ -23,8 +23,8 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
   };
 
   return (
-    <Modal
-      isOpen={props.isOpen}
+    <Dialog
+      open={props.isOpen}
       onOpenChange={(open) => {
         if (!open) props.onClose();
       }}
@@ -33,8 +33,8 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
       shouldCloseOnEsc
       shouldCloseOnBackdropClick
     >
-      <Modal.Content>
-        <Modal.Body>
+      <Dialog.Content>
+        <Dialog.Body>
           <div class="grid grid-cols-10 w-full" role="listbox">
             <For each={Object.entries(MATERIAL_COLORS)}>
               {([colorName, colorValue]) => (
@@ -69,13 +69,13 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
               {color()}
             </span>
           </div>
-        </Modal.Body>
-        <Modal.Footer class="bg-base-100">
+        </Dialog.Body>
+        <Dialog.Footer class="bg-base-100">
           <Button onClick={props.onClose} variant="primary">
             Done
           </Button>
-        </Modal.Footer>
-      </Modal.Content>
-    </Modal>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog>
   );
 }

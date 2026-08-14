@@ -294,44 +294,44 @@ export default function ChatBubbleShowcase() {
             <Flex justify="start" align="start">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
-                  <ChatBubble.Message color="primary">
+                  <ChatBubble.Message flavor="primary">
                     What kind of nonsense is this
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble>
-                  <ChatBubble.Message color="secondary">
+                  <ChatBubble.Message flavor="secondary">
                     Put me on the Council and not make me a Master!??
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble>
-                  <ChatBubble.Message color="accent">
+                  <ChatBubble.Message flavor="accent">
                     That's never been done in the history of the Jedi. It's
                     insulting!
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble end>
-                  <ChatBubble.Message color="info">
+                  <ChatBubble.Message flavor="info">
                     Calm down, Anakin.
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble end>
-                  <ChatBubble.Message color="success">
+                  <ChatBubble.Message flavor="success">
                     You have been given a great honor.
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble end>
-                  <ChatBubble.Message color="warning">
+                  <ChatBubble.Message flavor="warning">
                     To be on the Council at your age.
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble end>
-                  <ChatBubble.Message color="error">
+                  <ChatBubble.Message flavor="destructive">
                     It's never happened before.
                   </ChatBubble.Message>
                 </ChatBubble>
@@ -339,43 +339,43 @@ export default function ChatBubbleShowcase() {
             </Flex>
             <CodeBlock
               code={`<ChatBubble>
-  <ChatBubble.Message color="primary">
+  <ChatBubble.Message flavor="primary">
     What kind of nonsense is this
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble>
-  <ChatBubble.Message color="secondary">
+  <ChatBubble.Message flavor="secondary">
     Put me on the Council and not make me a Master!??
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble>
-  <ChatBubble.Message color="accent">
+  <ChatBubble.Message flavor="accent">
     That's never been done in the history of the Jedi. It's insulting!
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble end>
-  <ChatBubble.Message color="info">
+  <ChatBubble.Message flavor="info">
     Calm down, Anakin.
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble end>
-  <ChatBubble.Message color="success">
+  <ChatBubble.Message flavor="success">
     You have been given a great honor.
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble end>
-  <ChatBubble.Message color="warning">
+  <ChatBubble.Message flavor="warning">
     To be on the Council at your age.
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble end>
-  <ChatBubble.Message color="error">
+  <ChatBubble.Message flavor="destructive">
     It's never happened before.
   </ChatBubble.Message>
 </ChatBubble>`}

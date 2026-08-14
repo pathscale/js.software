@@ -1,6 +1,7 @@
 import { createSignal, onCleanup } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { VideoPreview, Button, Flex } from "@pathscale/ui";
+import { Button, Flex } from "@pathscale/ui";
+import { VideoPreview } from "@pathscale/ui/lab";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

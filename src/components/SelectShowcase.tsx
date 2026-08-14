@@ -186,7 +186,7 @@ export default function SelectShowcase() {
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Select isDisabled placeholder="Disabled">
+              <Select state="disabled" placeholder="Disabled">
                 <Trigger />
                 <Listbox options={fruitOptions} />
               </Select>
@@ -196,7 +196,7 @@ export default function SelectShowcase() {
               </Select>
             </Flex>
             <CodeBlock
-              code={`<Select isDisabled> ... </Select>
+              code={`<Select state="disabled"> ... </Select>
 <Select fullWidth> ... </Select>`}
             />
           </Flex>

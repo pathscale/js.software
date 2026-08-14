@@ -61,7 +61,7 @@ export default function SizesSection(props: SizesSectionProps) {
     <div class="w-full">
       <h3 class="divider divider-start text-xs">
         <span class="flex gap-1.5">
-          <Icon name="icon-[mdi--resize]" width={16} height={16} class="opacity-40" />
+          <Icon src="mdi--resize" width={16} height={16} class="opacity-40" />
           Sizes
         </span>
       </h3>

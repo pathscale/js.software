@@ -221,8 +221,8 @@ export default function CalendarShowcase() {
 
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
-            <Calendar isDisabled />
-            <CodeBlock code={`<Calendar isDisabled />`} />
+            <Calendar state="disabled" />
+            <CodeBlock code={`<Calendar state="disabled" />`} />
           </Flex>
         </ShowcaseSection>
 

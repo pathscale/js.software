@@ -1,5 +1,6 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Menu, Flex } from "@pathscale/ui";
+import { Flex } from "@pathscale/ui";
+import { Menu } from "@pathscale/ui/lab";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -243,15 +244,15 @@ export default function MenuShowcase() {
             <Flex justify="start" align="start">
               <Menu class="w-56 bg-base-200 rounded-box">
                 <Menu.Item>Enabled item</Menu.Item>
-                <Menu.Item isDisabled>Disabled item</Menu.Item>
-                <Menu.Item isDisabled>Disabled item</Menu.Item>
+                <Menu.Item state="disabled">Disabled item</Menu.Item>
+                <Menu.Item state="disabled">Disabled item</Menu.Item>
               </Menu>
             </Flex>
             <CodeBlock
               code={`<Menu>
   <Menu.Item>Enabled item</Menu.Item>
-  <Menu.Item isDisabled>Disabled item</Menu.Item>
-  <Menu.Item isDisabled>Disabled item</Menu.Item>
+  <Menu.Item state="disabled">Disabled item</Menu.Item>
+  <Menu.Item state="disabled">Disabled item</Menu.Item>
 </Menu>`}
             />
           </Flex>

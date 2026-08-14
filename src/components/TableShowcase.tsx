@@ -1,4 +1,4 @@
-import { Tag, Button, Checkbox, Flex, Table } from "@pathscale/ui";
+import { Chip, Button, Checkbox, Flex, Table } from "@pathscale/ui";
 import { For } from "solid-js";
 
 import ShowcaseLayout from "./ShowcaseLayout";
@@ -206,9 +206,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Zemlak, Daniel and Leannon
                         <br />
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Desktop Support Technician
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                       <Table.Cell>Purple</Table.Cell>
                       <Table.Cell>
@@ -238,9 +238,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Carrol Group
                         <br />
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Tax Accountant
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                       <Table.Cell>Red</Table.Cell>
                       <Table.Cell>
@@ -270,9 +270,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Rowe-Schoen
                         <br />
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Office Assistant I
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                       <Table.Cell>Crimson</Table.Cell>
                       <Table.Cell>
@@ -302,9 +302,9 @@ export default function TableShowcase() {
                       <Table.Cell>
                         Wyman-Ledner
                         <br />
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Community Outreach Specialist
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                       <Table.Cell>Indigo</Table.Cell>
                       <Table.Cell>
@@ -348,7 +348,7 @@ export default function TableShowcase() {
           <Table.Cell>
             Zemlak, Daniel and Leannon
             <br />
-            <Tag size="sm">Desktop Support Technician</Tag>
+            <Chip size="sm">Desktop Support Technician</Chip>
           </Table.Cell>
           <Table.Cell>Purple</Table.Cell>
           <Table.Cell>

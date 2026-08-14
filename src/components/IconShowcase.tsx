@@ -64,14 +64,14 @@ export default function IconShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex gap="md">
-              <Icon name="icon-[mdi--home]" />
-              <Icon name="icon-[mdi--chevron-left]" />
-              <Icon name="icon-[mdi--chevron-right]" />
+              <Icon src="mdi--home" />
+              <Icon src="mdi--chevron-left" />
+              <Icon src="mdi--chevron-right" />
             </Flex>
             <CodeBlock
-              code={`<Icon name="icon-[mdi--home]" />
-<Icon name="icon-[mdi--chevron-left]" />
-<Icon name="icon-[mdi--chevron-right]" />`}
+              code={`<Icon src="mdi--home" />
+<Icon src="mdi--chevron-left" />
+<Icon src="mdi--chevron-right" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -79,16 +79,16 @@ export default function IconShowcase() {
         <ShowcaseSection id="sizing" title="Custom Size">
           <Flex direction="col" gap="md">
             <Flex gap="md" align="center">
-              <Icon name="icon-[mdi--home]" width={16} height={16} />
-              <Icon name="icon-[mdi--home]" width={24} height={24} />
-              <Icon name="icon-[mdi--home]" width={32} height={32} />
-              <Icon name="icon-[mdi--home]" width={48} height={48} />
+              <Icon src="mdi--home" width={16} height={16} />
+              <Icon src="mdi--home" width={24} height={24} />
+              <Icon src="mdi--home" width={32} height={32} />
+              <Icon src="mdi--home" width={48} height={48} />
             </Flex>
             <CodeBlock
-              code={`<Icon name="icon-[mdi--home]" width={16} height={16} />
-<Icon name="icon-[mdi--home]" width={24} height={24} />
-<Icon name="icon-[mdi--home]" width={32} height={32} />
-<Icon name="icon-[mdi--home]" width={48} height={48} />`}
+              code={`<Icon src="mdi--home" width={16} height={16} />
+<Icon src="mdi--home" width={24} height={24} />
+<Icon src="mdi--home" width={32} height={32} />
+<Icon src="mdi--home" width={48} height={48} />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -96,16 +96,16 @@ export default function IconShowcase() {
         <ShowcaseSection id="color" title="Custom Color">
           <Flex direction="col" gap="md">
             <Flex gap="md" align="center">
-              <Icon name="icon-[mdi--home]" class="text-primary" />
-              <Icon name="icon-[mdi--home]" class="text-secondary" />
-              <Icon name="icon-[mdi--home]" class="text-accent" />
-              <Icon name="icon-[mdi--home]" class="text-error" />
+              <Icon src="mdi--home" class="text-primary" />
+              <Icon src="mdi--home" class="text-secondary" />
+              <Icon src="mdi--home" class="text-accent" />
+              <Icon src="mdi--home" class="text-error" />
             </Flex>
             <CodeBlock
-              code={`<Icon name="icon-[mdi--home]" class="text-primary" />
-<Icon name="icon-[mdi--home]" class="text-secondary" />
-<Icon name="icon-[mdi--home]" class="text-accent" />
-<Icon name="icon-[mdi--home]" class="text-error" />`}
+              code={`<Icon src="mdi--home" class="text-primary" />
+<Icon src="mdi--home" class="text-secondary" />
+<Icon src="mdi--home" class="text-accent" />
+<Icon src="mdi--home" class="text-error" />`}
             />
           </Flex>
         </ShowcaseSection>

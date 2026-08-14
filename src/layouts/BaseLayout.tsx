@@ -1,7 +1,7 @@
 import { ParentComponent, Component } from "solid-js";
 import { LayoutGrid } from "../components/layout/LayoutGrid";
 import { Footer } from "../components/Footer";
-import { NoiseBackground } from "@pathscale/ui";
+import { NoiseBackground } from "@pathscale/ui/lab";
 
 export interface BaseLayoutProps {
   header?: Component;
@@ -24,7 +24,7 @@ export const BaseLayout: ParentComponent<BaseLayoutProps> = (props) => {
         sidebar={props.sidebar}
         toc={props.toc}
         footer={Footer}
-        className={props.className}
+        class={props.className}
       >
         {props.children}
       </LayoutGrid>

@@ -106,7 +106,7 @@ const RadioShowcase: Component = () => {
               <Radio name="radio2" description="Billed once a year.">
                 Annual
               </Radio>
-              <Radio name="radio2" isInvalid description="Unavailable in your region.">
+              <Radio name="radio2" state="invalid" description="Unavailable in your region.">
                 Monthly
               </Radio>
             </Flex>
@@ -114,7 +114,7 @@ const RadioShowcase: Component = () => {
               code={`<Radio name="plan" description="Billed once a year.">
   Annual
 </Radio>
-<Radio name="plan" isInvalid description="Unavailable in your region.">
+<Radio name="plan" state="invalid" description="Unavailable in your region.">
   Monthly
 </Radio>`}
             />

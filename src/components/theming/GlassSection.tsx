@@ -38,7 +38,7 @@ export default function GlassSection(props: GlassSectionProps) {
     <div class="w-full">
       <h3 class="divider divider-start text-xs">
         <span class="flex items-center gap-1.5">
-          <Icon name="icon-[mdi--blur]" width={16} height={16} class="opacity-40" />
+          <Icon src="mdi--blur" width={16} height={16} class="opacity-40" />
           Glass
           <Button
             size="sm"

@@ -119,13 +119,13 @@ const TextareaShowcase: Component = () => {
         <ShowcaseSection id="states" title="States">
           <Flex direction="col" gap="md">
             <Flex direction="col" align="start" justify="start" gap="sm">
-              <Textarea isDisabled placeholder="Disabled textarea" />
-              <Textarea isInvalid placeholder="Invalid textarea" />
+              <Textarea state="disabled" placeholder="Disabled textarea" />
+              <Textarea state="invalid" placeholder="Invalid textarea" />
               <Textarea fullWidth placeholder="Full width textarea" />
             </Flex>
             <CodeBlock
-              code={`<Textarea isDisabled placeholder="Disabled textarea" />
-<Textarea isInvalid placeholder="Invalid textarea" />
+              code={`<Textarea state="disabled" placeholder="Disabled textarea" />
+<Textarea state="invalid" placeholder="Invalid textarea" />
 <Textarea fullWidth placeholder="Full width textarea" />`}
             />
           </Flex>

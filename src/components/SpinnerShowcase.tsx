@@ -108,19 +108,19 @@ export default function SpinnerShowcase() {
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
               <Spinner />
-              <Spinner color="current" />
-              <Spinner color="accent" />
-              <Spinner color="success" />
-              <Spinner color="warning" />
-              <Spinner color="danger" />
+              <Spinner flavor="current" />
+              <Spinner flavor="accent" />
+              <Spinner flavor="success" />
+              <Spinner flavor="warning" />
+              <Spinner flavor="destructive" />
             </Flex>
             <CodeBlock
               code={`<Spinner />
-<Spinner color="current" />
-<Spinner color="accent" />
-<Spinner color="success" />
-<Spinner color="warning" />
-<Spinner color="danger" />`}
+<Spinner flavor="current" />
+<Spinner flavor="accent" />
+<Spinner flavor="success" />
+<Spinner flavor="warning" />
+<Spinner flavor="destructive" />`}
             />
           </Flex>
         </ShowcaseSection>

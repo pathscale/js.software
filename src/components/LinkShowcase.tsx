@@ -142,12 +142,12 @@ const LinkShowcase: Component = () => {
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="lg">
-              <Link href="https://google.com" isDisabled>
+              <Link href="https://google.com" state="disabled">
                 Disabled link
               </Link>
             </Flex>
             <CodeBlock
-              code={`<Link href="https://google.com" isDisabled>Disabled link</Link>`}
+              code={`<Link href="https://google.com" state="disabled">Disabled link</Link>`}
             />
           </Flex>
         </ShowcaseSection>

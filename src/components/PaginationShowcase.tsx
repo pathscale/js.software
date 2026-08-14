@@ -110,11 +110,11 @@ export default function PaginationShowcase() {
                 page={disabledPage()}
                 total={10}
                 onChange={setDisabledPage}
-                isDisabled
+                state="disabled"
               />
             </Flex>
             <CodeBlock
-              code={`<Pagination page={page()} total={10} onChange={setPage} isDisabled />`}
+              code={`<Pagination page={page()} total={10} onChange={setPage} state="disabled" />`}
             />
           </Flex>
         </ShowcaseSection>

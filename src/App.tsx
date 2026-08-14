@@ -9,7 +9,7 @@ const Layout: ParentComponent = (props) => {
   return (
     <BaseLayout
       header={MarketingHeader}
-      className="min-h-screen"
+      class="min-h-screen"
     >
       {props.children}
     </BaseLayout>

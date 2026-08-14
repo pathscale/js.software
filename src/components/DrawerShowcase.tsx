@@ -1,4 +1,5 @@
-import { Button, Drawer, Flex, Menu } from "@pathscale/ui";
+import { Button, Drawer, Flex } from "@pathscale/ui";
+import { Menu } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";

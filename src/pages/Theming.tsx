@@ -189,7 +189,7 @@ export default function Theming() {
         </div>
 
         <ColorPickerPopover
-          isOpen={showColorPicker()}
+          open={showColorPicker()}
           onClose={() => setShowColorPicker(false)}
           onColorSelect={selectColor}
           initialColor={
@@ -203,7 +203,7 @@ export default function Theming() {
         />
 
         <ThemeCSSModal
-          isOpen={showCSSModal()}
+          open={showCSSModal()}
           onClose={() => setShowCSSModal(false)}
           theme={currentTheme()}
           isDefault={themeOptions().isDefault}

@@ -1,56 +1,6 @@
 import { ErrorBoundary, For, type JSX } from "solid-js";
-import {
-  ButtonGroup,
-  Button,
-  CheckboxGroup,
-  Checkbox,
-  CloseButton,
-  Description,
-  Disclosure,
-  DisclosureGroup,
-  EmptyState,
-  ErrorMessage,
-  FieldError,
-  Flex,
-  InputGroup,
-  InputOTP,
-  ListBox,
-  MetalBorder,
-  Meter,
-  NumberField,
-  ProgressBar,
-  ProgressCircle,
-  ScrollShadow,
-  SearchField,
-  Separator,
-  SizePicker,
-  Slider,
-  Spinner,
-  Surface,
-  Tag,
-  TagGroup,
-  Text,
-  TextArea,
-  TextField,
-  TimeField,
-  DateField,
-  Popover,
-  ColorPicker,
-  ColorArea,
-  ColorField,
-  ColorSlider,
-  ComboBox,
-  DatePicker,
-  DateRangePicker,
-  RangeCalendar,
-  Header,
-  Toolbar,
-  LanguageSwitcher,
-  LiveChatBubble,
-  ThemeColorPicker,
-  Kbd,
-  createI18n,
-} from "@pathscale/ui";
+import { Button, Checkbox, Description, Collapsible, DisclosureGroup, Empty, ErrorMessage, FieldError, Flex, InputGroup, InputOTP, ListBox, MetalBorder, NumberField, Progress, ScrollArea, SearchField, Separator, Slider, Spinner, Surface, Chip, TagGroup, Text, Textarea, TextField, Popover, Header, LanguageSwitcher, LiveChatBubble, ThemeColorPicker, createI18n } from "@pathscale/ui";
+import { ButtonGroup, CheckboxGroup, CloseButton, Meter, RadialProgress, SizePicker, TimeField, DateField, ColorPicker, ColorArea, ColorField, ColorSlider, ComboBox, DatePicker, DateRangePicker, RangeCalendar, Toolbar, Kbd } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 
 /**
@@ -106,30 +56,30 @@ const EXAMPLES: Example[] = [
   {
     name: "Disclosure",
     render: () => (
-      <Disclosure>
-        <Disclosure.Trigger>More</Disclosure.Trigger>
-        <Disclosure.Content>Hidden until opened.</Disclosure.Content>
-      </Disclosure>
+      <Collapsible>
+        <Collapsible.Trigger>More</Collapsible.Trigger>
+        <Collapsible.Content>Hidden until opened.</Collapsible.Content>
+      </Collapsible>
     ),
   },
   {
     name: "DisclosureGroup",
     render: () => (
       <DisclosureGroup>
-        <Disclosure>
-          <Disclosure.Trigger>First</Disclosure.Trigger>
-          <Disclosure.Content>One.</Disclosure.Content>
-        </Disclosure>
+        <Collapsible>
+          <Collapsible.Trigger>First</Collapsible.Trigger>
+          <Collapsible.Content>One.</Collapsible.Content>
+        </Collapsible>
       </DisclosureGroup>
     ),
   },
   {
     name: "EmptyState",
     render: () => (
-      <EmptyState>
-        <EmptyState.Title>Nothing here</EmptyState.Title>
-        <EmptyState.Description>Add something to begin.</EmptyState.Description>
-      </EmptyState>
+      <Empty>
+        <Empty.Title>Nothing here</Empty.Title>
+        <Empty.Description>Add something to begin.</Empty.Description>
+      </Empty>
     ),
   },
   { name: "ErrorMessage", render: () => <ErrorMessage>Required.</ErrorMessage> },
@@ -164,14 +114,14 @@ const EXAMPLES: Example[] = [
       </Popover>
     ),
   },
-  { name: "ProgressBar", render: () => <ProgressBar value={40} /> },
-  { name: "ProgressCircle", render: () => <ProgressCircle value={40} /> },
+  { name: "ProgressBar", render: () => <Progress value={40} /> },
+  { name: "ProgressCircle", render: () => <RadialProgress value={40} /> },
   {
     name: "ScrollShadow",
     render: () => (
-      <ScrollShadow class="max-h-24">
+      <ScrollArea class="max-h-24">
         <div class="h-40">Tall content that scrolls.</div>
-      </ScrollShadow>
+      </ScrollArea>
     ),
   },
   { name: "SearchField", render: () => <SearchField /> },
@@ -183,18 +133,18 @@ const EXAMPLES: Example[] = [
   },
   { name: "Spinner", render: () => <Spinner /> },
   { name: "Surface", render: () => <Surface>On a surface.</Surface> },
-  { name: "Tag", render: () => <Tag>Tagged</Tag> },
+  { name: "Tag", render: () => <Chip>Tagged</Chip> },
   {
     name: "TagGroup",
     render: () => (
       <TagGroup>
-        <Tag>One</Tag>
-        <Tag>Two</Tag>
+        <Chip>One</Chip>
+        <Chip>Two</Chip>
       </TagGroup>
     ),
   },
   { name: "Text", render: () => <Text>Body text.</Text> },
-  { name: "TextArea", render: () => <TextArea /> },
+  { name: "TextArea", render: () => <Textarea /> },
   { name: "TextField", render: () => <TextField /> },
   { name: "TimeField", render: () => <TimeField /> },
   { name: "DateField", render: () => <DateField /> },

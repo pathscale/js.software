@@ -295,7 +295,7 @@ export const DropdownCenterSection = () => (
             <Button variant="ghost" isIconOnly>
               <BellIcon />
             </Button>
-            <Badge size="sm" color="accent" />
+            <Badge size="sm" flavor="accent" />
           </Badge.Anchor>
         </Navbar.End>
       </Navbar>
@@ -318,7 +318,7 @@ export const DropdownCenterSection = () => (
     <Button variant="ghost" isIconOnly><SearchIcon /></Button>
     <Badge.Anchor>
       <Button variant="ghost" isIconOnly><BellIcon /></Button>
-      <Badge size="sm" color="accent" />
+      <Badge size="sm" flavor="accent" />
     </Badge.Anchor>
   </Navbar.End>
 </Navbar>`}
