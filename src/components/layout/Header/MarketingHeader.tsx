@@ -1,5 +1,5 @@
 import { Component, Show } from "solid-js";
-import { Button, Card, Flex, Navbar } from "@pathscale/ui";
+import { Button, Flex, Navbar } from "@pathscale/ui";
 import { useNavigation } from "./hooks/useNavigation";
 import { MainNavigation } from "./components/MainNavigation";
 import { ComponentsMenu } from "./components/ComponentsMenu";
@@ -25,13 +25,12 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
   );
 
   return (
-    <Navbar.Stack class={`navbar-stack sticky top-0 z-50 ${props.class || ""}`}>
-      <Card material="glass"
-        flavor="secondary"
-        padding="none"
-        style={{ "--glass-border-radius": "0px" }}
-      >
-        <Navbar.Row class="px-4 py-1.5">
+    <Navbar.Stack class={`navbar-stack glass-nav sticky top-0 z-50 ${props.class || ""}`}>
+      {/* `glass-nav` rather than a glass Card: the chrome is a seam across the
+          top of the page, not a panel sitting on it, so it wants a hairline
+          bottom border and no radius, corners or shadow. */}
+      <div class="page-container">
+        <Navbar.Row class="py-2">
         <Navbar.Start class="lg:hidden">
           <Button
             variant="ghost"
@@ -91,7 +90,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
           </a>
         </Navbar.End>
         </Navbar.Row>
-      </Card>
+      </div>
 
       <Show when={navigation.shouldShowComponentsMenu()}>
         <ComponentsMenu navigation={navigation} />

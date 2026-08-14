@@ -68,7 +68,7 @@ export default function GlassPanelShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
+                class="block text-sm text-base-content/60 hover:text-primary transition-colors"
               >
                 {section.title}
               </a>
@@ -87,7 +87,7 @@ export default function GlassPanelShowcase() {
 
         <ShowcaseSection id="theme-tuning" title="Theme Tuning">
           <Flex direction="col" gap="md">
-            <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
+            <p class="text-sm text-base-content/60">
               Adjust glass per-panel or globally by setting CSS variables. The base panel reads <code>--glass-blur</code>, <code>--glass-saturation</code>, <code>--glass-background-opacity</code>, <code>--glass-border-opacity</code>, etc. from the cascade — set them on the panel, a parent, or <code>:root</code> in your theme.
             </p>
             <div
@@ -162,7 +162,7 @@ export default function GlassPanelShowcase() {
           <PropsTable props={props} />
           <div class="mt-6">
             <h3 class="text-sm font-semibold mb-2">Theme CSS Variables</h3>
-            <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)] mb-3">
+            <p class="text-sm text-base-content/60 mb-3">
               Glass appearance is driven entirely by these CSS variables. Set them on <code>:root</code>, a theme selector, a parent, or per-panel via inline style.
             </p>
             <PropsTable props={themeVars} />

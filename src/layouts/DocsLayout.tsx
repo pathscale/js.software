@@ -16,7 +16,7 @@ export const DocsLayout: ParentComponent<DocsLayoutProps> = (props) => {
       toc={props.toc}
       class={`docs-layout ${props.class || ""}`}
     >
-      <div class="max-w-4xl mx-auto px-6">
+      <div class="page-container">
         <article class="prose prose-lg max-w-none">{props.children}</article>
       </div>
     </BaseLayout>

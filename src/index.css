@@ -26,13 +26,90 @@
 @import "./styles/themes/generated.css";
 
 @layer base {
+  /* Structure borrowed from 24x.ai: a stable scrollbar gutter so a short page
+     and a long one do not shift the layout between them, one centred measure
+     for every page, and glass reserved for the chrome rather than sprayed
+     across the content. */
+  :root {
+    --js-glass-blur: 6px;
+    --js-glass-nav-opacity: 55%;
+    --js-glass-border-opacity: 8%;
+  }
+
   html {
+    scrollbar-gutter: stable;
     scroll-behavior: smooth;
     font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   
   body {
     font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow-x: hidden;
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+  }
+
+  #root,
+  main,
+  section {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* The reader's preference outranks the effect. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .page-container {
+    width: min(1180px, calc(100% - 2.5rem));
+    margin-inline: auto;
+  }
+
+  /* Real blur, on the chrome only. A hairline at 8% rather than a border, so
+     the edge reads as a seam and not a box. */
+  .glass-nav {
+    background-color: color-mix(
+      in oklab,
+      var(--color-base-100) var(--js-glass-nav-opacity, 55%),
+      transparent
+    );
+    -webkit-backdrop-filter: blur(var(--js-glass-blur, 6px)) saturate(1.1);
+    backdrop-filter: blur(var(--js-glass-blur, 6px)) saturate(1.1);
+    border-bottom: 1px solid
+      color-mix(
+        in oklab,
+        var(--color-base-content) var(--js-glass-border-opacity, 8%),
+        transparent
+      );
+  }
+
+  /* The accent is the only saturated thing on the page, so it earns a glow
+     where it matters and nowhere else. */
+  .accent-glow {
+    box-shadow: 0 0 0 1px
+        color-mix(in oklab, var(--color-primary) 40%, transparent),
+      0 8px 32px -8px color-mix(in oklab, var(--color-primary) 45%, transparent);
+  }
+
+  .accent-rule {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--color-primary) 70%, transparent),
+      transparent
+    );
   }
 }
 

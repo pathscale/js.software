@@ -131,7 +131,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       </DialogHeader>
 
       <DialogBody>
-        <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)] mb-4">
+        <p class="text-sm text-base-content/60 mb-4">
           Copy this CSS to add your theme to DaisyUI
         </p>
 

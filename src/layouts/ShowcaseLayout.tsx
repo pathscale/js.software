@@ -16,9 +16,7 @@ export const ShowcaseLayout: ParentComponent<ShowcaseLayoutProps> = (props) => {
       toc={props.toc}
       class={`showcase-layout ${props.class || ""}`}
     >
-      <div class="w-full px-6">
-        <div class="max-w-7xl mx-auto">{props.children}</div>
-      </div>
+      <div class="page-container">{props.children}</div>
     </BaseLayout>
   );
 };
