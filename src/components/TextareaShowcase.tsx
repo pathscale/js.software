@@ -24,22 +24,22 @@ const TextareaShowcase: Component = () => {
       description: "Visual variant of the textarea",
     },
     {
-      name: "fullWidth",
-      type: "boolean",
+      name: "width",
+      type: `Width`,
       default: "false",
-      description: "Expands textarea to full width",
+      description: 'Pass width="full".',
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disables the textarea (also accepts native `disabled`)",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
-      name: "isInvalid",
-      type: "boolean",
+      name: "issues",
+      type: `Issue[]`,
       default: "false",
-      description: "Marks the textarea as invalid",
+      description: 'Validation results. Validity is derived from them, not asserted; force it with state="invalid".',
     },
     {
       name: "placeholder",
@@ -104,7 +104,7 @@ const TextareaShowcase: Component = () => {
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start">
-              <Flex direction="col" gap="sm" class="w-full">
+              <Flex direction="col" gap="sm" class="w-full component-preview">
                 <Textarea variant="primary" placeholder="Primary" />
                 <Textarea variant="secondary" placeholder="Secondary" />
               </Flex>

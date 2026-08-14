@@ -218,7 +218,7 @@ const FloatingDockShowcase: Component = () => {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Flex class="w-full" align="center" justify="center" gap="sm">
+            <Flex class="w-full component-preview" align="center" justify="center" gap="sm">
               <Dock items={sampleItems} showMobile={false} />
             </Flex>
             <CodeBlock
@@ -260,7 +260,7 @@ const FloatingDockShowcase: Component = () => {
             <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
               Larger resting size (60px) with a bigger hover size (100px).
             </p>
-            <Flex class="w-full" align="center" justify="center" gap="sm">
+            <Flex class="w-full component-preview" align="center" justify="center" gap="sm">
               <Dock
                 items={sampleItems}
                 baseSize={60}
@@ -287,7 +287,7 @@ const FloatingDockShowcase: Component = () => {
             <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
               The container background and shadow are hidden with showContainer set to false.
             </p>
-            <Flex class="w-full" align="center" justify="center" gap="sm">
+            <Flex class="w-full component-preview" align="center" justify="center" gap="sm">
               <Dock
                 items={sampleItems}
                 showContainer={false}

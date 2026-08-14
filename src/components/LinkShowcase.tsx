@@ -36,10 +36,10 @@ const LinkShowcase: Component = () => {
       description: 'Mark as external link (sets target="_blank" and rel attributes)',
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disables the link",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "href",

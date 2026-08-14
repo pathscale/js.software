@@ -60,9 +60,9 @@ export default function MenuShowcase() {
       description: "Data source for rendering items via children render fn",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
-      description: "Disables every item in the menu",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "class",

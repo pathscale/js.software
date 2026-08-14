@@ -50,6 +50,7 @@ export const ROUTES = {
   SKELETON: "/skeleton",
   SLIDER: "/slider",
   SPINNER: "/spinner",
+  DATA_GRID: "/data-grid",
   TABLE: "/table",
   TABS: "/tabs",
   TEXTAREA: "/textarea",

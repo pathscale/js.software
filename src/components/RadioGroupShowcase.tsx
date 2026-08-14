@@ -66,14 +66,14 @@ export default function RadioGroupShowcase() {
       description: "Visual variant of the radio buttons",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
-      description: "Disables all radios in the group",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
-      name: "isInvalid",
-      type: "boolean",
-      description: "Marks the group as invalid",
+      name: "issues",
+      type: `Issue[]`,
+      description: 'Validation results. Validity is derived from them, not asserted; force it with state="invalid".',
     },
   ];
 

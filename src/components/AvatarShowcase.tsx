@@ -23,10 +23,10 @@ export default function AvatarShowcase() {
       description: "Size of the avatar",
     },
     {
-      name: "color",
-      type: '"default" | "accent" | "success" | "warning" | "danger"',
+      name: "flavor",
+      type: `Flavor`,
       default: '"default"',
-      description: "Background color for the fallback slot",
+      description: "What the thing is. Open: your own name yields a class you can style.",
     },
     {
       name: "variant",
@@ -35,9 +35,9 @@ export default function AvatarShowcase() {
       description: "Visual variant of the avatar",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Alias for `class`, useful in JSX environments",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
     {
       name: "style",

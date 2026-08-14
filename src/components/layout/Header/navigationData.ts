@@ -25,6 +25,7 @@ export const navigationItems: NavigationItem[] = [
           { title: "Chat Bubble", href: ROUTES.CHAT_BUBBLE },
           { title: "Empty State", href: ROUTES.EMPTY_STATE },
           { title: "Kbd", href: ROUTES.KBD },
+          { title: "Data Grid", href: ROUTES.DATA_GRID },
           { title: "Table", href: ROUTES.TABLE },
         ],
       },

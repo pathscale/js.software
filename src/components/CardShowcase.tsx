@@ -45,9 +45,9 @@ export default function CardShowcase() {
       description: "Additional CSS classes to apply",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias for class)",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
     {
       name: "style",

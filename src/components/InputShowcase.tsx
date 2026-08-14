@@ -33,10 +33,10 @@ export default function InputShowcase() {
       description: "Size of the input",
     },
     {
-      name: "fullWidth",
-      type: "boolean",
+      name: "width",
+      type: `Width`,
       default: "true",
-      description: "Expands input to full width",
+      description: 'Pass width="full".',
     },
     {
       name: "placeholder",
@@ -44,16 +44,16 @@ export default function InputShowcase() {
       description: "Placeholder text",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disables the input (also accepts native `disabled`)",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
-      name: "isInvalid",
-      type: "boolean",
+      name: "issues",
+      type: `Issue[]`,
       default: "false",
-      description: "Marks the input as invalid",
+      description: 'Validation results. Validity is derived from them, not asserted; force it with state="invalid".',
     },
     {
       name: "label",
@@ -81,7 +81,7 @@ export default function InputShowcase() {
       description: "Icon rendered at the end of the input",
     },
     { name: "class", type: "string", description: "Additional CSS classes" },
-    { name: "className", type: "string", description: "Additional CSS classes (alias for class)" },
+    { name: "class", type: "string", description: "Extra classes, merged into the root. There is no className." },
     {
       name: "dataTheme",
       type: "string",

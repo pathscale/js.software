@@ -16,7 +16,7 @@ export default function FormShowcase() {
 
   const formProps = [
     { name: "class", type: "string", description: "Custom classes" },
-    { name: "className", type: "string", description: "Alias for class" },
+    { name: "class", type: "string", description: "Extra classes, merged into the root. There is no className." },
     { name: "dataTheme", type: "string", description: "Theme identifier" },
     { name: "children", type: "JSX.Element", description: "Form content" },
     {
@@ -29,9 +29,9 @@ export default function FormShowcase() {
   const labelProps = [
     { name: "for", type: "string", description: "Associated input id" },
     { name: "htmlFor", type: "string", description: "Alias for for" },
-    { name: "isRequired", type: "boolean", description: "Marks the label as required" },
-    { name: "isDisabled", type: "boolean", description: "Marks the label as disabled" },
-    { name: "isInvalid", type: "boolean", description: "Marks the label as invalid" },
+    { name: "required", type: "boolean", description: "Marks the label as required." },
+    { name: "state", type: "State", description: 'Pass state="disabled". One axis, so it cannot disagree with itself.' },
+    { name: "issues", type: "Issue[]", description: "Validity is derived from the issues, not asserted." },
     { name: "class", type: "string", description: "Custom classes" },
     { name: "children", type: "JSX.Element", description: "Label content" },
   ];
@@ -115,7 +115,7 @@ export default function FormShowcase() {
           <Flex direction="col" gap="md">
             <Form class="bg-base-100 p-4 rounded-md shadow-md w-full max-w-xl mx-auto">
               <Flex direction="row" gap="md" align="end">
-                <Flex direction="col" gap="sm" class="w-full">
+                <Flex direction="col" gap="sm" class="w-full component-preview">
                   <Label for="inline-email">Email</Label>
                   <Input
                     id="inline-email"
@@ -133,7 +133,7 @@ export default function FormShowcase() {
             <CodeBlock
               code={`<Form class="...">
   <Flex direction="row" gap="md" align="end">
-    <Flex direction="col" gap="sm" class="w-full">
+    <Flex direction="col" gap="sm" class="w-full component-preview">
       <Label for="email">Email</Label>
       <Input id="email" type="email" class="input-bordered w-full" />
     </Flex>

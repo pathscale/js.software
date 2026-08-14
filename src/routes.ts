@@ -19,6 +19,7 @@ import ChatBubbleShowcase from "./components/ChatBubbleShowcase";
 import CheckboxShowcase from "./components/CheckboxShowcase";
 import ColorPickerShowcase from "./components/ColorPickerShowcase";
 import CoverageShowcase from "./components/CoverageShowcase";
+import DataGridShowcase from "./components/DataGridShowcase";
 import DisclosureShowcase from "./components/DisclosureShowcase";
 import DrawerShowcase from "./components/DrawerShowcase";
 import DropdownShowcase from "./components/DropdownShowcase";
@@ -112,7 +113,8 @@ const componentRoutes = ([
   ["Skeleton", ROUTES.SKELETON, SkeletonShowcase, "Loading placeholders."],
   ["Slider", ROUTES.SLIDER, SliderShowcase, "Continuous numeric input."],
   ["Spinner", ROUTES.SPINNER, SpinnerShowcase, "Indeterminate loading feedback."],
-  ["Table", ROUTES.TABLE, TableShowcase, "Structured tabular data."],
+  ["Data Grid", ROUTES.DATA_GRID, DataGridShowcase, "One tag over a model that owns the state."],
+  ["Table", ROUTES.TABLE, TableShowcase, "The headless parts, assembled by hand."],
   ["Tabs", ROUTES.TABS, TabsShowcase, "Selectable views and panels."],
   ["Textarea", ROUTES.TEXTAREA, TextareaShowcase, "Multiline text input."],
   ["Toast", ROUTES.TOAST, ToastShowcase, "Transient notifications."],

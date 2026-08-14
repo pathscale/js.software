@@ -25,9 +25,9 @@ export default function FooterShowcase() {
       description: "Additional CSS classes to apply",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Alias for `class`, useful in JSX environments",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
     {
       name: "dataTheme",
@@ -50,9 +50,9 @@ export default function FooterShowcase() {
       description: "Additional CSS classes to apply",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Alias for `class`, useful in JSX environments",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
     {
       name: "dataTheme",

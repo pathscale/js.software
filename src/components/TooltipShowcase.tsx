@@ -52,9 +52,9 @@ export default function TooltipShowcase() {
       description: "Delay (ms) before the tooltip closes",
     },
     {
-      name: "isOpen",
-      type: "boolean",
-      description: "Controlled open state",
+      name: "open",
+      type: `boolean`,
+      description: "Completes the open / defaultOpen / onOpenChange triple.",
     },
     {
       name: "defaultOpen",

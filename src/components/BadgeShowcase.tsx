@@ -6,7 +6,7 @@ import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 const badgeProps = [
   { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Indicator size." },
-  { name: "color", type: '"default" | "accent" | "success" | "warning" | "danger"', default: '"default"', description: "Semantic indicator color." },
+  { name: "flavor", type: "Flavor", default: '"neutral"', description: "What the badge is. Open: your own name yields a class you can style." },
   { name: "variant", type: '"primary" | "secondary" | "soft"', default: '"primary"', description: "Indicator treatment." },
   { name: "placement", type: '"top-right" | "top-left" | "bottom-right" | "bottom-left"', default: '"top-right"', description: "Position relative to Badge.Anchor." },
 ];

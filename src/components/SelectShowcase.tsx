@@ -70,16 +70,16 @@ export default function SelectShowcase() {
       description: "Whether one or many options can be selected",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disable the select",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
-      name: "fullWidth",
-      type: "boolean",
+      name: "width",
+      type: `Width`,
       default: "false",
-      description: "Expand the trigger to full width",
+      description: 'Pass width="full".',
     },
     {
       name: "placement",

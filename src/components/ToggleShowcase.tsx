@@ -15,10 +15,10 @@ export default function ToggleShowcase() {
 
   const toggleProps = [
     {
-      name: "color",
-      type: '"default" | "accent" | "success" | "warning" | "danger"',
+      name: "flavor",
+      type: `Flavor`,
       default: '"default"',
-      description: "The color scheme of the toggle",
+      description: "What the thing is. Open: your own name yields a class you can style.",
     },
     {
       name: "size",
@@ -54,9 +54,9 @@ export default function ToggleShowcase() {
       description: "Theme data attribute value",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes to apply",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
   ];
 

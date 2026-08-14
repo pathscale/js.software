@@ -38,10 +38,10 @@ const RadioShowcase: Component = () => {
       description: "Supporting text rendered under the label",
     },
     {
-      name: "isInvalid",
-      type: "boolean",
+      name: "issues",
+      type: `Issue[]`,
       default: "false",
-      description: "Marks the radio as failing validation",
+      description: 'Validation results. Validity is derived from them, not asserted; force it with state="invalid".',
     },
     {
       name: "indicator",
@@ -59,10 +59,10 @@ const RadioShowcase: Component = () => {
       description: "Additional CSS classes to apply",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disables the radio",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
   ];
 
