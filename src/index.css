@@ -2,7 +2,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 @plugin "@iconify/tailwind4";
-@plugin "daisyui";
+/* daisyUI names its components with the same bare class names @pathscale/ui
+   uses for its BEM roots - `.checkbox`, `.alert`, `.badge`, `.navbar` and
+   seventeen more - so loading both styled every library component twice. The
+   visible symptom was the DataGrid's selection column: daisyUI's `.checkbox`
+   put a 24px bordered box around the library's own 16px control, so it read as
+   a toggle rather than a checkbox.
+
+   Excluded here rather than removed, because this app writes daisyUI classes
+   directly at ~200 call sites. The four that still collide - btn, card, link
+   and menu - are exactly the ones this app uses by hand, so they need the call
+   sites moved before they can be excluded too. */
+@plugin "daisyui" {
+  exclude: alert, avatar, badge, calendar, checkbox, dock, drawer, dropdown,
+    fieldset, footer, kbd, label, navbar, progress, radialprogress, radio,
+    skeleton, textarea, toast, tooltip;
+}
 @source "../node_modules/@pathscale/ui/";
 @import "tailwindcss";
 @import "tw-animate-css";
