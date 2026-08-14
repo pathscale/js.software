@@ -20,7 +20,7 @@ export default function Layouts() {
           </p>
         </header>
 
-        <GlassPanel tone="secondary" highlight>
+        <GlassPanel flavor="secondary" highlight>
           <Flex direction="col" gap="md">
             <h2 class="text-2xl font-semibold">The two compiler passes</h2>
             <CodeBlock

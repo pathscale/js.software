@@ -25,7 +25,7 @@ export default function EffectsSection(props: EffectsSectionProps) {
     <div class="w-full">
       <h3 class="divider divider-start text-xs">
         <span class="flex gap-1.5">
-          <Icon name="icon-[mdi--auto-fix]" width={16} height={16} class="opacity-40" />
+          <Icon src="mdi--auto-fix" width={16} height={16} class="opacity-40" />
           Effects
         </span>
       </h3>

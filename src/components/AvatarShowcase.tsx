@@ -160,28 +160,28 @@ export default function AvatarShowcase() {
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg" wrap="wrap">
-              <Avatar color="default">
+              <Avatar flavor="neutral">
                 <Avatar.Fallback>D</Avatar.Fallback>
               </Avatar>
-              <Avatar color="accent">
+              <Avatar flavor="accent">
                 <Avatar.Fallback>A</Avatar.Fallback>
               </Avatar>
-              <Avatar color="success">
+              <Avatar flavor="success">
                 <Avatar.Fallback>S</Avatar.Fallback>
               </Avatar>
-              <Avatar color="warning">
+              <Avatar flavor="warning">
                 <Avatar.Fallback>W</Avatar.Fallback>
               </Avatar>
-              <Avatar color="danger">
+              <Avatar flavor="destructive">
                 <Avatar.Fallback>D</Avatar.Fallback>
               </Avatar>
             </Flex>
             <CodeBlock
-              code={`<Avatar color="default"><Avatar.Fallback>D</Avatar.Fallback></Avatar>
-<Avatar color="accent"><Avatar.Fallback>A</Avatar.Fallback></Avatar>
-<Avatar color="success"><Avatar.Fallback>S</Avatar.Fallback></Avatar>
-<Avatar color="warning"><Avatar.Fallback>W</Avatar.Fallback></Avatar>
-<Avatar color="danger"><Avatar.Fallback>D</Avatar.Fallback></Avatar>`}
+              code={`<Avatar flavor="neutral"><Avatar.Fallback>D</Avatar.Fallback></Avatar>
+<Avatar flavor="accent"><Avatar.Fallback>A</Avatar.Fallback></Avatar>
+<Avatar flavor="success"><Avatar.Fallback>S</Avatar.Fallback></Avatar>
+<Avatar flavor="warning"><Avatar.Fallback>W</Avatar.Fallback></Avatar>
+<Avatar flavor="destructive"><Avatar.Fallback>D</Avatar.Fallback></Avatar>`}
             />
           </Flex>
         </ShowcaseSection>

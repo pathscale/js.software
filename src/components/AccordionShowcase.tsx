@@ -1,4 +1,5 @@
-import { Accordion, Join, Flex } from "@pathscale/ui";
+import { Accordion, Flex } from "@pathscale/ui";
+import { Join } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";

@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { FloatingDock, Flex } from "@pathscale/ui";
-import type { FloatingDockItem } from "@pathscale/ui";
+import { Dock, Flex } from "@pathscale/ui";
+import type { DockItem } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -219,10 +219,10 @@ const FloatingDockShowcase: Component = () => {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex class="w-full" align="center" justify="center" gap="sm">
-              <FloatingDock items={sampleItems} showMobile={false} />
+              <Dock items={sampleItems} showMobile={false} />
             </Flex>
             <CodeBlock
-              code={`<FloatingDock
+              code={`<Dock
   items={[
     { title: "Home", icon: <HomeIcon />, href: "#" },
     { title: "Search", icon: <SearchIcon />, href: "#" },
@@ -238,7 +238,7 @@ const FloatingDockShowcase: Component = () => {
         <ShowcaseSection id="vertical" title="Vertical Orientation">
           <Flex direction="col" gap="md">
             <Flex class="w-full min-h-[300px]" align="center" justify="center" gap="sm">
-              <FloatingDock
+              <Dock
                 items={sampleItems}
                 orientation="vertical"
                 tooltipDirection="right"
@@ -246,7 +246,7 @@ const FloatingDockShowcase: Component = () => {
               />
             </Flex>
             <CodeBlock
-              code={`<FloatingDock
+              code={`<Dock
   items={items}
   orientation="vertical"
   tooltipDirection="right"
@@ -261,7 +261,7 @@ const FloatingDockShowcase: Component = () => {
               Larger resting size (60px) with a bigger hover size (100px).
             </p>
             <Flex class="w-full" align="center" justify="center" gap="sm">
-              <FloatingDock
+              <Dock
                 items={sampleItems}
                 baseSize={60}
                 hoverSize={100}
@@ -271,7 +271,7 @@ const FloatingDockShowcase: Component = () => {
               />
             </Flex>
             <CodeBlock
-              code={`<FloatingDock
+              code={`<Dock
   items={items}
   baseSize={60}
   hoverSize={100}
@@ -288,14 +288,14 @@ const FloatingDockShowcase: Component = () => {
               The container background and shadow are hidden with showContainer set to false.
             </p>
             <Flex class="w-full" align="center" justify="center" gap="sm">
-              <FloatingDock
+              <Dock
                 items={sampleItems}
                 showContainer={false}
                 showMobile={false}
               />
             </Flex>
             <CodeBlock
-              code={`<FloatingDock
+              code={`<Dock
   items={items}
   showContainer={false}
 />`}

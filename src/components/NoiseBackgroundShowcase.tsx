@@ -1,5 +1,6 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { NoiseBackground, Flex } from "@pathscale/ui";
+import { Flex } from "@pathscale/ui";
+import { NoiseBackground } from "@pathscale/ui/lab";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

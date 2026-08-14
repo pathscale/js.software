@@ -1,4 +1,4 @@
-import { Badge, Button, Flex, Icon, Tag } from "@pathscale/ui";
+import { Badge, Button, Flex, Icon, Chip } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
@@ -19,18 +19,18 @@ export default function BadgeShowcase() {
           <Flex gap="xl" align="center" wrap="wrap">
             <Badge.Anchor>
               <Button variant="outline" isIconOnly aria-label="Inbox">
-                <Icon name="icon-[mdi--inbox]" width={20} height={20} />
+                <Icon src="mdi--inbox" width={20} height={20} />
               </Button>
-              <Badge color="danger">3</Badge>
+              <Badge flavor="destructive">3</Badge>
             </Badge.Anchor>
             <Badge.Anchor>
               <Button variant="outline">Messages</Button>
-              <Badge color="accent" placement="bottom-right">12</Badge>
+              <Badge flavor="accent" placement="bottom-right">12</Badge>
             </Badge.Anchor>
           </Flex>
           <CodeBlock code={`<Badge.Anchor>
-  <Button isIconOnly aria-label="Inbox"><Icon name="icon-[mdi--inbox]" /></Button>
-  <Badge color="danger">3</Badge>
+  <Button isIconOnly aria-label="Inbox"><Icon src="mdi--inbox" /></Button>
+  <Badge flavor="destructive">3</Badge>
 </Badge.Anchor>`} />
         </ShowcaseSection>
 
@@ -39,7 +39,7 @@ export default function BadgeShowcase() {
             {(["top-left", "top-right", "bottom-left", "bottom-right"] as const).map((placement) => (
               <Badge.Anchor>
                 <Button variant="outline">{placement}</Button>
-                <Badge placement={placement} color="accent" />
+                <Badge placement={placement} flavor="accent" />
               </Badge.Anchor>
             ))}
           </Flex>
@@ -51,11 +51,11 @@ export default function BadgeShowcase() {
             label rather than an indicator attached to another control.
           </p>
           <Flex gap="md" wrap="wrap">
-            <Tag>Draft</Tag>
-            <Tag variant="surface">In review</Tag>
+            <Chip>Draft</Chip>
+            <Chip variant="surface">In review</Chip>
           </Flex>
-          <CodeBlock code={`<Tag>Draft</Tag>
-<Tag variant="surface">In review</Tag>`} />
+          <CodeBlock code={`<Chip>Draft</Chip>
+<Chip variant="surface">In review</Chip>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

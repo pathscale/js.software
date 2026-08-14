@@ -1,4 +1,5 @@
-import { Button, Join } from "@pathscale/ui";
+import { Button } from "@pathscale/ui";
+import { Join } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

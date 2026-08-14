@@ -130,16 +130,16 @@ export default function InputShowcase() {
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
               <Input placeholder="Default" />
-              <Input isDisabled placeholder="Disabled state" />
+              <Input state="disabled" placeholder="Disabled state" />
               <Input readonly value="Read-only value" />
-              <Input isInvalid placeholder="Invalid state" errorMessage="Required" />
+              <Input state="invalid" placeholder="Invalid state" errorMessage="Required" />
               <Input type="password" placeholder="Password" />
             </Flex>
             <CodeBlock
               code={`<Input placeholder="Default" />
-<Input isDisabled placeholder="Disabled state" />
+<Input state="disabled" placeholder="Disabled state" />
 <Input readonly value="Read-only value" />
-<Input isInvalid placeholder="Invalid state" errorMessage="Required" />
+<Input state="invalid" placeholder="Invalid state" errorMessage="Required" />
 <Input type="password" placeholder="Password" />`}
             />
           </Flex>

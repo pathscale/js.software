@@ -29,7 +29,7 @@ export const MultilevelSection = () => {
     <ShowcaseSection id="multilevel" title="Multilevel">
       <Flex direction="col" gap="md">
         <Navbar.Stack sticky>
-          <Navbar.Row color="primary" padded>
+          <Navbar.Row flavor="primary" padded>
             <Navbar.Start>
               <Button variant="ghost" class="text-xl font-bold text-white">
                 Trading Platform
@@ -95,7 +95,7 @@ export const MultilevelSection = () => {
 
         <CodeBlock
           code={`<Navbar.Stack sticky>
-  <Navbar.Row color="primary" padded>
+  <Navbar.Row flavor="primary" padded>
     <Navbar.Start>
       <Button variant="ghost" class="text-xl font-bold text-white">
         Trading Platform

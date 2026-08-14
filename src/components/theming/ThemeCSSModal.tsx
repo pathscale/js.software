@@ -1,11 +1,4 @@
-import {
-  Button,
-  Icon,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "@pathscale/ui";
+import { Button, Icon, Dialog, DialogBody, DialogFooter, DialogHeader } from "@pathscale/ui";
 import { createEffect, createSignal } from "solid-js";
 import {
   GLASS_THEME_DEFAULTS,
@@ -121,8 +114,8 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
   };
 
   return (
-    <Modal
-      isOpen={props.isOpen}
+    <Dialog
+      open={props.isOpen}
       onOpenChange={(open) => !open && props.onClose()}
       backdrop="opaque"
       placement="center"
@@ -130,14 +123,14 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       shouldCloseOnBackdropClick
       class="w-11/12 max-w-4xl"
     >
-      <ModalHeader class="font-bold">
+      <DialogHeader class="font-bold">
         <div class="flex items-center gap-2">
-          <Icon name="icon-[mdi--code-braces]" width={20} height={20} />
+          <Icon src="mdi--code-braces" width={20} height={20} />
           CSS Theme
         </div>
-      </ModalHeader>
+      </DialogHeader>
 
-      <ModalBody>
+      <DialogBody>
         <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)] mb-4">
           Copy this CSS to add your theme to DaisyUI
         </p>
@@ -158,27 +151,27 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
           >
             {isClipboardButtonPressed() ? (
               <>
-                <Icon name="icon-[mdi--check]" width={16} height={16} />
+                <Icon src="mdi--check" width={16} height={16} />
                 Copied!
               </>
             ) : (
               <>
-                <Icon name="icon-[mdi--content-copy]" width={16} height={16} />
+                <Icon src="mdi--content-copy" width={16} height={16} />
                 Copy
               </>
             )}
           </Button>
         </div>
-      </ModalBody>
+      </DialogBody>
 
-      <ModalFooter>
+      <DialogFooter>
         <Button
           onClick={props.onClose}
           class="mt-5"
         >
           Close
         </Button>
-      </ModalFooter>
-    </Modal>
+      </DialogFooter>
+    </Dialog>
   );
 }

@@ -27,7 +27,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
   return (
     <Navbar.Stack class={`navbar-stack sticky top-0 z-50 ${props.className || ""}`}>
       <GlassPanel
-        tone="secondary"
+        flavor="secondary"
         highlight
         size="sm"
         paddingX="0"

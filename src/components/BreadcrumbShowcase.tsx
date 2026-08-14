@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Breadcrumbs, BreadcrumbsItem, Flex } from "@pathscale/ui";
+import { Breadcrumb, BreadcrumbItem, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -55,18 +55,18 @@ export default function BreadcrumbShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Breadcrumbs>
-                <BreadcrumbsItem href={ROUTES.HOME}>Home</BreadcrumbsItem>
-                <BreadcrumbsItem href={ROUTES.HOME}>Documents</BreadcrumbsItem>
-                <BreadcrumbsItem href={ROUTES.HOME}>Add Document</BreadcrumbsItem>
-              </Breadcrumbs>
+              <Breadcrumb>
+                <BreadcrumbItem href={ROUTES.HOME}>Home</BreadcrumbItem>
+                <BreadcrumbItem href={ROUTES.HOME}>Documents</BreadcrumbItem>
+                <BreadcrumbItem href={ROUTES.HOME}>Add Document</BreadcrumbItem>
+              </Breadcrumb>
             </Flex>
             <CodeBlock
-              code={`<Breadcrumbs>
-  <BreadcrumbsItem href="/">Home</BreadcrumbsItem>
-  <BreadcrumbsItem href="/">Documents</BreadcrumbsItem>
-  <BreadcrumbsItem href="/">Add Document</BreadcrumbsItem>
-</Breadcrumbs>`}
+              code={`<Breadcrumb>
+  <BreadcrumbItem href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem href="/">Documents</BreadcrumbItem>
+  <BreadcrumbItem href="/">Add Document</BreadcrumbItem>
+</Breadcrumb>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -74,8 +74,8 @@ export default function BreadcrumbShowcase() {
         <ShowcaseSection id="with-icons" title="With Icons">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Breadcrumbs>
-                <BreadcrumbsItem href={ROUTES.HOME}>
+              <Breadcrumb>
+                <BreadcrumbItem href={ROUTES.HOME}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -90,8 +90,8 @@ export default function BreadcrumbShowcase() {
                     />
                   </svg>
                   Home
-                </BreadcrumbsItem>
-                <BreadcrumbsItem href={ROUTES.HOME}>
+                </BreadcrumbItem>
+                <BreadcrumbItem href={ROUTES.HOME}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -106,8 +106,8 @@ export default function BreadcrumbShowcase() {
                     />
                   </svg>
                   Documents
-                </BreadcrumbsItem>
-                <BreadcrumbsItem href={ROUTES.HOME}>
+                </BreadcrumbItem>
+                <BreadcrumbItem href={ROUTES.HOME}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -122,30 +122,30 @@ export default function BreadcrumbShowcase() {
                     />
                   </svg>
                   Add Document
-                </BreadcrumbsItem>
-              </Breadcrumbs>
+                </BreadcrumbItem>
+              </Breadcrumb>
             </Flex>
             <CodeBlock
-              code={`<Breadcrumbs>
-  <BreadcrumbsItem href="/">
+              code={`<Breadcrumb>
+  <BreadcrumbItem href="/">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-2 stroke-current">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
     </svg>
     Home
-  </BreadcrumbsItem>
-  <BreadcrumbsItem href="/">
+  </BreadcrumbItem>
+  <BreadcrumbItem href="/">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-2 stroke-current">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
     </svg>
     Documents
-  </BreadcrumbsItem>
-  <BreadcrumbsItem href="/">
+  </BreadcrumbItem>
+  <BreadcrumbItem href="/">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-2 stroke-current">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2} d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
     </svg>
     Add Document
-  </BreadcrumbsItem>
-</Breadcrumbs>`}
+  </BreadcrumbItem>
+</Breadcrumb>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -153,22 +153,22 @@ export default function BreadcrumbShowcase() {
         <ShowcaseSection id="max-width" title="With Max Width">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Breadcrumbs class="max-w-xs">
-                <BreadcrumbsItem>Long text 1</BreadcrumbsItem>
-                <BreadcrumbsItem>Long text 2</BreadcrumbsItem>
-                <BreadcrumbsItem>Long text 3</BreadcrumbsItem>
-                <BreadcrumbsItem>Long text 4</BreadcrumbsItem>
-                <BreadcrumbsItem>Long text 5</BreadcrumbsItem>
-              </Breadcrumbs>
+              <Breadcrumb class="max-w-xs">
+                <BreadcrumbItem>Long text 1</BreadcrumbItem>
+                <BreadcrumbItem>Long text 2</BreadcrumbItem>
+                <BreadcrumbItem>Long text 3</BreadcrumbItem>
+                <BreadcrumbItem>Long text 4</BreadcrumbItem>
+                <BreadcrumbItem>Long text 5</BreadcrumbItem>
+              </Breadcrumb>
             </Flex>
             <CodeBlock
-              code={`<Breadcrumbs class="max-w-xs">
-  <BreadcrumbsItem>Long text 1</BreadcrumbsItem>
-  <BreadcrumbsItem>Long text 2</BreadcrumbsItem>
-  <BreadcrumbsItem>Long text 3</BreadcrumbsItem>
-  <BreadcrumbsItem>Long text 4</BreadcrumbsItem>
-  <BreadcrumbsItem>Long text 5</BreadcrumbsItem>
-</Breadcrumbs>`}
+              code={`<Breadcrumb class="max-w-xs">
+  <BreadcrumbItem>Long text 1</BreadcrumbItem>
+  <BreadcrumbItem>Long text 2</BreadcrumbItem>
+  <BreadcrumbItem>Long text 3</BreadcrumbItem>
+  <BreadcrumbItem>Long text 4</BreadcrumbItem>
+  <BreadcrumbItem>Long text 5</BreadcrumbItem>
+</Breadcrumb>`}
             />
           </Flex>
         </ShowcaseSection>

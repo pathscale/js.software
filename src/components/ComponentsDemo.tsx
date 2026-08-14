@@ -1,38 +1,6 @@
 import { createSignal } from "solid-js";
-import {
-  Button,
-  Card,
-  Alert,
-  Input,
-  Flex,
-  Checkbox,
-  Tag,
-  Avatar,
-  Menu,
-  Tabs,
-  Toggle,
-  ChatBubble,
-  Table,
-  Navbar,
-  Breadcrumbs,
-  BreadcrumbsItem,
-  Drawer,
-  Modal,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-  Select,
-  Dropdown,
-  Skeleton,
-  Form,
-  Join,
-  Radio,
-  Icon,
-  Pagination,
-  ProgressBar,
-  Slider,
-  Spinner,
-} from "@pathscale/ui";
+import { Button, Card, Alert, Input, Flex, Checkbox, Chip, Avatar, Tabs, Switch, ChatBubble, Table, Navbar, Breadcrumb, BreadcrumbItem, Drawer, Dialog, Tooltip, TooltipTrigger, TooltipContent, Select, Dropdown, Skeleton, Form, Radio, Icon, Pagination, Progress, Slider, Spinner } from "@pathscale/ui";
+import { Menu, Join } from "@pathscale/ui/lab";
 import { ROUTES } from "../config/routes";
 
 export default function ComponentsDemo() {
@@ -46,7 +14,7 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex justify="between" align="center">
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--filter-variant]" width={16} height={16} />
+                <Icon src="mdi--filter-variant" width={16} height={16} />
                 <span class="font-semibold">Filters</span>
               </Flex>
               <Button variant="ghost" size="sm">
@@ -54,8 +22,8 @@ export default function ComponentsDemo() {
               </Button>
             </Flex>
             <Flex gap="sm" class="mt-3 flex-wrap">
-              <Tag>Shoes</Tag>
-              <Tag>Bags</Tag>
+              <Chip>Shoes</Chip>
+              <Chip>Bags</Chip>
             </Flex>
             <Flex direction="col" gap="sm" class="mt-4">
               <Flex justify="between" align="center">
@@ -63,36 +31,36 @@ export default function ComponentsDemo() {
                   <Checkbox />
                   <span class="text-sm">Hoodies</span>
                 </Flex>
-                <Tag size="sm" variant="surface">
+                <Chip size="sm" variant="surface">
                   25
-                </Tag>
+                </Chip>
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Checkbox checked />
                   <span class="text-sm">Bags</span>
                 </Flex>
-                <Tag size="sm" variant="surface">
+                <Chip size="sm" variant="surface">
                   3
-                </Tag>
+                </Chip>
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Checkbox />
                   <span class="text-sm">Shoes</span>
                 </Flex>
-                <Tag size="sm" variant="surface">
+                <Chip size="sm" variant="surface">
                   12
-                </Tag>
+                </Chip>
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Checkbox />
                   <span class="text-sm">Accessories</span>
                 </Flex>
-                <Tag size="sm" variant="surface">
+                <Chip size="sm" variant="surface">
                   4
-                </Tag>
+                </Chip>
               </Flex>
             </Flex>
           </Card.Body>
@@ -101,7 +69,7 @@ export default function ComponentsDemo() {
         <Card class="bg-base-100">
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-3">
-              <Icon name="icon-[mdi--calendar]" width={16} height={16} />
+              <Icon src="mdi--calendar" width={16} height={16} />
               <span class="font-semibold">Calendar</span>
             </Flex>
             <Flex direction="col" gap="md">
@@ -151,20 +119,20 @@ export default function ComponentsDemo() {
               </Flex>
               <Input
                 placeholder="Search events..."
-                startIcon={<Icon name="icon-[mdi--magnify]" width={16} height={16} />}
+                startIcon={<Icon src="mdi--magnify" width={16} height={16} />}
                 size="sm"
               />
               <Flex justify="between" align="center">
                 <span class="text-sm">Show all day events</span>
-                <Toggle size="sm" />
+                <Switch size="sm" />
               </Flex>
               <Card class="mt-2">
                 <Card.Body class="p-2">
                   <Flex justify="between" align="center">
                     <span class="text-sm font-medium">Team meeting</span>
-                    <Tag size="sm">
+                    <Chip size="sm">
                       2h
-                    </Tag>
+                    </Chip>
                   </Flex>
                 </Card.Body>
               </Card>
@@ -195,7 +163,7 @@ export default function ComponentsDemo() {
         <Card class="bg-base-100">
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-2">
-              <Icon name="icon-[mdi--currency-usd]" width={16} height={16} />
+              <Icon src="mdi--currency-usd" width={16} height={16} />
               <span class="font-semibold">Price Range</span>
             </Flex>
             <Slider value={25} min={0} max={100} step={25} onChange={() => {}} />
@@ -227,7 +195,7 @@ export default function ComponentsDemo() {
                 91<span class="text-sm">/100</span>
               </span>
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--shield-check]" width={16} height={16} class="text-success" />
+                <Icon src="mdi--shield-check" width={16} height={16} class="text-success" />
                 <span class="text-xs">All good</span>
               </Flex>
             </Flex>
@@ -239,27 +207,27 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1234</span>
-                <Tag size="sm">
+                <Chip size="sm">
                   Sent
-                </Tag>
+                </Chip>
               </Flex>
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1235</span>
-                <Tag size="sm">
+                <Chip size="sm">
                   Failed
-                </Tag>
+                </Chip>
               </Flex>
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1236</span>
-                <Tag size="sm">
+                <Chip size="sm">
                   In progress
-                </Tag>
+                </Chip>
               </Flex>
               <Flex justify="between" align="center">
                 <span class="text-sm">Order #1237</span>
-                <Tag size="sm">
+                <Chip size="sm">
                   Completed
-                </Tag>
+                </Chip>
               </Flex>
             </Flex>
           </Card.Body>
@@ -269,7 +237,7 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-2">
               <span class="text-sm font-medium">Monthly Revenue</span>
-              <Icon name="icon-[mdi--trending-up]" width={16} height={16} class="text-success" />
+              <Icon src="mdi--trending-up" width={16} height={16} class="text-success" />
             </Flex>
             <Flex direction="col">
               <span class="text-2xl font-bold">$12,450</span>
@@ -300,14 +268,14 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex align="center" gap="sm" class="mb-3">
               <Avatar size="sm">
-                <Icon name="icon-[mdi--package-variant]" width={16} height={16} />
+                <Icon src="mdi--package-variant" width={16} height={16} />
               </Avatar>
               <Flex direction="col">
                 <span class="font-medium text-sm">Premium Product</span>
                 <span class="text-xs opacity-60">In Stock</span>
               </Flex>
             </Flex>
-            <ProgressBar value={75} />
+            <Progress value={75} />
             <Flex justify="between" align="center" class="mt-2">
               <span class="text-xs">75% sold</span>
               <span class="font-bold text-primary">$99.99</span>
@@ -348,21 +316,21 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex direction="col" gap="sm" class="mt-3">
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--check-circle]" width={16} height={16} class="text-success" />
+                <Icon src="mdi--check-circle" width={16} height={16} class="text-success" />
                 <Flex direction="col">
                   <span class="text-sm font-medium">9:00 — Project Started</span>
                   <span class="text-xs opacity-60">Initial setup completed</span>
                 </Flex>
               </Flex>
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--check-circle]" width={16} height={16} class="text-success" />
+                <Icon src="mdi--check-circle" width={16} height={16} class="text-success" />
                 <Flex direction="col">
                   <span class="text-sm font-medium">11:00 — Development Phase</span>
                   <span class="text-xs opacity-60">Core features implemented</span>
                 </Flex>
               </Flex>
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--clock-outline]" width={16} height={16} class="text-warning" />
+                <Icon src="mdi--clock-outline" width={16} height={16} class="text-warning" />
                 <Flex direction="col">
                   <span class="text-sm font-medium">15:00 — Testing Phase</span>
                   <span class="text-xs opacity-60">In progress...</span>
@@ -388,15 +356,15 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex direction="col" gap="sm" class="mt-3">
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi--check]" width={16} height={16} class="text-success" />
+                  <Icon src="mdi--check" width={16} height={16} class="text-success" />
                   <span class="text-sm">Unlimited projects</span>
                 </Flex>
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi--check]" width={16} height={16} class="text-success" />
+                  <Icon src="mdi--check" width={16} height={16} class="text-success" />
                   <span class="text-sm">Priority support</span>
                 </Flex>
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi--close]" width={16} height={16} class="text-error" />
+                  <Icon src="mdi--close" width={16} height={16} class="text-error" />
                   <span class="text-sm opacity-50">Advanced analytics</span>
                 </Flex>
               </Flex>
@@ -428,14 +396,14 @@ export default function ComponentsDemo() {
                         </Flex>
                       </Table.Cell>
                       <Table.Cell>
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Admin
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                       <Table.Cell>
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Active
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                     </Table.Row>
                     <Table.Row>
@@ -448,14 +416,14 @@ export default function ComponentsDemo() {
                         </Flex>
                       </Table.Cell>
                       <Table.Cell>
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Editor
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                       <Table.Cell>
-                        <Tag size="sm">
+                        <Chip size="sm">
                           Away
-                        </Tag>
+                        </Chip>
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>
@@ -471,27 +439,27 @@ export default function ComponentsDemo() {
               <Button size="sm" onClick={() => setModalOpen(true)}>
                 Open Dialog
               </Button>
-              <Modal
-                isOpen={modalOpen()}
+              <Dialog
+                open={modalOpen()}
                 onOpenChange={setModalOpen}
                 backdrop="opaque"
                 placement="center"
                 shouldCloseOnEsc
                 shouldCloseOnBackdropClick
               >
-                <Modal.Content>
-                  <Modal.Header class="font-bold">Confirmation</Modal.Header>
-                  <Modal.Body>Are you sure you want to continue?</Modal.Body>
-                  <Modal.Footer>
+                <Dialog.Content>
+                  <Dialog.Header class="font-bold">Confirmation</Dialog.Header>
+                  <Dialog.Body>Are you sure you want to continue?</Dialog.Body>
+                  <Dialog.Footer>
                     <Flex gap="sm" class="mt-2">
                       <Button onClick={() => setModalOpen(false)}>Cancel</Button>
                       <Button variant="primary" onClick={() => setModalOpen(false)}>
                         Confirm
                       </Button>
                     </Flex>
-                  </Modal.Footer>
-                </Modal.Content>
-              </Modal>
+                  </Dialog.Footer>
+                </Dialog.Content>
+              </Dialog>
             </Flex>
           </Card.Body>
         </Card>
@@ -509,16 +477,16 @@ export default function ComponentsDemo() {
                   <TooltipContent>Click to expand</TooltipContent>
                 </Tooltip>
                 <Flex align="center" gap="sm">
-                  <Tag size="sm">
+                  <Chip size="sm">
                     3
-                  </Tag>
+                  </Chip>
                   <Button size="sm" variant="outline" isIconOnly>
-                    <Icon name="icon-[mdi--bell]" width={16} height={16} />
+                    <Icon src="mdi--bell" width={16} height={16} />
                   </Button>
                 </Flex>
               </Flex>
               <Flex gap="sm">
-                <Toggle />
+                <Switch />
                 <span class="text-sm">Theme Toggle</span>
               </Flex>
             </Flex>
@@ -544,20 +512,20 @@ export default function ComponentsDemo() {
                   <ChatBubble.Time>12:46</ChatBubble.Time>
                 </ChatBubble.Header>
                 <ChatBubble.Avatar fallback="ME" size="sm" />
-                <ChatBubble.Message color="primary">
+                <ChatBubble.Message flavor="primary">
                   I'm doing great! Thanks for asking.
                 </ChatBubble.Message>
               </ChatBubble>
             </Flex>
             <Flex gap="sm" class="mt-4 justify-center">
               <Button size="sm" variant="outline" isIconOnly>
-                <Icon name="icon-[mdi--phone]" width={16} height={16} />
+                <Icon src="mdi--phone" width={16} height={16} />
               </Button>
               <Button size="sm" variant="outline" isIconOnly>
-                <Icon name="icon-[mdi--message]" width={16} height={16} />
+                <Icon src="mdi--message" width={16} height={16} />
               </Button>
               <Button size="sm" variant="outline" isIconOnly>
-                <Icon name="icon-[mdi--cog]" width={16} height={16} />
+                <Icon src="mdi--cog" width={16} height={16} />
               </Button>
             </Flex>
           </Card.Body>
@@ -569,51 +537,51 @@ export default function ComponentsDemo() {
               <Menu.Item id="database">
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
-                    <Icon name="icon-[mdi--database]" width={16} height={16} />
+                    <Icon src="mdi--database" width={16} height={16} />
                     <span>Database</span>
                   </Flex>
-                  <Tag size="sm">
+                  <Chip size="sm">
                     2
-                  </Tag>
+                  </Chip>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="products">
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
-                    <Icon name="icon-[mdi--package-variant]" width={16} height={16} />
+                    <Icon src="mdi--package-variant" width={16} height={16} />
                     <span>Products</span>
                   </Flex>
-                  <Tag size="sm">
+                  <Chip size="sm">
                     12
-                  </Tag>
+                  </Chip>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="messages">
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
-                    <Icon name="icon-[mdi--message-text]" width={16} height={16} />
+                    <Icon src="mdi--message-text" width={16} height={16} />
                     <span>Messages</span>
                   </Flex>
-                  <Tag size="sm">
+                  <Chip size="sm">
                     5
-                  </Tag>
+                  </Chip>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="tokens">
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi--key]" width={16} height={16} />
+                  <Icon src="mdi--key" width={16} height={16} />
                   <span>Access Tokens</span>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="users">
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi--account-group]" width={16} height={16} />
+                  <Icon src="mdi--account-group" width={16} height={16} />
                   <span>Users</span>
                 </Flex>
               </Menu.Item>
               <Menu.Item id="settings">
                 <Flex align="center" gap="sm">
-                  <Icon name="icon-[mdi--cog]" width={16} height={16} />
+                  <Icon src="mdi--cog" width={16} height={16} />
                   <span>Settings</span>
                 </Flex>
               </Menu.Item>
@@ -627,24 +595,24 @@ export default function ComponentsDemo() {
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
                   <Button size="sm" isIconOnly>
-                    <Icon name="icon-[mdi--skip-previous]" width={16} height={16} />
+                    <Icon src="mdi--skip-previous" width={16} height={16} />
                   </Button>
                   <Button size="sm" isIconOnly variant="primary">
-                    <Icon name="icon-[mdi--play]" width={16} height={16} />
+                    <Icon src="mdi--play" width={16} height={16} />
                   </Button>
                   <Button size="sm" isIconOnly>
-                    <Icon name="icon-[mdi--skip-next]" width={16} height={16} />
+                    <Icon src="mdi--skip-next" width={16} height={16} />
                   </Button>
                 </Flex>
                 <Button size="sm" variant="outline">
-                  <Icon name="icon-[mdi--volume-high]" width={16} height={16} />
+                  <Icon src="mdi--volume-high" width={16} height={16} />
                 </Button>
               </Flex>
               <Flex direction="col">
                 <span class="font-medium text-sm">Song Title</span>
                 <span class="text-xs opacity-60">Artist Name</span>
               </Flex>
-              <ProgressBar value={45} />
+              <Progress value={45} />
               <Flex justify="between" class="text-xs opacity-60">
                 <span>2:34</span>
                 <span>5:55</span>
@@ -668,7 +636,7 @@ export default function ComponentsDemo() {
                 <Dropdown>
                   <Dropdown.Trigger>
                     <Button variant="ghost" isIconOnly size="sm">
-                      <Icon name="icon-[mdi--menu]" width={16} height={16} />
+                      <Icon src="mdi--menu" width={16} height={16} />
                     </Button>
                   </Dropdown.Trigger>
                   <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1]">
@@ -683,7 +651,7 @@ export default function ComponentsDemo() {
               </Navbar.Center>
               <Navbar.End>
                 <Button variant="ghost" isIconOnly size="sm">
-                  <Icon name="icon-[mdi--account]" width={16} height={16} />
+                  <Icon src="mdi--account" width={16} height={16} />
                 </Button>
               </Navbar.End>
             </Navbar>
@@ -694,19 +662,19 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex direction="col" gap="sm">
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--check-circle]" width={16} height={16} class="text-success" />
+                <Icon src="mdi--check-circle" width={16} height={16} class="text-success" />
                 <span class="text-sm">Account Created</span>
               </Flex>
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--check-circle]" width={16} height={16} class="text-success" />
+                <Icon src="mdi--check-circle" width={16} height={16} class="text-success" />
                 <span class="text-sm">Email Verified</span>
               </Flex>
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--clock-outline]" width={16} height={16} class="text-warning" />
+                <Icon src="mdi--clock-outline" width={16} height={16} class="text-warning" />
                 <span class="text-sm">Profile Setup</span>
               </Flex>
               <Flex align="center" gap="sm">
-                <Icon name="icon-[mdi--circle-outline]" width={16} height={16} class="opacity-60" />
+                <Icon src="mdi--circle-outline" width={16} height={16} class="opacity-60" />
                 <span class="text-sm opacity-60">Payment Added</span>
               </Flex>
             </Flex>
@@ -734,7 +702,7 @@ export default function ComponentsDemo() {
                   size="sm"
                 />
                 <Button class="join-item" size="sm" variant="primary">
-                  <Icon name="icon-[mdi--magnify]" width={16} height={16} />
+                  <Icon src="mdi--magnify" width={16} height={16} />
                 </Button>
               </Join>
             </Flex>
@@ -756,11 +724,11 @@ export default function ComponentsDemo() {
               <Form>
                 <span class="text-sm font-medium">Rate your experience</span>
                 <Flex gap="sm">
-                  <Icon name="icon-[mdi--star]" width={16} height={16} class="text-warning" />
-                  <Icon name="icon-[mdi--star]" width={16} height={16} class="text-warning" />
-                  <Icon name="icon-[mdi--star]" width={16} height={16} class="text-warning" />
-                  <Icon name="icon-[mdi--star]" width={16} height={16} class="text-warning" />
-                  <Icon name="icon-[mdi--star-outline]" width={16} height={16} />
+                  <Icon src="mdi--star" width={16} height={16} class="text-warning" />
+                  <Icon src="mdi--star" width={16} height={16} class="text-warning" />
+                  <Icon src="mdi--star" width={16} height={16} class="text-warning" />
+                  <Icon src="mdi--star" width={16} height={16} class="text-warning" />
+                  <Icon src="mdi--star-outline" width={16} height={16} />
                 </Flex>
               </Form>
               <Flex gap="sm" class="mt-2">
@@ -776,11 +744,11 @@ export default function ComponentsDemo() {
 
         <Card class="bg-base-100">
           <Card.Body>
-            <Breadcrumbs>
-              <BreadcrumbsItem href={ROUTES.HOME}>Home</BreadcrumbsItem>
-              <BreadcrumbsItem href="/products">Products</BreadcrumbsItem>
-              <BreadcrumbsItem isCurrent>Details</BreadcrumbsItem>
-            </Breadcrumbs>
+            <Breadcrumb>
+              <BreadcrumbItem href={ROUTES.HOME}>Home</BreadcrumbItem>
+              <BreadcrumbItem href="/products">Products</BreadcrumbItem>
+              <BreadcrumbItem isCurrent>Details</BreadcrumbItem>
+            </Breadcrumb>
             <div class="my-3 border-t opacity-20" />
             <Pagination page={page()} total={3} onChange={setPage} />
           </Card.Body>

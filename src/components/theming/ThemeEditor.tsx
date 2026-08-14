@@ -1,5 +1,5 @@
 import { For, createSignal } from "solid-js";
-import { Grid, Icon, Button, Dropdown, Toggle } from "@pathscale/ui";
+import { Grid, Icon, Button, Dropdown, Switch } from "@pathscale/ui";
 import { Theme, COLOR_GROUPS } from "../../utils/themeUtils";
 import ColorGroup from "./ColorGroup";
 import RadiusSection from "./RadiusSection";
@@ -30,11 +30,11 @@ export default function ThemeEditor(props: ThemeEditorProps) {
     >
       <Grid cols="2" gap="sm" class="w-full">
         <Button onClick={props.onRandomizeTheme}>
-          <Icon name="icon-[mdi--dice]" width={16} height={16} class="group-active:scale-95" />
+          <Icon src="mdi--dice" width={16} height={16} class="group-active:scale-95" />
           Random
         </Button>
         <Button variant="secondary" onClick={() => props.onExportCSS(isDefault(), isPrefersDark(), colorScheme())}>
-          <Icon name="icon-[mdi--code-braces]" width={16} height={16} />
+          <Icon src="mdi--code-braces" width={16} height={16} />
           CSS
         </Button>
       </Grid>
@@ -42,7 +42,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       <div class="flex flex-col gap-2 w-full">
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Apply to whole site</span>
-          <Toggle 
+          <Switch 
             size="sm"
             checked={applyToWholeSite()}
             onChange={(e: any) => setApplyToWholeSite(e.currentTarget.checked)}
@@ -51,7 +51,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Remember this theme</span>
-          <Toggle 
+          <Switch 
             size="sm"
             checked={rememberTheme()}
             onChange={(e: any) => setRememberTheme(e.currentTarget.checked)}
@@ -61,7 +61,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
 
       <h3 class="divider divider-start text-xs">
         <span class="flex gap-1.5">
-          <Icon name="icon-[mdi--palette-outline]" width={16} height={16} class="opacity-40" />
+          <Icon src="mdi--palette-outline" width={16} height={16} class="opacity-40" />
           Change Colors
         </span>
       </h3>
@@ -100,7 +100,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       
       <h3 class="divider divider-start text-xs">
         <span class="flex gap-1.5">
-          <Icon name="icon-[mdi--cog]" width={16} height={16} class="opacity-40" />
+          <Icon src="mdi--cog" width={16} height={16} class="opacity-40" />
           Options
         </span>
       </h3>
@@ -108,7 +108,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       <div class="flex flex-col gap-3">
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Default theme</span>
-          <Toggle 
+          <Switch 
             size="sm"
             checked={isDefault()}
             onChange={(e: any) => setIsDefault(e.currentTarget.checked)}
@@ -117,7 +117,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Default dark theme</span>
-          <Toggle 
+          <Switch 
             size="sm"
             checked={isPrefersDark()}
             onChange={(e: any) => setIsPrefersDark(e.currentTarget.checked)}
@@ -126,7 +126,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         
         <div class="flex items-center justify-between gap-2">
           <span class="text-base-content/60 text-xs">Dark color scheme</span>
-          <Toggle 
+          <Switch 
             size="sm"
             checked={colorScheme() === "dark"}
             onChange={(e: any) => setColorScheme(e.currentTarget.checked ? "dark" : "light")}

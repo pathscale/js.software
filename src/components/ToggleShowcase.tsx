@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Toggle, Flex } from "@pathscale/ui";
+import { Switch, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -79,12 +79,12 @@ export default function ToggleShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Toggle />
-              <Toggle checked />
+              <Switch />
+              <Switch checked />
             </Flex>
             <CodeBlock
-              code={`<Toggle />
-<Toggle checked />`}
+              code={`<Switch />
+<Switch checked />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -92,18 +92,18 @@ export default function ToggleShowcase() {
         <ShowcaseSection id="colors" title="Colors">
           <Flex direction="col" gap="md">
             <Flex wrap="wrap" align="start" justify="start" gap="lg">
-              <Toggle color="default" checked />
-              <Toggle color="accent" checked />
-              <Toggle color="success" checked />
-              <Toggle color="warning" checked />
-              <Toggle color="danger" checked />
+              <Switch flavor="neutral" checked />
+              <Switch flavor="accent" checked />
+              <Switch flavor="success" checked />
+              <Switch flavor="warning" checked />
+              <Switch flavor="destructive" checked />
             </Flex>
             <CodeBlock
-              code={`<Toggle color="default" checked />
-<Toggle color="accent" checked />
-<Toggle color="success" checked />
-<Toggle color="warning" checked />
-<Toggle color="danger" checked />`}
+              code={`<Switch flavor="neutral" checked />
+<Switch flavor="accent" checked />
+<Switch flavor="success" checked />
+<Switch flavor="warning" checked />
+<Switch flavor="destructive" checked />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -111,14 +111,14 @@ export default function ToggleShowcase() {
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Toggle size="sm" />
-              <Toggle size="md" />
-              <Toggle size="lg" />
+              <Switch size="sm" />
+              <Switch size="md" />
+              <Switch size="lg" />
             </Flex>
             <CodeBlock
-              code={`<Toggle size="sm" />
-<Toggle size="md" />
-<Toggle size="lg" />`}
+              code={`<Switch size="sm" />
+<Switch size="md" />
+<Switch size="lg" />`}
             />
           </Flex>
         </ShowcaseSection>
@@ -126,12 +126,12 @@ export default function ToggleShowcase() {
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
             <Flex align="start" justify="start" gap="lg">
-              <Toggle disabled />
-              <Toggle disabled checked />
+              <Switch disabled />
+              <Switch disabled checked />
             </Flex>
             <CodeBlock
-              code={`<Toggle disabled />
-<Toggle disabled checked />`}
+              code={`<Switch disabled />
+<Switch disabled checked />`}
             />
           </Flex>
         </ShowcaseSection>

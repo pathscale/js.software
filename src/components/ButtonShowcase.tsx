@@ -16,8 +16,8 @@ const buttonProps = [
 ];
 
 export default function ButtonShowcase() {
-  const startIcon = <Icon name="icon-[mdi--arrow-left]" width={18} height={18} />;
-  const endIcon = <Icon name="icon-[mdi--arrow-right]" width={18} height={18} />;
+  const startIcon = <Icon src="mdi--arrow-left" width={18} height={18} />;
+  const endIcon = <Icon src="mdi--arrow-right" width={18} height={18} />;
 
   return (
     <ShowcaseLayout>
@@ -53,22 +53,22 @@ export default function ButtonShowcase() {
             <Button variant="outline" startIcon={startIcon}>Previous</Button>
             <Button variant="primary" endIcon={endIcon}>Continue</Button>
             <Button variant="ghost" isIconOnly aria-label="Settings">
-              <Icon name="icon-[mdi--cog]" width={20} height={20} />
+              <Icon src="mdi--cog" width={20} height={20} />
             </Button>
           </Flex>
-          <CodeBlock code={`<Button startIcon={<Icon name="icon-[mdi--arrow-left]" />}>Previous</Button>
-<Button endIcon={<Icon name="icon-[mdi--arrow-right]" />}>Continue</Button>
-<Button isIconOnly aria-label="Settings"><Icon name="icon-[mdi--cog]" /></Button>`} />
+          <CodeBlock code={`<Button startIcon={<Icon src="mdi--arrow-left" />}>Previous</Button>
+<Button endIcon={<Icon src="mdi--arrow-right" />}>Continue</Button>
+<Button isIconOnly aria-label="Settings"><Icon src="mdi--cog" /></Button>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="states" title="States">
           <Flex gap="md" align="center" wrap="wrap">
             <Button isPending>Saving</Button>
-            <Button isDisabled>Unavailable</Button>
+            <Button state="disabled">Unavailable</Button>
             <Button variant="outline" aria-pressed="true">Pressed</Button>
           </Flex>
           <CodeBlock code={`<Button isPending>Saving</Button>
-<Button isDisabled>Unavailable</Button>
+<Button state="disabled">Unavailable</Button>
 <Button variant="outline" aria-pressed={selected()}>Selected</Button>`} />
         </ShowcaseSection>
 

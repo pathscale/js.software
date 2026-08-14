@@ -30,7 +30,7 @@ const DocsIndex: Component = () => {
           consistent and delightful development experience.
         </p>
 
-        <Callout type="info" title="Prerequisites" className="mb-6">
+        <Callout type="info" title="Prerequisites" class="mb-6">
           Before getting started, ensure you have a SolidJS project with
           TailwindCSS configured. New to the setup? Check out our{" "}
           <a
@@ -52,9 +52,9 @@ const DocsIndex: Component = () => {
         </p>
 
         <CodeBlock code={`npm install @pathscale/ui solid-layouts
-npm install --save-dev rsbuild-plugin-solid-layouts`} language="bash" copyable={true} className="mb-6" />
+npm install --save-dev rsbuild-plugin-solid-layouts`} language="bash" copyable={true} class="mb-6" />
         
-        <Callout type="info" title="Complete Setup Guide" className="mb-6">
+        <Callout type="info" title="Complete Setup Guide" class="mb-6">
           For detailed installation instructions, prerequisites, and configuration steps, 
           check out our comprehensive{" "}
           <a
@@ -99,7 +99,7 @@ function App() {
           language="tsx"
         />
 
-        <Callout type="success" title="That's it!" className="mb-6">
+        <Callout type="success" title="That's it!" class="mb-6">
           You're now ready to build amazing UIs with @pathscale/ui. The
           components come with built-in styling, accessibility features, and
           TypeScript support.

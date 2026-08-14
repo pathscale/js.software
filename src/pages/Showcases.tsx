@@ -1,6 +1,6 @@
 import { Component, For } from "solid-js";
 import { ContentContainer } from "../components/content/ContentContainer";
-import { Tag, Flex, GlassPanel, Grid } from "@pathscale/ui";
+import { Chip, Flex, GlassPanel, Grid } from "@pathscale/ui";
 import { routes } from "../routes";
 import { ROUTES } from "../config/routes";
 
@@ -39,7 +39,7 @@ const Showcases: Component = () => {
 
   return (
     <ContentContainer maxWidth="2xl" prose={false}>
-      <GlassPanel size="lg" tone="secondary" highlight>
+      <GlassPanel size="lg" flavor="secondary" highlight>
         <div class="text-center">
           <h1 class="text-5xl font-bold mb-6">Component Showcases</h1>
           <p class="text-xl text-base-content/70 mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -48,15 +48,15 @@ const Showcases: Component = () => {
           </p>
 
           <Flex gap="md" justify="center" wrap="wrap" class="mb-8">
-            <Tag class="px-4 py-2">
+            <Chip class="px-4 py-2">
               {showcaseRoutes.length} Interactive Demos
-            </Tag>
-            <Tag class="px-4 py-2">
+            </Chip>
+            <Chip class="px-4 py-2">
               Live Code Examples
-            </Tag>
-            <Tag class="px-4 py-2">
+            </Chip>
+            <Chip class="px-4 py-2">
               Copy & Paste Ready
-            </Tag>
+            </Chip>
           </Flex>
         </div>
       </GlassPanel>
@@ -72,7 +72,7 @@ const Showcases: Component = () => {
           <For each={featuredRoutes}>
             {(route) => (
               <a href={route.path} class="block">
-                <GlassPanel size="md" tone="secondary" highlight interactive>
+                <GlassPanel size="md" flavor="secondary" highlight interactive>
                   <div>
                     <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
                       {route.name}
@@ -102,7 +102,7 @@ const Showcases: Component = () => {
           <For each={otherRoutes}>
             {(route) => (
               <a href={route.path} class="block">
-                <GlassPanel size="md" tone="secondary" interactive>
+                <GlassPanel size="md" flavor="secondary" interactive>
                   <div>
                     <h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
                       {route.name}

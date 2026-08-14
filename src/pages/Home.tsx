@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Flex, GlassPanel, Tag } from "@pathscale/ui";
+import { Flex, GlassPanel, Chip } from "@pathscale/ui";
 import { ContentContainer } from "../components/content/ContentContainer";
 import {
   HiOutlineShieldCheck,
@@ -14,13 +14,13 @@ const Home: Component = () => {
     <div>
       <div class="min-h-[80vh] bg-gradient-to-br from-primary to-base-200 flex items-center justify-center">
         <div class="w-full">
-          <ContentContainer maxWidth="xl" prose={false} className="text-center">
-            <GlassPanel size="lg" tone="secondary" highlight>
+          <ContentContainer maxWidth="xl" prose={false} class="text-center">
+            <GlassPanel size="lg" flavor="secondary" highlight>
               <div class="mb-8">
-                <Tag class="mb-6 px-4 py-2">
+                <Chip class="mb-6 px-4 py-2">
                   <HiOutlineShieldCheck class="w-4 h-4 mr-2" />
                   SolidJS components powered by Solid Layouts
-                </Tag>
+                </Chip>
               </div>
 
               <h1 class="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
@@ -87,7 +87,7 @@ const Home: Component = () => {
         </div>
 
         <div class="grid gap-8 md:grid-cols-3 mb-24">
-          <GlassPanel size="lg" tone="secondary" highlight interactive>
+          <GlassPanel size="lg" flavor="secondary" highlight interactive>
             <div class="text-center">
               <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineBolt class="w-8 h-8 text-white" />
@@ -101,7 +101,7 @@ const Home: Component = () => {
             </div>
           </GlassPanel>
 
-          <GlassPanel size="lg" tone="secondary" highlight interactive>
+          <GlassPanel size="lg" flavor="secondary" highlight interactive>
             <div class="text-center">
               <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineCheckCircle class="w-8 h-8 text-white" />
@@ -115,7 +115,7 @@ const Home: Component = () => {
             </div>
           </GlassPanel>
 
-          <GlassPanel size="lg" tone="secondary" highlight interactive>
+          <GlassPanel size="lg" flavor="secondary" highlight interactive>
             <div class="text-center">
               <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineHeart class="w-8 h-8 text-white" />
@@ -138,7 +138,7 @@ const Home: Component = () => {
           </p>
 
           <div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto mb-12">
-            <GlassPanel size="md" tone="secondary" highlight interactive>
+            <GlassPanel size="md" flavor="secondary" highlight interactive>
               <h3 class="font-bold text-lg mb-3 text-primary">
                 Visual Testing
               </h3>
@@ -147,7 +147,7 @@ const Home: Component = () => {
                 components
               </p>
             </GlassPanel>
-            <GlassPanel size="md" tone="secondary" highlight interactive>
+            <GlassPanel size="md" flavor="secondary" highlight interactive>
               <h3 class="font-bold text-lg mb-3 text-secondary">
                 Accessibility
               </h3>
@@ -156,7 +156,7 @@ const Home: Component = () => {
                 reader support
               </p>
             </GlassPanel>
-            <GlassPanel size="md" tone="secondary" highlight interactive>
+            <GlassPanel size="md" flavor="secondary" highlight interactive>
               <h3 class="font-bold text-lg mb-3 text-accent">Interactive</h3>
               <p class="text-base-content/70">
                 Rich interactions and animations built-in, no external
@@ -170,7 +170,7 @@ const Home: Component = () => {
           </a>
         </div>
 
-        <GlassPanel size="lg" tone="secondary" highlight>
+        <GlassPanel size="lg" flavor="secondary" highlight>
           <div class="text-center py-16">
             <h2 class="text-4xl lg:text-5xl font-bold mb-6">
               Start building amazing UIs today

@@ -1,14 +1,6 @@
 import { createSignal, For } from "solid-js";
-import {
-  ColorPicker,
-  ColorArea,
-  ColorField,
-  ColorSlider,
-  ColorSwatch,
-  ColorSwatchPicker,
-  ColorWheelFlower,
-  Flex,
-} from "@pathscale/ui";
+import { ColorSwatch, Flex } from "@pathscale/ui";
+import { ColorPicker, ColorArea, ColorField, ColorSlider, ColorSwatchPicker, ColorWheelFlower } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -236,10 +228,10 @@ export default function ColorPickerShowcase() {
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
             <div class="rounded-lg border border-base-300 bg-base-100 p-4 max-w-sm">
-              <ColorPicker value={disabledColor()} isDisabled />
+              <ColorPicker value={disabledColor()} state="disabled" />
               <p class="mt-3 text-xs font-mono">{disabledColor()}</p>
             </div>
-            <CodeBlock code={`<ColorPicker value={color()} isDisabled />`} />
+            <CodeBlock code={`<ColorPicker value={color()} state="disabled" />`} />
           </Flex>
         </ShowcaseSection>
 

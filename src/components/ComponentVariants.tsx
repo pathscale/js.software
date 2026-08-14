@@ -1,9 +1,4 @@
-import {
-  Button,
-  Card,
-  Input,
-  Flex,
-} from "@pathscale/ui";
+import { Button, Card, Input, Flex } from "@pathscale/ui";
 
 export default function ComponentVariants() {
   return (
@@ -29,8 +24,8 @@ export default function ComponentVariants() {
           <h5 class="text-lg font-semibold mb-2">Inputs</h5>
           <Flex gap="sm" class="flex-wrap">
             <Input placeholder="Input" class="max-w-32" />
-            <Input placeholder="Invalid" isInvalid class="max-w-32" />
-            <Input placeholder="Disabled" isDisabled class="max-w-32" />
+            <Input placeholder="Invalid" state="invalid" class="max-w-32" />
+            <Input placeholder="Disabled" state="disabled" class="max-w-32" />
             <Input placeholder="Small" size="sm" class="max-w-32" />
             <Input placeholder="Medium" size="md" class="max-w-32" />
             <Input placeholder="Large" size="lg" class="max-w-32" />

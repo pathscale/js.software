@@ -1,5 +1,6 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Kbd, Flex } from "@pathscale/ui";
+import { Flex } from "@pathscale/ui";
+import { Kbd } from "@pathscale/ui/lab";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

@@ -18,7 +18,7 @@ const Usage: Component = () => {
         </p>
       </div>
 
-      <Callout type="info" title="Source of truth" className="mb-12">
+      <Callout type="info" title="Source of truth" class="mb-12">
         This page mirrors{" "}
         <a
           href={EXTERNAL_ROUTES.UI_USAGE_DOC}
@@ -47,7 +47,7 @@ const Usage: Component = () => {
           language="bash"
           code={`bun add @pathscale/ui solid-layouts
 bun add -d rsbuild-plugin-solid-layouts`}
-          className="mb-6"
+          class="mb-6"
         />
         <p class="text-base-content/70 mb-4 max-w-3xl">
           Everything is exported from the root barrel, and one stylesheet brings
@@ -55,12 +55,12 @@ bun add -d rsbuild-plugin-solid-layouts`}
         </p>
         <CodeBlock
           language="typescript"
-          code={`import { Button, Flex, Modal, toast } from "@pathscale/ui";
+          code={`import { Button, Flex, Dialog, toast } from "@pathscale/ui";
 import "@pathscale/ui/index.css";
 
 // rsbuild.config.ts
 pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
-          className="mb-6"
+          class="mb-6"
         />
         <p class="text-base-content/70 max-w-3xl">
           Subpath exports also exist if you need them:{" "}
@@ -86,7 +86,7 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
         <CodeBlock
           language="typescript"
           code={`document.documentElement.setAttribute("data-theme", "dark");`}
-          className="mb-6"
+          class="mb-6"
         />
         <Callout type="note" title="Tokens are not duplicated here">
           The full list of CSS custom properties — colors, surfaces, radii, and
@@ -153,7 +153,7 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
           </li>
           <li>
             • <strong>Compound components</strong> —{" "}
-            <code class="text-sm">Modal.Trigger</code>,{" "}
+            <code class="text-sm">Dialog.Trigger</code>,{" "}
             <code class="text-sm">Tabs.List</code>,{" "}
             <code class="text-sm">Select.Option</code> — are also exported flat
             (<code class="text-sm">AccordionRoot</code>,{" "}
@@ -247,7 +247,7 @@ const form = createForm({
   <FormField name="password" label="Password" inputProps={{ type: "password" }} />
   <FormSubmitButton>Log in</FormSubmitButton>
 </Form>`}
-          className="mb-6"
+          class="mb-6"
         />
         <ul class="space-y-3 text-base-content/70 mb-6 max-w-3xl">
           <li>
@@ -307,7 +307,7 @@ const table = useTableModel({
 
 // render table.getHeaderGroups() / getRowModel().rows into:
 // <Table.Content sortDescriptor={sorting.sortDescriptor()} onSortChange={sorting.setSortDescriptor}>…`}
-          className="mb-6"
+          class="mb-6"
         />
         <ul class="space-y-3 text-base-content/70 mb-6 max-w-3xl">
           <li>
@@ -373,9 +373,9 @@ toast.promise(p, { loading, success, error });`}
         </p>
         <CodeBlock
           language="tsx"
-          code={`<Icon name="icon-[mdi--close]" />
+          code={`<Icon src="mdi--close" />
 <span class="icon-[lucide--search]" />`}
-          className="mb-6"
+          class="mb-6"
         />
         <p class="text-base-content/70 max-w-3xl">
           In the library repository, icons are baked at build time into{" "}

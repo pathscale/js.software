@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Modal, Button, Flex } from "@pathscale/ui";
+import { Dialog, Button, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -154,40 +154,40 @@ export default function ModalShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
               <Button onClick={() => setDefaultOpen(true)}>Open Modal</Button>
-              <Modal
-                isOpen={defaultOpen()}
+              <Dialog
+                open={defaultOpen()}
                 onOpenChange={setDefaultOpen}
                 backdrop="opaque"
                 placement="center"
               >
-                <Modal.Content>
-                  <Modal.Header class="font-bold">Hello!</Modal.Header>
-                  <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-                  <Modal.Footer>
-                    <Modal.CloseTrigger>
+                <Dialog.Content>
+                  <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+                  <Dialog.Body>Press ESC key or click outside to close</Dialog.Body>
+                  <Dialog.Footer>
+                    <Dialog.CloseTrigger>
                       <Button>Close</Button>
-                    </Modal.CloseTrigger>
-                  </Modal.Footer>
-                </Modal.Content>
-              </Modal>
+                    </Dialog.CloseTrigger>
+                  </Dialog.Footer>
+                </Dialog.Content>
+              </Dialog>
             </Flex>
             <CodeBlock
-              code={`<Modal
-  isOpen={open()}
+              code={`<Dialog
+  open={open()}
   onOpenChange={setOpen}
   backdrop="opaque"
   placement="center"
 >
-  <Modal.Content>
-    <Modal.Header class="font-bold">Hello!</Modal.Header>
-    <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-    <Modal.Footer>
-      <Modal.CloseTrigger>
+  <Dialog.Content>
+    <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+    <Dialog.Body>Press ESC key or click outside to close</Dialog.Body>
+    <Dialog.Footer>
+      <Dialog.CloseTrigger>
         <Button>Close</Button>
-      </Modal.CloseTrigger>
-    </Modal.Footer>
-  </Modal.Content>
-</Modal>`}
+      </Dialog.CloseTrigger>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -196,30 +196,30 @@ export default function ModalShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
               <Button onClick={() => setOutsideOpen(true)}>Open Modal</Button>
-              <Modal
-                isOpen={outsideOpen()}
+              <Dialog
+                open={outsideOpen()}
                 onOpenChange={setOutsideOpen}
                 backdrop="opaque"
                 placement="center"
               >
-                <Modal.Content>
-                  <Modal.Header class="font-bold">Hello!</Modal.Header>
-                  <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-                </Modal.Content>
-              </Modal>
+                <Dialog.Content>
+                  <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+                  <Dialog.Body>Press ESC key or click outside to close</Dialog.Body>
+                </Dialog.Content>
+              </Dialog>
             </Flex>
             <CodeBlock
-              code={`<Modal
-  isOpen={open()}
+              code={`<Dialog
+  open={open()}
   onOpenChange={setOpen}
   backdrop="opaque"
   placement="center"
 >
-  <Modal.Content>
-    <Modal.Header class="font-bold">Hello!</Modal.Header>
-    <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-  </Modal.Content>
-</Modal>`}
+  <Dialog.Content>
+    <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+    <Dialog.Body>Press ESC key or click outside to close</Dialog.Body>
+  </Dialog.Content>
+</Dialog>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -230,29 +230,29 @@ export default function ModalShowcase() {
               <Button onClick={() => setCloseButtonOpen(true)}>
                 Open Modal
               </Button>
-              <Modal
-                isOpen={closeButtonOpen()}
+              <Dialog
+                open={closeButtonOpen()}
                 onOpenChange={setCloseButtonOpen}
                 backdrop="opaque"
                 placement="center"
               >
-                <Modal.Content>
-                  <Modal.CloseTrigger class="absolute right-2 top-2" />
-                  <Modal.Header class="font-bold">Hello!</Modal.Header>
-                  <Modal.Body>
+                <Dialog.Content>
+                  <Dialog.CloseTrigger class="absolute right-2 top-2" />
+                  <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+                  <Dialog.Body>
                     Press ESC key or click on X button to close
-                  </Modal.Body>
-                </Modal.Content>
-              </Modal>
+                  </Dialog.Body>
+                </Dialog.Content>
+              </Dialog>
             </Flex>
             <CodeBlock
-              code={`<Modal isOpen={open()} onOpenChange={setOpen} backdrop="opaque" placement="center">
-  <Modal.Content>
-    <Modal.CloseTrigger class="absolute right-2 top-2" />
-    <Modal.Header class="font-bold">Hello!</Modal.Header>
-    <Modal.Body>Press ESC key or click on X button to close</Modal.Body>
-  </Modal.Content>
-</Modal>`}
+              code={`<Dialog open={open()} onOpenChange={setOpen} backdrop="opaque" placement="center">
+  <Dialog.Content>
+    <Dialog.CloseTrigger class="absolute right-2 top-2" />
+    <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+    <Dialog.Body>Press ESC key or click on X button to close</Dialog.Body>
+  </Dialog.Content>
+</Dialog>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -261,83 +261,83 @@ export default function ModalShowcase() {
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start" gap="md">
               <Button onClick={() => setXsModalOpen(true)}>XS Modal</Button>
-              <Modal
-                isOpen={xsModalOpen()}
+              <Dialog
+                open={xsModalOpen()}
                 onOpenChange={setXsModalOpen}
                 backdrop="opaque"
                 placement="center"
                 size="xs"
               >
-                <Modal.Content>
-                  <Modal.Header class="font-bold">XS Modal</Modal.Header>
-                  <Modal.Body>This is an extra small modal</Modal.Body>
-                  <Modal.Footer>
-                    <Modal.CloseTrigger>
+                <Dialog.Content>
+                  <Dialog.Header class="font-bold">XS Modal</Dialog.Header>
+                  <Dialog.Body>This is an extra small modal</Dialog.Body>
+                  <Dialog.Footer>
+                    <Dialog.CloseTrigger>
                       <Button>Close</Button>
-                    </Modal.CloseTrigger>
-                  </Modal.Footer>
-                </Modal.Content>
-              </Modal>
+                    </Dialog.CloseTrigger>
+                  </Dialog.Footer>
+                </Dialog.Content>
+              </Dialog>
 
               <Button onClick={() => setSmModalOpen(true)}>SM Modal</Button>
-              <Modal
-                isOpen={smModalOpen()}
+              <Dialog
+                open={smModalOpen()}
                 onOpenChange={setSmModalOpen}
                 backdrop="opaque"
                 placement="center"
                 size="sm"
               >
-                <Modal.Content>
-                  <Modal.Header class="font-bold">Small Modal</Modal.Header>
-                  <Modal.Body>This is a small modal</Modal.Body>
-                  <Modal.Footer>
-                    <Modal.CloseTrigger>
+                <Dialog.Content>
+                  <Dialog.Header class="font-bold">Small Modal</Dialog.Header>
+                  <Dialog.Body>This is a small modal</Dialog.Body>
+                  <Dialog.Footer>
+                    <Dialog.CloseTrigger>
                       <Button>Close</Button>
-                    </Modal.CloseTrigger>
-                  </Modal.Footer>
-                </Modal.Content>
-              </Modal>
+                    </Dialog.CloseTrigger>
+                  </Dialog.Footer>
+                </Dialog.Content>
+              </Dialog>
 
               <Button onClick={() => setLgModalOpen(true)}>LG Modal</Button>
-              <Modal
-                isOpen={lgModalOpen()}
+              <Dialog
+                open={lgModalOpen()}
                 onOpenChange={setLgModalOpen}
                 backdrop="opaque"
                 placement="center"
                 size="lg"
               >
-                <Modal.Content>
-                  <Modal.Header class="font-bold">Large Modal</Modal.Header>
-                  <Modal.Body>This is a large modal with more content space</Modal.Body>
-                  <Modal.Footer>
-                    <Modal.CloseTrigger>
+                <Dialog.Content>
+                  <Dialog.Header class="font-bold">Large Modal</Dialog.Header>
+                  <Dialog.Body>This is a large modal with more content space</Dialog.Body>
+                  <Dialog.Footer>
+                    <Dialog.CloseTrigger>
                       <Button>Close</Button>
-                    </Modal.CloseTrigger>
-                  </Modal.Footer>
-                </Modal.Content>
-              </Modal>
+                    </Dialog.CloseTrigger>
+                  </Dialog.Footer>
+                </Dialog.Content>
+              </Dialog>
             </Flex>
             <CodeBlock
-              code={`<Modal size="xs" isOpen={open()} onOpenChange={setOpen}>
-  <Modal.Content>
-    <Modal.Header>XS Modal</Modal.Header>
-    <Modal.Body>Extra small modal</Modal.Body>
-  </Modal.Content>
-</Modal>
+              code={`<Dialog size="xs" open={open()} onOpenChange={setOpen}>
+  <Dialog.Content>
+    <Dialog.Header>XS Modal</Dialog.Header>
+    <Dialog.Body>Extra small modal</Dialog.Body>
+  </Dialog.Content>
+</Dialog>
 
-<Modal size="sm" isOpen={open()} onOpenChange={setOpen}>
-  <Modal.Content>
-    <Modal.Header>Small Modal</Modal.Header>
-    <Modal.Body>Small modal</Modal.Body>
-  </Modal.Content>
-</Modal>
+<Dialog size="sm" open={open()} onOpenChange={setOpen}>
+  <Dialog.Content>
+    <Dialog.Header>Small Modal</Dialog.Header>
+    <Dialog.Body>Small modal</Dialog.Body>
+  </Dialog.Content>
+</Dialog>
 
-<Modal size="lg" isOpen={open()} onOpenChange={setOpen}>
-  <Modal.Content>
-    <Modal.Header>Large Modal</Modal.Header>
-    <Modal.Body>Large modal</Modal.Body>
-  </Modal.Content>
-</Modal>`}
+<Dialog size="lg" open={open()} onOpenChange={setOpen}>
+  <Dialog.Content>
+    <Dialog.Header>Large Modal</Dialog.Header>
+    <Dialog.Body>Large modal</Dialog.Body>
+  </Dialog.Content>
+</Dialog>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -348,40 +348,40 @@ export default function ModalShowcase() {
               <Button onClick={() => setCustomWidthOpen(true)}>
                 Open Modal
               </Button>
-              <Modal
-                isOpen={customWidthOpen()}
+              <Dialog
+                open={customWidthOpen()}
                 onOpenChange={setCustomWidthOpen}
                 backdrop="opaque"
                 placement="center"
               >
-                <Modal.Content class="w-11/12 max-w-5xl">
-                  <Modal.Header class="font-bold">Hello!</Modal.Header>
-                  <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-                  <Modal.Footer>
-                    <Modal.CloseTrigger>
+                <Dialog.Content class="w-11/12 max-w-5xl">
+                  <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+                  <Dialog.Body>Press ESC key or click outside to close</Dialog.Body>
+                  <Dialog.Footer>
+                    <Dialog.CloseTrigger>
                       <Button>Close</Button>
-                    </Modal.CloseTrigger>
-                  </Modal.Footer>
-                </Modal.Content>
-              </Modal>
+                    </Dialog.CloseTrigger>
+                  </Dialog.Footer>
+                </Dialog.Content>
+              </Dialog>
             </Flex>
             <CodeBlock
-              code={`<Modal
-  isOpen={open()}
+              code={`<Dialog
+  open={open()}
   onOpenChange={setOpen}
   backdrop="opaque"
   placement="center"
 >
-  <Modal.Content class="w-11/12 max-w-5xl">
-    <Modal.Header class="font-bold">Hello!</Modal.Header>
-    <Modal.Body>Press ESC key or click outside to close</Modal.Body>
-    <Modal.Footer>
-      <Modal.CloseTrigger>
+  <Dialog.Content class="w-11/12 max-w-5xl">
+    <Dialog.Header class="font-bold">Hello!</Dialog.Header>
+    <Dialog.Body>Press ESC key or click outside to close</Dialog.Body>
+    <Dialog.Footer>
+      <Dialog.CloseTrigger>
         <Button>Close</Button>
-      </Modal.CloseTrigger>
-    </Modal.Footer>
-  </Modal.Content>
-</Modal>`}
+      </Dialog.CloseTrigger>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog>`}
             />
           </Flex>
         </ShowcaseSection>
@@ -391,13 +391,13 @@ export default function ModalShowcase() {
             <h3 class="text-lg font-semibold">Modal</h3>
             <PropsTable props={modalProps} />
 
-            <h3 class="text-lg font-semibold">Modal.Header</h3>
+            <h3 class="text-lg font-semibold">Dialog.Header</h3>
             <PropsTable props={modalHeaderProps} />
 
-            <h3 class="text-lg font-semibold">Modal.Body</h3>
+            <h3 class="text-lg font-semibold">Dialog.Body</h3>
             <PropsTable props={modalBodyProps} />
 
-            <h3 class="text-lg font-semibold">Modal.Footer</h3>
+            <h3 class="text-lg font-semibold">Dialog.Footer</h3>
             <PropsTable props={modalFooterProps} />
           </Flex>
         </ShowcaseSection>
