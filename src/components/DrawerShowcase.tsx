@@ -16,9 +16,9 @@ export default function DrawerShowcase() {
 
   const props = [
     {
-      name: "isOpen",
-      type: "boolean",
-      description: "Controlled open state of the drawer",
+      name: "open",
+      type: `boolean`,
+      description: "Completes the open / defaultOpen / onOpenChange triple.",
     },
     {
       name: "defaultOpen",

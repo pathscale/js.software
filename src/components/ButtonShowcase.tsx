@@ -7,9 +7,9 @@ import { ShowcaseSection } from "./showcase/ShowcaseSection";
 const buttonProps = [
   { name: "variant", type: '"primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger" | "danger-soft"', default: '"primary"', description: "Semantic visual treatment." },
   { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Control size." },
-  { name: "isIconOnly", type: "boolean", default: "false", description: "Square icon-only control." },
-  { name: "fullWidth", type: "boolean", default: "false", description: "Fill the available width." },
-  { name: "isDisabled", type: "boolean", default: "false", description: "Disable interaction." },
+  { name: "width", type: 'Width | "square"', default: "—", description: "square is icon-only: as wide as it is tall, at whatever size it is." },
+  { name: "variant", type: "Variant", default: '"solid"', description: "Shape: solid, soft, outline, ghost, plain. Not a colour." },
+  { name: "state", type: "State", default: '"default"', description: "What is happening: loading, disabled, invalid. Loading implies disabled." },
   { name: "isPending", type: "boolean", default: "false", description: "Show pending state and block interaction." },
   { name: "startIcon", type: "JSX.Element", description: "Icon before the label." },
   { name: "endIcon", type: "JSX.Element", description: "Icon after the label." },

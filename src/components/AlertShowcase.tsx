@@ -18,10 +18,10 @@ const AlertShowcase: Component = () => {
 
   const alertProps = [
     {
-      name: "status",
-      type: '"default" | "accent" | "success" | "warning" | "danger"',
+      name: "flavor",
+      type: `Flavor`,
       default: '"default"',
-      description: "The status/color variant of the alert",
+      description: "What the thing is. Open: your own name yields a class you can style.",
     },
     {
       name: "children",
@@ -34,9 +34,9 @@ const AlertShowcase: Component = () => {
       description: "Additional CSS classes to apply",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias for class)",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
     {
       name: "style",
@@ -107,7 +107,7 @@ const AlertShowcase: Component = () => {
             justify="start"
             gap="md"
           >
-            <Flex direction="col" gap="md" class="w-full">
+            <Flex direction="col" gap="md" class="w-full component-preview">
               <Alert flavor="neutral">
                 Default status alert
                 </Alert>

@@ -17,10 +17,10 @@ export default function ModalShowcase() {
 
   const modalProps = [
     {
-      name: "isOpen",
-      type: "boolean",
+      name: "open",
+      type: `boolean`,
       default: "false",
-      description: "Controls the visibility of the modal.",
+      description: "Completes the open / defaultOpen / onOpenChange triple.",
     },
     {
       name: "defaultOpen",
@@ -80,9 +80,9 @@ export default function ModalShowcase() {
       description: "Additional CSS classes to apply.",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias for class).",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
   ];
 

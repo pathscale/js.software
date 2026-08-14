@@ -97,10 +97,10 @@ export default function CalendarShowcase() {
       description: "Whether to render days from adjacent months.",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disables calendar interaction if true.",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "dataTheme",

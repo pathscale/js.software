@@ -32,10 +32,10 @@ export default function PaginationShowcase() {
       description: "Callback fired when the active page changes.",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disables all pagination controls.",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "class",
@@ -43,9 +43,9 @@ export default function PaginationShowcase() {
       description: "Additional CSS classes",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias)",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
   ];
 

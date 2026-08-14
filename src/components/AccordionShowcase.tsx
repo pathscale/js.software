@@ -51,10 +51,10 @@ export default function AccordionShowcase() {
       description: "Hide separators between items",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
       default: "false",
-      description: "Disable the entire accordion",
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "class",
@@ -62,9 +62,9 @@ export default function AccordionShowcase() {
       description: "Additional CSS classes to apply",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias for class)",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
     {
       name: "style",

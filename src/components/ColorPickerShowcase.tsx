@@ -46,9 +46,9 @@ export default function ColorPickerShowcase() {
       description: "Fires whenever the color changes",
     },
     {
-      name: "isDisabled",
-      type: "boolean",
-      description: "Disables every nested picker control",
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "children",
@@ -84,7 +84,7 @@ export default function ColorPickerShowcase() {
     { name: "value", type: "string", description: "Selected color" },
     { name: "defaultValue", type: "string", description: "Default selected color" },
     { name: "onChange", type: "(value: string) => void", description: "Selection callback" },
-    { name: "isDisabled", type: "boolean", description: "Disables all swatches" },
+    { name: "state", type: "State", description: 'Pass state="disabled" to disable all swatches.' },
   ];
 
   const wheelFlowerProps = [

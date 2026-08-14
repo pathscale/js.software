@@ -21,10 +21,10 @@ export default function SpinnerShowcase() {
       description: "Size of the loading indicator",
     },
     {
-      name: "color",
-      type: '"current" | "accent" | "success" | "warning" | "danger"',
+      name: "flavor",
+      type: `Flavor`,
       default: '"current"',
-      description: "Color of the loading indicator",
+      description: "What the thing is. Open: your own name yields a class you can style.",
     },
     {
       name: "variant",
@@ -38,9 +38,9 @@ export default function SpinnerShowcase() {
       description: "Additional CSS classes",
     },
     {
-      name: "className",
-      type: "string",
-      description: "Additional CSS classes (alias)",
+      name: "class",
+      type: `string`,
+      description: "Extra classes, merged into the root. There is no className.",
     },
     {
       name: "style",
