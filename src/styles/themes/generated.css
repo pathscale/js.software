@@ -92,18 +92,26 @@
   default: true;
   prefersdark: false;
   color-scheme: "dark";
-  --color-base-100: oklch(20% 0.01 260);
-  --color-base-200: oklch(17% 0.01 260);
-  --color-base-300: oklch(14% 0.01 260);
-  --color-base-content: oklch(90% 0.01 260);
-  --color-primary: oklch(60% 0.2 275);
-  --color-primary-content: oklch(98% 0.005 260);
-  --color-secondary: oklch(65% 0.25 330);
-  --color-secondary-content: oklch(98% 0.005 260);
-  --color-accent: oklch(62% 0.23 200);
-  --color-accent-content: oklch(98% 0.005 260);
-  --color-neutral: oklch(25% 0.01 260);
-  --color-neutral-content: oklch(90% 0.01 260);
+  /* Modelled on 24x.ai: a near-black page, pure-white text, and one saturated
+     accent carrying both `primary` and `accent` so nothing competes with it.
+     24x uses a yellow; this is the same structure in violet.
+
+     base-200 is *darker* than base-100, which is the part people get wrong
+     copying this. The page is the lighter surface and the chrome recedes
+     behind it, so a header or a table head reads as a well rather than a card
+     floating on top. */
+  --color-base-100: oklch(14% 0.008 292);
+  --color-base-200: oklch(9% 0.006 292);
+  --color-base-300: oklch(19% 0.011 292);
+  --color-base-content: oklch(100% 0 0);
+  --color-primary: oklch(72% 0.19 302);
+  --color-primary-content: oklch(13% 0.02 300);
+  --color-secondary: oklch(64% 0.16 296);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(72% 0.19 302);
+  --color-accent-content: oklch(13% 0.02 300);
+  --color-neutral: oklch(22% 0.012 292);
+  --color-neutral-content: oklch(100% 0 0);
   --color-info: oklch(70% 0.2 200);
   --color-info-content: oklch(98% 0.005 260);
   --color-success: oklch(64.8% 0.15 160);
@@ -112,16 +120,18 @@
   --color-warning-content: oklch(20% 0.01 260);
   --color-error: oklch(65% 0.25 25);
   --color-error-content: oklch(98% 0.005 260);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.25rem;
+  --radius-selector: 0.375rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.75rem;
   --size-selector: 0.28125rem;
   --size-field: 0.1875rem;
   --border: 1px;
   --depth: 0;
   --noise: 0;
-  --glass-background-color: white;
-  --glass-background-opacity: 38%;
+  /* Glass tints violet rather than white, so a panel over the page picks up
+     the accent instead of washing to grey. */
+  --glass-background-color: oklch(72% 0.19 302);
+  --glass-background-opacity: 10%;
   --glass-border-color: white;
   --glass-border-opacity: 30%;
   --glass-highlight-color: white;

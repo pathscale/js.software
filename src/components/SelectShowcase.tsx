@@ -119,7 +119,7 @@ export default function SelectShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
+                class="block text-sm text-base-content/60 hover:text-primary transition-colors"
               >
                 {section.title}
               </a>
@@ -138,7 +138,7 @@ export default function SelectShowcase() {
                 <Trigger />
                 <Listbox options={fruitOptions} />
               </Select>
-              <div class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
+              <div class="text-sm text-base-content/60">
                 Selected fruit: {selected() ?? "(none)"}
               </div>
             </Flex>

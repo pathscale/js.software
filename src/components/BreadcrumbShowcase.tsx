@@ -44,7 +44,7 @@ export default function BreadcrumbShowcase() {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
+                class="block text-sm text-base-content/60 hover:text-primary transition-colors"
               >
                 {section.title}
               </a>

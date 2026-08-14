@@ -208,7 +208,7 @@ const FloatingDockShowcase: Component = () => {
             {sections.map((section) => (
               <a
                 href={`#${section.id}`}
-                class="block text-sm text-[hsl(var(--color-fg-secondary)/1)] hover:text-[hsl(var(--color-fg-body)/1)]"
+                class="block text-sm text-base-content/60 hover:text-primary transition-colors"
               >
                 {section.title}
               </a>
@@ -257,7 +257,7 @@ const FloatingDockShowcase: Component = () => {
 
         <ShowcaseSection id="custom-sizing" title="Custom Sizing">
           <Flex direction="col" gap="md">
-            <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
+            <p class="text-sm text-base-content/60">
               Larger resting size (60px) with a bigger hover size (100px).
             </p>
             <Flex class="w-full component-preview" align="center" justify="center" gap="sm">
@@ -284,7 +284,7 @@ const FloatingDockShowcase: Component = () => {
 
         <ShowcaseSection id="no-container" title="Without Container">
           <Flex direction="col" gap="md">
-            <p class="text-sm text-[hsl(var(--color-fg-secondary)/1)]">
+            <p class="text-sm text-base-content/60">
               The container background and shadow are hidden with showContainer set to false.
             </p>
             <Flex class="w-full component-preview" align="center" justify="center" gap="sm">
