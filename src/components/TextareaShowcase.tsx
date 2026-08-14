@@ -121,12 +121,12 @@ const TextareaShowcase: Component = () => {
             <Flex direction="col" align="start" justify="start" gap="sm">
               <Textarea state="disabled" placeholder="Disabled textarea" />
               <Textarea state="invalid" placeholder="Invalid textarea" />
-              <Textarea fullWidth placeholder="Full width textarea" />
+              <Textarea class="w-full" placeholder="Full width textarea" />
             </Flex>
             <CodeBlock
               code={`<Textarea state="disabled" placeholder="Disabled textarea" />
 <Textarea state="invalid" placeholder="Invalid textarea" />
-<Textarea fullWidth placeholder="Full width textarea" />`}
+<Textarea class="w-full" placeholder="Full width textarea" />`}
             />
           </Flex>
         </ShowcaseSection>

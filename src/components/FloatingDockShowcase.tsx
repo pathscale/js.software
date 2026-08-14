@@ -36,7 +36,7 @@ const accountIcon = (
   </svg>
 );
 
-const sampleItems: FloatingDockItem[] = [
+const sampleItems: DockItem[] = [
   { title: "Home", icon: homeIcon, href: "#" },
   { title: "Search", icon: searchIcon, href: "#" },
   { title: "Favorites", icon: heartIcon, href: "#" },
@@ -57,7 +57,7 @@ const FloatingDockShowcase: Component = () => {
   const floatingDockProps = [
     {
       name: "items",
-      type: "FloatingDockItem[]",
+      type: "DockItem[]",
       description: "Array of dock items with title, icon, href, and optional onClick.",
     },
     {
@@ -307,7 +307,7 @@ const FloatingDockShowcase: Component = () => {
           <h3 class="text-lg font-medium mb-4">FloatingDock Props</h3>
           <PropsTable props={floatingDockProps} />
 
-          <h3 class="text-lg font-medium mt-8 mb-4">FloatingDockItem</h3>
+          <h3 class="text-lg font-medium mt-8 mb-4">DockItem</h3>
           <PropsTable props={itemProps} />
         </ShowcaseSection>
       </div>

@@ -11,7 +11,7 @@ export default function FormActionsShowcase() {
           <Fieldset.Legend>Profile</Fieldset.Legend>
           <Fieldset.Actions>
             <Button variant="ghost">Cancel</Button>
-            <Button variant="primary">Save changes</Button>
+            <Button flavor="primary">Save changes</Button>
           </Fieldset.Actions>
         </Fieldset>
         <CodeBlock
@@ -19,7 +19,7 @@ export default function FormActionsShowcase() {
   <Fieldset.Legend>Profile</Fieldset.Legend>
   <Fieldset.Actions>
     <Button variant="ghost">Cancel</Button>
-    <Button variant="primary">Save changes</Button>
+    <Button flavor="primary">Save changes</Button>
   </Fieldset.Actions>
 </Fieldset>`}
         />

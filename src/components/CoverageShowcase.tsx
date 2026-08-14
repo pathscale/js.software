@@ -1,5 +1,5 @@
 import { ErrorBoundary, For, type JSX } from "solid-js";
-import { Button, Checkbox, Description, Collapsible, DisclosureGroup, Empty, ErrorMessage, FieldError, Flex, InputGroup, InputOTP, ListBox, MetalBorder, NumberField, Progress, ScrollArea, SearchField, Separator, Slider, Spinner, Surface, Chip, TagGroup, Text, Textarea, TextField, Popover, Header, LanguageSwitcher, LiveChatBubble, ThemeColorPicker, createI18n } from "@pathscale/ui";
+import { Accordion, Button, Card, Checkbox, Chip, Collapsible, Empty, Flex, Header, Input, InputOTP, LanguageSwitcher, ListBox, LiveChatBubble, MetalBorder, Popover, Progress, ScrollArea, Separator, Slider, Spinner, Text, Textarea, ThemeColorPicker, createI18n } from "@pathscale/ui";
 import { ButtonGroup, CheckboxGroup, CloseButton, Meter, RadialProgress, SizePicker, TimeField, DateField, ColorPicker, ColorArea, ColorField, ColorSlider, ComboBox, DatePicker, DateRangePicker, RangeCalendar, Toolbar, Kbd } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 
@@ -52,7 +52,7 @@ const EXAMPLES: Example[] = [
       </Kbd>
     ),
   },
-  { name: "Description", render: () => <Description>Helper text.</Description> },
+  { name: "Input (placeholder)", render: () => <Input placeholder="Helper text." /> },
   {
     name: "Disclosure",
     render: () => (
@@ -63,14 +63,14 @@ const EXAMPLES: Example[] = [
     ),
   },
   {
-    name: "DisclosureGroup",
+    name: "Accordion",
     render: () => (
-      <DisclosureGroup>
+      <Accordion>
         <Collapsible>
           <Collapsible.Trigger>First</Collapsible.Trigger>
           <Collapsible.Content>One.</Collapsible.Content>
         </Collapsible>
-      </DisclosureGroup>
+      </Accordion>
     ),
   },
   {
@@ -82,14 +82,15 @@ const EXAMPLES: Example[] = [
       </Empty>
     ),
   },
-  { name: "ErrorMessage", render: () => <ErrorMessage>Required.</ErrorMessage> },
-  { name: "FieldError", render: () => <FieldError>Required.</FieldError> },
+  { name: "Input (issues)", render: () => <Input issues={[{ code: "required", message: "Required." }]} /> },
+  { name: "Input (invalid)", render: () => <Input state="invalid" /> },
   {
-    name: "InputGroup",
+    name: "Input (grouped)",
     render: () => (
-      <InputGroup>
-        <TextField />
-      </InputGroup>
+      <Flex gap="sm">
+        <Input type="text" />
+        <Button>Go</Button>
+      </Flex>
     ),
   },
   { name: "InputOTP", render: () => <InputOTP /> },
@@ -104,7 +105,7 @@ const EXAMPLES: Example[] = [
     render: () => <MetalBorder>Bordered</MetalBorder>,
   },
   { name: "Meter", render: () => <Meter value={60} /> },
-  { name: "NumberField", render: () => <NumberField /> },
+  { name: "Input (number)", render: () => <Input type="number" /> },
   {
     name: "Popover",
     render: () => (
@@ -124,7 +125,7 @@ const EXAMPLES: Example[] = [
       </ScrollArea>
     ),
   },
-  { name: "SearchField", render: () => <SearchField /> },
+  { name: "Input (search)", render: () => <Input type="search" /> },
   { name: "Separator", render: () => <Separator /> },
   { name: "SizePicker", render: () => <SizePicker /> },
   {
@@ -132,20 +133,20 @@ const EXAMPLES: Example[] = [
     render: () => <Slider label="Volume" value={40} onChange={() => {}} />,
   },
   { name: "Spinner", render: () => <Spinner /> },
-  { name: "Surface", render: () => <Surface>On a surface.</Surface> },
+  { name: "Card (surface)", render: () => <Card>On a surface.</Card> },
   { name: "Tag", render: () => <Chip>Tagged</Chip> },
   {
-    name: "TagGroup",
+    name: "Chip (grouped)",
     render: () => (
-      <TagGroup>
+      <Flex gap="sm">
         <Chip>One</Chip>
         <Chip>Two</Chip>
-      </TagGroup>
+      </Flex>
     ),
   },
   { name: "Text", render: () => <Text>Body text.</Text> },
   { name: "TextArea", render: () => <Textarea /> },
-  { name: "TextField", render: () => <TextField /> },
+  { name: "Input (text)", render: () => <Input type="text" /> },
   { name: "TimeField", render: () => <TimeField /> },
   { name: "DateField", render: () => <DateField /> },
 ];

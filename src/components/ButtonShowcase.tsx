@@ -24,17 +24,17 @@ export default function ButtonShowcase() {
       <Flex direction="col" gap="xl">
         <ShowcaseSection id="variants" title="Variants">
           <Flex gap="md" wrap="wrap">
-            <Button variant="primary">Primary</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="tertiary">Tertiary</Button>
+            <Button flavor="primary">Primary</Button>
+            <Button flavor="secondary">Secondary</Button>
+            <Button flavor="tertiary">Tertiary</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="ghost">Ghost</Button>
-            <Button variant="danger">Danger</Button>
-            <Button variant="danger-soft">Danger soft</Button>
+            <Button flavor="destructive">Danger</Button>
+            <Button flavor="destructive" variant="soft">Danger soft</Button>
           </Flex>
-          <CodeBlock code={`<Button variant="primary">Primary</Button>
+          <CodeBlock code={`<Button flavor="primary">Primary</Button>
 <Button variant="outline">Outline</Button>
-<Button variant="danger-soft">Delete</Button>`} />
+<Button flavor="destructive" variant="soft">Delete</Button>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="sizes" title="Sizes">
@@ -51,30 +51,30 @@ export default function ButtonShowcase() {
         <ShowcaseSection id="icons" title="Icons">
           <Flex gap="md" align="center" wrap="wrap">
             <Button variant="outline" startIcon={startIcon}>Previous</Button>
-            <Button variant="primary" endIcon={endIcon}>Continue</Button>
-            <Button variant="ghost" isIconOnly aria-label="Settings">
+            <Button flavor="primary" endIcon={endIcon}>Continue</Button>
+            <Button variant="ghost" width="square" aria-label="Settings">
               <Icon src="mdi--cog" width={20} height={20} />
             </Button>
           </Flex>
           <CodeBlock code={`<Button startIcon={<Icon src="mdi--arrow-left" />}>Previous</Button>
 <Button endIcon={<Icon src="mdi--arrow-right" />}>Continue</Button>
-<Button isIconOnly aria-label="Settings"><Icon src="mdi--cog" /></Button>`} />
+<Button width="square" aria-label="Settings"><Icon src="mdi--cog" /></Button>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="states" title="States">
           <Flex gap="md" align="center" wrap="wrap">
-            <Button isPending>Saving</Button>
+            <Button state="loading">Saving</Button>
             <Button state="disabled">Unavailable</Button>
             <Button variant="outline" aria-pressed="true">Pressed</Button>
           </Flex>
-          <CodeBlock code={`<Button isPending>Saving</Button>
+          <CodeBlock code={`<Button state="loading">Saving</Button>
 <Button state="disabled">Unavailable</Button>
 <Button variant="outline" aria-pressed={selected()}>Selected</Button>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="width" title="Full width">
-          <Button fullWidth variant="primary">Continue</Button>
-          <CodeBlock code={`<Button fullWidth variant="primary">Continue</Button>`} />
+          <Button width="full" flavor="primary">Continue</Button>
+          <CodeBlock code={`<Button width="full" flavor="primary">Continue</Button>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="native-link" title="Navigation styled as an action">

@@ -88,7 +88,7 @@ function App() {
             Start building beautiful interfaces with our component library.
           </p>
           <Flex gap="md">
-            <Button variant="primary">Get Started</Button>
+            <Button flavor="primary">Get Started</Button>
             <Button variant="outline">Learn More</Button>
           </Flex>
         </Card.Body>

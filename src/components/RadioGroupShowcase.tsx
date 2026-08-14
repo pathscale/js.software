@@ -88,7 +88,7 @@ export default function RadioGroupShowcase() {
   const renderOptions = (opts: Option[]) => (
     <For each={opts}>
       {(opt) => (
-        <Radio value={opt.value} isDisabled={opt.disabled}>
+        <Radio value={opt.value} disabled={opt.disabled}>
           {opt.label}
         </Radio>
       )}

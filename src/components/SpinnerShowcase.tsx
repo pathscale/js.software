@@ -98,9 +98,9 @@ export default function SpinnerShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Spinner variant="spinner" />
+              <Spinner shape="spinner" />
             </Flex>
-            <CodeBlock code={`<Spinner variant="spinner" />`} />
+            <CodeBlock code={`<Spinner shape="spinner" />`} />
           </Flex>
         </ShowcaseSection>
 
@@ -128,20 +128,20 @@ export default function SpinnerShowcase() {
         <ShowcaseSection id="variants" title="Variants">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Spinner variant="spinner" />
-              <Spinner variant="dots" />
-              <Spinner variant="ring" />
-              <Spinner variant="ball" />
-              <Spinner variant="bars" />
-              <Spinner variant="infinity" />
+              <Spinner shape="spinner" />
+              <Spinner shape="dots" />
+              <Spinner shape="ring" />
+              <Spinner shape="ball" />
+              <Spinner shape="bars" />
+              <Spinner shape="infinity" />
             </Flex>
             <CodeBlock
-              code={`<Spinner variant="spinner" />
-<Spinner variant="dots" />
-<Spinner variant="ring" />
-<Spinner variant="ball" />
-<Spinner variant="bars" />
-<Spinner variant="infinity" />`}
+              code={`<Spinner shape="spinner" />
+<Spinner shape="dots" />
+<Spinner shape="ring" />
+<Spinner shape="ball" />
+<Spinner shape="bars" />
+<Spinner shape="infinity" />`}
             />
           </Flex>
         </ShowcaseSection>

@@ -4,7 +4,7 @@ import Callout from "./Callout";
 
 export interface MDXRendererProps {
   content: string;
-  className?: string;
+  class?: string;
   components?: Record<string, Component<any>>;
 }
 
@@ -38,7 +38,7 @@ export const MDXRenderer: Component<MDXRendererProps> = (props) => {
       const codeElement = preProps.children;
       if (codeElement?.type === "code") {
         const language =
-          codeElement.props.className?.replace("language-", "") || "";
+          codeElement.props.class?.replace("language-", "") || "";
         return (
           <CodeBlock
             code={codeElement.props.children}
@@ -184,7 +184,7 @@ export const MDXRenderer: Component<MDXRendererProps> = (props) => {
     // In a production app, you'd use @mdx-js/solid or similar
     return (
       <div
-        class={`mdx-content ${props.className || ""}`}
+        class={`mdx-content ${props.class || ""}`}
         innerHTML={props.content}
       />
     );

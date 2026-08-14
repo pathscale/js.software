@@ -1,6 +1,6 @@
 import { Component, For } from "solid-js";
 import { ContentContainer } from "../components/content/ContentContainer";
-import { Chip, Flex, GlassPanel, Grid } from "@pathscale/ui";
+import { Card, Chip, Flex, Grid } from "@pathscale/ui";
 import { routes } from "../routes";
 import { ROUTES } from "../config/routes";
 
@@ -39,7 +39,7 @@ const Showcases: Component = () => {
 
   return (
     <ContentContainer maxWidth="2xl" prose={false}>
-      <GlassPanel size="lg" flavor="secondary" highlight>
+      <Card material="glass" padding="lg" flavor="secondary">
         <div class="text-center">
           <h1 class="text-5xl font-bold mb-6">Component Showcases</h1>
           <p class="text-xl text-base-content/70 mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -59,7 +59,7 @@ const Showcases: Component = () => {
             </Chip>
           </Flex>
         </div>
-      </GlassPanel>
+      </Card>
 
       <div class="mb-16">
         <h2 class="text-3xl font-bold mb-6">Featured Components</h2>
@@ -72,7 +72,7 @@ const Showcases: Component = () => {
           <For each={featuredRoutes}>
             {(route) => (
               <a href={route.path} class="block">
-                <GlassPanel size="md" flavor="secondary" highlight interactive>
+                <Card material="glass" padding="md" flavor="secondary" isInteractive>
                   <div>
                     <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
                       {route.name}
@@ -84,7 +84,7 @@ const Showcases: Component = () => {
                       View Demo →
                     </span>
                   </div>
-                </GlassPanel>
+                </Card>
               </a>
             )}
           </For>
@@ -102,7 +102,7 @@ const Showcases: Component = () => {
           <For each={otherRoutes}>
             {(route) => (
               <a href={route.path} class="block">
-                <GlassPanel size="md" flavor="secondary" interactive>
+                <Card material="glass" padding="md" flavor="secondary" isInteractive>
                   <div>
                     <h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
                       {route.name}
@@ -114,7 +114,7 @@ const Showcases: Component = () => {
                       Explore →
                     </span>
                   </div>
-                </GlassPanel>
+                </Card>
               </a>
             )}
           </For>

@@ -3,7 +3,7 @@ import { ParentComponent } from "solid-js";
 export interface CalloutProps {
   type?: "info" | "warning" | "error" | "success" | "note";
   title?: string;
-  className?: string;
+  class?: string;
   icon?: boolean;
 }
 
@@ -90,7 +90,7 @@ export const Callout: ParentComponent<CalloutProps> = (props) => {
   const styles = () => typeStyles[type()];
 
   return (
-    <div class={`border-l-4 p-4 rounded-r-lg ${styles().container} ${props.className || ""}`}>
+    <div class={`border-l-4 p-4 rounded-r-lg ${styles().container} ${props.class || ""}`}>
       <div class="flex">
         {showIcon() && (
           <div class={`flex-shrink-0 ${styles().icon} mr-3`}>

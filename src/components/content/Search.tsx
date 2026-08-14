@@ -18,7 +18,7 @@ export interface SearchResult {
 }
 
 export interface SearchProps {
-  className?: string;
+  class?: string;
   placeholder?: string;
   maxResults?: number;
 }
@@ -229,7 +229,7 @@ export const Search: Component<SearchProps> = (props) => {
       <button
         onClick={openSearch}
         class={`flex items-center gap-2 px-3 py-2 text-sm bg-base-100 border border-base-300 rounded-lg hover:bg-base-200 transition-colors ${
-          props.className || ""
+          props.class || ""
         }`}
       >
         <SearchIcon />

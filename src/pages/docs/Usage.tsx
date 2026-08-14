@@ -144,7 +144,7 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
           </li>
           <li>
             • <strong>Controlled/uncontrolled comes in triples:</strong>{" "}
-            <code class="text-sm">isOpen/defaultOpen/onOpenChange</code>,{" "}
+            <code class="text-sm">open/defaultOpen/onOpenChange</code>,{" "}
             <code class="text-sm">value/defaultValue/onChange</code>,{" "}
             <code class="text-sm">
               selectedKey/defaultSelectedKey/onSelectionChange
@@ -173,7 +173,7 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
         <CodeBlock
           language="tsx"
           code={`<Flex direction="col" gap="sm">
-  <Button variant="primary" size="md" isPending={saving()}>Save</Button>
+  <Button flavor="primary" size="md" isPending={saving()}>Save</Button>
 </Flex>`}
         />
       </section>

@@ -18,7 +18,7 @@ export default function BadgeShowcase() {
         <ShowcaseSection id="anchor" title="Anchored badge">
           <Flex gap="xl" align="center" wrap="wrap">
             <Badge.Anchor>
-              <Button variant="outline" isIconOnly aria-label="Inbox">
+              <Button variant="outline" width="square" aria-label="Inbox">
                 <Icon src="mdi--inbox" width={20} height={20} />
               </Button>
               <Badge flavor="destructive">3</Badge>
@@ -29,7 +29,7 @@ export default function BadgeShowcase() {
             </Badge.Anchor>
           </Flex>
           <CodeBlock code={`<Badge.Anchor>
-  <Button isIconOnly aria-label="Inbox"><Icon src="mdi--inbox" /></Button>
+  <Button width="square" aria-label="Inbox"><Icon src="mdi--inbox" /></Button>
   <Badge flavor="destructive">3</Badge>
 </Badge.Anchor>`} />
         </ShowcaseSection>
@@ -52,10 +52,10 @@ export default function BadgeShowcase() {
           </p>
           <Flex gap="md" wrap="wrap">
             <Chip>Draft</Chip>
-            <Chip variant="surface">In review</Chip>
+            <Chip variant="flat">In review</Chip>
           </Flex>
           <CodeBlock code={`<Chip>Draft</Chip>
-<Chip variant="surface">In review</Chip>`} />
+<Chip variant="flat">In review</Chip>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

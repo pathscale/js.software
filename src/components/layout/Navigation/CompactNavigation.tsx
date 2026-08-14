@@ -4,7 +4,7 @@ import { Dropdown } from "@pathscale/ui";
 import { ROUTES, EXTERNAL_ROUTES } from "../../../config/routes";
 
 export interface CompactNavigationProps {
-  className?: string;
+  class?: string;
 }
 
 export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
@@ -40,7 +40,7 @@ export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
   );
 
   return (
-    <div class={`md:hidden ${props.className || ""}`}>
+    <div class={`md:hidden ${props.class || ""}`}>
       <Dropdown>
         <Dropdown.Trigger
           class="w-full flex items-center justify-between px-4 py-3 bg-base-100 border border-chromatic-border rounded-lg text-left"

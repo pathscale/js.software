@@ -32,7 +32,7 @@ export const TitleAndIconSection = () => (
           </a>
         </Flex>
         <Flex shrink={false}>
-          <Button variant="ghost" isIconOnly>
+          <Button variant="ghost" width="square">
             <DotsIcon />
           </Button>
         </Flex>
@@ -43,7 +43,7 @@ export const TitleAndIconSection = () => (
     <a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a>
   </Flex>
   <Flex shrink={false}>
-    <Button variant="ghost" isIconOnly>
+    <Button variant="ghost" width="square">
       <DotsIcon />
     </Button>
   </Flex>
@@ -58,7 +58,7 @@ export const IconStartEndSection = () => (
     <Flex direction="col" gap="md">
       <Navbar class="bg-base-100 shadow-xl rounded-box">
         <Flex shrink={false}>
-          <Button variant="ghost" isIconOnly>
+          <Button variant="ghost" width="square">
             <MenuIcon />
           </Button>
         </Flex>
@@ -68,16 +68,16 @@ export const IconStartEndSection = () => (
           </a>
         </Flex>
         <Flex shrink={false}>
-          <Button variant="ghost" isIconOnly>
+          <Button variant="ghost" width="square">
             <DotsIcon />
           </Button>
         </Flex>
       </Navbar>
       <CodeBlock
         code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
-  <Flex shrink={false}><Button variant="ghost" isIconOnly><MenuIcon /></Button></Flex>
+  <Flex shrink={false}><Button variant="ghost" width="square"><MenuIcon /></Button></Flex>
   <Flex grow><a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a></Flex>
-  <Flex shrink={false}><Button variant="ghost" isIconOnly><DotsIcon /></Button></Flex>
+  <Flex shrink={false}><Button variant="ghost" width="square"><DotsIcon /></Button></Flex>
 </Navbar>`}
       />
     </Flex>
@@ -214,7 +214,7 @@ export const IconIndicatorSection = () => (
                 <span class="font-bold text-lg">8 Items</span>
                 <span class="text-info">Subtotal: $999</span>
                 <Flex justify="end" class="mt-2">
-                  <Button variant="primary" fullWidth>
+                  <Button flavor="primary" width="full">
                     View cart
                   </Button>
                 </Flex>
@@ -251,7 +251,7 @@ export const IconIndicatorSection = () => (
           <span class="font-bold text-lg">8 Items</span>
           <span class="text-info">Subtotal: $999</span>
           <Flex justify="end" class="mt-2">
-            <Button variant="primary" fullWidth>View cart</Button>
+            <Button flavor="primary" width="full">View cart</Button>
           </Flex>
         </Card.Body>
       </Dropdown.Menu>
@@ -288,11 +288,11 @@ export const DropdownCenterSection = () => (
           </a>
         </Navbar.Center>
         <Navbar.End>
-          <Button variant="ghost" isIconOnly>
+          <Button variant="ghost" width="square">
             <SearchIcon />
           </Button>
           <Badge.Anchor>
-            <Button variant="ghost" isIconOnly>
+            <Button variant="ghost" width="square">
               <BellIcon />
             </Button>
             <Badge size="sm" flavor="accent" />
@@ -315,9 +315,9 @@ export const DropdownCenterSection = () => (
     <a class="btn btn-ghost normal-case text-xl" href="#">daisyUI</a>
   </Navbar.Center>
   <Navbar.End>
-    <Button variant="ghost" isIconOnly><SearchIcon /></Button>
+    <Button variant="ghost" width="square"><SearchIcon /></Button>
     <Badge.Anchor>
-      <Button variant="ghost" isIconOnly><BellIcon /></Button>
+      <Button variant="ghost" width="square"><BellIcon /></Button>
       <Badge size="sm" flavor="accent" />
     </Badge.Anchor>
   </Navbar.End>

@@ -8,7 +8,7 @@ interface LayoutGridProps {
   toc?: Component;
   footer?: Component;
   children: any;
-  className?: string;
+  class?: string;
 }
 
 export const LayoutGrid: Component<LayoutGridProps> = (props) => {

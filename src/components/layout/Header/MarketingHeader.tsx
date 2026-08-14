@@ -1,5 +1,5 @@
 import { Component, Show } from "solid-js";
-import { Navbar, Button, Flex, GlassPanel } from "@pathscale/ui";
+import { Button, Card, Flex, Navbar } from "@pathscale/ui";
 import { useNavigation } from "./hooks/useNavigation";
 import { MainNavigation } from "./components/MainNavigation";
 import { ComponentsMenu } from "./components/ComponentsMenu";
@@ -25,20 +25,17 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
   );
 
   return (
-    <Navbar.Stack class={`navbar-stack sticky top-0 z-50 ${props.className || ""}`}>
-      <GlassPanel
+    <Navbar.Stack class={`navbar-stack sticky top-0 z-50 ${props.class || ""}`}>
+      <Card material="glass"
         flavor="secondary"
-        highlight
-        size="sm"
-        paddingX="0"
-        paddingY="0"
+        padding="none"
         style={{ "--glass-border-radius": "0px" }}
       >
         <Navbar.Row class="px-4 py-1.5">
         <Navbar.Start class="lg:hidden">
           <Button
             variant="ghost"
-            isIconOnly
+            width="square"
             onClick={() => navigation.setIsOpen(!navigation.isOpen())}
           >
             <HamburgerIcon />
@@ -94,7 +91,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
           </a>
         </Navbar.End>
         </Navbar.Row>
-      </GlassPanel>
+      </Card>
 
       <Show when={navigation.shouldShowComponentsMenu()}>
         <ComponentsMenu navigation={navigation} />

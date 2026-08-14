@@ -1,4 +1,4 @@
-import { GlassPanel, Flex } from "@pathscale/ui";
+import { Card, Collapsible, Flex } from "@pathscale/ui";
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
@@ -78,10 +78,10 @@ export default function GlassPanelShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <GlassPanel>
+            <Card material="glass">
               <p>This is a basic glass panel. Blur, saturation, opacity, and colors all come from the theme via CSS variables.</p>
-            </GlassPanel>
-            <CodeBlock code={`<GlassPanel>\n  <p>Your content here</p>\n</GlassPanel>`} />
+            </Card>
+            <CodeBlock code={`<Card material="glass">\n  <p>Your content here</p>\n</Card>`} />
           </Flex>
         </ShowcaseSection>
 
@@ -94,16 +94,16 @@ export default function GlassPanelShowcase() {
               class="relative rounded-xl p-4 space-y-4"
               style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}
             >
-              <GlassPanel style={{ "--glass-blur": "4px" } as Record<string, string>}>
+              <Card material="glass" style={{ "--glass-blur": "4px" } as Record<string, string>}>
                 <p class="text-sm font-medium">--glass-blur: 4px</p>
-              </GlassPanel>
-              <GlassPanel style={{ "--glass-blur": "16px" } as Record<string, string>}>
+              </Card>
+              <Card material="glass" style={{ "--glass-blur": "16px" } as Record<string, string>}>
                 <p class="text-sm font-medium">--glass-blur: 16px</p>
-              </GlassPanel>
-              <GlassPanel style={{ "--glass-blur": "40px" } as Record<string, string>}>
+              </Card>
+              <Card material="glass" style={{ "--glass-blur": "40px" } as Record<string, string>}>
                 <p class="text-sm font-medium">--glass-blur: 40px</p>
-              </GlassPanel>
-              <GlassPanel
+              </Card>
+              <Card material="glass"
                 style={{
                   "--glass-blur": "20px",
                   "--glass-background-opacity": "15%",
@@ -112,10 +112,10 @@ export default function GlassPanelShowcase() {
               >
                 <p class="text-sm font-medium">Hype4 reference defaults</p>
                 <p class="text-sm opacity-70">blur 20px, bg 15%, border 30%</p>
-              </GlassPanel>
+              </Card>
             </div>
             <CodeBlock
-              code={`<GlassPanel style={{ "--glass-blur": "4px" }}>...</GlassPanel>\n<GlassPanel style={{ "--glass-blur": "16px" }}>...</GlassPanel>\n<GlassPanel style={{ "--glass-blur": "40px" }}>...</GlassPanel>\n\n// Global tuning via theme\n:root {\n  --glass-blur: 20px;\n  --glass-background-opacity: 15%;\n  --glass-border-opacity: 30%;\n}`}
+              code={`<Card material="glass" style={{ "--glass-blur": "4px" }}>...</Card>\n<Card material="glass" style={{ "--glass-blur": "16px" }}>...</Card>\n<Card material="glass" style={{ "--glass-blur": "40px" }}>...</Card>\n\n// Global tuning via theme\n:root {\n  --glass-blur: 20px;\n  --glass-background-opacity: 15%;\n  --glass-border-opacity: 30%;\n}`}
             />
           </Flex>
         </ShowcaseSection>
@@ -126,27 +126,20 @@ export default function GlassPanelShowcase() {
               const [open, setOpen] = createSignal(true);
               return (
                 <>
-                  <GlassPanel
-                    collapsible
-                    title="Settings"
-                    icon={<SettingsIcon />}
-                    open={open()}
-                    onToggle={setOpen}
-                  >
-                    <p class="text-sm">This panel can be expanded and collapsed by clicking the header. It uses a controlled open state.</p>
-                  </GlassPanel>
-                  <GlassPanel
-                    collapsible
-                    title="Additional Information"
-                    icon={<InfoIcon />}
-                    defaultOpen={false}
-                  >
-                    <p class="text-sm">This panel starts collapsed and uses uncontrolled state with defaultOpen set to false.</p>
-                  </GlassPanel>
+                  <Card material="glass">
+                    <Collapsible open={open()} onOpenChange={setOpen} title="Settings">
+                      <p class="text-sm">This panel can be expanded and collapsed by clicking the header. It uses a controlled open state.</p>
+                    </Collapsible>
+                  </Card>
+                  <Card material="glass">
+                    <Collapsible defaultOpen={false} title="Additional Information">
+                      <p class="text-sm">This panel starts collapsed and uses uncontrolled state with defaultOpen set to false.</p>
+                    </Collapsible>
+                  </Card>
                 </>
               );
             })()}
-            <CodeBlock code={`<GlassPanel collapsible title="Settings" icon={<Icon />} open={open()} onToggle={setOpen}>\n  <p>Collapsible content</p>\n</GlassPanel>\n\n<GlassPanel collapsible title="Info" defaultOpen={false}>\n  <p>Starts collapsed</p>\n</GlassPanel>`} />
+            <CodeBlock code={`<Card material="glass" collapsible title="Settings" icon={<Icon />} open={open()} onToggle={setOpen}>\n  <p>Collapsible content</p>\n</Card>\n\n<Card material="glass" collapsible title="Info" defaultOpen={false}>\n  <p>Starts collapsed</p>\n</Card>`} />
           </Flex>
         </ShowcaseSection>
 
@@ -156,12 +149,12 @@ export default function GlassPanelShowcase() {
               class="relative rounded-xl p-4"
               style={{ background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" }}
             >
-              <GlassPanel transparent>
+              <Card variant="plain" padding="md">
                 <p class="text-sm font-medium">Transparent panel</p>
                 <p class="text-sm opacity-70">Removes background, border, blur, and decorative chrome — renders as a plain padded container.</p>
-              </GlassPanel>
+              </Card>
             </div>
-            <CodeBlock code={`<GlassPanel transparent>\n  <p>Bare container, no glass chrome</p>\n</GlassPanel>`} />
+            <CodeBlock code={`<Card variant="plain" padding="md">\n  <p>Bare container, no glass chrome</p>\n</Card>`} />
           </Flex>
         </ShowcaseSection>
 

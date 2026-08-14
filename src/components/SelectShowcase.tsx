@@ -190,14 +190,14 @@ export default function SelectShowcase() {
                 <Trigger />
                 <Listbox options={fruitOptions} />
               </Select>
-              <Select fullWidth placeholder="Full width">
+              <Select class="w-full" placeholder="Full width">
                 <Trigger />
                 <Listbox options={animalOptions} />
               </Select>
             </Flex>
             <CodeBlock
               code={`<Select state="disabled"> ... </Select>
-<Select fullWidth> ... </Select>`}
+<Select class="w-full"> ... </Select>`}
             />
           </Flex>
         </ShowcaseSection>
