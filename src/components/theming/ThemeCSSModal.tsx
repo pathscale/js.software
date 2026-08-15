@@ -137,7 +137,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
 
         <div class="relative">
           <textarea
-            class="textarea textarea-bordered w-full h-80 font-mono text-xs resize-none"
+            class="w-full rounded-field border border-base-300 bg-base-100 p-3 font-mono text-xs w-full h-80 font-mono text-xs resize-none"
             value={cssText()}
             readonly
             spellcheck={false}

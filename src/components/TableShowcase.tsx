@@ -172,7 +172,7 @@ export default function TableShowcase() {
           <Flex direction="col" gap="md">
             <Table>
               <Table.ScrollContainer>
-                <Table.Content class="rounded-box">
+                <Table.Content>
                   <Table.Header>
                     <Table.Row>
                       <Table.Column id="select">
@@ -322,7 +322,7 @@ export default function TableShowcase() {
             <CodeBlock
               code={`<Table>
   <Table.ScrollContainer>
-    <Table.Content class="rounded-box">
+    <Table.Content>
       <Table.Header>
         <Table.Row>
           <Table.Column id="select"><Checkbox /></Table.Column>

@@ -1,5 +1,5 @@
 import { createMemo, For } from "solid-js";
-import { Icon } from "@pathscale/ui";
+import { Icon, Separator } from "@pathscale/ui";
 import { Theme } from "../../utils/themeUtils";
 
 interface SizesSectionProps {
@@ -59,12 +59,10 @@ export default function SizesSection(props: SizesSectionProps) {
 
   return (
     <div class="w-full">
-      <h3 class="divider divider-start text-xs">
-        <span class="flex gap-1.5">
+      <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex gap-1.5">
           <Icon src="mdi--resize" width={16} height={16} class="opacity-40" />
           Sizes
-        </span>
-      </h3>
+        </span></span><Separator class="flex-1" /></h3>
       
       <div class="flex flex-col gap-2">
         <For each={SIZE_TYPES}>
@@ -75,7 +73,7 @@ export default function SizesSection(props: SizesSectionProps) {
                 <div class="text-base-content/40 text-xs italic">{sizeType.description}</div>
               </div>
               
-              <div class="bg-base-200 rounded-box flex items-end justify-center gap-2 p-2">
+              <div class="bg-base-200 rounded-lg flex items-end justify-center gap-2 p-2">
                 <div class="flex gap-1">
                   <For each={sizeType.scale}>
                     {(size, index) => {
@@ -106,7 +104,7 @@ export default function SizesSection(props: SizesSectionProps) {
                 
                 <input 
                   type="range" 
-                  class="range range-xs" 
+                  class="w-full accent-primary" 
                   min={0} 
                   max={SIZE_VALUES.length - 1} 
                   step={1}
@@ -130,7 +128,7 @@ export default function SizesSection(props: SizesSectionProps) {
             <div class="text-base-content/40 text-xs italic">All components</div>
           </div>
           
-          <div class="bg-base-200 rounded-box p-2">
+          <div class="bg-base-200 rounded-lg p-2">
             <div class="flex flex-col gap-2">
               <div class="flex justify-between text-xs text-base-content/50">
                 <span>0.5px</span>
@@ -139,7 +137,7 @@ export default function SizesSection(props: SizesSectionProps) {
               
               <input 
                 type="range" 
-                class="range range-xs" 
+                class="w-full accent-primary" 
                 min={0} 
                 max={BORDER_VALUES.length - 1} 
                 step={1}

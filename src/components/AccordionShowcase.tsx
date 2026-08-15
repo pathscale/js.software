@@ -236,7 +236,7 @@ export default function AccordionShowcase() {
           <Flex direction="col" gap="md">
             <Join class="w-full" vertical>
               <Accordion
-                class="border border-base-300 join-item"
+                class="border border-base-300"
                 defaultValue="a"
               >
                 <Accordion.Item value="a">
@@ -267,7 +267,7 @@ export default function AccordionShowcase() {
             </Join>
             <CodeBlock
               code={`<Join class="w-full" vertical>
-  <Accordion class="border border-base-300 join-item" defaultValue="a">
+  <Accordion class="border border-base-300" defaultValue="a">
     <Accordion.Item value="a">
       <Accordion.Trigger class="text-xl font-medium">
         Click to open this one and close others

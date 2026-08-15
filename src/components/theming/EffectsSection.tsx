@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import { Icon } from "@pathscale/ui";
+import { Icon, Separator } from "@pathscale/ui";
 import { Theme } from "../../utils/themeUtils";
 
 interface EffectsSectionProps {
@@ -23,12 +23,10 @@ const EFFECTS = [
 export default function EffectsSection(props: EffectsSectionProps) {
   return (
     <div class="w-full">
-      <h3 class="divider divider-start text-xs">
-        <span class="flex gap-1.5">
+      <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex gap-1.5">
           <Icon src="mdi--auto-fix" width={16} height={16} class="opacity-40" />
           Effects
-        </span>
-      </h3>
+        </span></span><Separator class="flex-1" /></h3>
       
       <div class="flex flex-col gap-1">
         <For each={EFFECTS}>
@@ -40,7 +38,7 @@ export default function EffectsSection(props: EffectsSectionProps) {
               </span>
               <input 
                 type="checkbox" 
-                class="toggle toggle-xs"
+                class="accent-primary"
                 checked={props.theme[effect.key] === "1"}
                 onChange={(e) => 
                   props.onThemeUpdate(effect.key, e.currentTarget.checked ? "1" : "0")

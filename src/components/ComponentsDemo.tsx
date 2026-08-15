@@ -639,7 +639,7 @@ export default function ComponentsDemo() {
                       <Icon src="mdi--menu" width={16} height={16} />
                     </Button>
                   </Dropdown.Trigger>
-                  <Dropdown.Menu class="w-52 menu-sm mt-3 z-[1]">
+                  <Dropdown.Menu class="w-52 mt-3 z-[1]">
                     <Dropdown.Item>Dashboard</Dropdown.Item>
                     <Dropdown.Item>Settings</Dropdown.Item>
                     <Dropdown.Item>Logout</Dropdown.Item>
@@ -685,23 +685,23 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex direction="col" gap="sm">
               <Join>
-                <Button class="join-item" size="sm">
+                <Button size="sm">
                   Button 1
                 </Button>
-                <Button class="join-item" size="sm" flavor="primary">
+                <Button size="sm" flavor="primary">
                   Button 2
                 </Button>
-                <Button class="join-item" size="sm">
+                <Button size="sm">
                   Button 3
                 </Button>
               </Join>
               <Join>
                 <Input
                   placeholder="Search..."
-                  class="join-item flex-1"
+                  class="flex-1"
                   size="sm"
                 />
-                <Button class="join-item" size="sm" flavor="primary">
+                <Button size="sm" flavor="primary">
                   <Icon src="mdi--magnify" width={16} height={16} />
                 </Button>
               </Join>

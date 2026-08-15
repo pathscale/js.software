@@ -1,3 +1,7 @@
+// Applies `data-theme` on the document. Imported for the effect: nothing
+// else mounted it, so the site was rendering with no theme attribute at all
+// and falling through to whatever `:root` happened to declare.
+import "./lib/theme";
 /* @refresh reload */
 import "./index.css";
 import { render } from "solid-js/web";

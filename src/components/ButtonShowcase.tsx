@@ -82,8 +82,8 @@ export default function ButtonShowcase() {
             Button deliberately renders a button. Use a native anchor or the Link component for
             navigation so browser and accessibility semantics remain correct.
           </p>
-          <a class="btn btn-primary" href="/docs/layouts">Read about Solid Layouts</a>
-          <CodeBlock code={`<a class="btn btn-primary" href="/docs/layouts">Read about Solid Layouts</a>`} />
+          <Button href="/docs/layouts" flavor="primary">Read about Solid Layouts</Button>
+          <CodeBlock code={`<Button href="/docs/layouts" flavor="primary">Read about Solid Layouts</Button>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">

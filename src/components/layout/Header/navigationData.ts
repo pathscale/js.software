@@ -3,6 +3,7 @@ import { ROUTES } from "../../../config/routes";
 
 export const navigationItems: NavigationItem[] = [
   { title: "Home", href: ROUTES.HOME },
+  { title: "Theming", href: ROUTES.THEMING },
   {
     title: "Components",
     subcategories: [

@@ -1,4 +1,4 @@
-import { Footer, Flex } from "@pathscale/ui";
+import { Flex, Footer, Link } from "@pathscale/ui";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -81,14 +81,14 @@ export default function FooterShowcase() {
           <Flex direction="col" gap="md">
             <Footer>
               <Footer.Title>Company</Footer.Title>
-              <a class="link link-hover">About us</a>
-              <a class="link link-hover">Contact</a>
+              <Link underline="hover">About us</Link>
+              <Link underline="hover">Contact</Link>
             </Footer>
             <CodeBlock
               code={`<Footer>
   <Footer.Title>Company</Footer.Title>
-  <a class="link link-hover">About us</a>
-  <a class="link link-hover">Contact</a>
+  <Link underline="hover">About us</Link>
+  <Link underline="hover">Contact</Link>
 </Footer>`}
             />
           </Flex>
@@ -98,14 +98,14 @@ export default function FooterShowcase() {
           <Flex direction="col" gap="md">
             <Footer horizontal>
               <Footer.Title>Links</Footer.Title>
-              <a class="link link-hover">Docs</a>
-              <a class="link link-hover">API</a>
+              <Link underline="hover">Docs</Link>
+              <Link underline="hover">API</Link>
             </Footer>
             <CodeBlock
               code={`<Footer horizontal>
   <Footer.Title>Links</Footer.Title>
-  <a class="link link-hover">Docs</a>
-  <a class="link link-hover">API</a>
+  <Link underline="hover">Docs</Link>
+  <Link underline="hover">API</Link>
 </Footer>`}
             />
           </Flex>
@@ -115,14 +115,14 @@ export default function FooterShowcase() {
           <Flex direction="col" gap="md">
             <Footer vertical>
               <Footer.Title>Company</Footer.Title>
-              <a class="link link-hover">About</a>
-              <a class="link link-hover">Careers</a>
+              <Link underline="hover">About</Link>
+              <Link underline="hover">Careers</Link>
             </Footer>
             <CodeBlock
               code={`<Footer vertical>
   <Footer.Title>Company</Footer.Title>
-  <a class="link link-hover">About</a>
-  <a class="link link-hover">Careers</a>
+  <Link underline="hover">About</Link>
+  <Link underline="hover">Careers</Link>
 </Footer>`}
             />
           </Flex>
@@ -132,14 +132,14 @@ export default function FooterShowcase() {
           <Flex direction="col" gap="md">
             <Footer center>
               <Footer.Title>Legal</Footer.Title>
-              <a class="link link-hover">Terms</a>
-              <a class="link link-hover">Privacy</a>
+              <Link underline="hover">Terms</Link>
+              <Link underline="hover">Privacy</Link>
             </Footer>
             <CodeBlock
               code={`<Footer center>
   <Footer.Title>Legal</Footer.Title>
-  <a class="link link-hover">Terms</a>
-  <a class="link link-hover">Privacy</a>
+  <Link underline="hover">Terms</Link>
+  <Link underline="hover">Privacy</Link>
 </Footer>`}
             />
           </Flex>

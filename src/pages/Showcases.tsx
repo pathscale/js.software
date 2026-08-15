@@ -1,6 +1,6 @@
 import { Component, For } from "solid-js";
 import { ContentContainer } from "../components/content/ContentContainer";
-import { Card, Chip, Flex, Grid } from "@pathscale/ui";
+import { Button, Card, Chip, Flex, Grid } from "@pathscale/ui";
 import { routes } from "../routes";
 import { ROUTES } from "../config/routes";
 
@@ -124,15 +124,15 @@ const Showcases: Component = () => {
       <div class="mt-16 p-8 bg-base-200 rounded-xl">
         <h3 class="text-2xl font-bold mb-4">Quick Links</h3>
         <Flex gap="lg" wrap="wrap">
-          <a href={ROUTES.DOCS} class="btn btn-primary">
+          <Button href={ROUTES.DOCS} flavor="primary">
             Documentation
-          </a>
-          <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-outline">
+          </Button>
+          <Button href={ROUTES.DOCS_INSTALLATION} variant="outline">
             Get Started
-          </a>
-          <a href={ROUTES.THEMING} class="btn btn-outline">
+          </Button>
+          <Button href={ROUTES.THEMING} variant="outline">
             Theme Customization
-          </a>
+          </Button>
         </Flex>
       </div>
     </ContentContainer>

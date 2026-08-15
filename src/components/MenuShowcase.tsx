@@ -153,7 +153,7 @@ export default function MenuShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu class="w-56 bg-base-200 rounded-box">
+              <Menu class="w-56 bg-base-200">
                 <Menu.Item>Item 1</Menu.Item>
                 <Menu.Item>Item 2</Menu.Item>
                 <Menu.Item>Item 3</Menu.Item>
@@ -175,7 +175,7 @@ export default function MenuShowcase() {
               <Menu
                 selectionMode="single"
                 defaultSelectedKeys={["item-2"]}
-                class="w-56 bg-base-200 rounded-box"
+                class="w-56 bg-base-200"
               >
                 <Menu.Item id="item-1">
                   <Menu.ItemIndicator />
@@ -216,7 +216,7 @@ export default function MenuShowcase() {
               <Menu
                 selectionMode="multiple"
                 defaultSelectedKeys={["a", "c"]}
-                class="w-56 bg-base-200 rounded-box"
+                class="w-56 bg-base-200"
               >
                 <Menu.Item id="a">
                   <Menu.ItemIndicator />A
@@ -242,7 +242,7 @@ export default function MenuShowcase() {
         <ShowcaseSection id="disabled" title="Disabled Items">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu class="w-56 bg-base-200 rounded-box">
+              <Menu class="w-56 bg-base-200">
                 <Menu.Item>Enabled item</Menu.Item>
                 <Menu.Item state="disabled">Disabled item</Menu.Item>
                 <Menu.Item state="disabled">Disabled item</Menu.Item>
@@ -261,7 +261,7 @@ export default function MenuShowcase() {
         <ShowcaseSection id="icons" title="With Icons">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu class="w-56 bg-base-200 rounded-box">
+              <Menu class="w-56 bg-base-200">
                 <Menu.Item>
                   <Flex gap="sm" align="center">
                     <IconHome />
@@ -299,7 +299,7 @@ export default function MenuShowcase() {
         <ShowcaseSection id="sections" title="Sections">
           <Flex direction="col" gap="md">
             <Flex justify="start" align="start">
-              <Menu class="w-56 bg-base-200 rounded-box">
+              <Menu class="w-56 bg-base-200">
                 <Menu.Section title="Account">
                   <Menu.Item>Profile</Menu.Item>
                   <Menu.Item>Settings</Menu.Item>
@@ -330,7 +330,7 @@ export default function MenuShowcase() {
             <Flex justify="start" align="start">
               <Menu
                 items={fileItems}
-                class="w-56 bg-base-200 rounded-box"
+                class="w-56 bg-base-200"
                 onAction={(key) => console.log("activated", key)}
               >
                 {(item) => <Menu.Item id={(item as FileItem).id}>{(item as FileItem).name}</Menu.Item>}
