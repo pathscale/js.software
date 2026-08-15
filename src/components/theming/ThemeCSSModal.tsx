@@ -20,12 +20,24 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
   const [isClipboardButtonPressed, setIsClipboardButtonPressed] = createSignal(false);
 
   const generateCSS = (theme: Theme) => {
-    const baseProps = [
-      `  name: "${theme.name}";`,
-      `  default: ${props.isDefault ? "true" : "false"};`,
-      `  prefersdark: ${props.isPrefersDark ? "true" : "false"};`,
-      `  color-scheme: "${props.colorScheme || "light"}";`,
-    ];
+    /*
+     * Plain CSS, not a daisyUI `@plugin "daisyui/theme"` block.
+     *
+     * This exported a theme in a format the site itself no longer uses: a
+     * theme in @pathscale/ui is a block of custom properties on a selector and
+     * nothing more. Anyone pasting the old output into this repository would
+     * have got a rule that never applied, and a plugin directive for a package
+     * that is not installed.
+     *
+     * `default` decides whether the theme also claims `:root`, and
+     * `prefersdark` whether it answers the OS preference - the two things the
+     * plugin's booleans meant, expressed as selectors and a media query.
+     */
+    const selectors = [
+      props.isDefault ? ":root" : null,
+      `[data-theme="${theme.name}"]`,
+    ].filter(Boolean).join(",\n");
+    const baseProps = [`  color-scheme: ${props.colorScheme || "light"};`];
 
     // Color properties in specific order like DaisyUI
     const colorOrder = [
@@ -87,7 +99,10 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       ...glassProps
     ];
 
-    return `@plugin "daisyui/theme" {\n${allProps.join("\n")}\n}`;
+    const block = `${selectors} {\n${allProps.join("\n")}\n}`;
+    return props.isPrefersDark
+      ? `${block}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n${allProps.map((l) => `  ${l}`).join("\n")}\n  }\n}`
+      : block;
   };
 
   createEffect(() => {
