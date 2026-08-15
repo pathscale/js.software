@@ -1,4 +1,4 @@
-import { Button, Icon } from "@pathscale/ui";
+import { Button, Icon, Separator } from "@pathscale/ui";
 import {
   BLUR_MAX,
   DEPTH_MAX,
@@ -36,8 +36,7 @@ export default function GlassSection(props: GlassSectionProps) {
 
   return (
     <div class="w-full">
-      <h3 class="divider divider-start text-xs">
-        <span class="flex items-center gap-1.5">
+      <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex items-center gap-1.5">
           <Icon src="mdi--blur" width={16} height={16} class="opacity-40" />
           Glass
           <Button
@@ -49,11 +48,10 @@ export default function GlassSection(props: GlassSectionProps) {
           >
             Hype4
           </Button>
-        </span>
-      </h3>
+        </span></span><Separator class="flex-1" /></h3>
 
       <div class="flex flex-col gap-2">
-        <label class="bg-base-200 rounded-box flex flex-col gap-1 p-2">
+        <label class="bg-base-200 rounded-lg flex flex-col gap-1 p-2">
           <span class="flex items-center justify-between gap-2">
             <span class="text-base-content/70 text-xs">Blur</span>
             <span class="text-base-content/50 font-mono text-xs">
@@ -62,7 +60,7 @@ export default function GlassSection(props: GlassSectionProps) {
           </span>
           <input
             type="range"
-            class="range range-xs"
+            class="w-full accent-primary"
             min={0}
             max={BLUR_MAX}
             step={1}
@@ -73,7 +71,7 @@ export default function GlassSection(props: GlassSectionProps) {
           />
         </label>
 
-        <label class="bg-base-200 rounded-box flex flex-col gap-1 p-2">
+        <label class="bg-base-200 rounded-lg flex flex-col gap-1 p-2">
           <span class="flex items-center justify-between gap-2">
             <span class="text-base-content/70 text-xs">Refraction</span>
             <span class="text-base-content/50 font-mono text-xs">
@@ -82,7 +80,7 @@ export default function GlassSection(props: GlassSectionProps) {
           </span>
           <input
             type="range"
-            class="range range-xs"
+            class="w-full accent-primary"
             min={0}
             max={REFRACTION_MAX}
             step={0.01}
@@ -93,7 +91,7 @@ export default function GlassSection(props: GlassSectionProps) {
           />
         </label>
 
-        <label class="bg-base-200 rounded-box flex flex-col gap-1 p-2">
+        <label class="bg-base-200 rounded-lg flex flex-col gap-1 p-2">
           <span class="flex items-center justify-between gap-2">
             <span class="text-base-content/70 text-xs">Depth</span>
             <span class="text-base-content/50 font-mono text-xs">
@@ -102,7 +100,7 @@ export default function GlassSection(props: GlassSectionProps) {
           </span>
           <input
             type="range"
-            class="range range-xs"
+            class="w-full accent-primary"
             min={0}
             max={DEPTH_MAX}
             step={1}

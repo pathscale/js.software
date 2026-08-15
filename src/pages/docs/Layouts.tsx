@@ -131,9 +131,9 @@ export const SettingsPanel = () => <SaveActions />;`}
         </section>
 
         <Flex gap="md" wrap="wrap">
-          <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-primary">Installation</a>
-          <a href={ROUTES.DOCS_USAGE} class="btn btn-outline">Usage cheatsheet</a>
-          <a href={ROUTES.SHOWCASES} class="btn btn-outline">Component showcases</a>
+          <Button href={ROUTES.DOCS_INSTALLATION} flavor="primary">Installation</Button>
+          <Button href={ROUTES.DOCS_USAGE} variant="outline">Usage cheatsheet</Button>
+          <Button href={ROUTES.SHOWCASES} variant="outline">Component showcases</Button>
         </Flex>
       </Flex>
     </ContentContainer>

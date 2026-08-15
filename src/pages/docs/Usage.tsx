@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Card, Flex } from "@pathscale/ui";
+import { Button, Card, Flex } from "@pathscale/ui";
 import { ContentContainer } from "../../components/content/ContentContainer";
 import { CodeBlock } from "../../components/showcase/CodeBlock";
 import { Callout } from "../../components/content/Callout";
@@ -412,29 +412,24 @@ toast.promise(p, { loading, success, error });`}
           </li>
         </ul>
         <Flex gap="md" wrap="wrap">
-          <a href={ROUTES.CALENDAR} class="btn btn-outline btn-sm">
+          <Button href={ROUTES.CALENDAR} variant="outline" size="sm">
             Calendar showcase
-          </a>
+          </Button>
         </Flex>
       </section>
 
       <section>
         <h2 class="text-3xl font-semibold mb-6">Keep going</h2>
         <Flex gap="lg" wrap="wrap">
-          <a href={ROUTES.SHOWCASES} class="btn btn-primary">
+          <Button href={ROUTES.SHOWCASES} flavor="primary">
             Explore Components
-          </a>
-          <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-outline">
+          </Button>
+          <Button href={ROUTES.DOCS_INSTALLATION} variant="outline">
             Installation Guide
-          </a>
-          <a
-            href={EXTERNAL_ROUTES.UI_USAGE_DOC}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-outline"
-          >
+          </Button>
+          <Button href={EXTERNAL_ROUTES.UI_USAGE_DOC} target="_blank" rel="noopener noreferrer" variant="outline">
             Full reference on GitHub
-          </a>
+          </Button>
         </Flex>
       </section>
     </ContentContainer>

@@ -15,7 +15,7 @@ interface PropsTableProps {
 export function PropsTable(props: PropsTableProps) {
   return (
     <div class="overflow-x-auto">
-      <table class="table table-zebra w-full text-sm">
+      <table class="w-full text-left w-full text-sm">
         <thead>
           <tr>
             <th>Name</th>

@@ -1,5 +1,5 @@
 import { For, createSignal } from "solid-js";
-import { Grid, Icon, Button, Dropdown, Switch } from "@pathscale/ui";
+import { Button, Dropdown, Grid, Icon, Separator, Switch } from "@pathscale/ui";
 import { Theme, COLOR_GROUPS } from "../../utils/themeUtils";
 import ColorGroup from "./ColorGroup";
 import RadiusSection from "./RadiusSection";
@@ -59,12 +59,10 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         </div>
       </div>
 
-      <h3 class="divider divider-start text-xs">
-        <span class="flex gap-1.5">
+      <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex gap-1.5">
           <Icon src="mdi--palette-outline" width={16} height={16} class="opacity-40" />
           Change Colors
-        </span>
-      </h3>
+        </span></span><Separator class="flex-1" /></h3>
 
       <Grid cols="4" gap="md" class="w-fit">
         <For each={COLOR_GROUPS}>
@@ -98,12 +96,10 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         onThemeUpdate={props.onThemePropertyUpdate}
       />
       
-      <h3 class="divider divider-start text-xs">
-        <span class="flex gap-1.5">
+      <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex gap-1.5">
           <Icon src="mdi--cog" width={16} height={16} class="opacity-40" />
           Options
-        </span>
-      </h3>
+        </span></span><Separator class="flex-1" /></h3>
       
       <div class="flex flex-col gap-3">
         <div class="flex items-center justify-between gap-2">

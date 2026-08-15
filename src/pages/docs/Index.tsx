@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Card, Flex } from "@pathscale/ui";
+import { Button, Card, Flex } from "@pathscale/ui";
 import { ContentContainer } from "../../components/content/ContentContainer";
 import { CodeBlock } from "../../components/showcase/CodeBlock";
 import { Callout } from "../../components/content/Callout";

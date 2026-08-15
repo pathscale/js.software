@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import { Icon } from "@pathscale/ui";
+import { Icon, Separator } from "@pathscale/ui";
 import { Theme } from "../../utils/themeUtils";
 
 interface RadiusSectionProps {
@@ -30,12 +30,10 @@ const RADIUS_TYPES = [
 export default function RadiusSection(props: RadiusSectionProps) {
   return (
     <div class="w-full">
-      <h3 class="divider divider-start text-xs">
-        <span class="flex gap-1.5">
+      <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex gap-1.5">
           <Icon src="mdi--border-radius" width={16} height={16} class="opacity-40" />
           Radius
-        </span>
-      </h3>
+        </span></span><Separator class="flex-1" /></h3>
       
       <div class="flex flex-col gap-1.5">
         <For each={RADIUS_TYPES}>

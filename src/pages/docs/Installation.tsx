@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
 import { ContentContainer } from "../../components/content/ContentContainer";
 import { CodeBlock } from "../../components/showcase/CodeBlock";
-import { Card, Flex } from "@pathscale/ui";
+import { Button, Card, Flex } from "@pathscale/ui";
 import { Callout } from "../../components/content/Callout";
 import { ROUTES } from "../../config/routes";
 
@@ -154,21 +154,21 @@ function App() {
       <section>
         <h2 class="text-3xl font-semibold mb-6">Next Steps</h2>
         <Flex gap="lg" wrap="wrap">
-          <a href={ROUTES.SHOWCASES} class="btn btn-primary">
+          <Button href={ROUTES.SHOWCASES} flavor="primary">
             Explore Components
-          </a>
-          <a href={ROUTES.DOCS_USAGE} class="btn btn-outline">
+          </Button>
+          <Button href={ROUTES.DOCS_USAGE} variant="outline">
             Usage Cheatsheet
-          </a>
-          <a href={ROUTES.DOCS_LAYOUTS} class="btn btn-outline">
+          </Button>
+          <Button href={ROUTES.DOCS_LAYOUTS} variant="outline">
             Solid Layouts
-          </a>
-          <a href={ROUTES.THEMING} class="btn btn-outline">
+          </Button>
+          <Button href={ROUTES.THEMING} variant="outline">
             Customize Theme
-          </a>
-          <a href={ROUTES.DOCS} class="btn btn-outline">
+          </Button>
+          <Button href={ROUTES.DOCS} variant="outline">
             View Documentation
-          </a>
+          </Button>
         </Flex>
       </section>
     </ContentContainer>

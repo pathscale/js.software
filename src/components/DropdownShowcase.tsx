@@ -128,14 +128,14 @@ export default function DropdownShowcase() {
 
         <ShowcaseSection id="in-navbar" title="In Navbar">
           <Flex direction="col" gap="md">
-            <Navbar class="my-16 px-2 font-sans bg-base-300 rounded-box">
+            <Navbar class="my-16 px-2 font-sans bg-base-300">
               <Navbar.Start class="px-2 lg:flex-none">
                 <span class="text-lg font-bold">daisyUI</span>
               </Navbar.Start>
               <Navbar.End>
                 <Button variant="ghost">Button</Button>
                 <Dropdown placement="bottom">
-                  <Dropdown.Trigger class="btn btn-ghost rounded-btn">
+                  <Dropdown.Trigger>
                     Dropdown
                   </Dropdown.Trigger>
                   <Dropdown.Menu align="end" class="w-52 mt-4">
@@ -146,14 +146,14 @@ export default function DropdownShowcase() {
               </Navbar.End>
             </Navbar>
             <CodeBlock
-              code={`<Navbar class="my-16 px-2 font-sans bg-base-300 rounded-box">
+              code={`<Navbar class="my-16 px-2 font-sans bg-base-300">
   <Navbar.Start class="px-2 lg:flex-none">
     <span class="text-lg font-bold">daisyUI</span>
   </Navbar.Start>
   <Navbar.End>
     <Button variant="ghost">Button</Button>
     <Dropdown placement="bottom">
-      <Dropdown.Trigger class="btn btn-ghost rounded-btn">
+      <Dropdown.Trigger>
         Dropdown
       </Dropdown.Trigger>
       <Dropdown.Menu align="end" class="w-52 mt-4">
@@ -172,7 +172,7 @@ export default function DropdownShowcase() {
             <Flex justify="start" align="start" class="my-16">
               A normal text and a helper dropdown
               <Dropdown placement="bottom">
-                <Dropdown.Trigger class="btn btn-circle btn-ghost btn-xs text-info">
+                <Dropdown.Trigger class="text-info">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -189,7 +189,7 @@ export default function DropdownShowcase() {
                 </Dropdown.Trigger>
                 <Dropdown.Menu
                   align="end"
-                  class="w-64 !p-0 shadow bg-base-100 rounded-box"
+                  class="w-64 !p-0 shadow bg-base-100"
                 >
                   <Card.Body>
                     <h2 class="text-lg font-bold">You needed more info?</h2>
@@ -202,10 +202,10 @@ export default function DropdownShowcase() {
               code={`<Flex justify="start" align="start" class="my-16">
   A normal text and a helper dropdown
   <Dropdown placement="bottom">
-    <Dropdown.Trigger class="btn btn-circle btn-ghost btn-xs text-info">
+    <Dropdown.Trigger class="text-info">
       <svg ...><path d="..." /></svg>
     </Dropdown.Trigger>
-    <Dropdown.Menu align="end" class="w-64 !p-0 shadow bg-base-100 rounded-box">
+    <Dropdown.Menu align="end" class="w-64 !p-0 shadow bg-base-100">
       <Card.Body>
         <h2 class="text-lg font-bold">You needed more info?</h2>
         <p>Here is a description!</p>

@@ -6,16 +6,16 @@ import { MenuIcon, DotsIcon, SearchIcon, CartIcon, BellIcon } from "./icons";
 export const DefaultSection = () => (
   <ShowcaseSection id="default" title="Default">
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 shadow-xl rounded-box">
-        <a class="btn btn-ghost text-xl normal-case" href="#">
+      <Navbar class="bg-base-100 shadow-xl">
+        <Button href="#" variant="ghost" size="lg">
           daisyUI
-        </a>
+        </Button>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
-  <a class="btn btn-ghost text-xl normal-case" href="#">
+        code={`<Navbar class="bg-base-100 shadow-xl">
+  <Button href="#" variant="ghost" size="lg">
     daisyUI
-  </a>
+  </Button>
 </Navbar>`}
       />
     </Flex>
@@ -25,11 +25,11 @@ export const DefaultSection = () => (
 export const TitleAndIconSection = () => (
   <ShowcaseSection id="title-and-icon" title="Title and Icon">
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 shadow-xl rounded-box">
+      <Navbar class="bg-base-100 shadow-xl">
         <Flex grow>
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Flex>
         <Flex shrink={false}>
           <Button variant="ghost" width="square">
@@ -38,9 +38,9 @@ export const TitleAndIconSection = () => (
         </Flex>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
+        code={`<Navbar class="bg-base-100 shadow-xl">
   <Flex grow>
-    <a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a>
+    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
   </Flex>
   <Flex shrink={false}>
     <Button variant="ghost" width="square">
@@ -56,16 +56,16 @@ export const TitleAndIconSection = () => (
 export const IconStartEndSection = () => (
   <ShowcaseSection id="icon-at-start-and-end" title="Icon at Start and End">
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 shadow-xl rounded-box">
+      <Navbar class="bg-base-100 shadow-xl">
         <Flex shrink={false}>
           <Button variant="ghost" width="square">
             <MenuIcon />
           </Button>
         </Flex>
         <Flex grow>
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Flex>
         <Flex shrink={false}>
           <Button variant="ghost" width="square">
@@ -74,9 +74,9 @@ export const IconStartEndSection = () => (
         </Flex>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 shadow-xl rounded-box">
+        code={`<Navbar class="bg-base-100 shadow-xl">
   <Flex shrink={false}><Button variant="ghost" width="square"><MenuIcon /></Button></Flex>
-  <Flex grow><a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a></Flex>
+  <Flex grow><Button href="#" variant="ghost" size="lg">daisyUI</Button></Flex>
   <Flex shrink={false}><Button variant="ghost" width="square"><DotsIcon /></Button></Flex>
 </Navbar>`}
       />
@@ -87,14 +87,14 @@ export const IconStartEndSection = () => (
 export const MenuSubmenuSection = () => (
   <ShowcaseSection id="menu-and-submenu" title="Menu and Submenu">
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
+      <Navbar class="bg-base-100 mb-32 shadow-xl">
         <Flex grow>
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Flex>
         <Flex shrink={false}>
-          <ul class="menu menu-horizontal px-1">
+          <ul class="flex flex-row gap-1 px-1">
             <li>
               <a>Link</a>
             </li>
@@ -115,12 +115,12 @@ export const MenuSubmenuSection = () => (
         </Flex>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
+        code={`<Navbar class="bg-base-100 mb-32 shadow-xl">
   <Flex grow>
-    <a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a>
+    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
   </Flex>
   <Flex shrink={false}>
-    <ul class="menu menu-horizontal px-1">
+    <ul class="flex flex-row gap-1 px-1">
       <li><a>Link</a></li>
       <li><details><summary>Parent</summary><ul class="p-2 bg-base-100">
         <li><a>Link 1</a></li><li><a>Link 2</a></li>
@@ -139,16 +139,16 @@ export const SearchInputSection = () => (
     title="Search Input and Dropdown"
   >
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
+      <Navbar class="bg-base-100 mb-32 shadow-xl">
         <Flex grow>
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Flex>
         <Flex shrink={false} gap="md">
           <Input placeholder="Search" class="w-24 md:w-auto" />
           <Dropdown placement="bottom">
-            <Dropdown.Trigger class="btn btn-ghost btn-circle avatar">
+            <Dropdown.Trigger>
               <div class="w-10 rounded-full">
                 <img
                   alt="avatar"
@@ -165,12 +165,12 @@ export const SearchInputSection = () => (
         </Flex>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 mb-32 shadow-xl rounded-box">
-  <Flex grow><a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a></Flex>
+        code={`<Navbar class="bg-base-100 mb-32 shadow-xl">
+  <Flex grow><Button href="#" variant="ghost" size="lg">daisyUI</Button></Flex>
   <Flex shrink={false} gap="md">
     <Input placeholder="Search" class="w-24 md:w-auto" />
     <Dropdown placement="bottom">
-      <Dropdown.Trigger class="btn btn-ghost btn-circle avatar">
+      <Dropdown.Trigger>
         <div class="w-10 rounded-full"><img src="..." /></div>
       </Dropdown.Trigger>
       <Dropdown.Menu align="end" class="w-52 mt-3 z-[1] p-2">
@@ -192,15 +192,15 @@ export const IconIndicatorSection = () => (
     title="Icon Indicator and Dropdown"
   >
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
+      <Navbar class="bg-base-100 mb-40 shadow-xl">
         <Flex grow>
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Flex>
         <Flex shrink={false} gap="md">
           <Dropdown placement="bottom">
-            <Dropdown.Trigger class="btn btn-ghost btn-circle">
+            <Dropdown.Trigger>
               <Badge.Anchor>
                 <CartIcon />
                 <Badge size="sm">8</Badge>
@@ -208,7 +208,7 @@ export const IconIndicatorSection = () => (
             </Dropdown.Trigger>
             <Dropdown.Menu
               align="end"
-              class="mt-3 z-[1] card card-compact w-52 !p-0"
+              class="mt-3 z-[1] w-52 !p-0"
             >
               <Card.Body>
                 <span class="font-bold text-lg">8 Items</span>
@@ -222,7 +222,7 @@ export const IconIndicatorSection = () => (
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown placement="bottom">
-            <Dropdown.Trigger class="btn btn-ghost btn-circle avatar">
+            <Dropdown.Trigger>
               <div class="w-10 rounded-full">
                 <img
                   alt="avatar"
@@ -239,14 +239,14 @@ export const IconIndicatorSection = () => (
         </Flex>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
-  <Flex grow><a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a></Flex>
+        code={`<Navbar class="bg-base-100 mb-40 shadow-xl">
+  <Flex grow><Button href="#" variant="ghost" size="lg">daisyUI</Button></Flex>
   <Flex shrink={false} gap="md">
     <Dropdown placement="bottom">
-      <Dropdown.Trigger class="btn btn-ghost btn-circle">
+      <Dropdown.Trigger>
         <Badge.Anchor><CartIcon /><Badge size="sm">8</Badge></Badge.Anchor>
       </Dropdown.Trigger>
-      <Dropdown.Menu align="end" class="mt-3 z-[1] card card-compact w-52 !p-0">
+      <Dropdown.Menu align="end" class="mt-3 z-[1] w-52 !p-0">
         <Card.Body>
           <span class="font-bold text-lg">8 Items</span>
           <span class="text-info">Subtotal: $999</span>
@@ -269,10 +269,10 @@ export const DropdownCenterSection = () => (
     title="Dropdown Center Logo and Icon"
   >
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
+      <Navbar class="bg-base-100 mb-40 shadow-xl">
         <Navbar.Start>
           <Dropdown>
-            <Dropdown.Trigger class="btn btn-ghost btn-circle">
+            <Dropdown.Trigger>
               <MenuIcon />
             </Dropdown.Trigger>
             <Dropdown.Menu class="w-52 mt-3 z-[1]">
@@ -283,9 +283,9 @@ export const DropdownCenterSection = () => (
           </Dropdown>
         </Navbar.Start>
         <Navbar.Center>
-          <a class="btn btn-ghost normal-case text-xl" href="#">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Navbar.Center>
         <Navbar.End>
           <Button variant="ghost" width="square">
@@ -300,10 +300,10 @@ export const DropdownCenterSection = () => (
         </Navbar.End>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 mb-40 shadow-xl rounded-box">
+        code={`<Navbar class="bg-base-100 mb-40 shadow-xl">
   <Navbar.Start>
     <Dropdown>
-      <Dropdown.Trigger class="btn btn-ghost btn-circle"><MenuIcon /></Dropdown.Trigger>
+      <Dropdown.Trigger><MenuIcon /></Dropdown.Trigger>
       <Dropdown.Menu class="w-52 mt-3 z-[1]">
         <Dropdown.Item>Homepage</Dropdown.Item>
         <Dropdown.Item>Portfolio</Dropdown.Item>
@@ -312,7 +312,7 @@ export const DropdownCenterSection = () => (
     </Dropdown>
   </Navbar.Start>
   <Navbar.Center>
-    <a class="btn btn-ghost normal-case text-xl" href="#">daisyUI</a>
+    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
   </Navbar.Center>
   <Navbar.End>
     <Button variant="ghost" width="square"><SearchIcon /></Button>
@@ -330,10 +330,10 @@ export const DropdownCenterSection = () => (
 export const ResponsiveSection = () => (
   <ShowcaseSection id="responsive" title="Responsive">
     <Flex direction="col" gap="md">
-      <Navbar class="bg-base-100 mb-48 shadow-xl rounded-box">
+      <Navbar class="bg-base-100 mb-48 shadow-xl">
         <Navbar.Start>
           <Dropdown>
-            <Dropdown.Trigger class="btn btn-ghost lg:hidden">
+            <Dropdown.Trigger class="lg:hidden">
               <MenuIcon />
             </Dropdown.Trigger>
             <Dropdown.Menu class="w-52 mt-3 z-[1]">
@@ -342,12 +342,12 @@ export const ResponsiveSection = () => (
               <Dropdown.Item>Item 3</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <a class="btn btn-ghost normal-case text-xl" href="#">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Navbar.Start>
         <Navbar.Center class="hidden lg:flex">
-          <ul class="menu menu-horizontal px-1">
+          <ul class="flex flex-row gap-1 px-1">
             <li>
               <a>Item 1</a>
             </li>
@@ -374,20 +374,20 @@ export const ResponsiveSection = () => (
         </Navbar.End>
       </Navbar>
       <CodeBlock
-        code={`<Navbar class="bg-base-100 mb-48 shadow-xl rounded-box">
+        code={`<Navbar class="bg-base-100 mb-48 shadow-xl">
   <Navbar.Start>
     <Dropdown>
-      <Dropdown.Trigger class="btn btn-ghost lg:hidden"><MenuIcon /></Dropdown.Trigger>
+      <Dropdown.Trigger class="lg:hidden"><MenuIcon /></Dropdown.Trigger>
       <Dropdown.Menu class="w-52 mt-3 z-[1]">
         <Dropdown.Item>Item 1</Dropdown.Item>
         <Dropdown.Item>Parent</Dropdown.Item>
         <Dropdown.Item>Item 3</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
-    <a class="btn btn-ghost normal-case text-xl" href="#">daisyUI</a>
+    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
   </Navbar.Start>
   <Navbar.Center class="hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
+    <ul class="flex flex-row gap-1 px-1">
       <li><a>Item 1</a></li>
       <li><details><summary>Parent</summary><ul class="p-2">
         <li><a>Submenu 1</a></li><li><a>Submenu 2</a></li>
@@ -406,33 +406,33 @@ export const ColorsSection = () => (
   <ShowcaseSection id="colors" title="Colors">
     <Flex direction="col" gap="md">
       <div class="space-y-4">
-        <Navbar class="rounded-box bg-neutral text-neutral-content">
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+        <Navbar class="bg-neutral text-neutral-content">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Navbar>
-        <Navbar class="rounded-box bg-base-300">
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+        <Navbar class="bg-base-300">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Navbar>
-        <Navbar class="rounded-box bg-primary text-primary-content">
-          <a class="btn btn-ghost text-xl normal-case" href="#">
+        <Navbar class="bg-primary text-primary-content">
+          <Button href="#" variant="ghost" size="lg">
             daisyUI
-          </a>
+          </Button>
         </Navbar>
       </div>
       <CodeBlock
-        code={`<Navbar class="rounded-box bg-neutral text-neutral-content">
-  <a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a>
+        code={`<Navbar class="bg-neutral text-neutral-content">
+  <Button href="#" variant="ghost" size="lg">daisyUI</Button>
 </Navbar>
 
-<Navbar class="rounded-box bg-base-300">
-  <a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a>
+<Navbar class="bg-base-300">
+  <Button href="#" variant="ghost" size="lg">daisyUI</Button>
 </Navbar>
 
-<Navbar class="rounded-box bg-primary text-primary-content">
-  <a class="btn btn-ghost text-xl normal-case" href="#">daisyUI</a>
+<Navbar class="bg-primary text-primary-content">
+  <Button href="#" variant="ghost" size="lg">daisyUI</Button>
 </Navbar>`}
       />
     </Flex>

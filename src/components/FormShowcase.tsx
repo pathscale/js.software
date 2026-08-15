@@ -75,7 +75,7 @@ export default function FormShowcase() {
                     id="basic-email"
                     type="email"
                     placeholder="Enter your email"
-                    class="input-bordered w-full"
+                    class="w-full"
                   />
                 </Flex>
                 <Flex direction="col" gap="sm">
@@ -84,7 +84,7 @@ export default function FormShowcase() {
                     id="basic-password"
                     type="password"
                     placeholder="Enter your password"
-                    class="input-bordered w-full"
+                    class="w-full"
                   />
                 </Flex>
                 <Button flavor="primary" class="w-full" type="submit">
@@ -98,11 +98,11 @@ export default function FormShowcase() {
   <Flex direction="col" gap="md">
     <Flex direction="col" gap="sm">
       <Label for="email">Email</Label>
-      <Input id="email" type="email" class="input-bordered w-full" />
+      <Input id="email" type="email" class="w-full" />
     </Flex>
     <Flex direction="col" gap="sm">
       <Label for="password">Password</Label>
-      <Input id="password" type="password" class="input-bordered w-full" />
+      <Input id="password" type="password" class="w-full" />
     </Flex>
     <Button class="w-full">Submit</Button>
   </Flex>
@@ -121,7 +121,7 @@ export default function FormShowcase() {
                     id="inline-email"
                     type="email"
                     placeholder="email"
-                    class="input-bordered w-full"
+                    class="w-full"
                   />
                 </Flex>
                 <Button type="submit" flavor="primary">
@@ -135,7 +135,7 @@ export default function FormShowcase() {
   <Flex direction="row" gap="md" align="end">
     <Flex direction="col" gap="sm" class="w-full component-preview">
       <Label for="email">Email</Label>
-      <Input id="email" type="email" class="input-bordered w-full" />
+      <Input id="email" type="email" class="w-full" />
     </Flex>
     <Button>Subscribe</Button>
   </Flex>
@@ -150,19 +150,19 @@ export default function FormShowcase() {
               <Grid cols="2" gap="md">
                 <Flex direction="col" gap="sm">
                   <Label for="grid-first">First Name</Label>
-                  <Input id="grid-first" type="text" class="input-bordered w-full" />
+                  <Input id="grid-first" type="text" class="w-full" />
                 </Flex>
                 <Flex direction="col" gap="sm">
                   <Label for="grid-last">Last Name</Label>
-                  <Input id="grid-last" type="text" class="input-bordered w-full" />
+                  <Input id="grid-last" type="text" class="w-full" />
                 </Flex>
                 <Flex direction="col" gap="sm" class="col-span-2">
                   <Label for="grid-email">Email</Label>
-                  <Input id="grid-email" type="email" class="input-bordered w-full" />
+                  <Input id="grid-email" type="email" class="w-full" />
                 </Flex>
                 <Flex direction="col" gap="sm" class="col-span-2">
                   <Label for="grid-phone">Phone</Label>
-                  <Input id="grid-phone" type="tel" class="input-bordered w-full" />
+                  <Input id="grid-phone" type="tel" class="w-full" />
                 </Flex>
               </Grid>
               <Button type="submit" flavor="primary" class="w-full">
@@ -175,7 +175,7 @@ export default function FormShowcase() {
   <Grid cols="2" gap="md">
     <Flex direction="col" gap="sm">
       <Label for="first">First Name</Label>
-      <Input id="first" class="input-bordered w-full" />
+      <Input id="first" class="w-full" />
     </Flex>
     ...
   </Grid>

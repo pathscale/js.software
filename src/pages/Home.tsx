@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Card, Chip, Flex } from "@pathscale/ui";
+import { Button, Card, Chip, Flex } from "@pathscale/ui";
 import { ContentContainer } from "../components/content/ContentContainer";
 import {
   HiOutlineShieldCheck,
@@ -40,18 +40,18 @@ const Home: Component = () => {
               </p>
 
               <Flex gap="lg" justify="center" wrap="wrap" class="mb-16">
-                <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-primary btn-lg">
+                <Button href={ROUTES.DOCS_INSTALLATION} flavor="primary" size="lg">
                   Start Building Today
-                </a>
-                <a href={ROUTES.SHOWCASES} class="btn btn-outline btn-lg">
+                </Button>
+                <Button href={ROUTES.SHOWCASES} variant="outline" size="lg">
                   Explore Components
-                </a>
-                <a href={ROUTES.DOCS_USAGE} class="btn btn-ghost btn-lg">
+                </Button>
+                <Button href={ROUTES.DOCS_USAGE} variant="ghost" size="lg">
                   Usage Cheatsheet
-                </a>
-                <a href={ROUTES.DOCS_LAYOUTS} class="btn btn-ghost btn-lg">
+                </Button>
+                <Button href={ROUTES.DOCS_LAYOUTS} variant="ghost" size="lg">
                   How Layouts work
-                </a>
+                </Button>
               </Flex>
 
               <div class="text-center">
@@ -92,7 +92,7 @@ const Home: Component = () => {
         </div>
 
         <div class="grid gap-8 md:grid-cols-3 mb-24">
-          <Card material="glass" padding="lg" flavor="secondary" isInteractive>
+          <Card variant="plain" padding="lg" isInteractive>
             <div class="text-center">
               <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineBolt class="w-8 h-8 text-white" />
@@ -106,9 +106,9 @@ const Home: Component = () => {
             </div>
           </Card>
 
-          <Card material="glass" padding="lg" flavor="secondary" isInteractive>
+          <Card variant="plain" padding="lg" isInteractive>
             <div class="text-center">
-              <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+              <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineCheckCircle class="w-8 h-8 text-white" />
               </div>
               <h3 class="text-2xl font-bold mb-4">Type-Safe by Design</h3>
@@ -120,9 +120,9 @@ const Home: Component = () => {
             </div>
           </Card>
 
-          <Card material="glass" padding="lg" flavor="secondary" isInteractive>
+          <Card variant="plain" padding="lg" isInteractive>
             <div class="text-center">
-              <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+              <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <HiOutlineHeart class="w-8 h-8 text-white" />
               </div>
               <h3 class="text-2xl font-bold mb-4">Developer Friendly</h3>
@@ -143,7 +143,7 @@ const Home: Component = () => {
           </p>
 
           <div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto mb-12">
-            <Card material="glass" padding="md" flavor="secondary" isInteractive>
+            <Card variant="plain" padding="md" isInteractive>
               <h3 class="font-bold text-lg mb-3 text-primary">
                 Visual Testing
               </h3>
@@ -152,7 +152,7 @@ const Home: Component = () => {
                 components
               </p>
             </Card>
-            <Card material="glass" padding="md" flavor="secondary" isInteractive>
+            <Card variant="plain" padding="md" isInteractive>
               <h3 class="font-bold text-lg mb-3 text-secondary">
                 Accessibility
               </h3>
@@ -161,7 +161,7 @@ const Home: Component = () => {
                 reader support
               </p>
             </Card>
-            <Card material="glass" padding="md" flavor="secondary" isInteractive>
+            <Card variant="plain" padding="md" isInteractive>
               <h3 class="font-bold text-lg mb-3 text-accent">Interactive</h3>
               <p class="text-base-content/70">
                 Rich interactions and animations built-in, no external
@@ -170,9 +170,9 @@ const Home: Component = () => {
             </Card>
           </div>
 
-          <a href={ROUTES.SHOWCASES} class="btn btn-primary btn-lg">
+          <Button href={ROUTES.SHOWCASES} flavor="primary" size="lg">
             Explore all components
-          </a>
+          </Button>
         </div>
 
         <Card variant="plain" padding="lg" class="border-0 bg-transparent">
@@ -185,12 +185,12 @@ const Home: Component = () => {
               projects. Get started in minutes, not hours.
             </p>
             <Flex gap="lg" justify="center" wrap="wrap">
-              <a href={ROUTES.DOCS_INSTALLATION} class="btn btn-primary btn-lg">
+              <Button href={ROUTES.DOCS_INSTALLATION} flavor="primary" size="lg">
                 Get started for free
-              </a>
-              <a href={ROUTES.DOCS} class="btn btn-outline btn-lg">
+              </Button>
+              <Button href={ROUTES.DOCS} variant="outline" size="lg">
                 View documentation
-              </a>
+              </Button>
             </Flex>
           </div>
         </Card>
