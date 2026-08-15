@@ -193,7 +193,7 @@ export default function TableShowcase() {
                       <Table.Cell>
                         <Flex align="center" gap="md" class="truncate">
                           <img
-                            src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                            src="https://i.pravatar.cc/96?img=2"
                             alt="Hart Hagerty"
                             class="w-12 h-12 rounded-full object-cover"
                           />
@@ -225,7 +225,7 @@ export default function TableShowcase() {
                       <Table.Cell>
                         <Flex align="center" gap="md" class="truncate">
                           <img
-                            src="https://img.daisyui.com/images/profile/demo/3@94.webp"
+                            src="https://i.pravatar.cc/96?img=3"
                             alt="Brice Swyre"
                             class="w-12 h-12 rounded-full object-cover"
                           />
@@ -257,7 +257,7 @@ export default function TableShowcase() {
                       <Table.Cell>
                         <Flex align="center" gap="md" class="truncate">
                           <img
-                            src="https://img.daisyui.com/images/profile/demo/4@94.webp"
+                            src="https://i.pravatar.cc/96?img=4"
                             alt="Marjy Ferencz"
                             class="w-12 h-12 rounded-full object-cover"
                           />
@@ -289,7 +289,7 @@ export default function TableShowcase() {
                       <Table.Cell>
                         <Flex align="center" gap="md" class="truncate">
                           <img
-                            src="https://img.daisyui.com/images/profile/demo/5@94.webp"
+                            src="https://i.pravatar.cc/96?img=5"
                             alt="Yancy Tear"
                             class="w-12 h-12 rounded-full object-cover"
                           />

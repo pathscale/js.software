@@ -52,7 +52,7 @@ export default function AvatarShowcase() {
   ];
 
   const sampleImage =
-    "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
+    "https://i.pravatar.cc/96";
 
   return (
     <ShowcaseLayout>

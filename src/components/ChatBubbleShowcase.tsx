@@ -68,7 +68,7 @@ export default function ChatBubbleShowcase() {
                 <ChatBubble.Header>
                   Obi-Wan Kenobi <ChatBubble.Time>2 hours ago</ChatBubble.Time>
                 </ChatBubble.Header>
-                <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                 <ChatBubble.Message>
                   You were my brother, Anakin.
                 </ChatBubble.Message>
@@ -80,7 +80,7 @@ export default function ChatBubbleShowcase() {
   <ChatBubble.Header>
     Obi-Wan Kenobi <ChatBubble.Time>2 hours ago</ChatBubble.Time>
   </ChatBubble.Header>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>You were my brother, Anakin.</ChatBubble.Message>
   <ChatBubble.Footer>Seen</ChatBubble.Footer>
 </ChatBubble>`}
@@ -124,21 +124,21 @@ export default function ChatBubbleShowcase() {
             <Flex justify="start" align="start">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
-                  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                   <ChatBubble.Message>
                     It was said that you would, destroy the Sith, not join them.
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble>
-                  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                   <ChatBubble.Message>
                     It was you who would bring balance to the Force
                   </ChatBubble.Message>
                 </ChatBubble>
 
                 <ChatBubble>
-                  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                   <ChatBubble.Message>
                     Not leave it in Darkness
                   </ChatBubble.Message>
@@ -147,21 +147,21 @@ export default function ChatBubbleShowcase() {
             </Flex>
             <CodeBlock
               code={`<ChatBubble>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>
     It was said that you would, destroy the Sith, not join them.
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>
     It was you who would bring balance to the Force
   </ChatBubble.Message>
 </ChatBubble>
 
 <ChatBubble>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>Not leave it in Darkness</ChatBubble.Message>
 </ChatBubble>`}
             />
@@ -176,7 +176,7 @@ export default function ChatBubbleShowcase() {
                   <ChatBubble.Header>
                     Obi-Wan Kenobi <ChatBubble.Time>12:45</ChatBubble.Time>
                   </ChatBubble.Header>
-                  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                   <ChatBubble.Message>
                     You were the Chosen One!
                   </ChatBubble.Message>
@@ -186,7 +186,7 @@ export default function ChatBubbleShowcase() {
                   <ChatBubble.Header>
                     Anakin <ChatBubble.Time>12:46</ChatBubble.Time>
                   </ChatBubble.Header>
-                  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                   <ChatBubble.Message>I hate you!</ChatBubble.Message>
                 </ChatBubble>
               </Flex>
@@ -196,7 +196,7 @@ export default function ChatBubbleShowcase() {
   <ChatBubble.Header>
     Obi-Wan Kenobi <ChatBubble.Time>12:45</ChatBubble.Time>
   </ChatBubble.Header>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>You were the Chosen One!</ChatBubble.Message>
 </ChatBubble>
 
@@ -204,7 +204,7 @@ export default function ChatBubbleShowcase() {
   <ChatBubble.Header>
     Anakin <ChatBubble.Time>12:46</ChatBubble.Time>
   </ChatBubble.Header>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>I hate you!</ChatBubble.Message>
 </ChatBubble>`}
             />
@@ -216,7 +216,7 @@ export default function ChatBubbleShowcase() {
             <Flex justify="start" align="start">
               <Flex direction="col" gap="lg">
                 <ChatBubble>
-                  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                   <ChatBubble.Message>
                     You were the Chosen One!
                   </ChatBubble.Message>
@@ -224,7 +224,7 @@ export default function ChatBubbleShowcase() {
                 </ChatBubble>
 
                 <ChatBubble end>
-                  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
                   <ChatBubble.Message>I hate you!</ChatBubble.Message>
                   <ChatBubble.Footer>Seen at 12:46</ChatBubble.Footer>
                 </ChatBubble>
@@ -232,13 +232,13 @@ export default function ChatBubbleShowcase() {
             </Flex>
             <CodeBlock
               code={`<ChatBubble>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>You were the Chosen One!</ChatBubble.Message>
   <ChatBubble.Footer>Delivered</ChatBubble.Footer>
 </ChatBubble>
 
 <ChatBubble end>
-  <ChatBubble.Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+  <ChatBubble.Avatar src="https://i.pravatar.cc/96" />
   <ChatBubble.Message>I hate you!</ChatBubble.Message>
   <ChatBubble.Footer>Seen at 12:46</ChatBubble.Footer>
 </ChatBubble>`}
