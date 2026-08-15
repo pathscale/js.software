@@ -8,13 +8,13 @@ export const DefaultSection = () => (
     <Flex direction="col" gap="md">
       <Navbar class="bg-base-100 shadow-xl">
         <Button href="#" variant="ghost" size="lg">
-          daisyUI
+          Brand
         </Button>
       </Navbar>
       <CodeBlock
         code={`<Navbar class="bg-base-100 shadow-xl">
   <Button href="#" variant="ghost" size="lg">
-    daisyUI
+    Brand
   </Button>
 </Navbar>`}
       />
@@ -28,7 +28,7 @@ export const TitleAndIconSection = () => (
       <Navbar class="bg-base-100 shadow-xl">
         <Flex grow>
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Flex>
         <Flex shrink={false}>
@@ -40,7 +40,7 @@ export const TitleAndIconSection = () => (
       <CodeBlock
         code={`<Navbar class="bg-base-100 shadow-xl">
   <Flex grow>
-    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
+    <Button href="#" variant="ghost" size="lg">Brand</Button>
   </Flex>
   <Flex shrink={false}>
     <Button variant="ghost" width="square">
@@ -64,7 +64,7 @@ export const IconStartEndSection = () => (
         </Flex>
         <Flex grow>
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Flex>
         <Flex shrink={false}>
@@ -76,7 +76,7 @@ export const IconStartEndSection = () => (
       <CodeBlock
         code={`<Navbar class="bg-base-100 shadow-xl">
   <Flex shrink={false}><Button variant="ghost" width="square"><MenuIcon /></Button></Flex>
-  <Flex grow><Button href="#" variant="ghost" size="lg">daisyUI</Button></Flex>
+  <Flex grow><Button href="#" variant="ghost" size="lg">Brand</Button></Flex>
   <Flex shrink={false}><Button variant="ghost" width="square"><DotsIcon /></Button></Flex>
 </Navbar>`}
       />
@@ -90,7 +90,7 @@ export const MenuSubmenuSection = () => (
       <Navbar class="bg-base-100 mb-32 shadow-xl">
         <Flex grow>
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Flex>
         <Flex shrink={false}>
@@ -117,7 +117,7 @@ export const MenuSubmenuSection = () => (
       <CodeBlock
         code={`<Navbar class="bg-base-100 mb-32 shadow-xl">
   <Flex grow>
-    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
+    <Button href="#" variant="ghost" size="lg">Brand</Button>
   </Flex>
   <Flex shrink={false}>
     <ul class="flex flex-row gap-1 px-1">
@@ -142,7 +142,7 @@ export const SearchInputSection = () => (
       <Navbar class="bg-base-100 mb-32 shadow-xl">
         <Flex grow>
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Flex>
         <Flex shrink={false} gap="md">
@@ -152,7 +152,7 @@ export const SearchInputSection = () => (
               <div class="w-10 rounded-full">
                 <img
                   alt="avatar"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src="https://i.pravatar.cc/96"
                 />
               </div>
             </Dropdown.Trigger>
@@ -166,7 +166,7 @@ export const SearchInputSection = () => (
       </Navbar>
       <CodeBlock
         code={`<Navbar class="bg-base-100 mb-32 shadow-xl">
-  <Flex grow><Button href="#" variant="ghost" size="lg">daisyUI</Button></Flex>
+  <Flex grow><Button href="#" variant="ghost" size="lg">Brand</Button></Flex>
   <Flex shrink={false} gap="md">
     <Input placeholder="Search" class="w-24 md:w-auto" />
     <Dropdown placement="bottom">
@@ -195,7 +195,7 @@ export const IconIndicatorSection = () => (
       <Navbar class="bg-base-100 mb-40 shadow-xl">
         <Flex grow>
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Flex>
         <Flex shrink={false} gap="md">
@@ -226,7 +226,7 @@ export const IconIndicatorSection = () => (
               <div class="w-10 rounded-full">
                 <img
                   alt="avatar"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src="https://i.pravatar.cc/96"
                 />
               </div>
             </Dropdown.Trigger>
@@ -240,7 +240,7 @@ export const IconIndicatorSection = () => (
       </Navbar>
       <CodeBlock
         code={`<Navbar class="bg-base-100 mb-40 shadow-xl">
-  <Flex grow><Button href="#" variant="ghost" size="lg">daisyUI</Button></Flex>
+  <Flex grow><Button href="#" variant="ghost" size="lg">Brand</Button></Flex>
   <Flex shrink={false} gap="md">
     <Dropdown placement="bottom">
       <Dropdown.Trigger>
@@ -284,7 +284,7 @@ export const DropdownCenterSection = () => (
         </Navbar.Start>
         <Navbar.Center>
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Navbar.Center>
         <Navbar.End>
@@ -312,7 +312,7 @@ export const DropdownCenterSection = () => (
     </Dropdown>
   </Navbar.Start>
   <Navbar.Center>
-    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
+    <Button href="#" variant="ghost" size="lg">Brand</Button>
   </Navbar.Center>
   <Navbar.End>
     <Button variant="ghost" width="square"><SearchIcon /></Button>
@@ -343,7 +343,7 @@ export const ResponsiveSection = () => (
             </Dropdown.Menu>
           </Dropdown>
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Navbar.Start>
         <Navbar.Center class="hidden lg:flex">
@@ -384,7 +384,7 @@ export const ResponsiveSection = () => (
         <Dropdown.Item>Item 3</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
-    <Button href="#" variant="ghost" size="lg">daisyUI</Button>
+    <Button href="#" variant="ghost" size="lg">Brand</Button>
   </Navbar.Start>
   <Navbar.Center class="hidden lg:flex">
     <ul class="flex flex-row gap-1 px-1">
@@ -408,31 +408,31 @@ export const ColorsSection = () => (
       <div class="space-y-4">
         <Navbar class="bg-neutral text-neutral-content">
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Navbar>
         <Navbar class="bg-base-300">
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Navbar>
         <Navbar class="bg-primary text-primary-content">
           <Button href="#" variant="ghost" size="lg">
-            daisyUI
+            Brand
           </Button>
         </Navbar>
       </div>
       <CodeBlock
         code={`<Navbar class="bg-neutral text-neutral-content">
-  <Button href="#" variant="ghost" size="lg">daisyUI</Button>
+  <Button href="#" variant="ghost" size="lg">Brand</Button>
 </Navbar>
 
 <Navbar class="bg-base-300">
-  <Button href="#" variant="ghost" size="lg">daisyUI</Button>
+  <Button href="#" variant="ghost" size="lg">Brand</Button>
 </Navbar>
 
 <Navbar class="bg-primary text-primary-content">
-  <Button href="#" variant="ghost" size="lg">daisyUI</Button>
+  <Button href="#" variant="ghost" size="lg">Brand</Button>
 </Navbar>`}
       />
     </Flex>

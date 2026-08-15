@@ -164,7 +164,7 @@ export default function CardShowcase() {
           <Flex direction="col" gap="md">
             <Card class="overflow-hidden">
               <img
-                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                src="https://i.pravatar.cc/96"
                 alt="Shoes"
                 class="w-full h-48 object-cover"
               />
@@ -179,7 +179,7 @@ export default function CardShowcase() {
             <CodeBlock
               code={`<Card class="overflow-hidden">
   <img
-    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+    src="https://i.pravatar.cc/96"
     alt="Shoes"
     class="w-full h-48 object-cover"
   />

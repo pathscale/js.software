@@ -70,7 +70,6 @@ const Home: Component = () => {
                     Solid Layouts
                   </div>
                   <div class="text-lg font-bold text-base-content/70">TypeScript</div>
-                  <div class="text-lg font-bold text-base-content/70">DaisyUI</div>
                   <div class="text-lg font-bold text-base-content/70">Rsbuild</div>
                 </Flex>
               </div>

@@ -130,7 +130,7 @@ export default function DropdownShowcase() {
           <Flex direction="col" gap="md">
             <Navbar class="my-16 px-2 font-sans bg-base-300">
               <Navbar.Start class="px-2 lg:flex-none">
-                <span class="text-lg font-bold">daisyUI</span>
+                <span class="text-lg font-bold">Brand</span>
               </Navbar.Start>
               <Navbar.End>
                 <Button variant="ghost">Button</Button>
@@ -148,7 +148,7 @@ export default function DropdownShowcase() {
             <CodeBlock
               code={`<Navbar class="my-16 px-2 font-sans bg-base-300">
   <Navbar.Start class="px-2 lg:flex-none">
-    <span class="text-lg font-bold">daisyUI</span>
+    <span class="text-lg font-bold">Brand</span>
   </Navbar.Start>
   <Navbar.End>
     <Button variant="ghost">Button</Button>

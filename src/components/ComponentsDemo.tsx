@@ -624,7 +624,7 @@ export default function ComponentsDemo() {
         <Card class="bg-base-100">
           <Card.Body class="p-0">
             <pre class="bg-base-200 p-4 text-xs font-mono rounded">
-              <code>{`$ npm install daisyui\n> installing...\n> Done!`}</code>
+              <code>{`$ bun add @pathscale/ui\n> installing...\n> Done!`}</code>
             </pre>
           </Card.Body>
         </Card>
