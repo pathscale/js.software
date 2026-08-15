@@ -4,10 +4,10 @@ import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function ProgressCircleShowcase() {
+export default function RadialProgressShowcase() {
   return (
     <ShowcaseLayout>
-      <ShowcaseSection id="progress-circle" title="Progress Circle">
+      <ShowcaseSection id="radial-progress" title="Radial Progress">
         <Flex gap="lg" align="center" wrap="wrap">
           <RadialProgress value={24} />
           <RadialProgress value={58} />

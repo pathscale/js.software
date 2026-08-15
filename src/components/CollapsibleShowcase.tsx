@@ -3,10 +3,10 @@ import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function DisclosureShowcase() {
+export default function CollapsibleShowcase() {
   return (
     <ShowcaseLayout>
-      <ShowcaseSection id="disclosure" title="Disclosure">
+      <ShowcaseSection id="collapsible" title="Collapsible">
         <Flex direction="col" gap="md">
           <Collapsible>
             <Collapsible.Trigger>What does Solid Layouts compile?</Collapsible.Trigger>

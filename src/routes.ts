@@ -20,14 +20,14 @@ import CheckboxShowcase from "./components/CheckboxShowcase";
 import ColorPickerShowcase from "./components/ColorPickerShowcase";
 import CoverageShowcase from "./components/CoverageShowcase";
 import DataGridShowcase from "./components/DataGridShowcase";
-import DisclosureShowcase from "./components/DisclosureShowcase";
+import CollapsibleShowcase from "./components/CollapsibleShowcase";
 import DrawerShowcase from "./components/DrawerShowcase";
 import DropdownShowcase from "./components/DropdownShowcase";
-import EmptyStateShowcase from "./components/EmptyStateShowcase";
+import EmptyShowcase from "./components/EmptyShowcase";
 import FieldsetShowcase from "./components/FieldsetShowcase";
 import FileInputShowcase from "./components/FileInputShowcase";
 import FlexShowcase from "./components/FlexShowcase";
-import FloatingDockShowcase from "./components/FloatingDockShowcase";
+import DockShowcase from "./components/DockShowcase";
 import FooterShowcase from "./components/FooterShowcase";
 import FormActionsShowcase from "./components/FormActionsShowcase";
 import FormShowcase from "./components/FormShowcase";
@@ -40,12 +40,12 @@ import JoinShowcase from "./components/JoinShowcase";
 import KbdShowcase from "./components/KbdShowcase";
 import LinkShowcase from "./components/LinkShowcase";
 import MenuShowcase from "./components/MenuShowcase";
-import ModalShowcase from "./components/ModalShowcase";
+import DialogShowcase from "./components/DialogShowcase";
 import NavbarShowcase from "./components/NavbarShowcase";
 import NoiseBackgroundShowcase from "./components/NoiseBackgroundShowcase";
 import PaginationShowcase from "./components/PaginationShowcase";
-import ProgressBarShowcase from "./components/ProgressBarShowcase";
-import ProgressCircleShowcase from "./components/ProgressCircleShowcase";
+import ProgressShowcase from "./components/ProgressShowcase";
+import RadialProgressShowcase from "./components/RadialProgressShowcase";
 import RadioGroupShowcase from "./components/RadioGroupShowcase";
 import RadioShowcase from "./components/RadioShowcase";
 import SelectShowcase from "./components/SelectShowcase";
@@ -57,7 +57,7 @@ import TableShowcase from "./components/TableShowcase";
 import TabsShowcase from "./components/TabsShowcase";
 import TextareaShowcase from "./components/TextareaShowcase";
 import ToastShowcase from "./components/ToastShowcase";
-import ToggleShowcase from "./components/ToggleShowcase";
+import SwitchShowcase from "./components/SwitchShowcase";
 import TooltipShowcase from "./components/TooltipShowcase";
 import VideoPreviewShowcase from "./components/VideoPreviewShowcase";
 
@@ -73,21 +73,21 @@ const componentRoutes = ([
   ["Alert", ROUTES.ALERT, AlertShowcase, "Important status and feedback messages."],
   ["Avatar", ROUTES.AVATAR, AvatarShowcase, "Images, initials, and user identity."],
   ["Badge", ROUTES.BADGE, BadgeShowcase, "Compact labels, counts, and statuses."],
-  ["Breadcrumbs", ROUTES.BREADCRUMB, BreadcrumbShowcase, "Hierarchical navigation paths."],
+  ["Breadcrumb", ROUTES.BREADCRUMB, BreadcrumbShowcase, "Hierarchical navigation paths."],
   ["Button", ROUTES.BUTTON, ButtonShowcase, "Semantic actions and form controls."],
   ["Calendar", ROUTES.CALENDAR, CalendarShowcase, "Interactive date selection."],
   ["Card", ROUTES.CARD, CardShowcase, "Grouped content and actions."],
   ["Chat Bubble", ROUTES.CHAT_BUBBLE, ChatBubbleShowcase, "Conversation messages."],
   ["Checkbox", ROUTES.CHECKBOX, CheckboxShowcase, "Boolean and multi-select controls."],
   ["Color Picker", ROUTES.COLOR_PICKER, ColorPickerShowcase, "Composable color selection."],
-  ["Disclosure", ROUTES.DISCLOSURE, DisclosureShowcase, "Reveal supporting content."],
+  ["Collapsible", ROUTES.COLLAPSIBLE, CollapsibleShowcase, "Reveal supporting content."],
   ["Drawer", ROUTES.DRAWER, DrawerShowcase, "Edge-mounted overlay panels."],
   ["Dropdown", ROUTES.DROPDOWN, DropdownShowcase, "Contextual actions and menus."],
-  ["Empty State", ROUTES.EMPTY_STATE, EmptyStateShowcase, "Guidance for empty content."],
+  ["Empty", ROUTES.EMPTY, EmptyShowcase, "Guidance for empty content."],
   ["Fieldset", ROUTES.FIELDSET, FieldsetShowcase, "Related form controls and actions."],
   ["File Input", ROUTES.FILE_INPUT, FileInputShowcase, "File selection with the Input recipe."],
   ["Flex", ROUTES.FLEX, FlexShowcase, "Responsive flex layout parameters."],
-  ["Floating Dock", ROUTES.FLOATING_DOCK, FloatingDockShowcase, "Magnifying action dock."],
+  ["Dock", ROUTES.DOCK, DockShowcase, "Magnifying action dock."],
   ["Footer", ROUTES.FOOTER, FooterShowcase, "Page footer structure."],
   ["Form", ROUTES.FORM, FormShowcase, "Validation-aware form composition."],
   ["Fieldset Actions", ROUTES.FORM_ACTIONS, FormActionsShowcase, "Semantic form action layout."],
@@ -100,12 +100,12 @@ const componentRoutes = ([
   ["Kbd", ROUTES.KBD, KbdShowcase, "Keyboard shortcut notation."],
   ["Link", ROUTES.LINK, LinkShowcase, "Accessible navigation links."],
   ["Menu", ROUTES.MENU, MenuShowcase, "Structured actions and navigation."],
-  ["Modal", ROUTES.MODAL, ModalShowcase, "Focused overlay dialogs."],
+  ["Dialog", ROUTES.DIALOG, DialogShowcase, "Focused overlay dialogs."],
   ["Navbar", ROUTES.NAVBAR, NavbarShowcase, "Application navigation structure."],
   ["Noise Background", ROUTES.NOISE_BACKGROUND, NoiseBackgroundShowcase, "Layered ambient backgrounds."],
   ["Pagination", ROUTES.PAGINATION, PaginationShowcase, "Paged data navigation."],
-  ["Progress Bar", ROUTES.PROGRESS_BAR, ProgressBarShowcase, "Linear progress feedback."],
-  ["Progress Circle", ROUTES.PROGRESS_CIRCLE, ProgressCircleShowcase, "Circular progress feedback."],
+  ["Progress", ROUTES.PROGRESS, ProgressShowcase, "Linear progress feedback."],
+  ["Radial Progress", ROUTES.RADIAL_PROGRESS, RadialProgressShowcase, "Circular progress feedback."],
   ["Radio", ROUTES.RADIO, RadioShowcase, "Single-choice controls."],
   ["Radio Group", ROUTES.RADIO_GROUP, RadioGroupShowcase, "Grouped single-choice controls."],
   ["Select", ROUTES.SELECT, SelectShowcase, "Keyboard-accessible option selection."],
@@ -118,7 +118,7 @@ const componentRoutes = ([
   ["Tabs", ROUTES.TABS, TabsShowcase, "Selectable views and panels."],
   ["Textarea", ROUTES.TEXTAREA, TextareaShowcase, "Multiline text input."],
   ["Toast", ROUTES.TOAST, ToastShowcase, "Transient notifications."],
-  ["Toggle", ROUTES.TOGGLE, ToggleShowcase, "Pressed and on/off state."],
+  ["Switch", ROUTES.SWITCH, SwitchShowcase, "Pressed and on/off state."],
   ["Tooltip", ROUTES.TOOLTIP, TooltipShowcase, "Context on hover and focus."],
   ["Video Preview", ROUTES.VIDEO_PREVIEW, VideoPreviewShowcase, "Live media preview."],
   ["Complete Coverage", ROUTES.COVERAGE, CoverageShowcase, "Current public families without a dedicated page."],

@@ -18,21 +18,29 @@ export default function CardShowcase() {
   const cardProps = [
     {
       name: "variant",
-      type: '"default" | "flat" | "bordered" | "shadow"',
-      default: '"default"',
-      description: "Visual variant of the card",
+      type: '"solid" | "soft" | "outline" | "ghost" | "plain"',
+      default: '"plain"',
+      // The old scale conflated three things. `bordered` is variant outline,
+      // `shadow` is an elevation, `flat` is variant plain.
+      description: "Fill treatment. Shared vocabulary, same values on every component.",
     },
     {
-      name: "isHoverable",
-      type: "boolean",
-      default: "false",
-      description: "Adds an interactive hover treatment",
+      name: "material",
+      type: '"solid" | "glass"',
+      default: '"solid"',
+      description: "What the surface is made of. Absorbs the old GlassPanel.",
     },
     {
-      name: "isPressable",
+      name: "elevation",
+      type: '"none" | "sm" | "md" | "lg" | "xl"',
+      default: '"none"',
+      description: "How far off the page it sits. Was the separate shadow prop.",
+    },
+    {
+      name: "isInteractive",
       type: "boolean",
       default: "false",
-      description: "Makes the card behave like a button (role + keyboard activation)",
+      description: "Button role, tab stop and keyboard activation. Replaces isHoverable and isPressable, which were one call site each across 330.",
     },
     {
       name: "dataTheme",
@@ -72,7 +80,7 @@ export default function CardShowcase() {
     {
       name: "role",
       type: "string",
-      description: "ARIA role attribute (defaults to 'button' when isPressable)",
+      description: "ARIA role attribute (defaults to 'button' when isInteractive)",
     },
   ];
 

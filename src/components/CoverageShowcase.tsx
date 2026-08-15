@@ -54,7 +54,7 @@ const EXAMPLES: Example[] = [
   },
   { name: "Input (placeholder)", render: () => <Input placeholder="Helper text." /> },
   {
-    name: "Disclosure",
+    name: "Collapsible",
     render: () => (
       <Collapsible>
         <Collapsible.Trigger>More</Collapsible.Trigger>
@@ -74,7 +74,7 @@ const EXAMPLES: Example[] = [
     ),
   },
   {
-    name: "EmptyState",
+    name: "Empty",
     render: () => (
       <Empty>
         <Empty.Title>Nothing here</Empty.Title>
@@ -115,8 +115,8 @@ const EXAMPLES: Example[] = [
       </Popover>
     ),
   },
-  { name: "ProgressBar", render: () => <Progress value={40} /> },
-  { name: "ProgressCircle", render: () => <RadialProgress value={40} /> },
+  { name: "Progress", render: () => <Progress value={40} /> },
+  { name: "RadialProgress", render: () => <RadialProgress value={40} /> },
   {
     name: "ScrollShadow",
     render: () => (

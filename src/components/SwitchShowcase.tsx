@@ -4,7 +4,7 @@ import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function ToggleShowcase() {
+export default function SwitchShowcase() {
   const sections = [
     { id: "default", title: "Default" },
     { id: "colors", title: "Colors" },

@@ -19,7 +19,7 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
 
   return (
     <>
-      <Navbar.Row class="hidden lg:block bg-base-200 border-t border-base-300 px-4 py-2">
+      <Navbar.Row class="hidden lg:block bg-base-200 px-4 py-2">
         <Flex wrap="wrap" gap="sm" align="center">
           <For each={componentsItem?.subcategories || []}>
             {(subcategory) => (
@@ -44,7 +44,7 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
         </Flex>
       </Navbar.Row>
       
-      <Navbar.Row class="hidden lg:block bg-base-100 border-t border-base-300 px-4 py-2">
+      <Navbar.Row class="hidden lg:block bg-base-100 px-4 py-2">
         <Flex wrap="wrap" gap="sm" align="center">
           <For each={selectedSubcategory()?.items || []}>
             {(item) => (

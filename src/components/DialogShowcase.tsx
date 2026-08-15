@@ -5,7 +5,7 @@ import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function ModalShowcase() {
+export default function DialogShowcase() {
   const sections = [
     { id: "default", title: "Default" },
     { id: "clicked-outside", title: "Clicked Outside" },

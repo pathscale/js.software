@@ -33,7 +33,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
 
       <div class="fixed top-0 left-0 h-screen w-80 bg-base-100 shadow-xl transform transition-transform duration-300 ease-in-out">
         <div class="flex flex-col h-screen">
-          <div class="flex items-center justify-between p-4 border-b border-base-300">
+          <div class="flex items-center justify-between p-4">
             <span class="text-xl font-bold">UI</span>
             <Button
               variant="ghost"
@@ -45,7 +45,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
             </Button>
           </div>
 
-          <div class="p-4 border-b border-base-300">
+          <div class="p-4">
             <Search />
           </div>
 
@@ -107,7 +107,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
             </div>
           </div>
 
-          <div class="p-4 border-t border-base-300">
+          <div class="p-4">
             <a
               href="/docs/installation"
               class="block w-full bg-primary text-white hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-center transition-all whitespace-nowrap"

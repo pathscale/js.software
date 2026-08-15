@@ -27,10 +27,12 @@ export default function SpinnerShowcase() {
       description: "What the thing is. Open: your own name yields a class you can style.",
     },
     {
-      name: "variant",
+      name: "shape",
       type: '"spinner" | "dots" | "ring" | "ball" | "bars" | "infinity"',
       default: '"spinner"',
-      description: "Visual style variant of the loading indicator",
+      // Was `variant`. `variant` is the shared fill-treatment axis now, and a
+      // spinner has no fill to treat.
+      description: "Which indicator to draw",
     },
     {
       name: "class",
