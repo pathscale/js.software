@@ -3,10 +3,10 @@ import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
-export default function ProgressBarShowcase() {
+export default function ProgressShowcase() {
   return (
     <ShowcaseLayout>
-      <ShowcaseSection id="progress-bar" title="Progress Bar">
+      <ShowcaseSection id="progress-bar" title="Progress">
         <Flex direction="col" gap="lg">
           <Progress value={24} />
           <Progress value={58} />

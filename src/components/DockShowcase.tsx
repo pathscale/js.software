@@ -44,7 +44,7 @@ const sampleItems: DockItem[] = [
   { title: "Account", icon: accountIcon, href: "#" },
 ];
 
-const FloatingDockShowcase: Component = () => {
+const DockShowcase: Component = () => {
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
@@ -54,7 +54,7 @@ const FloatingDockShowcase: Component = () => {
     { id: "props", title: "Props" },
   ] as const;
 
-  const floatingDockProps = [
+  const dockProps = [
     {
       name: "items",
       type: "DockItem[]",
@@ -304,8 +304,8 @@ const FloatingDockShowcase: Component = () => {
         </ShowcaseSection>
 
         <ShowcaseSection id="props" title="Props">
-          <h3 class="text-lg font-medium mb-4">FloatingDock Props</h3>
-          <PropsTable props={floatingDockProps} />
+          <h3 class="text-lg font-medium mb-4">Dock Props</h3>
+          <PropsTable props={dockProps} />
 
           <h3 class="text-lg font-medium mt-8 mb-4">DockItem</h3>
           <PropsTable props={itemProps} />
@@ -315,4 +315,4 @@ const FloatingDockShowcase: Component = () => {
   );
 };
 
-export default FloatingDockShowcase;
+export default DockShowcase;

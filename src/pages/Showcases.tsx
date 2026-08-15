@@ -17,7 +17,7 @@ const Showcases: Component = () => {
     "Button",
     "Card",
     "Input",
-    "Modal",
+    "Dialog",
     "Navbar",
     "Alert",
     "Grid",

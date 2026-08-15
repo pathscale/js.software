@@ -15,18 +15,23 @@ export default function GlassPanelShowcase() {
     { id: "props", title: "Props" },
   ] as const;
 
+  /* Card's props, not GlassPanel's. GlassPanel was absorbed into Card in
+     @pathscale/ui 2.2: `material="glass"` is what this page demonstrates. The
+     collapse machinery it used to carry — `collapsible`, `open`, `defaultOpen`,
+     `onToggle`, `title`, `icon` — was dropped rather than ported, because no
+     call site across thirteen applications used any of it. `transparent`,
+     `paddingX` and `paddingY` went the same way: padding is an axis now. */
   const props = [
-    { name: "collapsible", type: "boolean", description: "Whether the panel can be collapsed" },
-    { name: "open", type: "boolean", description: "Controlled open state for collapsible panels" },
-    { name: "defaultOpen", type: "boolean", description: "Initial open state for uncontrolled collapsible panels (default: true)" },
-    { name: "onToggle", type: "(open: boolean) => void", description: "Callback when collapsible panel is toggled" },
-    { name: "title", type: "string", description: "Header title text (required for collapsible)" },
-    { name: "icon", type: "JSX.Element", description: "Icon displayed next to the title" },
-    { name: "size", type: '"xs" | "sm" | "md" | "lg" | "xl"', description: "Content padding size (default: md)" },
-    { name: "transparent", type: "boolean", description: "Removes background, border, blur, and decorative chrome — renders as a plain container" },
-    { name: "paddingX", type: "string", description: "Custom horizontal padding utility class (overrides size)" },
-    { name: "paddingY", type: "string", description: "Custom vertical padding utility class (overrides size)" },
-    { name: "class", type: "string", description: "Additional CSS classes" },
+    { name: "material", type: '"solid" | "glass"', description: "What the surface is made of. `glass` is this page." },
+    { name: "variant", type: '"solid" | "soft" | "outline" | "ghost" | "plain"', description: "Fill treatment, shared across every component" },
+    { name: "flavor", type: "Flavor", description: "Which semantic colour it carries" },
+    { name: "elevation", type: '"none" | "sm" | "md" | "lg" | "xl"', description: "How far off the page it sits" },
+    { name: "padding", type: '"none" | "xs" | "sm" | "md" | "lg" | "xl"', description: "Inner spacing" },
+    { name: "radius", type: '"none" | "sm" | "md" | "lg" | "full"', description: "Corner rounding" },
+    { name: "isInteractive", type: "boolean", description: "Takes a button role, a tab stop and keyboard activation. Replaces the old isHoverable and isPressable." },
+    { name: "header", type: "JSX.Element", description: "Rendered in the card's header slot" },
+    { name: "footer", type: "JSX.Element", description: "Rendered in the card's footer slot" },
+    { name: "state", type: "State", description: "default | loading | error | invalid | disabled | hidden" },
   ];
 
   const themeVars = [

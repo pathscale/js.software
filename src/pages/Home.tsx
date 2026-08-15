@@ -12,10 +12,15 @@ import { ROUTES } from "../config/routes";
 const Home: Component = () => {
   return (
     <div>
-      <div class="min-h-[80vh] bg-gradient-to-br from-primary to-base-200 flex items-center justify-center">
+      {/* 24x.ai's hero is the page itself: flat `base-100`, no wash, and the
+          accent reserved for the things you can act on. A `from-primary`
+          gradient across 80vh spends the accent on the background, which is
+          exactly the budget the rest of the page needs to have any contrast
+          left. */}
+      <div class="min-h-[80vh] bg-base-100 flex items-center justify-center">
         <div class="w-full">
           <ContentContainer maxWidth="xl" prose={false} class="text-center">
-            <Card material="glass" padding="lg" flavor="secondary">
+            <Card variant="plain" padding="lg" class="border-0 bg-transparent">
               <div class="mb-8">
                 <Chip class="mb-6 px-4 py-2">
                   <HiOutlineShieldCheck class="w-4 h-4 mr-2" />
@@ -170,7 +175,7 @@ const Home: Component = () => {
           </a>
         </div>
 
-        <Card material="glass" padding="lg" flavor="secondary">
+        <Card variant="plain" padding="lg" class="border-0 bg-transparent">
           <div class="text-center py-16">
             <h2 class="text-4xl lg:text-5xl font-bold mb-6">
               Start building amazing UIs today

@@ -1,6 +1,3 @@
-/* Nunito Sans Font */
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-
 @plugin "@iconify/tailwind4";
 /* daisyUI names its components with the same bare class names @pathscale/ui
    uses for its BEM roots - `.checkbox`, `.alert`, `.badge`, `.navbar` and
@@ -23,7 +20,7 @@
 @import "tw-animate-css";
 @import "@pathscale/ui/index.css";
 @import "daisyui/components/diff.css";
-@import "./styles/themes/generated.css";
+@import "./styles/themes/theme.css";
 
 @layer base {
   /* Structure borrowed from 24x.ai: a stable scrollbar gutter so a short page
@@ -31,20 +28,19 @@
      for every page, and glass reserved for the chrome rather than sprayed
      across the content. */
   :root {
-    --js-glass-blur: 6px;
-    --js-glass-nav-opacity: 55%;
-    --js-glass-border-opacity: 8%;
+    --js-glass-blur: 4px;
+    --js-glass-nav-opacity: 42%;
+    --js-glass-border-opacity: 7%;
   }
 
   html {
     scrollbar-gutter: stable;
     scroll-behavior: smooth;
-    font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   
   body {
-    font-family: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     overflow-x: hidden;
+    overflow-y: scroll;
     background-color: var(--color-base-100);
     color: var(--color-base-content);
   }
@@ -80,37 +76,19 @@
 
   /* Real blur, on the chrome only. A hairline at 8% rather than a border, so
      the edge reads as a seam and not a box. */
+  /* No border, no shadow. The nav is the page with a blur over it, and a
+     hairline under it is chrome that earns nothing: the blur already separates
+     it from what scrolls beneath. */
   .glass-nav {
     background-color: color-mix(
       in oklab,
-      var(--color-base-100) var(--js-glass-nav-opacity, 55%),
+      var(--color-base-100) var(--js-glass-nav-opacity, 42%),
       transparent
     );
-    -webkit-backdrop-filter: blur(var(--js-glass-blur, 6px)) saturate(1.1);
-    backdrop-filter: blur(var(--js-glass-blur, 6px)) saturate(1.1);
-    border-bottom: 1px solid
-      color-mix(
-        in oklab,
-        var(--color-base-content) var(--js-glass-border-opacity, 8%),
-        transparent
-      );
+    -webkit-backdrop-filter: blur(var(--js-glass-blur, 4px)) saturate(1.1);
+    backdrop-filter: blur(var(--js-glass-blur, 4px)) saturate(1.1);
   }
 
-  /* The accent is the only saturated thing on the page, so it earns a glow
-     where it matters and nowhere else. */
-  .accent-glow {
-    box-shadow: 0 0 0 1px
-        color-mix(in oklab, var(--color-primary) 40%, transparent),
-      0 8px 32px -8px color-mix(in oklab, var(--color-primary) 45%, transparent);
-  }
-
-  .accent-rule {
-    background: linear-gradient(
-      90deg,
-      color-mix(in oklab, var(--color-primary) 70%, transparent),
-      transparent
-    );
-  }
 }
 
 @layer components {
@@ -125,10 +103,12 @@
      -------------------------------------------------------------------------- */
   .component-preview {
     padding: var(--padding-md, 1rem);
-    border: var(--border, 1px) solid
-      color-mix(in oklch, var(--color-base-content, currentColor) 10%, transparent);
     border-radius: var(--radius-box, 0.75rem);
-    background-color: var(--color-base-100, transparent);
+    /* A well, not a framed box. `base-200` recedes from the page in both
+       themes, which separates the demo from the prose without drawing a rule
+       around it - and on a page with thirty demos, thirty rules is the only
+       thing you see. */
+    background-color: var(--color-base-200, transparent);
   }
 
   /* A preview of something translucent needs a patterned backdrop, or "glass"

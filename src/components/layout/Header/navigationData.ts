@@ -12,8 +12,8 @@ export const navigationItems: NavigationItem[] = [
           { title: "Button", href: ROUTES.BUTTON },
           { title: "Dropdown", href: ROUTES.DROPDOWN },
           { title: "Menu", href: ROUTES.MENU },
-          { title: "Modal", href: ROUTES.MODAL },
-          { title: "Toggle", href: ROUTES.TOGGLE },
+          { title: "Dialog", href: ROUTES.DIALOG },
+          { title: "Switch", href: ROUTES.SWITCH },
         ],
       },
       {
@@ -24,7 +24,7 @@ export const navigationItems: NavigationItem[] = [
           { title: "Card", href: ROUTES.CARD },
           { title: "Chat Bubble", href: ROUTES.CHAT_BUBBLE },
           { title: "Data Grid", href: ROUTES.DATA_GRID },
-          { title: "Empty State", href: ROUTES.EMPTY_STATE },
+          { title: "Empty", href: ROUTES.EMPTY },
           { title: "Kbd", href: ROUTES.KBD },
           { title: "Table", href: ROUTES.TABLE },
         ],
@@ -33,8 +33,8 @@ export const navigationItems: NavigationItem[] = [
         title: "Feedback",
         items: [
           { title: "Alert", href: ROUTES.ALERT },
-          { title: "Progress Bar", href: ROUTES.PROGRESS_BAR },
-          { title: "Progress Circle", href: ROUTES.PROGRESS_CIRCLE },
+          { title: "Progress", href: ROUTES.PROGRESS },
+          { title: "Radial Progress", href: ROUTES.RADIAL_PROGRESS },
           { title: "Skeleton", href: ROUTES.SKELETON },
           { title: "Spinner", href: ROUTES.SPINNER },
           { title: "Toast", href: ROUTES.TOAST },
@@ -60,7 +60,7 @@ export const navigationItems: NavigationItem[] = [
         title: "Layout",
         items: [
           { title: "Accordion", href: ROUTES.ACCORDION },
-          { title: "Disclosure", href: ROUTES.DISCLOSURE },
+          { title: "Collapsible", href: ROUTES.COLLAPSIBLE },
           { title: "Drawer", href: ROUTES.DRAWER },
           { title: "Flex", href: ROUTES.FLEX },
           { title: "Grid", href: ROUTES.GRID },
@@ -71,8 +71,8 @@ export const navigationItems: NavigationItem[] = [
       {
         title: "Navigation",
         items: [
-          { title: "Breadcrumbs", href: ROUTES.BREADCRUMB },
-          { title: "Floating Dock", href: ROUTES.FLOATING_DOCK },
+          { title: "Breadcrumb", href: ROUTES.BREADCRUMB },
+          { title: "Dock", href: ROUTES.DOCK },
           { title: "Link", href: ROUTES.LINK },
           { title: "Navbar", href: ROUTES.NAVBAR },
           { title: "Pagination", href: ROUTES.PAGINATION },

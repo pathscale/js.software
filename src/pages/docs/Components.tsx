@@ -51,11 +51,11 @@ const Components: Component = () => {
       "Checkbox",
       "Radio",
       "Range",
-      "Toggle",
+      "Switch",
       "File Input",
       "Rating",
     ],
-    "Overlays & Popups": ["Modal", "Dropdown", "Tooltip", "Drawer"],
+    "Overlays & Popups": ["Dialog", "Dropdown", "Tooltip", "Drawer"],
     "Media & Display": [
       "Carousel",
       "Artboard",

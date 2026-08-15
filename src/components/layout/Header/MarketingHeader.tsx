@@ -30,7 +30,10 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
           top of the page, not a panel sitting on it, so it wants a hairline
           bottom border and no radius, corners or shadow. */}
       <div class="page-container">
-        <Navbar.Row class="py-2">
+        {/* Transparent: `glass-nav` on the stack is what paints the chrome. A
+            bare Navbar.Row defaults to flavor neutral, which is near-black by
+            design and read as a black bar across the light theme. */}
+        <Navbar.Row class="py-2 bg-transparent">
         <Navbar.Start class="lg:hidden">
           <Button
             variant="ghost"
