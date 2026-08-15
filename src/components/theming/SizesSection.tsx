@@ -51,11 +51,16 @@ export default function SizesSection(props: SizesSectionProps) {
     return (parseFloat(remValue) * 16 * multiplier).toFixed(0);
   };
 
-  const maxHeight = createMemo(() => {
-    const maxRem = parseFloat(SIZE_VALUES[SIZE_VALUES.length - 1]);
-    const maxScale = Math.max(...FIELD_SCALE);
-    return maxRem * 16 * maxScale;
-  });
+  /*
+   * Per axis, not shared.
+   *
+   * This used `Math.max(...FIELD_SCALE)` for both, so the Selector bars were
+   * normalised against Fields' largest step - fourteen against their own eight
+   * - and collapsed into five identical dots. Each axis is drawn against its
+   * own largest step now, so both fill the same box and both show their shape.
+   */
+  const maxHeightFor = (scale: number[]) =>
+    parseFloat(SIZE_VALUES[SIZE_VALUES.length - 1]) * 16 * Math.max(...scale);
 
   return (
     <div class="w-full">
@@ -79,13 +84,13 @@ export default function SizesSection(props: SizesSectionProps) {
                     {(size, index) => {
                       const currentValue = props.theme[sizeType.key] || "0.25rem";
                       const pixelValue = getPixelValue(currentValue, size);
-                      const heightPercent = (parseFloat(currentValue) * 16 * size / maxHeight()) * 100;
+                      const heightPercent = (parseFloat(currentValue) * 16 * size / maxHeightFor(sizeType.scale)) * 100;
                       
                       return (
                         <div class="flex flex-col items-center gap-1">
                           <div 
                             class="flex items-end" 
-                            style={{ height: `${maxHeight() / 4}px` }}
+                            style={{ height: `${maxHeightFor(FIELD_SCALE) / 4}px` }}
                           >
                             <div 
                               class="bg-base-content w-1 rounded-full" 
@@ -115,7 +120,7 @@ export default function SizesSection(props: SizesSectionProps) {
               
               <div class="mt-0.5 text-center">
                 <span class="text-base-content/50 text-xs font-mono">
-                  {sizeType.label} base size: {(parseFloat(props.theme[sizeType.key] || "0.25rem") * 16 * 4).toFixed(1)} Pixels
+                  {sizeType.label} base size: {getPixelValue(props.theme[sizeType.key] || "0.25rem", sizeType.scale[0])} Pixels
                 </span>
               </div>
             </div>
