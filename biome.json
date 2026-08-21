@@ -17,6 +17,7 @@
         "noConsoleLog": "warn"
       },
       "style": {
+        "useImportType": "off",
         "noNonNullAssertion": "off",
         "useShorthandArrayType": "error"
       }
