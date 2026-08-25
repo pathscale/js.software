@@ -3,3 +3,6 @@ dist
 
 # Tauri build artifacts
 src-tauri/target
+# Handover and session notes are never committed. See AGENTS.md.
+HANDOVER*.md
+docs/HANDOVER*.md

@@ -9,6 +9,13 @@ natively, and Claude Code loads it through the `@AGENTS.md` import in
 
 ## Invariants (don't break these)
 
+- **No Python.** Not a script, not `python3 -c`, not a heredoc. Reaching for it is the
+  tell that a step is being solved by parsing when the tool that owns the answer could
+  just be asked. Do not swap it for another parser either, and do not assume `jq` is
+  present: it does not ship with macOS. A fixed-shape field is one `sed -nE` line;
+  anything needing real parsing belongs in this repo's own language, where it can be
+  tested. If a task seems to need Python, the approach is wrong.
+
 - **Read [`docs/frontend-conventions.md`](docs/frontend-conventions.md) before opening
   implementation files.** It is the frontend working agreement: SolidJS/`@pathscale/ui`
   conventions, and a context-efficient workflow. Reading it first keeps
@@ -129,3 +136,28 @@ Claude Code" / robot-emoji footers, no `Co-Authored-By: Claude` (or any AI) trai
 and no AI credit in commit messages, PR or issue titles/bodies, changelogs, release
 notes, or code comments. Applies to every agent and every vendor. Work product should
 be indistinguishable from a human teammate's.
+
+## Handover documents are never committed
+
+**Never commit a handover, status or session-summary document to any
+repository, and never push one to `master`.** Not under `docs/`, not at the
+root, not under any name. They are working notes for the owner and belong in
+the conversation, not in the history of a codebase that outlives the session.
+
+If you find one tracked, untrack it rather than editing it.
+
+## Merged is not fixed
+
+**Only the owner closes a bug.** A merged PR means the change landed, nothing
+more. Marking work finished because CI went green is how a list of real,
+still-broken behaviour quietly empties itself.
+
+- `shipped` when the PR merges: the honest ceiling for anything you cannot see
+  with your own eyes.
+- finished only after the owner says it works, or after you have driven the
+  exact reported path on a running build and watched it behave.
+- A passing test is not the owner saying it works. A guard can assert the
+  precondition you fixed and still leave the feature broken underneath it.
+
+When a fix cannot be verified from here, say which part is unverified rather
+than rounding it up.
