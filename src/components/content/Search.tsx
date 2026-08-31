@@ -2,12 +2,12 @@ import {
   Component,
   createSignal,
   createEffect,
-  onMount,
+  onSettled,
   onCleanup,
   For,
   Show,
 } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createStore } from "solid-js";
 import { ROUTES } from "../../config/routes";
 
 export interface SearchResult {
@@ -87,7 +87,7 @@ export const Search: Component<SearchProps> = (props) => {
 
   const performSearch = (searchQuery: string) => {
     if (!searchQuery.trim()) {
-      setResults([]);
+      setResults(() => []);
       return;
     }
 
@@ -121,7 +121,7 @@ export const Search: Component<SearchProps> = (props) => {
       .slice(0, props.maxResults || 8)
       .map(({ relevance, ...item }) => item);
 
-    setResults(filtered);
+    setResults(() => filtered);
     setSelectedIndex(0);
   };
 
@@ -168,7 +168,7 @@ export const Search: Component<SearchProps> = (props) => {
   const closeSearch = () => {
     setIsOpen(false);
     setQuery("");
-    setResults([]);
+    setResults(() => []);
     setSelectedIndex(0);
   };
 
@@ -196,18 +196,24 @@ export const Search: Component<SearchProps> = (props) => {
     }
   };
 
-  createEffect(() => {
-    performSearch(query());
-  });
+  // Solid 2 splits an effect in two: the first function tracks and returns,
+  // the second acts on that value. The one-argument form throws
+  // MISSING_EFFECT_FN.
+  createEffect(
+    () => query(),
+    (value) => performSearch(value),
+  );
 
-  onMount(() => {
+  // Solid 2 forbids onCleanup inside onSettled: the settle callback returns
+  // its own cleanup instead.
+  onSettled(() => {
     document.addEventListener("keydown", handleGlobalKeyDown);
     document.addEventListener("click", handleClickOutside);
-  });
 
-  onCleanup(() => {
-    document.removeEventListener("keydown", handleGlobalKeyDown);
-    document.removeEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", handleGlobalKeyDown);
+      document.removeEventListener("click", handleClickOutside);
+    };
   });
 
   const SearchIcon = () => (

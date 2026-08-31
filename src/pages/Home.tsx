@@ -1,12 +1,6 @@
 import { Component } from "solid-js";
-import { Button, Card, Chip, Flex } from "@pathscale/ui";
+import { Button, Card, Chip, Flex, Icon } from "@pathscale/ui";
 import { ContentContainer } from "../components/content/ContentContainer";
-import {
-  HiOutlineShieldCheck,
-  HiOutlineBolt,
-  HiOutlineCheckCircle,
-  HiOutlineHeart,
-} from "solid-icons/hi";
 import { ROUTES } from "../config/routes";
 
 const Home: Component = () => {
@@ -23,7 +17,7 @@ const Home: Component = () => {
             <Card variant="plain" padding="lg" class="border-0 bg-transparent">
               <div class="mb-8">
                 <Chip class="mb-6 px-4 py-2">
-                  <HiOutlineShieldCheck class="w-4 h-4 mr-2" />
+                  <Icon src="icon-[lucide--shield-check]" class="w-4 h-4 mr-2" />
                   SolidJS components powered by Solid Layouts
                 </Chip>
               </div>
@@ -94,7 +88,7 @@ const Home: Component = () => {
           <Card variant="plain" padding="lg" isInteractive>
             <div class="text-center">
               <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                <HiOutlineBolt class="w-8 h-8 text-white" />
+                <Icon src="icon-[lucide--zap]" class="w-8 h-8 text-white" />
               </div>
               <h3 class="text-2xl font-bold mb-4">Lightning Fast</h3>
               <p class="text-base-content/70 leading-relaxed">
@@ -108,7 +102,7 @@ const Home: Component = () => {
           <Card variant="plain" padding="lg" isInteractive>
             <div class="text-center">
               <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                <HiOutlineCheckCircle class="w-8 h-8 text-white" />
+                <Icon src="icon-[lucide--circle-check]" class="w-8 h-8 text-white" />
               </div>
               <h3 class="text-2xl font-bold mb-4">Type-Safe by Design</h3>
               <p class="text-base-content/70 leading-relaxed">
@@ -122,7 +116,7 @@ const Home: Component = () => {
           <Card variant="plain" padding="lg" isInteractive>
             <div class="text-center">
               <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                <HiOutlineHeart class="w-8 h-8 text-white" />
+                <Icon src="icon-[lucide--heart]" class="w-8 h-8 text-white" />
               </div>
               <h3 class="text-2xl font-bold mb-4">Developer Friendly</h3>
               <p class="text-base-content/70 leading-relaxed">

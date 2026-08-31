@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Link, Flex } from "@pathscale/ui";
+import { Flex, Link } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

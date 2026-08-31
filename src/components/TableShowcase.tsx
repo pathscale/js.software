@@ -1,4 +1,4 @@
-import { Chip, Button, Checkbox, Flex, Table } from "@pathscale/ui";
+import { Button, Checkbox, Chip, Flex, Table } from "@pathscale/ui";
 import { For } from "solid-js";
 
 import ShowcaseLayout from "./ShowcaseLayout";

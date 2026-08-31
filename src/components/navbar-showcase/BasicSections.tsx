@@ -1,4 +1,4 @@
-import { Navbar, Button, Dropdown, Input, Badge, Card, Flex } from "@pathscale/ui";
+import { Badge, Button, Card, Dropdown, Flex, Input, Navbar } from "@pathscale/ui";
 import { CodeBlock } from "../showcase/CodeBlock";
 import { ShowcaseSection } from "../showcase/ShowcaseSection";
 import { MenuIcon, DotsIcon, SearchIcon, CartIcon, BellIcon } from "./icons";

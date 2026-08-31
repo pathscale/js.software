@@ -17,13 +17,19 @@ interface CodeBlockProps {
 export function CodeBlock(props: CodeBlockProps) {
   let codeRef: HTMLElement | undefined;
 
-  createEffect(() => {
-    if (codeRef && props.code) {
-      requestAnimationFrame(() => {
-        Prism.highlightElement(codeRef);
-      });
-    }
-  });
+  // Solid 2 splits an effect in two: the first function tracks and returns,
+  // the second acts on that value. The one-argument form throws
+  // MISSING_EFFECT_FN.
+  createEffect(
+    () => props.code,
+    (code) => {
+      if (codeRef && code) {
+        requestAnimationFrame(() => {
+          Prism.highlightElement(codeRef);
+        });
+      }
+    },
+  );
 
   return (
     <div class={cn("relative group", props.class)}>

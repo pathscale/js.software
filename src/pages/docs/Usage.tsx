@@ -120,7 +120,7 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
             <code class="text-sm">isOpen</code>,{" "}
             <code class="text-sm">isInvalid</code>,{" "}
             <code class="text-sm">isPending</code>,{" "}
-            <code class="text-sm">isIconOnly</code>,{" "}
+            <code class="text-sm">width="square"</code>,{" "}
             <code class="text-sm">isHoverable</code>,{" "}
             <code class="text-sm">isPressable</code>. Native{" "}
             <code class="text-sm">disabled</code> is honored too.
@@ -173,7 +173,7 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
         <CodeBlock
           language="tsx"
           code={`<Flex direction="col" gap="sm">
-  <Button flavor="primary" size="md" isPending={saving()}>Save</Button>
+  <Button flavor="primary" size="md" state={saving() ? "loading" : "default"}>Save</Button>
 </Flex>`}
         />
       </section>
@@ -209,7 +209,7 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
               <h3 class="text-xl font-semibold mb-4">Read the inventory</h3>
               <p class="text-base-content/70 mb-4">
                 The by-family list, plus the rename map from older versions
-                (Loading→Spinner, DropdownSelect→Select, and the rest).
+                (Spinner→Spinner, Select→Select, and the rest).
               </p>
               <a
                 href={EXTERNAL_ROUTES.UI_USAGE_DOC}

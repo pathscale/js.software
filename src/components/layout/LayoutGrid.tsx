@@ -1,4 +1,5 @@
-import { Component, createEffect, createSignal, onCleanup } from "solid-js";
+import { Dynamic } from "@solidjs/web";
+import { Component, createSignal, onCleanup, onSettled } from "solid-js";
 
 export const [isNavbarExpanded, setIsNavbarExpanded] = createSignal(false);
 
@@ -15,14 +16,16 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
   const [isDesktop, setIsDesktop] = createSignal(window.innerWidth >= 768);
   const [isXl, setIsXl] = createSignal(window.innerWidth >= 1280);
 
-  createEffect(() => {
+  // Nothing reactive here -- this only wires a listener once, which is what
+  // onSettled is for. It was never an effect.
+  onSettled(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 768);
       setIsXl(window.innerWidth >= 1280);
     };
 
     window.addEventListener("resize", handleResize);
-    onCleanup(() => window.removeEventListener("resize", handleResize));
+    return () => window.removeEventListener("resize", handleResize);
   });
 
   const hasAnySidebar = () => props.sidebar || props.toc;
@@ -30,7 +33,7 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
   return (
     <div class="min-h-screen">
       <div class="fixed top-0 left-0 right-0 z-50">
-        {props.header && <props.header />}
+        {props.header && <Dynamic component={props.header} />}
       </div>
 
       <div class={isNavbarExpanded() ? "pt-32" : "pt-16"}>
@@ -39,7 +42,7 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
             {(isDesktop() || isXl()) && props.sidebar && (
               <div class={`w-[280px] fixed ${isNavbarExpanded() ? "top-32" : "top-16"} bottom-0`}>
                 <div class="h-full overflow-auto py-6">
-                  <props.sidebar />
+                  <Dynamic component={props.sidebar} />
                 </div>
               </div>
             )}
@@ -55,7 +58,7 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
             {isXl() && props.toc && (
               <div class={`w-[280px] fixed ${isNavbarExpanded() ? "top-32" : "top-16"} bottom-0 right-0`}>
                 <div class="h-full overflow-auto py-6">
-                  <props.toc />
+                  <Dynamic component={props.toc} />
                 </div>
               </div>
             )}
@@ -70,7 +73,7 @@ export const LayoutGrid: Component<LayoutGridProps> = (props) => {
               hasAnySidebar() && (isDesktop() || isXl()) ? "ml-[280px]" : ""
             } ${hasAnySidebar() && isXl() ? "mr-[280px]" : ""}`}
           >
-            <props.footer />
+            <Dynamic component={props.footer} />
           </div>
         </div>
       )}

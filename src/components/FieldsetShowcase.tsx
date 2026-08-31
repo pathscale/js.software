@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Fieldset, Input, Checkbox, Flex } from "@pathscale/ui";
+import { Checkbox, Fieldset, Flex, Input } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

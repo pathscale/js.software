@@ -57,11 +57,7 @@ export default function RadiusSection(props: RadiusSectionProps) {
                       />
                       <div class="px-1.5 py-1">
                         <div 
-                          class="border-base-content/20 bg-base-200 h-6 w-8 border-e-2 border-t-2"
-                          classList={{
-                            "border-primary bg-base-300": props.theme[radiusType.key] === value,
-                            "bg-base-200": props.theme[radiusType.key] !== value
-                          }}
+                          class={`border-base-content/20 bg-base-200 h-6 w-8 border-e-2 border-t-2 ${props.theme[radiusType.key] === value ? "border-primary bg-base-300" : ""} ${props.theme[radiusType.key] !== value ? "bg-base-200" : ""}`}
                           style={{ 
                             "border-start-end-radius": value,
                             "border-top-right-radius": value

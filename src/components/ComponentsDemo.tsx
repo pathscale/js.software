@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { Button, Card, Alert, Input, Flex, Checkbox, Chip, Avatar, Tabs, Switch, ChatBubble, Table, Navbar, Breadcrumb, BreadcrumbItem, Drawer, Dialog, Tooltip, TooltipTrigger, TooltipContent, Select, Dropdown, Skeleton, Form, Radio, Icon, Pagination, Progress, Slider, Spinner } from "@pathscale/ui";
+import { Alert, Avatar, Breadcrumb, BreadcrumbItem, Button, Card, ChatBubble, Checkbox, Chip, Dialog, Drawer, Dropdown, Flex, Form, Icon, Input, Navbar, Pagination, Progress, Radio, Select, Skeleton, Slider, Spinner, Switch, Table, Tabs, Tooltip, TooltipContent, TooltipTrigger } from "@pathscale/ui";
 import { Menu, Join } from "@pathscale/ui/lab";
 import { ROUTES } from "../config/routes";
 
@@ -487,7 +487,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex gap="sm">
                 <Switch />
-                <span class="text-sm">Theme Toggle</span>
+                <span class="text-sm">Theme Switch</span>
               </Flex>
             </Flex>
           </Card.Body>

@@ -9,7 +9,7 @@ const buttonProps = [
   { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Control size." },
   { name: "width", type: 'Width | "square"', default: "—", description: "square is icon-only: as wide as it is tall, at whatever size it is." },
   { name: "variant", type: "Variant", default: '"solid"', description: "Shape: solid, soft, outline, ghost, plain. Not a colour." },
-  { name: "state", type: "State", default: '"default"', description: "What is happening: loading, disabled, invalid. Loading implies disabled." },
+  { name: "state", type: "State", default: '"default"', description: "What is happening: loading, disabled, invalid. Spinner implies disabled." },
   { name: "isPending", type: "boolean", default: "false", description: "Show pending state and block interaction." },
   { name: "startIcon", type: "JSX.Element", description: "Icon before the label." },
   { name: "endIcon", type: "JSX.Element", description: "Icon after the label." },
@@ -69,7 +69,7 @@ export default function ButtonShowcase() {
           </Flex>
           <CodeBlock code={`<Button state="loading">Saving</Button>
 <Button state="disabled">Unavailable</Button>
-<Button variant="outline" aria-pressed={selected()}>Selected</Button>`} />
+<Button variant="outline" aria-pressed={selected() ? "true" : "false"}>Selected</Button>`} />
         </ShowcaseSection>
 
         <ShowcaseSection id="width" title="Full width">

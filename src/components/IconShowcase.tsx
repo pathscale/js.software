@@ -1,4 +1,4 @@
-import { Icon, Flex } from "@pathscale/ui";
+import { Flex, Icon } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";

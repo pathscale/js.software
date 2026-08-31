@@ -25,8 +25,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
 
   return (
     <div
-      class="bg-base-100 flex w-full shrink-0 flex-col items-center gap-2 p-2 pb-20 md:sticky md:top-16 md:items-start lg:items-stretch"
-      classList={{ "max-md:hidden": props.dockActiveItem !== "editor" }}
+      class={`bg-base-100 flex w-full shrink-0 flex-col items-center gap-2 p-2 pb-20 md:sticky md:top-16 md:items-start lg:items-stretch ${props.dockActiveItem !== "editor" ? "max-md:hidden" : ""}`}
     >
       <Grid cols="2" gap="sm" class="w-full">
         <Button onClick={props.onRandomizeTheme}>

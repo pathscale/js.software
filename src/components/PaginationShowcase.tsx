@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Pagination, Flex } from "@pathscale/ui";
+import { Flex, Pagination } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

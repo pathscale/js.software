@@ -110,7 +110,7 @@ const componentRoutes = ([
   ["Radio Group", ROUTES.RADIO_GROUP, RadioGroupShowcase, "Grouped single-choice controls."],
   ["Select", ROUTES.SELECT, SelectShowcase, "Keyboard-accessible option selection."],
   ["Separator", ROUTES.SEPARATOR, SeparatorShowcase, "Semantic content separation."],
-  ["Skeleton", ROUTES.SKELETON, SkeletonShowcase, "Loading placeholders."],
+  ["Skeleton", ROUTES.SKELETON, SkeletonShowcase, "Spinner placeholders."],
   ["Slider", ROUTES.SLIDER, SliderShowcase, "Continuous numeric input."],
   ["Spinner", ROUTES.SPINNER, SpinnerShowcase, "Indeterminate loading feedback."],
   ["Data Grid", ROUTES.DATA_GRID, DataGridShowcase, "One tag over a model that owns the state."],

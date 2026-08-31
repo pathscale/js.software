@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Dropdown, Card, Navbar, Button, Flex } from "@pathscale/ui";
+import { Button, Card, Dropdown, Flex, Navbar } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

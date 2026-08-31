@@ -1,10 +1,9 @@
 import { createSignal } from "solid-js";
-import { Input, Flex } from "@pathscale/ui";
+import { Flex, Icon, Input } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
-import { FiLock, FiEye } from "solid-icons/fi";
 
 export default function InputShowcase() {
   const [value, setValue] = createSignal("");
@@ -163,21 +162,21 @@ export default function InputShowcase() {
         <ShowcaseSection id="icons" title="With Icons">
           <Flex direction="col" gap="md">
             <Flex direction="col" justify="start" align="start" gap="lg">
-              <Input startIcon={<FiLock />} placeholder="With start icon" />
+              <Input startIcon={<Icon src="icon-[lucide--lock]" />} placeholder="With start icon" />
               <Input
                 type="password"
-                startIcon={<FiLock />}
-                endIcon={<FiEye />}
+                startIcon={<Icon src="icon-[lucide--lock]" />}
+                endIcon={<Icon src="icon-[lucide--eye]" />}
                 placeholder="Password with icons"
               />
             </Flex>
             <CodeBlock
-              code={`<Input startIcon={<FiLock />} placeholder="With start icon" />
+              code={`<Input startIcon={<Icon src="icon-[lucide--lock]" />} placeholder="With start icon" />
 
 <Input
   type="password"
-  startIcon={<FiLock />}
-  endIcon={<FiEye />}
+  startIcon={<Icon src="icon-[lucide--lock]" />}
+  endIcon={<Icon src="icon-[lucide--eye]" />}
   placeholder="Password with icons"
 />`}
             />

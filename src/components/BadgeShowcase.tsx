@@ -1,4 +1,4 @@
-import { Badge, Button, Flex, Icon, Chip } from "@pathscale/ui";
+import { Badge, Button, Chip, Flex, Icon } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";

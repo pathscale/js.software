@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Dialog, Button, Flex } from "@pathscale/ui";
+import { Button, Dialog, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

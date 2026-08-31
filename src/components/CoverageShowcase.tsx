@@ -1,5 +1,6 @@
-import { ErrorBoundary, For, type JSX } from "solid-js";
-import { Accordion, Button, Card, Checkbox, Chip, Collapsible, Empty, Flex, Header, Input, InputOTP, LanguageSwitcher, ListBox, LiveChatBubble, MetalBorder, Popover, Progress, ScrollArea, Separator, Slider, Spinner, Text, Textarea, ThemeColorPicker, createI18n } from "@pathscale/ui";
+import type { JSX } from "@solidjs/web";
+import { createErrorBoundary, For } from "solid-js";
+import { Accordion, Button, Card, Checkbox, Chip, Collapsible, createI18n, Empty, Flex, Header, Input, InputOTP, LanguageSwitcher, ListBox, LiveChatBubble, MetalBorder, Popover, Progress, ScrollArea, Separator, Slider, Spinner, Text, Textarea, ThemeColorPicker } from "@pathscale/ui";
 import { ButtonGroup, CheckboxGroup, CloseButton, Meter, RadialProgress, SizePicker, TimeField, DateField, ColorPicker, ColorArea, ColorField, ColorSlider, ComboBox, DatePicker, DateRangePicker, RangeCalendar, Toolbar, Kbd } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 
@@ -118,7 +119,7 @@ const EXAMPLES: Example[] = [
   { name: "Progress", render: () => <Progress value={40} /> },
   { name: "RadialProgress", render: () => <RadialProgress value={40} /> },
   {
-    name: "ScrollShadow",
+    name: "ScrollArea",
     render: () => (
       <ScrollArea class="max-h-24">
         <div class="h-40">Tall content that scrolls.</div>
@@ -242,15 +243,14 @@ export default function CoverageShowcase() {
               <div class="text-xs uppercase tracking-wide opacity-60 mb-3">
                 {example.name}
               </div>
-              <ErrorBoundary
-                fallback={(error: Error) => (
-                  <div data-coverage-error={example.name} class="text-sm">
-                    {String(error?.message ?? error)}
-                  </div>
-                )}
-              >
-                {example.render()}
-              </ErrorBoundary>
+              {createErrorBoundary(
+                () => example.render(),
+                (error) => (
+                    <div data-coverage-error={example.name} class="text-sm">
+                      {String((error() as Error)?.message ?? error())}
+                    </div>
+                ),
+              )()}
             </div>
           )}
         </For>

@@ -13,9 +13,15 @@ interface ColorPickerPopoverProps {
 export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
   const [color, setColor] = createSignal(props.initialColor);
 
-  createEffect(() => {
-    setColor(props.initialColor);
-  });
+  // Solid 2 splits an effect in two: the first function tracks and returns,
+  // the second acts on that value. The one-argument form throws
+  // MISSING_EFFECT_FN.
+  createEffect(
+    () => props.initialColor,
+    (initial) => {
+      setColor(initial);
+    },
+  );
 
   const handleColorSelect = (selectedColor: string) => {
     setColor(selectedColor);
@@ -41,7 +47,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
                 <button
                   class="appearance-none cursor-pointer w-full"
                   aria-label={colorName}
-                  aria-selected={color() === colorValue}
+                  aria-selected={color() === colorValue ? "true" : "false"}
                   onClick={() => handleColorSelect(colorValue)}
                 >
                   <div

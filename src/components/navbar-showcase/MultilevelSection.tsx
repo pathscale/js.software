@@ -1,5 +1,5 @@
 import { createSignal, Show } from "solid-js";
-import { Navbar, Button, Flex } from "@pathscale/ui";
+import { Button, Flex, Navbar } from "@pathscale/ui";
 import { CodeBlock } from "../showcase/CodeBlock";
 import { ShowcaseSection } from "../showcase/ShowcaseSection";
 
@@ -50,10 +50,7 @@ export const MultilevelSection = () => {
                       setActiveMain(item);
                       setActiveStrategy(null);
                     }}
-                    class="hover:underline"
-                    classList={{
-                      "font-bold underline": activeMain() === item,
-                    }}
+                    class={`hover:underline ${activeMain() === item ? "font-bold underline" : ""}`}
                   >
                     {item}
                   </button>
@@ -67,11 +64,8 @@ export const MultilevelSection = () => {
               <Flex gap="md">
                 {strategies.map((s) => (
                   <button
-                    class="relative pb-1"
+                    class={`relative pb-1 ${activeStrategy() === s ? "border-b-2 border-green-300" : ""}`}
                     onClick={() => setActiveStrategy(s)}
-                    classList={{
-                      "border-b-2 border-green-300": activeStrategy() === s,
-                    }}
                   >
                     {s}
                   </button>

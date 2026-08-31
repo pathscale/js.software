@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Switch, Flex } from "@pathscale/ui";
+import { Flex, Switch } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

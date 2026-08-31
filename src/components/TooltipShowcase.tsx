@@ -1,5 +1,5 @@
 import ShowcaseLayout from "./ShowcaseLayout";
-import { Tooltip, Button, Flex } from "@pathscale/ui";
+import { Button, Flex, Tooltip } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

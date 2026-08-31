@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { Select, Flex } from "@pathscale/ui";
+import { Flex, Select } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import { CodeBlock } from "./showcase/CodeBlock";

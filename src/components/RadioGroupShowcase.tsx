@@ -1,6 +1,6 @@
 import { createSignal, For } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
-import { RadioGroup, Radio, Flex } from "@pathscale/ui";
+import { Flex, Radio, RadioGroup } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";

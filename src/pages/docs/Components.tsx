@@ -1,6 +1,6 @@
 import { Component, For } from "solid-js";
 import { ContentContainer } from "../../components/content/ContentContainer";
-import { Card, Grid, Flex } from "@pathscale/ui";
+import { Card, Flex, Grid } from "@pathscale/ui";
 import { routes } from "../../routes";
 import { ROUTES } from "../../config/routes";
 
@@ -37,7 +37,7 @@ const Components: Component = () => {
     ],
     Feedback: [
       "Alert",
-      "Loading",
+      "Spinner",
       "Progress",
       "Radial Progress",
       "Toast",

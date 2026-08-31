@@ -1,4 +1,4 @@
-import { Button, Card, Input, Flex } from "@pathscale/ui";
+import { Button, Card, Flex, Input } from "@pathscale/ui";
 
 export default function ComponentVariants() {
   return (

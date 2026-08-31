@@ -21,13 +21,17 @@ const getInitialTheme = (): ThemeValue => {
 
 const [theme, setTheme] = createSignal<ThemeValue>(getInitialTheme());
 
-createEffect(() => {
-  const current = theme();
-  if (typeof window !== "undefined") {
-    document.documentElement.setAttribute("data-theme", current);
-    localStorage.setItem("theme", current);
-  }
-});
+// Solid 2 splits an effect in two: the first function tracks and returns, the
+// second acts on that value. The one-argument form throws MISSING_EFFECT_FN.
+createEffect(
+  () => theme(),
+  (current) => {
+    if (typeof window !== "undefined") {
+      document.documentElement.setAttribute("data-theme", current);
+      localStorage.setItem("theme", current);
+    }
+  },
+);
 
 export { setTheme, theme };
 

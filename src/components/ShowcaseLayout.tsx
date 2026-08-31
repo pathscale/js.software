@@ -1,7 +1,8 @@
 import { useLocation } from "@solidjs/router";
 import { routes } from "../routes";
-import type { JSX, ParentComponent } from "solid-js";
-import { onMount } from "solid-js";
+import type { JSX } from "@solidjs/web";
+import type { ParentComponent } from "solid-js";
+import { onSettled } from "solid-js";
 import { Flex } from "@pathscale/ui";
 
 interface ShowcaseLayoutProps {
@@ -12,7 +13,7 @@ const ShowcaseLayout: ParentComponent = (props) => {
   const location = useLocation();
   const current = () => routes.find((r) => r.path === location.pathname);
 
-  onMount(() => {
+  onSettled(() => {
     // Handle initial hash scroll
     if (location.hash) {
       const element = document.getElementById(location.hash.slice(1));

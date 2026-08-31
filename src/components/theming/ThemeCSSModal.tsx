@@ -1,4 +1,4 @@
-import { Button, Icon, Dialog, DialogBody, DialogFooter, DialogHeader } from "@pathscale/ui";
+import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Icon } from "@pathscale/ui";
 import { createEffect, createSignal } from "solid-js";
 import {
   GLASS_THEME_DEFAULTS,
@@ -105,18 +105,15 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       : block;
   };
 
-  createEffect(() => {
-    if (props.open) {
-      setCssText(generateCSS(props.theme));
-    }
-  });
-
-  // Update CSS when options change
-  createEffect(() => {
-    if (props.open) {
-      setCssText(generateCSS(props.theme));
-    }
-  });
+  // Solid 2 splits an effect in two: the first function tracks and returns,
+  // the second acts on that value. The one-argument form throws
+  // MISSING_EFFECT_FN.
+  createEffect(
+    () => ({ open: props.open, theme: props.theme }),
+    ({ open, theme }) => {
+      if (open) setCssText(generateCSS(theme));
+    },
+  );
 
   const copyThemeCSSToClipboard = () => {
     navigator.clipboard

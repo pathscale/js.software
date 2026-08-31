@@ -1,4 +1,4 @@
-import { FiMoon, FiSun } from "solid-icons/fi";
+import { Icon } from "@pathscale/ui";
 import { setTheme, theme } from "./lib/theme";
 
 export default function ThemeToggle() {
@@ -11,9 +11,9 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       class="p-2 rounded-md bg-primary text-primary-content"
-      aria-label="Toggle theme"
+      aria-label="Switch theme"
     >
-      {theme() === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
+      {theme() === "dark" ? <Icon src="icon-[lucide--sun]" width={20} height={20} /> : <Icon src="icon-[lucide--moon]" width={20} height={20} />}
     </button>
   );
 }

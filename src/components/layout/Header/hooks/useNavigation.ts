@@ -34,20 +34,27 @@ export const useNavigation = () => {
            (activeCategory() && activeCategory() !== "Components");
   };
 
-  createEffect(() => {
-    const currentPath = location.pathname;
-    const mainPages = [ROUTES.HOME, ROUTES.DOCS, ROUTES.SHOWCASES];
-    
-    if (mainPages.includes(currentPath as any)) {
-      setActiveCategory(null);
-      setIsNavbarExpanded(false);
-    }
-  });
+  // Solid 2 splits an effect in two: the first function tracks and returns,
+  // the second acts on that value. The one-argument form throws
+  // MISSING_EFFECT_FN.
+  createEffect(
+    () => location.pathname,
+    (currentPath) => {
+      const mainPages = [ROUTES.HOME, ROUTES.DOCS, ROUTES.SHOWCASES];
 
-  createEffect(() => {
-    const hasExpandedMenu = activeCategory() !== null;
-    setIsNavbarExpanded(hasExpandedMenu);
-  });
+      if (mainPages.includes(currentPath as any)) {
+        setActiveCategory(null);
+        setIsNavbarExpanded(false);
+      }
+    },
+  );
+
+  createEffect(
+    () => activeCategory() !== null,
+    (hasExpandedMenu) => {
+      setIsNavbarExpanded(hasExpandedMenu);
+    },
+  );
 
   return {
     isOpen,
