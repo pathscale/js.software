@@ -21,13 +21,13 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
 
   const generateCSS = (theme: Theme) => {
     /*
-     * Plain CSS, not a daisyUI `@plugin "daisyui/theme"` block.
+     * Plain CSS.
      *
-     * This exported a theme in a format the site itself no longer uses: a
-     * theme in @pathscale/ui is a block of custom properties on a selector and
-     * nothing more. Anyone pasting the old output into this repository would
-     * have got a rule that never applied, and a plugin directive for a package
-     * that is not installed.
+     * This used to export a theme in a format the site itself no longer uses:
+     * a theme in @pathscale/ui is a block of custom properties on a selector
+     * and nothing more. Anyone pasting the old output into this repository
+     * would have got a rule that never applied, and a plugin directive for a
+     * package that is not installed.
      *
      * `default` decides whether the theme also claims `:root`, and
      * `prefersdark` whether it answers the OS preference - the two things the
@@ -39,7 +39,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
     ].filter(Boolean).join(",\n");
     const baseProps = [`  color-scheme: ${props.colorScheme || "light"};`];
 
-    // Color properties in specific order like DaisyUI
+    // Colour properties in a fixed order, so a regenerated theme diffs cleanly.
     const colorOrder = [
       "--color-base-100", "--color-base-content", "--color-base-200", "--color-base-300",
       "--color-primary", "--color-primary-content",
@@ -144,7 +144,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
 
       <DialogBody>
         <p class="text-sm text-base-content/60 mb-4">
-          Copy this CSS to add your theme to DaisyUI
+          Copy this CSS to add your theme to @pathscale/ui
         </p>
 
         <div class="relative">

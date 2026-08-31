@@ -2,12 +2,10 @@
    24x's `#ffee58` becomes `#c9a0ff`. A violet of the same lightness, so it
    still takes `#111111` on top exactly as the yellow did.
 
-   Plain CSS rather than daisyUI `@plugin "daisyui/theme"` blocks. A theme in
-   @pathscale/ui is a block of custom properties and nothing more; routing it
-   through the plugin added a layer that bought nothing, and is how this file
-   ended up with a saturated yellow `base-100` in its light theme. daisyUI's
-   own components read the same `--color-*` properties, so the four classes
-   this app still writes by hand are unaffected. */
+   Plain CSS. A theme in @pathscale/ui is a block of custom properties on a
+   selector and nothing more; the plugin layer this replaced bought nothing,
+   and is how this file ended up with a saturated yellow `base-100` in its
+   light theme. */
 
 @layer theme {
   :root,

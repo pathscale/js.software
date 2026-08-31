@@ -5,7 +5,7 @@
 import { ColorPair, ColorGroup, BrandColorWeights } from '../types/theme';
 
 /**
- * DaisyUI color pairs - background and their corresponding content colors
+ * Colour pairs: a background and the content colour that sits on it.
  */
 export const COLOR_PAIRS: ColorPair[] = [
   { background: "--color-base-100", content: "--color-base-content" },
