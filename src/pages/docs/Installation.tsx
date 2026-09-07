@@ -25,7 +25,7 @@ const Installation: Component = () => {
             have these core dependencies installed:
           </p>
           <ul class="space-y-2 pl-4">
-            <li>• SolidJS ^1.9 - Our reactive foundation</li>
+            <li>• SolidJS 2.0 and @solidjs/web - Our reactive foundation</li>
             <li>
               • TailwindCSS ^4.0 (optional) - For utility-first styling
               alongside the library
@@ -36,9 +36,10 @@ const Installation: Component = () => {
             </li>
           </ul>
           <p class="mt-4">
-            The library also declares @solid-primitives/*, @tanstack/solid-form
-            and @tanstack/solid-table as peer dependencies; popmotion and
-            @standard-schema/spec are optional.
+            The library also declares solid-layouts as a peer dependency;
+            popmotion and @standard-schema/spec are optional. TanStack is gone
+            in 4.0: forms and the grid model are the library's own, so there is
+            no @tanstack/solid-form or @tanstack/solid-table to install.
           </p>
         </Callout>
       </section>
@@ -87,13 +88,23 @@ pnpm add --save-dev rsbuild-plugin-solid-layouts`} />
           </p>
           <CodeBlock
             language="typescript"
-            code={`import { pluginSolidLayoutsApplication } from "rsbuild-plugin-solid-layouts";
+            code={`import { pluginSolid2LayoutsApplication } from "rsbuild-plugin-solid-layouts";
 
 export default defineConfig({
   plugins: [
-    pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] }),
+    pluginSolid2LayoutsApplication({ layouts: ["@pathscale/ui"] }),
     pluginBabel({ /* SolidJS options */ }),
   ],
+  resolve: {
+    // solid-layouts ships one build arm per Solid major and its bare entry is
+    // the 1.9 one. These aliases pick the arm built against Solid 2.
+    alias: {
+      "solid-layouts/recipe": "solid-layouts/solid-2/recipe",
+      "solid-layouts/cx": "solid-layouts/solid-2/cx",
+      "solid-layouts/application-boundary": "solid-layouts/solid-2/application-boundary",
+      "solid-layouts$": "solid-layouts/solid-2",
+    },
+  },
 });`}
           />
         </div>
