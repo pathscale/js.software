@@ -39,9 +39,9 @@ const Usage: Component = () => {
           Install &amp; setup
         </h2>
         <p class="text-base-content/70 mb-6 max-w-3xl">
-          Peer dependencies: solid-js ^1.9, @solid-primitives/*,
-          @tanstack/solid-form and @tanstack/solid-table, plus popmotion and
-          @standard-schema/spec (both optional).
+          Peer dependencies: solid-js 2.0, @solidjs/web and solid-layouts, plus
+          popmotion and @standard-schema/spec (both optional). TanStack is gone
+          in 4.0 - forms and the grid model are the library's own now.
         </p>
         <CodeBlock
           language="bash"
@@ -59,7 +59,7 @@ bun add -d rsbuild-plugin-solid-layouts`}
 import "@pathscale/ui/index.css";
 
 // rsbuild.config.ts
-pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
+pluginSolid2LayoutsApplication({ layouts: ["@pathscale/ui"] })`}
           class="mb-6"
         />
         <p class="text-base-content/70 max-w-3xl">
@@ -68,7 +68,10 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
           <code class="text-sm">./primitives/*</code>,{" "}
           <code class="text-sm">./hooks/*</code>,{" "}
           <code class="text-sm">./motion</code>,{" "}
-          <code class="text-sm">./styles/*</code>.
+          <code class="text-sm">./styles/*</code>. There is also{" "}
+          <code class="text-sm">./lab</code>, where components with no adopted
+          call site across the fleet are parked. Nothing there is deprecated;
+          it is off the main surface so the main surface says what is in use.
         </p>
       </section>
 
@@ -114,33 +117,55 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
         </h2>
         <ul class="space-y-3 text-base-content/70 mb-6 max-w-3xl">
           <li>
-            • <strong>Booleans read as questions.</strong> HeroUI-style{" "}
-            <code class="text-sm">is*</code> props:{" "}
-            <code class="text-sm">isDisabled</code>,{" "}
-            <code class="text-sm">isOpen</code>,{" "}
-            <code class="text-sm">isInvalid</code>,{" "}
-            <code class="text-sm">isPending</code>,{" "}
-            <code class="text-sm">width="square"</code>,{" "}
-            <code class="text-sm">isHoverable</code>,{" "}
-            <code class="text-sm">isPressable</code>. Native{" "}
-            <code class="text-sm">disabled</code> is honored too.
+            • <strong>One state axis, not a bag of booleans.</strong> The
+            HeroUI-style <code class="text-sm">is*</code> props are gone.{" "}
+            <code class="text-sm">state</code> holds one of{" "}
+            <code class="text-sm">
+              default | loading | error | invalid | disabled | hidden
+            </code>
+            , so <code class="text-sm">isDisabled</code>,{" "}
+            <code class="text-sm">isLoading</code> and{" "}
+            <code class="text-sm">isInvalid</code> can no longer disagree with
+            each other. <code class="text-sm">isRequired</code> is the platform{" "}
+            <code class="text-sm">required</code>,{" "}
+            <code class="text-sm">isOpen</code> is{" "}
+            <code class="text-sm">open</code>, and native{" "}
+            <code class="text-sm">disabled</code> is still honored.
+          </li>
+          <li>
+            • <strong>Validity is derived, not asserted.</strong> Pass{" "}
+            <code class="text-sm">issues</code> (an{" "}
+            <code class="text-sm">Issue[]</code>) and the component works out
+            whether it is invalid. <code class="text-sm">state="invalid"</code>{" "}
+            forces it when you have no issue list to hand.
           </li>
           <li>
             • <strong>Sizes</strong> are{" "}
-            <code class="text-sm">xs | sm | md | lg | xl</code>, and{" "}
-            <strong>colors</strong> are{" "}
+            <code class="text-sm">xs | sm | md | lg | xl</code>, and the colour
+            axis is <code class="text-sm">flavor</code>, not{" "}
+            <code class="text-sm">color</code>:{" "}
             <code class="text-sm">
-              neutral | primary | secondary | accent | info | success | warning
-              | error | ghost
+              neutral | primary | secondary | accent | destructive | success |
+              warning | info
             </code>
-            .
+            . It is deliberately open, so a theme can define its own{" "}
+            <code class="text-sm">flavor="hip"</code> and style{" "}
+            <code class="text-sm">[data-flavor="hip"]</code> with no library
+            change. <strong>Shape</strong> is a separate axis,{" "}
+            <code class="text-sm">variant</code>:{" "}
+            <code class="text-sm">solid | soft | outline | ghost | plain</code>.
           </li>
           <li>
             • <strong>
-              Both <code class="text-sm">class</code> and{" "}
-              <code class="text-sm">className</code> are accepted
+              Only <code class="text-sm">class</code> is accepted.
             </strong>{" "}
-            everywhere, and your classes win — they are merged last via twMerge.
+            <code class="text-sm">className</code> was removed with{" "}
+            <code class="text-sm">IComponentBaseProps</code>; components take{" "}
+            <code class="text-sm">UIBaseProps</code> now, which carries{" "}
+            <code class="text-sm">class</code> alone. A stray{" "}
+            <code class="text-sm">className</code> is an unknown prop and is
+            silently dropped. Your classes still win — they are merged last via
+            twMerge.
           </li>
           <li>
             • <strong>Controlled/uncontrolled comes in triples:</strong>{" "}
@@ -149,16 +174,23 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
             <code class="text-sm">
               selectedKey/defaultSelectedKey/onSelectionChange
             </code>
-            . Event callbacks pass <strong>values, not events</strong>.
+            . Event callbacks pass <strong>values, not events</strong> —
+            including on <code class="text-sm">Switch</code>,{" "}
+            <code class="text-sm">Checkbox</code> and{" "}
+            <code class="text-sm">Radio</code>, which used to hand over the
+            native event. The event is still available as{" "}
+            <code class="text-sm">onNativeChange</code>, and that is where{" "}
+            <code class="text-sm">preventDefault()</code> belongs.
           </li>
           <li>
             • <strong>Compound components</strong> —{" "}
             <code class="text-sm">Dialog.Trigger</code>,{" "}
-            <code class="text-sm">Tabs.List</code>,{" "}
-            <code class="text-sm">Select.Option</code> — are also exported flat
-            (<code class="text-sm">AccordionRoot</code>,{" "}
-            <code class="text-sm">AlertTitle</code>, …). Parts are styleable and
-            testable through <code class="text-sm">data-slot="…"</code> and
+            <code class="text-sm">Table.Content</code>,{" "}
+            <code class="text-sm">Input.Field</code> — and their parts are also
+            exported flat (<code class="text-sm">DialogBody</code>,{" "}
+            <code class="text-sm">AccordionItem</code>,{" "}
+            <code class="text-sm">BreadcrumbItem</code>, …). Parts are styleable
+            and testable through <code class="text-sm">data-slot="…"</code> and
             state attributes like <code class="text-sm">data-open</code>,{" "}
             <code class="text-sm">data-selected</code>,{" "}
             <code class="text-sm">data-invalid</code>.
@@ -229,8 +261,10 @@ pluginSolidLayoutsApplication({ layouts: ["@pathscale/ui"] })`}
           Forms
         </h2>
         <p class="text-base-content/70 mb-6 max-w-3xl">
-          Built on TanStack Form, validated by any Standard Schema — Zod v4,
-          Valibot or ArkType all work unchanged.
+          The form engine is the library's own, validated by any Standard Schema
+          — Zod v4, Valibot or ArkType all work unchanged. It was TanStack Form
+          until 4.0; that dependency peer-pinned Solid 1 and was one of three
+          packages standing between the library and Solid 2.
         </p>
         <CodeBlock
           language="tsx"
@@ -269,17 +303,27 @@ const form = createForm({
             soon as the field becomes valid again.
           </li>
           <li>
-            • Escape hatch: <code class="text-sm">form._tsForm</code> is the raw
-            TanStack API, typed <code class="text-sm">any</code> on purpose.
+            • The form object itself is the escape hatch:{" "}
+            <code class="text-sm">values()</code>,{" "}
+            <code class="text-sm">getFieldValue</code>,{" "}
+            <code class="text-sm">getFieldMeta</code>,{" "}
+            <code class="text-sm">setFieldValue</code>,{" "}
+            <code class="text-sm">validateField</code>,{" "}
+            <code class="text-sm">submit()</code>,{" "}
+            <code class="text-sm">isSubmitting()</code> and{" "}
+            <code class="text-sm">isValid()</code>. The old{" "}
+            <code class="text-sm">form._tsForm</code> is gone with TanStack, and
+            with it the twelve erased generics it leaked into the public type.
           </li>
         </ul>
         <Callout type="warning" title="Errors are touch-gated">
           <code class="text-sm">error()</code> stays{" "}
           <code class="text-sm">undefined</code> until the field blurs, but{" "}
-          <code class="text-sm">FormSubmitButton</code> disables on{" "}
-          <code class="text-sm">!canSubmit</code>, which is not touch-gated. The
-          practical consequence: the submit button can sit disabled with no
-          visible error anywhere on the form.
+          <code class="text-sm">FormSubmitButton</code> takes{" "}
+          <code class="text-sm">state="disabled"</code> whenever{" "}
+          <code class="text-sm">form.isValid()</code> is false, which is not
+          touch-gated. The practical consequence: the submit button can sit
+          disabled with no visible error anywhere on the form.
         </Callout>
       </section>
 
@@ -288,57 +332,60 @@ const form = createForm({
           Table
         </h2>
         <p class="text-base-content/70 mb-6 max-w-3xl">
-          Table is headless and assembled from parts — you compose the model
-          hooks with the render pieces rather than passing a config object to
-          one component.
+          Table is the presentational compound: you own the markup and it owns
+          the styling. It carries no data model, so there is nothing to
+          configure and nothing to keep in sync.
         </p>
         <CodeBlock
           language="tsx"
-          code={`import { Table, useTableModel, useTableSorting, useTablePagination } from "@pathscale/ui";
+          code={`import { Table } from "@pathscale/ui";
 
-const sorting = useTableSorting();
-const pagination = useTablePagination();          // default page sizes [10,25,50,100]
-const table = useTableModel({
-  data: () => rows(), columns,
-  sorting: sorting.sorting, setSorting: sorting.setSorting,
-  pagination: pagination.pagination, setPagination: pagination.setPagination,
-  enableSorting: true, enablePagination: true,
-});
-
-// render table.getHeaderGroups() / getRowModel().rows into:
-// <Table.Content sortDescriptor={sorting.sortDescriptor()} onSortChange={sorting.setSortDescriptor}>…`}
+<Table>
+  <Table.ScrollContainer>
+    <Table.Content>
+      <Table.Header>
+        <Table.Row><Table.Column id="name">Name</Table.Column></Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row><Table.Cell>Ada Byron</Table.Cell></Table.Row>
+      </Table.Body>
+    </Table.Content>
+  </Table.ScrollContainer>
+</Table>`}
           class="mb-6"
         />
         <ul class="space-y-3 text-base-content/70 mb-6 max-w-3xl">
           <li>
-            • <strong>State-slice hooks</strong>, all controlled-or-uncontrolled:{" "}
-            <code class="text-sm">useTableSorting</code>,{" "}
-            <code class="text-sm">useTableSelection</code>,{" "}
-            <code class="text-sm">useTableFiltering</code> (per-column popovers
-            plus <code class="text-sm">getColumnFilterProps</code>),{" "}
-            <code class="text-sm">useTablePagination</code>,{" "}
-            <code class="text-sm">useTableExpansion</code>.
-          </li>
-          <li>
             • <strong>Parts:</strong> Table.Root, Table.ScrollContainer,
             Table.Content, Header, Column, Body, Row, Cell, ExpandedRow, Footer,
             PageSize, ResizableContainer, ColumnResizer, LoadMore(+Content), plus
-            SortIcon, ExpandToggle, InlineConfirm, MobileListView (a responsive
-            card fallback) and VirtualSpacerRow.
+            TableSortIcon, TableExpandToggle, TableInlineConfirm,
+            TableMobileListView (a responsive card fallback) and
+            TableVirtualSpacerRow.
+          </li>
+          <li>
+            • <strong>
+              Sorting, paging, selection and grouping live in{" "}
+              <code class="text-sm">DataGrid</code>
+            </strong>
+            , built from a <code class="text-sm">createDataGrid</code> model.
+            Reach for Table when you are laying out rows you already have, and
+            for DataGrid when something has to sort or page them.
           </li>
         </ul>
         <Flex direction="col" gap="md">
-          <Callout type="warning" title="Pagination needs a max page index">
-            <code class="text-sm">nextPage(max)</code> and{" "}
-            <code class="text-sm">lastPage(max)</code> take the maximum page
-            index from the caller — they don't derive it themselves.
-          </Callout>
-          <Callout type="warning" title="Virtualization is not built in">
-            Combine <code class="text-sm">useVirtualRows</code> (a wrapper over
-            @tanstack/solid-virtual) with{" "}
-            <code class="text-sm">VirtualSpacerRow</code> yourself. The library
-            playground has working examples under{" "}
-            <code class="text-sm">playground/src/examples/Table*.tsx</code>.
+          <Callout type="warning" title="The useTable* hooks are gone">
+            <code class="text-sm">useTableModel</code>,{" "}
+            <code class="text-sm">useTableSorting</code>,{" "}
+            <code class="text-sm">useTableSelection</code>,{" "}
+            <code class="text-sm">useTableFiltering</code>,{" "}
+            <code class="text-sm">useTablePagination</code> and{" "}
+            <code class="text-sm">useTableExpansion</code> were the TanStack-era
+            model layer and no longer ship. Their replacement is{" "}
+            <code class="text-sm">createDataGrid</code>, which is the library's
+            own and is not a TanStack wrapper. Only{" "}
+            <code class="text-sm">useAnchoredOverlayPosition</code> survives
+            from that group.
           </Callout>
         </Flex>
       </section>
