@@ -23,8 +23,24 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      "~": "./src",
+      /*
+       * solid-layouts ships one build arm per Solid major and its bare entry is
+       * the 1.9 one, whose renderer calls `splitProps`. Solid 2 replaced that
+       * with `omit`, and a bundler links both arms of the package's runtime
+       * check, so the default entry fails at link time with "export
+       * 'createComponent' was not found in './renderer.js'". `./solid-2` is the
+       * arm built against this major; these aliases are how a consumer picks it.
+       */
+      "solid-layouts/recipe": "solid-layouts/solid-2/recipe",
+      "solid-layouts/cx": "solid-layouts/solid-2/cx",
+      "solid-layouts/application-boundary": "solid-layouts/solid-2/application-boundary",
+      "solid-layouts$": "solid-layouts/solid-2",
+    },
+  },
   source: {
-    alias: { "~": "./src" },
     define: {
       "import.meta.env.VERSION": JSON.stringify(
         process.env.GITHUB_RUN_NUMBER || "0.0.1"
