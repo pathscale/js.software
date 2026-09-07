@@ -10,7 +10,7 @@ export default function ComponentVariants() {
             <Button>Button</Button>
             <Button flavor="primary">Primary</Button>
             <Button flavor="secondary">Secondary</Button>
-            <Button flavor="tertiary">Tertiary</Button>
+            <Button flavor="accent">Accent</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="ghost">Ghost</Button>
             <Button flavor="destructive">Danger</Button>

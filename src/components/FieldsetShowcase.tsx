@@ -27,11 +27,6 @@ export default function FieldsetShowcase() {
     },
     {
       name: "class",
-      type: "string",
-      description: "Additional CSS classes (use Tailwind gap-* utilities to control spacing)",
-    },
-    {
-      name: "class",
       type: `string`,
       description: "Extra classes, merged into the root. There is no className.",
     },

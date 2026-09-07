@@ -21,11 +21,6 @@ export default function FooterShowcase() {
     },
     {
       name: "class",
-      type: "string",
-      description: "Additional CSS classes to apply",
-    },
-    {
-      name: "class",
       type: `string`,
       description: "Extra classes, merged into the root. There is no className.",
     },
@@ -44,11 +39,6 @@ export default function FooterShowcase() {
   ];
 
   const titleProps = [
-    {
-      name: "class",
-      type: "string",
-      description: "Additional CSS classes to apply",
-    },
     {
       name: "class",
       type: `string`,

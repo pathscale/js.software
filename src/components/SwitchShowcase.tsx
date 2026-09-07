@@ -1,3 +1,4 @@
+import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Flex, Switch } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
@@ -5,8 +6,11 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 export default function SwitchShowcase() {
+  const [notify, setNotify] = createSignal(false);
+
   const sections = [
     { id: "default", title: "Default" },
+    { id: "controlled", title: "Controlled" },
     { id: "colors", title: "Colors" },
     { id: "sizes", title: "Sizes" },
     { id: "disabled", title: "Disabled" },
@@ -40,8 +44,20 @@ export default function SwitchShowcase() {
     },
     {
       name: "onChange",
-      type: "(event: ChangeEvent<HTMLInputElement>) => void",
-      description: "Callback function when the toggle state changes",
+      type: "(checked: boolean) => void",
+      description:
+        "Reports the new checked state. It is the value, not the event: every control in the library reports its own value under this name.",
+    },
+    {
+      name: "onNativeChange",
+      type: "JSX.EventHandlerUnion<HTMLInputElement, Event>",
+      description:
+        "The underlying input event, and still where preventDefault() belongs. Vetoing here also suppresses onChange.",
+    },
+    {
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
+      description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "ref",
@@ -85,6 +101,27 @@ export default function SwitchShowcase() {
             <CodeBlock
               code={`<Switch />
 <Switch checked />`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="controlled" title="Controlled">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="start" gap="lg">
+              <Switch checked={notify()} onChange={setNotify} />
+              <span class="text-sm text-base-content/70">
+                Notifications are {notify() ? "on" : "off"}
+              </span>
+            </Flex>
+            <p class="text-sm text-base-content/60">
+              onChange hands over the new checked state. Reach for onNativeChange
+              when you need the event itself, such as to call preventDefault.
+            </p>
+            <CodeBlock
+              code={`const [notify, setNotify] = createSignal(false);
+
+<Switch checked={notify()} onChange={setNotify} />
+<Switch onNativeChange={(e) => e.preventDefault()} />`}
             />
           </Flex>
         </ShowcaseSection>

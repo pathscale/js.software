@@ -39,9 +39,9 @@ export default function IconShowcase() {
       description: "Optional theme for the icon (e.g. light or dark).",
     },
     {
-      name: "class / className",
+      name: "class",
       type: "string",
-      description: "Optional Tailwind or custom class names.",
+      description: "Optional Tailwind or custom class names. There is no className.",
     },
   ];
 

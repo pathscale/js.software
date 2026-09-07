@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Flex, Radio } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
@@ -6,8 +6,11 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 
 const RadioShowcase: Component = () => {
+  const [plan, setPlan] = createSignal("annual");
+
   const sections = [
     { id: "default", title: "Default" },
+    { id: "controlled", title: "Controlled" },
     { id: "description", title: "Description and validation" },
     { id: "disabled", title: "Disabled" },
     { id: "with-labels", title: "With Labels and Form" },
@@ -31,6 +34,18 @@ const RadioShowcase: Component = () => {
       name: "name",
       type: "string",
       description: "Name attribute for the radio input, used for grouping",
+    },
+    {
+      name: "onChange",
+      type: "(checked: boolean) => void",
+      description:
+        "Reports the new checked state. It is the value, not the event. RadioGroup.onChange reports the selected value instead.",
+    },
+    {
+      name: "onNativeChange",
+      type: "JSX.EventHandlerUnion<HTMLInputElement, Event>",
+      description:
+        "The underlying input event, and still where preventDefault() belongs. Vetoing here also suppresses onChange.",
     },
     {
       name: "description",
@@ -93,6 +108,44 @@ const RadioShowcase: Component = () => {
   <Radio name="radio1" checked />
   <Radio name="radio1" />
 </Flex>`}
+            />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="controlled" title="Controlled">
+          <Flex direction="col" gap="md">
+            <Flex align="center" justify="start" gap="lg">
+              <label class="cursor-pointer flex items-center gap-2">
+                <Radio
+                  name="plan"
+                  checked={plan() === "annual"}
+                  onChange={(checked) => checked && setPlan("annual")}
+                />
+                <span>Annual</span>
+              </label>
+              <label class="cursor-pointer flex items-center gap-2">
+                <Radio
+                  name="plan"
+                  checked={plan() === "monthly"}
+                  onChange={(checked) => checked && setPlan("monthly")}
+                />
+                <span>Monthly</span>
+              </label>
+              <span class="text-sm text-base-content/70">Selected: {plan()}</span>
+            </Flex>
+            <p class="text-sm text-base-content/60">
+              onChange hands over the new checked state of this radio, not the
+              event. For a whole group, RadioGroup reports the selected value
+              instead.
+            </p>
+            <CodeBlock
+              code={`const [plan, setPlan] = createSignal("annual");
+
+<Radio
+  name="plan"
+  checked={plan() === "annual"}
+  onChange={(checked) => checked && setPlan("annual")}
+/>`}
             />
           </Flex>
         </ShowcaseSection>

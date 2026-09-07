@@ -28,14 +28,16 @@ export default function InputShowcase() {
     {
       name: "size",
       type: '"sm" | "md" | "lg"',
-      default: '"md"',
-      description: "Size of the input",
+      default: '"sm"',
+      description:
+        'Size of the input. It defaulted to "md" before 4.0, which left an unsized field 4px taller than an unsized Button; both are 2.25rem now. Pass size="md" if you want the old height.',
     },
     {
-      name: "width",
-      type: `Width`,
-      default: "true",
-      description: 'Pass width="full".',
+      name: "fullWidth",
+      type: "boolean",
+      default: "false",
+      description:
+        'Stretches the field to its container. Input takes a boolean here, not the Width vocabulary: width="full" is a Button prop and is silently dropped on an Input.',
     },
     {
       name: "placeholder",
@@ -79,7 +81,6 @@ export default function InputShowcase() {
       type: "JSX.Element",
       description: "Icon rendered at the end of the input",
     },
-    { name: "class", type: "string", description: "Additional CSS classes" },
     { name: "class", type: "string", description: "Extra classes, merged into the root. There is no className." },
     {
       name: "dataTheme",

@@ -7,7 +7,8 @@ import { ShowcaseSection } from "./showcase/ShowcaseSection";
 const badgeProps = [
   { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Indicator size." },
   { name: "flavor", type: "Flavor", default: '"neutral"', description: "What the badge is. Open: your own name yields a class you can style." },
-  { name: "variant", type: '"primary" | "secondary" | "soft"', default: '"primary"', description: "Indicator treatment." },
+  { name: "variant", type: '"solid" | "soft" | "outline"', default: '"solid"', description: "Indicator treatment. This is shape only: primary is a flavor, not a variant." },
+  { name: "state", type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`, default: '"default"', description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree." },
   { name: "placement", type: '"top-right" | "top-left" | "bottom-right" | "bottom-left"', default: '"top-right"', description: "Position relative to Badge.Anchor." },
 ];
 

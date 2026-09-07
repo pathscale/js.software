@@ -146,7 +146,7 @@ const EXAMPLES: Example[] = [
     ),
   },
   { name: "Text", render: () => <Text>Body text.</Text> },
-  { name: "TextArea", render: () => <Textarea /> },
+  { name: "Textarea", render: () => <Textarea /> },
   { name: "Input (text)", render: () => <Input type="text" /> },
   { name: "TimeField", render: () => <TimeField /> },
   { name: "DateField", render: () => <DateField /> },

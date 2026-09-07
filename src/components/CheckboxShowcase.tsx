@@ -1,3 +1,4 @@
+import { createSignal } from "solid-js";
 import { Checkbox, Flex } from "@pathscale/ui";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
@@ -5,8 +6,11 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 
 export default function CheckboxShowcase() {
+  const [accepted, setAccepted] = createSignal(false);
+
   const sections = [
     { id: "default", title: "Default" },
+    { id: "controlled", title: "Controlled" },
     { id: "indeterminate", title: "Indeterminate" },
     { id: "form-control", title: "Form Control" },
     { id: "variants", title: "Variants" },
@@ -18,6 +22,30 @@ export default function CheckboxShowcase() {
       name: "checked",
       type: "boolean",
       description: "Controls the checked state",
+    },
+    {
+      name: "onChange",
+      type: "(checked: boolean) => void",
+      description:
+        "Reports the new checked state. It is the value, not the event. A checkbox inside a CheckboxGroup fires this as well as the group's own onChange.",
+    },
+    {
+      name: "onNativeChange",
+      type: "JSX.EventHandlerUnion<HTMLInputElement, Event>",
+      description:
+        "The underlying input event, and still where preventDefault() belongs. Vetoing here also suppresses onChange.",
+    },
+    {
+      name: "issues",
+      type: "Issue[]",
+      description:
+        'Validation results. Validity is derived from them, not asserted; force it with state="invalid".',
+    },
+    {
+      name: "state",
+      type: `"default" | "loading" | "error" | "invalid" | "disabled" | "hidden"`,
+      description:
+        "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
       name: "indeterminate",
@@ -61,6 +89,27 @@ export default function CheckboxShowcase() {
               <Checkbox />
             </Flex>
             <CodeBlock code={`<Checkbox />`} />
+          </Flex>
+        </ShowcaseSection>
+
+        <ShowcaseSection id="controlled" title="Controlled">
+          <Flex direction="col" gap="md">
+            <Flex justify="start" align="center" gap="sm">
+              <Checkbox checked={accepted()} onChange={setAccepted} />
+              <span class="text-sm text-base-content/70">
+                Terms {accepted() ? "accepted" : "not accepted"}
+              </span>
+            </Flex>
+            <p class="text-sm text-base-content/60">
+              onChange hands over the new checked state. Reach for onNativeChange
+              when you need the event itself, such as to call preventDefault.
+            </p>
+            <CodeBlock
+              code={`const [accepted, setAccepted] = createSignal(false);
+
+<Checkbox checked={accepted()} onChange={setAccepted} />
+<Checkbox onNativeChange={(e) => e.preventDefault()} />`}
+            />
           </Flex>
         </ShowcaseSection>
 
