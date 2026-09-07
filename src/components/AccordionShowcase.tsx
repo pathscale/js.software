@@ -58,11 +58,6 @@ export default function AccordionShowcase() {
     },
     {
       name: "class",
-      type: "string",
-      description: "Additional CSS classes to apply",
-    },
-    {
-      name: "class",
       type: `string`,
       description: "Extra classes, merged into the root. There is no className.",
     },

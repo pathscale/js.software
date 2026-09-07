@@ -15,7 +15,6 @@ export default function FormShowcase() {
   ];
 
   const formProps = [
-    { name: "class", type: "string", description: "Custom classes" },
     { name: "class", type: "string", description: "Extra classes, merged into the root. There is no className." },
     { name: "dataTheme", type: "string", description: "Theme identifier" },
     { name: "children", type: "JSX.Element", description: "Form content" },

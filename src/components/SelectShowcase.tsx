@@ -76,10 +76,11 @@ export default function SelectShowcase() {
       description: "What is happening to the component. Replaces isDisabled, isLoading and isInvalid, which could disagree.",
     },
     {
-      name: "width",
-      type: `Width`,
+      name: "fullWidth",
+      type: "boolean",
       default: "false",
-      description: 'Pass width="full".',
+      description:
+        'Stretches the select to its container. Select takes a boolean here, not the Width vocabulary: width="full" is a Button prop and is silently dropped on a Select.',
     },
     {
       name: "placement",

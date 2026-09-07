@@ -36,11 +36,6 @@ export default function SpinnerShowcase() {
     },
     {
       name: "class",
-      type: "string",
-      description: "Additional CSS classes",
-    },
-    {
-      name: "class",
       type: `string`,
       description: "Extra classes, merged into the root. There is no className.",
     },

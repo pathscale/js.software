@@ -44,7 +44,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           <Switch 
             size="sm"
             checked={applyToWholeSite()}
-            onChange={(e: any) => setApplyToWholeSite(e.currentTarget.checked)}
+            onChange={setApplyToWholeSite}
           />
         </div>
         
@@ -53,7 +53,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           <Switch 
             size="sm"
             checked={rememberTheme()}
-            onChange={(e: any) => setRememberTheme(e.currentTarget.checked)}
+            onChange={setRememberTheme}
           />
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           <Switch 
             size="sm"
             checked={isDefault()}
-            onChange={(e: any) => setIsDefault(e.currentTarget.checked)}
+            onChange={setIsDefault}
           />
         </div>
         
@@ -115,7 +115,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           <Switch 
             size="sm"
             checked={isPrefersDark()}
-            onChange={(e: any) => setIsPrefersDark(e.currentTarget.checked)}
+            onChange={setIsPrefersDark}
           />
         </div>
         
@@ -124,7 +124,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           <Switch 
             size="sm"
             checked={colorScheme() === "dark"}
-            onChange={(e: any) => setColorScheme(e.currentTarget.checked ? "dark" : "light")}
+            onChange={(checked) => setColorScheme(checked ? "dark" : "light")}
           />
         </div>
       </div>

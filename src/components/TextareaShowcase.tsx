@@ -24,10 +24,11 @@ const TextareaShowcase: Component = () => {
       description: "Visual variant of the textarea",
     },
     {
-      name: "width",
-      type: `Width`,
+      name: "fullWidth",
+      type: "boolean",
       default: "false",
-      description: 'Pass width="full".',
+      description:
+        'Stretches the textarea to its container. Textarea takes a boolean here, not the Width vocabulary: width="full" is a Button prop and is silently dropped on a Textarea.',
     },
     {
       name: "state",
