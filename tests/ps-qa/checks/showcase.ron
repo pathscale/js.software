@@ -1,0 +1,53 @@
+// The showcase, driven against its built output through a headless browser.
+//
+// This site is the library's kitchen sink, so what it proves is that the
+// published `@pathscale/ui` renders in a real engine at all. A version that
+// fails to boot takes the whole showcase with it, and the symptom is a blank
+// page rather than an error anyone reads.
+//
+// The heading checks are `Present` rather than `Paints`: text is exactly as
+// wide as its line and as tall as its shaped glyphs, so on a host with no font
+// catalogue -- which a Linux runner is -- it lays out flat and a box assertion
+// fails for a reason that says nothing about the site.
+[
+    (
+        id: "the-showcase-renders",
+        group: "showcase",
+        what: "the showcase paints its heading rather than a blank page",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Build Exceptional UIs",
+        expect: Present,
+    ),
+    (
+        id: "the-navigation-is-there",
+        group: "showcase",
+        what: "the documentation is reachable from the home page",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:Docs",
+        expect: Paints,
+    ),
+    (
+        id: "the-component-menu-has-a-trigger",
+        group: "showcase",
+        what: "the component index is offered as something a person can press",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Components",
+        expect: Paints,
+    ),
+    (
+        id: "the-body-rendered-too",
+        group: "showcase",
+        what: "the sections below the header rendered rather than only the shell",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Modern Components",
+        expect: Present,
+    ),
+]

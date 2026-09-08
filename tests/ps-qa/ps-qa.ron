@@ -1,0 +1,8 @@
+// What the harness has to be told about this application.
+//
+// `Components` is a button rather than a link: it opens a menu instead of
+// navigating, so it is listed as navigation and not as a surface of its own.
+AppProfile(
+    navigation_controls: ["Home", "Theming", "Docs", "Components"],
+    home_opener: Some("Home"),
+)
