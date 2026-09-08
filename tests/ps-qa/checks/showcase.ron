@@ -50,4 +50,33 @@
         subject: "heading:Modern Components",
         expect: Present,
     ),
+    // Everything above only asks whether the page painted, and a page that
+    // paints can still be dead: Solid 2 halts the reactive system permanently
+    // when an error escapes every boundary, and a halted page renders once
+    // and then answers nothing. Pressing the menu and reading back what
+    // appeared is what separates the two.
+    //
+    // The categories are the right subject rather than the trigger, because
+    // the trigger is there either way. They exist only once the menu is open.
+    (
+        id: "the-component-menu-opens",
+        group: "showcase",
+        what: "pressing the trigger reveals the component categories",
+        open: None,
+        hover: None,
+        click: Some("Components"),
+        subject: "button:Data display",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-menu-lists-more-than-one-category",
+        group: "showcase",
+        what: "the menu is a list of sections rather than a single entry",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Navigation",
+        expect: Paints,
+    ),
 ]
