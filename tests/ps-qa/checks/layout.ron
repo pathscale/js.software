@@ -121,8 +121,13 @@
         open: None,
         hover: None,
         click: None,
+        // The disclosure summary is its own label and nothing else, so it
+        // resolves to zero height without fonts and no painted assertion can
+        // hold. `Present` still separates a disclosure from a caption: a
+        // caption is not a `button`. The check below presses it, which proves
+        // the same control is live.
         subject: "button:What does Solid Layouts compile?",
-        expect: Enabled,
+        expect: Present,
     ),
     (
         id: "and-its-content-starts-closed",

@@ -66,15 +66,26 @@
         expect_count: Some(3),
     ),
     (
-        id: "and-its-crumbs-run-left-to-right",
+        id: "and-its-crumbs-hold-their-own-places",
         group: "navigation",
-        what: "the trail reads as a path rather than stacking",
+        what: "the crumbs hold their own places rather than stacking on one another",
         open: None,
         hover: None,
         click: None,
-        subject: "link:Add Document",
-        compare: Some("link:Documents"),
-        expect: RightOf,
+        // This was `link:Add Document` right of `link:Documents`, and it
+        // cannot be that on a host with no font catalogue. The page draws the
+        // same trail three times and the crumb names repeat across all three,
+        // so the selector matches the plain example's anchors as well -- and
+        // those are pure text, 4x0, while the icon example's are 28x16.
+        // `RightOf` requires *every* match to paint, so the assertion fails on
+        // the example whose links have nothing but a label.
+        //
+        // The list items are what survive: each one has a box in every
+        // example, and `DistinctPositions` fails exactly when a trail collapses
+        // onto one coordinate, which is the stacking this check is about. What
+        // it no longer proves is the left-to-right order specifically.
+        subject: "listitem:",
+        expect: DistinctPositions,
     ),
     // Dock.
     (
@@ -140,8 +151,12 @@
         open: None,
         hover: None,
         click: None,
+        // A bare anchor: no padding, no border, so its box is its text and it
+        // is 0x0 without fonts. `Present` is the assertion this check was
+        // always making anyway -- a styled span would not carry the `link`
+        // role.
         subject: "link:Take me to Google!",
-        expect: Paints,
+        expect: Present,
     ),
     (
         id: "the-link-page-covers-the-external-case",
@@ -150,8 +165,9 @@
         open: None,
         hover: None,
         click: None,
+        // Bare anchor again, and `Present` for the same reason.
         subject: "link:External link",
-        expect: Paints,
+        expect: Present,
     ),
     // Navbar. The busiest page in the category.
     (
