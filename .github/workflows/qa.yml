@@ -5,6 +5,12 @@
 # that fails to boot takes the whole showcase with it, and the symptom is a
 # blank page rather than an error anyone reads.
 #
+# Eleven groups: the header and the landing page, the four documentation pages,
+# the theme editor, the seven categories of the component menu, and the six
+# showcases the menu does not list. Between them they open 58 of the site's 60
+# routes. The two that are left, `/calendar` and `/color-picker`, are reached
+# and not opened; `tests/ps-qa/checks/input.ron` says why.
+#
 # It is not jsdom. `chuzz-headless` loads the built site through the same
 # loader, the same web-API shim and the same engine a tab uses, and `ps-qa`
 # drives it over a socket without linking any of it.
@@ -46,8 +52,19 @@ jobs:
           # locally well inside the budget. This widens scheduling deadlines
           # only; every declared transition is still required.
           QA_TIMEOUT_SCALE: 2
+        # One invocation per group, rather than one that runs everything.
+        #
+        # That is not only for readable logs. The driver orders the checks it
+        # selects by which surface each one opens, so that a large page is
+        # mounted once rather than per check, and that ordering is computed
+        # across every check file at once. Selecting all of them therefore
+        # interleaves the groups by surface instead of running each group as
+        # written. Selecting one group at a time keeps every group in the order
+        # its file declares, which is the order its preamble and its restores
+        # depend on.
         run: |
-          for GROUP in showcase; do
+          for GROUP in showcase docs theming actions data-display feedback \
+                       input layout navigation surfaces unlisted; do
             echo "::group::$GROUP"
             ps-qa --app tests/ps-qa/ps-qa.ron \
               qa-hosted "$GROUP" \
