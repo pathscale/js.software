@@ -275,9 +275,12 @@
         open: None,
         hover: None,
         click: Some("button:Add Toast (Max 3)"),
-        // The counter is per press and this group presses once, so the first
-        // message is the one to name.
-        subject: "status:Limited message #1",
+        // Named without a role on purpose. This example picks its severity at
+        // random from four values, and two of them are severe enough to take
+        // the `alert` role rather than `status`, so a role-qualified subject
+        // passes or fails on a coin toss. The counter is per press and this
+        // group presses once, so the first message is the one to name.
+        subject: "Limited message #1",
         expect: Paints,
         outcome_timeout_ms: 3000,
     ),
