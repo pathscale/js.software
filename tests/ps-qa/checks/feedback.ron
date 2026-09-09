@@ -249,6 +249,14 @@
         subject: "status:Default toast message",
         expect: Absent,
     ),
+    // Every toast on this page removes itself after four seconds, so the two
+    // checks below carry deadlines shorter than that and each names the toast
+    // its own press produced. The first version of the second check counted the
+    // whole `status` family instead, and its baseline of one was the *previous*
+    // toast: on a slower run that one had already expired, the count went
+    // 1 -> 0, and a working component was reported broken by a four-second
+    // timer. A check whose subject is a family the page also mutates on a clock
+    // is a check that will eventually fail for the wrong reason.
     (
         id: "and-pressing-the-trigger-raises-one",
         group: "feedback",
@@ -258,18 +266,20 @@
         click: Some("button:Show Default Toast"),
         subject: "status:Default toast message",
         expect: Paints,
-        outcome_timeout_ms: 8000,
+        outcome_timeout_ms: 3000,
     ),
     (
-        id: "and-the-dynamic-example-adds-its-own",
+        id: "and-the-dynamic-example-names-the-toast-it-appended",
         group: "feedback",
-        what: "the list-backed example appends rather than replacing",
+        what: "the list-backed example appends an item of its own rather than reusing one",
         open: None,
         hover: None,
         click: Some("button:Add Toast (Max 3)"),
-        subject: "status:",
-        expect: PaintsMore,
-        outcome_timeout_ms: 8000,
+        // The counter is per press and this group presses once, so the first
+        // message is the one to name.
+        subject: "status:Limited message #1",
+        expect: Paints,
+        outcome_timeout_ms: 3000,
     ),
     // Tooltip. The only component in the suite whose behaviour needs a pointer.
     (
