@@ -123,9 +123,9 @@
         id: "the-calendar-page-opens",
         group: "calendar",
         what: "the calendar showcase mounts rather than taking the application down",
-        open: Some("link:Calendar"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Calendar"),
         // The page title, from `ShowcaseLayout`'s `h1`. This is the first
         // thing that fails today: the throw happens during the first render,
         // so the heading never reaches the tree either.

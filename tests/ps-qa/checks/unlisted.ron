@@ -13,6 +13,11 @@
 // description, so `Fieldset` alone also matches `Fieldset Actions`, and `Radio`
 // also matches `Radio Group`.
 //
+// Each card is pressed with `click` rather than reached with `open`, for the
+// reason written out in `actions.ron`: these pages are not surfaces, so `open`
+// confirms arrival by waiting for the check's own heading to paint, and a
+// heading does not paint on a host with no font catalogue.
+//
 // This group runs last in the suite, after every category group, because the
 // index it depends on is the one page whose content is derived from the route
 // table: if a route is added and this group starts failing, the route table and
@@ -44,9 +49,9 @@
         id: "the-fieldset-page-opens-from-the-index",
         group: "unlisted",
         what: "the index card reaches the Fieldset showcase",
-        open: Some("link:Fieldset Related form controls"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Fieldset Related form controls"),
         subject: "heading:Default with Legend",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -101,9 +106,9 @@
         id: "the-fieldset-actions-page-opens-from-the-index",
         group: "unlisted",
         what: "the index card reaches the Fieldset Actions showcase",
-        open: Some("link:Fieldset Actions Semantic form action layout"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Fieldset Actions Semantic form action layout"),
         subject: "button:Save changes",
         expect: Paints,
         outcome_timeout_ms: 8000,
@@ -146,9 +151,9 @@
         id: "the-footer-page-opens-from-the-index",
         group: "unlisted",
         what: "the index card reaches the Footer showcase",
-        open: Some("link:Footer Page footer structure"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Footer Page footer structure"),
         subject: "heading:Centered Layout",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -190,9 +195,9 @@
         id: "the-icon-page-opens-from-the-index",
         group: "unlisted",
         what: "the index card reaches the Icon showcase",
-        open: Some("link:Icon Consistent SVG icon presentation"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Icon Consistent SVG icon presentation"),
         subject: "heading:Custom Color",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -223,9 +228,9 @@
         id: "the-radio-page-opens-from-the-index",
         group: "unlisted",
         what: "the index card reaches the bare Radio showcase",
-        open: Some("link:Radio Single-choice controls"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Radio Single-choice controls"),
         subject: "radio:Monthly",
         expect: Paints,
         outcome_timeout_ms: 8000,
@@ -277,9 +282,9 @@
         id: "the-video-preview-page-opens-from-the-index",
         group: "unlisted",
         what: "the index card reaches the Video Preview showcase",
-        open: Some("link:Video Preview Live media preview"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Video Preview Live media preview"),
         subject: "button:Start Camera",
         expect: Paints,
         outcome_timeout_ms: 8000,
