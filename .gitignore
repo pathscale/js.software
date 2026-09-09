@@ -3,3 +3,5 @@ dist
 
 # Tauri build artifacts
 src-tauri/target
+bun.lock
+Cargo.lock
