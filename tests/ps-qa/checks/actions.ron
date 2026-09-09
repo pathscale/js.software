@@ -1,0 +1,383 @@
+// The Actions category of the component menu: Button, Dropdown, Menu, Dialog,
+// Switch.
+//
+// Every component group on this site starts the same way, and the preamble is
+// three checks rather than one on purpose. The component pages are not in the
+// header: they are behind a two-press disclosure, and `useNavigation` clears
+// that disclosure whenever the route becomes `/`, `/docs` or `/showcases`. So a
+// group first lands on a page that clears it, then opens the menu, then selects
+// its own category. Each of those three is a real assertion about navigation
+// the site owns, and together they make the group re-runnable from wherever the
+// previous one stopped.
+//
+// The documentation index is the reset page rather than the showcase index.
+// `/showcases` renders a card per component whose accessible name is the
+// component's name followed by its description, so `Button`, `Actions` and
+// `Menu` all match something there and every assertion in the preamble would
+// pass on the wrong node.
+[
+    (
+        id: "the-actions-group-starts-from-a-page-that-clears-the-menu",
+        group: "actions",
+        what: "the run reaches a route whose navigation resets the component disclosure",
+        open: Some("Docs"),
+        hover: None,
+        click: None,
+        subject: "heading:Quick Start",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-actions-group-opens-the-component-menu",
+        group: "actions",
+        what: "the component index offers its categories when asked",
+        open: None,
+        hover: None,
+        click: Some("Components"),
+        subject: "button:Actions",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-actions-group-selects-its-category",
+        group: "actions",
+        what: "picking a category lists the pages under it",
+        open: None,
+        hover: None,
+        click: Some("button:Actions"),
+        subject: "link:Button",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    // Button.
+    (
+        id: "the-button-page-opens",
+        group: "actions",
+        what: "the menu reaches the Button showcase",
+        open: Some("link:Button"),
+        hover: None,
+        click: None,
+        subject: "heading:Button",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-button-page-draws-every-variant",
+        group: "actions",
+        what: "the variant row rendered to its end rather than stopping at the first flavour",
+        open: None,
+        hover: None,
+        click: None,
+        // The last of seven. Asserting the first would pass on a row that
+        // rendered one button and gave up.
+        subject: "button:Danger soft",
+        expect: Paints,
+    ),
+    (
+        id: "the-button-page-keeps-its-size-scale",
+        group: "actions",
+        what: "the large size resolves to a taller control than the small one",
+        open: None,
+        hover: None,
+        click: None,
+        // Sizes come from the recipe, and a recipe that stops resolving leaves
+        // every button at one height while the names, roles and colours all
+        // stay correct. This is the assertion that notices.
+        subject: "button:Large",
+        expect: Measures,
+        expect_size: Some("x44"),
+    ),
+    (
+        id: "and-the-small-one-is-actually-smaller",
+        group: "actions",
+        what: "the scale is a scale rather than one height with three labels",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Small",
+        expect: Measures,
+        expect_size: Some("x<=36"),
+    ),
+    (
+        id: "the-button-page-draws-an-icon-only-button-as-a-square",
+        group: "actions",
+        what: "a button with no label still has a box",
+        open: None,
+        hover: None,
+        click: None,
+        // Worth its own check because it is the one button on the page whose
+        // size does not come from its text, so it is measurable on a host with
+        // no font catalogue.
+        subject: "button:Settings",
+        expect: Measures,
+        expect_size: Some("32x32"),
+    ),
+    (
+        id: "the-button-page-shows-a-disabled-button",
+        group: "actions",
+        what: "the disabled state refuses input rather than only looking pale",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Saving",
+        expect: Disabled,
+    ),
+    (
+        id: "and-an-enabled-button-beside-it",
+        group: "actions",
+        what: "the disabled assertion is about state, not about a page that drew nothing",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Primary",
+        expect: Enabled,
+    ),
+    (
+        id: "the-button-page-covers-a-link-styled-as-an-action",
+        group: "actions",
+        what: "the navigation-as-action example is a link and not a button",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:Read about Solid Layouts",
+        expect: Paints,
+    ),
+    // Dropdown.
+    (
+        id: "the-dropdown-page-opens",
+        group: "actions",
+        what: "the menu reaches the Dropdown showcase",
+        open: Some("link:Dropdown"),
+        hover: None,
+        click: None,
+        subject: "heading:Dropdown",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-dropdown-page-draws-its-triggers",
+        group: "actions",
+        what: "the examples rendered as pressable triggers",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Aligned Dropdown",
+        expect: Paints,
+    ),
+    (
+        id: "a-dropdown-has-no-menu-until-it-is-pressed",
+        group: "actions",
+        what: "the menu is built on demand rather than sitting open",
+        open: None,
+        hover: None,
+        click: None,
+        // The positive half of this pair is the check below, which opens one.
+        // Alone this would pass on a page that rendered nothing at all.
+        subject: "menuitem:Item 1",
+        expect: Absent,
+    ),
+    (
+        id: "and-pressing-one-reveals-its-items",
+        group: "actions",
+        what: "the trigger opens a menu with the items it was given",
+        open: None,
+        hover: None,
+        click: Some("button:Click"),
+        subject: "menuitem:Item 2",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "and-it-closes-again-when-the-trigger-is-pressed-twice",
+        group: "actions",
+        what: "the trigger is a toggle rather than a one-way switch",
+        open: None,
+        hover: None,
+        click: Some("button:Click"),
+        subject: "menuitem:Item 2",
+        expect: Vanishes,
+        outcome_timeout_ms: 8000,
+    ),
+    // Menu. This page renders every item shape the component supports without
+    // needing an interaction, which is exactly what a role assertion is for:
+    // the roles are the contract a screen reader reads.
+    (
+        id: "the-menu-page-opens",
+        group: "actions",
+        what: "the menu reaches the Menu showcase",
+        open: Some("link:Menu"),
+        hover: None,
+        click: None,
+        subject: "heading:Menu",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-menu-page-draws-plain-items",
+        group: "actions",
+        what: "the default menu rendered its items",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitem:Item 3",
+        expect: Paints,
+    ),
+    (
+        id: "the-menu-page-gives-single-selection-a-radio-role",
+        group: "actions",
+        what: "a one-of-many menu says so in its roles rather than only in its styling",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitemradio:Item 2",
+        expect: Paints,
+    ),
+    (
+        id: "and-multiple-selection-a-checkbox-role",
+        group: "actions",
+        what: "a many-of-many menu is a different role from a one-of-many one",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitemcheckbox:B",
+        expect: Paints,
+    ),
+    (
+        id: "the-menu-page-shows-a-disabled-item",
+        group: "actions",
+        what: "an unavailable item refuses activation",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitem:Disabled item",
+        expect: Disabled,
+    ),
+    (
+        id: "and-an-enabled-item-beside-it",
+        group: "actions",
+        what: "the section rendered both states rather than failing to render",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitem:Enabled item",
+        expect: Enabled,
+    ),
+    (
+        id: "the-menu-page-groups-items-into-sections",
+        group: "actions",
+        what: "the sectioned example kept the items in its second section",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitem:Billing",
+        expect: Paints,
+    ),
+    (
+        id: "the-menu-page-builds-items-from-a-prop",
+        group: "actions",
+        what: "the data-driven form of the component produced the same items",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitem:tsconfig.json",
+        expect: Paints,
+    ),
+    // Dialog.
+    (
+        id: "the-dialog-page-opens",
+        group: "actions",
+        what: "the menu reaches the Dialog showcase",
+        open: Some("link:Dialog"),
+        hover: None,
+        click: None,
+        subject: "heading:Dialog",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-dialog-page-offers-its-size-variants",
+        group: "actions",
+        what: "the sizes section rendered all three triggers",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:LG Modal",
+        expect: Paints,
+    ),
+    (
+        id: "no-dialog-is-open-to-begin-with",
+        group: "actions",
+        what: "the page starts with nothing over it",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Close dialog",
+        expect: Absent,
+    ),
+    (
+        id: "and-a-modal-opens-when-asked",
+        group: "actions",
+        what: "the trigger mounts the dialog and its dismissal",
+        open: None,
+        hover: None,
+        click: Some("button:Open Modal"),
+        subject: "button:Close dialog",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "and-the-modal-closes-again",
+        group: "actions",
+        what: "the dialog is dismissible, and the page is left with nothing over it",
+        open: None,
+        hover: None,
+        click: Some("button:Close dialog"),
+        // Not `Absent`: a dismissed dialog is normally still in the tree at
+        // 0x0, and asking for absence reports a working control as broken.
+        subject: "button:Close dialog",
+        expect: Vanishes,
+        outcome_timeout_ms: 8000,
+    ),
+    // Switch. Every switch on this page is a one-pixel input with no accessible
+    // name, so there is no control here a check can address by name and no
+    // assertion it could make about one. Counting the family is what is left,
+    // and it is still falsifiable: a page that fails to mount its switches, or
+    // a component that stops rendering an input at all, changes the number.
+    //
+    // The names are the defect, not the sizes. A visually hidden input with a
+    // styled sibling is the ordinary way to build a switch, and the sibling is
+    // correctly marked presentational; what is missing is a label on the input.
+    (
+        id: "the-switch-page-opens",
+        group: "actions",
+        what: "the menu reaches the Switch showcase",
+        open: Some("link:Switch"),
+        hover: None,
+        click: None,
+        subject: "heading:Switch",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-switch-page-mounts-every-example",
+        group: "actions",
+        what: "all five sections produced their switches",
+        open: None,
+        hover: None,
+        click: None,
+        // Two default, one controlled, five colours, three sizes, two disabled.
+        subject: "switch:",
+        expect: Count,
+        expect_count: Some(13),
+    ),
+    (
+        id: "the-switch-page-covers-the-disabled-state",
+        group: "actions",
+        what: "the section that has no addressable control at least drew its heading",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Disabled",
+        expect: Present,
+    ),
+]
