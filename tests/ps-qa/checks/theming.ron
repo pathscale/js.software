@@ -1,0 +1,297 @@
+// The theme editor, which is the only page on this site that is an application
+// rather than a document.
+//
+// It is worth its own group because it is the one surface where the library is
+// driven rather than displayed: the left column writes custom properties and the
+// right column is a live preview built from the components those properties
+// style. A theme token that stops resolving shows up here first, and nowhere
+// else on the site does a control change anything.
+//
+// This group changes only things it puts back. The colour popover is opened and
+// closed, and no colour is committed.
+//
+// One defect is visible from here and is asserted around rather than at.
+// `ThemeCSSModal` renders `DialogHeader`/`DialogBody`/`DialogFooter` as direct
+// children of `Dialog` instead of wrapping them in `Dialog.Content`. Only the
+// content is portalled and positioned, so pressing `CSS` mounts the export
+// panel at the bottom of the document flow -- measured at y=2482 in a 900px
+// window, with `dialog-root` reporting 0x0 -- instead of over the page. There
+// is no backdrop and nothing moves on screen, so a person pressing the button
+// sees the page do nothing.
+//
+// Its Close button does not work either, for the same reason: the footer is
+// outside the content the dialog root owns, so pressing Close re-renders the
+// page and leaves the panel exactly where it was.
+//
+// One check therefore asserts what the control is *for*, which stays true once
+// it is fixed: pressing it produces the exported CSS and a way to copy it.
+// Nothing here asserts the position it currently renders at, and because the
+// panel cannot be dismissed that check runs last.
+[
+    (
+        id: "the-theme-editor-opens",
+        group: "theming",
+        what: "the header reaches the theme editor",
+        open: Some("Theming"),
+        hover: None,
+        click: None,
+        subject: "heading:Theme Editor",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-editor-offers-the-colour-tokens",
+        group: "theming",
+        what: "the colour section rendered, not only the page title",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Change Colors",
+        expect: Present,
+    ),
+    (
+        id: "and-a-swatch-per-token",
+        group: "theming",
+        what: "each colour token is a control a person can press",
+        open: None,
+        hover: None,
+        click: None,
+        // The base surface token, named for the custom property it writes.
+        // A swatch is a coloured square with no label, so its box is its own
+        // rather than its text's: this is one of the few assertions on this
+        // site that a host with no fonts would still measure.
+        subject: "button:--color-base-100",
+        expect: Measures,
+        expect_size: Some("24x24"),
+    ),
+    (
+        id: "and-the-full-token-set-rather-than-a-few",
+        group: "theming",
+        what: "every colour role has a swatch, content colours included",
+        open: None,
+        hover: None,
+        click: None,
+        // Ten roles, each with a content colour. Counting them is what
+        // distinguishes a rendered palette from a section header with one
+        // stray square under it.
+        subject: "button:--color-",
+        expect: Count,
+        expect_count: Some(20),
+    ),
+    (
+        id: "the-editor-offers-the-shape-tokens",
+        group: "theming",
+        what: "radius, sizes and effects are all present",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Radius",
+        expect: Present,
+    ),
+    (
+        id: "and-the-glass-tokens",
+        group: "theming",
+        what: "the glass section, which is this library's own addition, rendered",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Glass Hype4",
+        expect: Present,
+    ),
+    (
+        id: "and-a-way-to-put-the-glass-tokens-back",
+        group: "theming",
+        what: "the glass section can be reset rather than only edited",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Reset to Hype4 defaults",
+        expect: Paints,
+    ),
+    (
+        id: "the-editor-offers-both-of-its-actions",
+        group: "theming",
+        what: "randomize and export are offered as pressable controls",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Random",
+        expect: Paints,
+    ),
+    (
+        id: "and-the-export-control-is-enabled",
+        group: "theming",
+        what: "the CSS export control is offered rather than greyed out",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:CSS",
+        expect: Enabled,
+    ),
+    // The colour popover, opened and closed. This is the one write path on the
+    // site, and the round trip is what proves the page is still reactive rather
+    // than a frozen first render.
+    (
+        id: "pressing-a-swatch-opens-the-colour-picker",
+        group: "theming",
+        what: "a colour token can be edited, and the palette appears when asked",
+        open: None,
+        hover: None,
+        click: Some("button:--color-primary"),
+        // The Material palette this editor picks from. A colour by name rather
+        // than the dialog's own chrome: the chrome is there whether or not the
+        // swatches rendered.
+        subject: "button:red-500",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "and-the-palette-is-the-whole-material-set",
+        group: "theming",
+        what: "the picker offers a grid of colours rather than one stray square",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:blue-500",
+        expect: Paints,
+    ),
+    (
+        id: "and-closing-it-leaves-the-theme-alone",
+        group: "theming",
+        what: "the popover dismisses, and this group changes nothing it cannot put back",
+        open: None,
+        hover: None,
+        click: Some("button:Done"),
+        subject: "button:red-500",
+        expect: Vanishes,
+        outcome_timeout_ms: 8000,
+    ),
+    // Randomizing. The theme it produces is random by construction, so there is
+    // no name or value to assert. What is worth asserting is that the page is
+    // still alive afterwards: Solid 2 halts its reactive system permanently
+    // when an error escapes, and a halted page keeps its last frame and answers
+    // nothing, so re-opening the popover is the falsifiable question.
+    (
+        id: "the-theme-can-be-randomized",
+        group: "theming",
+        what: "the randomize control runs without taking the editor down with it",
+        open: None,
+        hover: None,
+        click: Some("button:Random"),
+        subject: "button:Reset to Hype4 defaults",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "and-the-editor-still-answers-afterwards",
+        group: "theming",
+        what: "the page is reactive after a full theme regeneration, not merely painted",
+        open: None,
+        hover: None,
+        click: Some("button:--color-accent"),
+        subject: "button:red-500",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "and-the-picker-is-closed-again",
+        group: "theming",
+        what: "the group leaves no overlay open for the next one",
+        open: None,
+        hover: None,
+        click: Some("button:Done"),
+        subject: "button:red-500",
+        expect: Vanishes,
+        outcome_timeout_ms: 8000,
+    ),
+    // The preview column. It is built from the library rather than from static
+    // markup, so it is the broadest single assertion on the site that
+    // `@pathscale/ui` mounts: a version that fails to boot leaves this column
+    // empty while the editor beside it still draws.
+    (
+        id: "the-preview-column-renders-the-library",
+        group: "theming",
+        what: "the live preview is there beside the editor",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Components Demo",
+        expect: Present,
+    ),
+    (
+        id: "and-the-preview-includes-a-tab-strip",
+        group: "theming",
+        what: "a composite component, not only boxes and text",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "tab:Tab 1",
+        expect: Paints,
+    ),
+    (
+        id: "and-a-menu-with-real-items",
+        group: "theming",
+        what: "the menu in the preview drew its items",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitem:Access Tokens",
+        expect: Paints,
+    ),
+    (
+        id: "and-a-disabled-control-to-style",
+        group: "theming",
+        what: "the preview covers the disabled state, which has its own tokens",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Submitting",
+        expect: Disabled,
+    ),
+    (
+        id: "and-an-enabled-one-beside-it",
+        group: "theming",
+        what: "the disabled assertion above is about state rather than about a dead column",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Choose Plan",
+        expect: Enabled,
+    ),
+    (
+        id: "and-the-preview-drives-a-dialog",
+        group: "theming",
+        what: "an overlay opens from inside the preview, over the themed page",
+        open: None,
+        hover: None,
+        click: Some("button:Open Dialog"),
+        subject: "button:Confirm",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "and-that-dialog-can-be-answered-no",
+        group: "theming",
+        what: "the group leaves the preview as it found it",
+        open: None,
+        hover: None,
+        click: Some("button:Cancel"),
+        subject: "button:Confirm",
+        expect: Vanishes,
+        outcome_timeout_ms: 8000,
+    ),
+    // Last, because what it opens cannot be closed again. See the header: the
+    // export panel has no working dismissal, so anything after this would run
+    // with it mounted.
+    (
+        id: "the-export-control-produces-the-theme-as-css",
+        group: "theming",
+        what: "pressing CSS generates the stylesheet and offers a way to take it",
+        open: None,
+        hover: None,
+        click: Some("button:CSS"),
+        subject: "button:Copy",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+]
