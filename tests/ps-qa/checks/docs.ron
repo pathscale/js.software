@@ -1,0 +1,227 @@
+// The four documentation pages, and the links that join them.
+//
+// `showcase.ron` proves each of these is reachable from the header. This group
+// is about what is *on* them: a documentation page that routes correctly and
+// renders an empty article is the failure mode a navigation check cannot see.
+//
+// Two of the four are not in the header at all. `/docs/installation` is reached
+// by the header's `Get Started` call to action, and `/docs/usage` only by a link
+// inside another page. Both are covered the way a person reaches them rather
+// than by naming their URL, which is the difference between proving a page
+// works and proving a route exists.
+//
+// Headings are asserted `Present` rather than `Paints` throughout: text is
+// exactly as wide as its line and as tall as its shaped glyphs, so a host with
+// no font catalogue lays it out flat and a box assertion fails for a reason
+// that says nothing about the site.
+[
+    (
+        id: "the-documentation-index-opens",
+        group: "docs",
+        what: "the header reaches the documentation index",
+        open: Some("Docs"),
+        hover: None,
+        click: None,
+        subject: "heading:Quick Start",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-documentation-index-names-its-prerequisites",
+        group: "docs",
+        what: "the index carries its own body, not just the shell and a title",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Prerequisites",
+        expect: Present,
+    ),
+    (
+        id: "the-documentation-index-offers-the-worked-examples",
+        group: "docs",
+        what: "the four worked examples below the fold rendered",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Navigation Bar",
+        expect: Present,
+    ),
+    (
+        id: "and-each-example-links-to-its-own-page",
+        group: "docs",
+        what: "an example is an entry point rather than a dead card",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:View Navbar docs",
+        expect: Paints,
+    ),
+    (
+        id: "the-documentation-index-closes-with-next-steps",
+        group: "docs",
+        what: "the community links at the bottom of the page are there",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:GitHub Discussions",
+        expect: Paints,
+    ),
+    // The installation guide. `Get Started` is the header's primary call to
+    // action and is on every page, which is why this group reaches the guide
+    // through it rather than through the documentation index: it is the path
+    // that would be noticed if it broke.
+    (
+        id: "the-header-call-to-action-reaches-the-installation-guide",
+        group: "docs",
+        what: "Get Started goes to the installation guide",
+        open: None,
+        hover: None,
+        click: Some("Get Started"),
+        subject: "heading:Required Dependencies",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-installation-guide-covers-every-package-manager",
+        group: "docs",
+        what: "the guide is not only the bun path",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Using PNPM",
+        expect: Present,
+    ),
+    (
+        id: "the-installation-guide-configures-the-layouts-compiler",
+        group: "docs",
+        what: "the compiler step, which is the part a reader cannot guess, is present",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:1. Configure the Layouts compiler",
+        expect: Present,
+    ),
+    (
+        id: "the-installation-guide-ends-with-somewhere-to-go",
+        group: "docs",
+        what: "the guide hands the reader on rather than stopping",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:Usage Cheatsheet",
+        expect: Paints,
+    ),
+    // The cheatsheet, reached by the link the previous check just proved. This
+    // page is in no navigation bar: this link and one on the landing page are
+    // the only ways a person arrives.
+    (
+        id: "the-usage-cheatsheet-opens",
+        group: "docs",
+        what: "the cheatsheet is reachable from the installation guide",
+        open: None,
+        hover: None,
+        click: Some("Usage Cheatsheet"),
+        subject: "heading:Component conventions",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-cheatsheet-warns-about-touch-gated-errors",
+        group: "docs",
+        what: "the forms section rendered, callout and all",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Errors are touch-gated",
+        expect: Present,
+    ),
+    (
+        id: "the-cheatsheet-records-that-the-usetable-hooks-are-gone",
+        group: "docs",
+        what: "the table section carries the removal a 3.x reader has to know about",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:The useTable* hooks are gone",
+        expect: Present,
+    ),
+    (
+        id: "the-cheatsheet-does-not-duplicate-the-theme-tokens",
+        group: "docs",
+        what: "the theming section points at its source instead of copying it",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Tokens are not duplicated here",
+        expect: Present,
+    ),
+    (
+        id: "the-cheatsheet-links-to-a-live-showcase",
+        group: "docs",
+        what: "the dates section reaches the component it is about",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:Calendar showcase",
+        expect: Paints,
+    ),
+    // The layouts page. `showcase.ron` already opens it; what it does not do is
+    // ask whether the recipe demonstration on it rendered as controls rather
+    // than as prose about controls.
+    (
+        id: "the-layouts-page-opens-from-the-header",
+        group: "docs",
+        what: "the header reaches the Solid Layouts explanation",
+        open: Some("Layouts"),
+        hover: None,
+        click: None,
+        subject: "heading:The two compiler passes",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-layouts-page-draws-its-recipe-demonstration",
+        group: "docs",
+        what: "the recipe example is a real pair of buttons, not a code block about them",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Continue",
+        expect: Paints,
+    ),
+    (
+        id: "and-the-demonstration-buttons-are-full-height",
+        group: "docs",
+        what: "the recipe resolved its padding rather than collapsing to a sliver",
+        open: None,
+        hover: None,
+        click: None,
+        // A button that keeps its label, its role and its colour while losing
+        // its padding still passes every assertion above. 40 rather than the
+        // 44 measured here: the size comes from the recipe, and a check should
+        // fail on a collapse rather than on a redesign.
+        subject: "button:Continue",
+        expect: Measures,
+        expect_size: Some("x40"),
+    ),
+    (
+        id: "the-layouts-page-warns-about-case-sensitivity",
+        group: "docs",
+        what: "the trap that silently produces no layout is written down",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Component names are case-sensitive",
+        expect: Present,
+    ),
+    (
+        id: "the-layouts-page-returns-to-the-installation-guide",
+        group: "docs",
+        what: "the documentation set is a loop rather than a dead end",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:Installation",
+        expect: Paints,
+    ),
+]
