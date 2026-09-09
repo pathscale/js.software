@@ -1,3 +1,6 @@
+// The preamble, and the reason each page is reached with `click` rather than
+// `open`, are both described in `actions.ron`.
+//
 // The Surfaces category: Glass Panel, Glow Card, Noise Background, and the
 // Complete Coverage lab.
 //
@@ -49,9 +52,9 @@
         id: "the-glass-panel-page-opens",
         group: "surfaces",
         what: "the menu reaches the Glass Panel showcase",
-        open: Some("link:Glass Panel"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Glass Panel"),
         subject: "heading:Glass Panel",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -81,9 +84,9 @@
         id: "the-glow-card-page-opens",
         group: "surfaces",
         what: "the menu reaches the Glow Card showcase",
-        open: Some("link:Glow Card"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Glow Card"),
         subject: "heading:Glow Card",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -114,9 +117,9 @@
         id: "the-noise-background-page-opens",
         group: "surfaces",
         what: "the menu reaches the Noise Background showcase",
-        open: Some("link:Noise Background"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Noise Background"),
         subject: "heading:Noise Background",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -146,9 +149,9 @@
         id: "the-coverage-page-opens",
         group: "surfaces",
         what: "the menu reaches the complete coverage lab",
-        open: Some("link:Complete Coverage"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Complete Coverage"),
         subject: "heading:Complete Coverage",
         expect: Present,
         outcome_timeout_ms: 8000,

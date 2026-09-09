@@ -15,6 +15,25 @@
 // component's name followed by its description, so `Button`, `Actions` and
 // `Menu` all match something there and every assertion in the preamble would
 // pass on the wrong node.
+//
+// # Why a component page is reached by `click` and not by `open`
+//
+// This is the shape every category group uses, and it is not the obvious one.
+// `open` asks the harness to navigate and then to *confirm* the arrival before
+// the check is judged. A component page is not one of the surfaces in
+// `ps-qa.ron`, so the harness has no marker for it and confirms arrival by
+// waiting for the check's own subject to paint. Every one of these subjects is
+// the page's heading, and on a host with no font catalogue -- which is what CI
+// runs -- a heading has no height and never paints. The arrival then times out,
+// the harness falls back to its recovery path, presses the home opener, and the
+// group is left on the landing page with the component menu closed. The first
+// page of a group failed and took the rest of the group with it.
+//
+// `click` presses the same menu entry and skips the arrival gate, which is the
+// only part that could not work. The subject and the expectation are unchanged,
+// and they are what proves the page is in front: `heading:Button` exists on the
+// Button page and nowhere else. The menu entry is a padded control, so it has a
+// box with or without fonts and the press itself is never in doubt.
 [
     (
         id: "the-actions-group-starts-from-a-page-that-clears-the-menu",
@@ -54,9 +73,9 @@
         id: "the-button-page-opens",
         group: "actions",
         what: "the menu reaches the Button showcase",
-        open: Some("link:Button"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Button"),
         subject: "heading:Button",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -147,9 +166,9 @@
         id: "the-dropdown-page-opens",
         group: "actions",
         what: "the menu reaches the Dropdown showcase",
-        open: Some("link:Dropdown"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Dropdown"),
         subject: "heading:Dropdown",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -205,9 +224,9 @@
         id: "the-menu-page-opens",
         group: "actions",
         what: "the menu reaches the Menu showcase",
-        open: Some("link:Menu"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Menu"),
         subject: "heading:Menu",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -287,9 +306,9 @@
         id: "the-dialog-page-opens",
         group: "actions",
         what: "the menu reaches the Dialog showcase",
-        open: Some("link:Dialog"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Dialog"),
         subject: "heading:Dialog",
         expect: Present,
         outcome_timeout_ms: 8000,
@@ -351,9 +370,9 @@
         id: "the-switch-page-opens",
         group: "actions",
         what: "the menu reaches the Switch showcase",
-        open: Some("link:Switch"),
+        open: None,
         hover: None,
-        click: None,
+        click: Some("link:Switch"),
         subject: "heading:Switch",
         expect: Present,
         outcome_timeout_ms: 8000,
