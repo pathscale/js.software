@@ -1,0 +1,293 @@
+// The Calendar showcase, which today does not run.
+//
+// EXPECTED TO FAIL until the engine has `Intl`. This group is written now so
+// that the fix has something to be judged by, and it is deliberately not in
+// the workflow's group list. Add `calendar` there when `Intl` lands; until
+// then `tests/ps-qa/checks/input.ron` still records that the page is reached
+// and not opened, and it should keep doing so.
+//
+// Measured on 2026-09-09 against `dist` and `chuzz-headless`: 4 of 14 pass.
+// The three preamble checks pass because they never leave the menu, and the
+// last one passes vacuously, for the reason written beside it. `--trace`
+// reports the shape of the failure exactly:
+//
+//     activating "link:Calendar" (id 12884902253)
+//     [REACTIVITY_HALTED] ReferenceError: Intl is not defined
+//                         (static/js/app.mjs:1:161906)
+//     activating "Home"
+//     could not open "link:Calendar": no visible, enabled, sized semantic
+//                                     control matching it
+//
+// Read that second message as a consequence rather than a cause. The press
+// landed, the page threw during its first render, the reactive system halted,
+// and the driver's retry then found a dead application with a closed menu.
+//
+// What is broken. `/calendar` mounts `@pathscale/ui`'s `Calendar`, whose
+// `useCalendarState` builds three `Intl.DateTimeFormat` instances during the
+// first render. The engine has no `Intl` by policy, so the first of them
+// throws `ReferenceError: Intl is not defined`, the error escapes every
+// boundary, and Solid 2 answers an escaped error by halting its reactive
+// system for good. The page paints nine hidden zero-height nodes and then
+// answers nothing.
+//
+// Why this group is its own file and its own invocation. Every group runs
+// against one shared browser. A page that halts the reactive system ends the
+// run where it halts, and every later group is reported as a failure of its
+// own. Keeping these checks in a group nobody else shares means a red calendar
+// says the calendar is red.
+//
+// What these checks are for, which is not "it stopped throwing". A calendar
+// that renders every cell as `Invalid Date` throws nothing, and a shim that
+// answers `String(value)` throws nothing either -- it renders
+// `Sun Jun 15 2025 12:00:00 GMT+0700 (Indochina Time)` where the page meant
+// `Sunday, June 15, 2025`. Both are rejected here, because every assertion
+// below names the exact string a correct `en-US` `Intl` produces.
+//
+// Why the dates are 2025 rather than today. The page mounts five calendars.
+// Four of them show the current month, which is not a stable thing to assert;
+// the fifth is the Controlled Value example, pinned to `new Date(2025, 5, 15)`
+// by `src/components/CalendarShowcase.tsx`. Its grid runs Sunday 1 June 2025
+// to Saturday 12 July 2025 and will do so for as long as the example exists,
+// so every name below belongs to that calendar and to no other.
+//
+// What is asserted and what is not. The accessible name of a node in this
+// tree comes from `aria-label`, or from text content for a `heading`, a
+// `button` and a `status`. It does not come from text content for a
+// `columnheader` or a plain `div`, and `aria-labelledby` is not resolved.
+// Measured, not assumed: a fixture reproducing the calendar's markup reported
+// `grid,""` for a grid carrying `aria-labelledby`, `columnheader,""` for
+// `<span role="columnheader">Sun</span>`, and
+// `gridcell,"Sunday, June 15, 2025"` for the day button.
+//
+// So of the three formatters, only one is reachable by name:
+//
+//   `{ dateStyle: "full" }`         the day button's `aria-label`. Asserted
+//                                   exactly, four times, below.
+//
+//   `{ month: "long",               the heading. Rendered into a bare `div`
+//     year: "numeric" }`            with no role and no label, so it has no
+//                                   accessible name and no check here can read
+//                                   it. Giving that `div` `role="heading"`, or
+//                                   an `aria-label` of the same text, would
+//                                   make `heading:June 2025` assertable. That
+//                                   is a change to `@pathscale/ui`, not to
+//                                   this site.
+//
+//   `{ weekday: "short" }`          the seven column headers. Same problem:
+//                                   `<span role="columnheader">Sun</span>`
+//                                   reports an empty name. Only the count of
+//                                   them can be checked, and a count says
+//                                   nothing about formatting.
+//
+// `dateStyle: "full"` is the strongest of the three to be left with, which is
+// the one consolation: it carries the long weekday, the long month, the day
+// and the year in one string, so asserting it exactly also proves that a
+// correct `month: "long"` and `weekday: "long"` were available to produce it.
+[
+    // The preamble. `input.ron` reaches this link and stops; this group is the
+    // one that presses it.
+    (
+        id: "the-calendar-group-starts-from-a-page-that-clears-the-menu",
+        group: "calendar",
+        what: "the run reaches a route whose navigation resets the component disclosure",
+        open: Some("Docs"),
+        hover: None,
+        click: None,
+        subject: "heading:Quick Start",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-calendar-group-opens-the-component-menu",
+        group: "calendar",
+        what: "the component index offers its categories when asked",
+        open: None,
+        hover: None,
+        click: Some("Components"),
+        subject: "button:Input",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-calendar-group-selects-its-category",
+        group: "calendar",
+        what: "picking a category lists the pages under it",
+        open: None,
+        hover: None,
+        click: Some("button:Input"),
+        subject: "link:Calendar",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-calendar-page-opens",
+        group: "calendar",
+        what: "the calendar showcase mounts rather than taking the application down",
+        open: Some("link:Calendar"),
+        hover: None,
+        click: None,
+        // The page title, from `ShowcaseLayout`'s `h1`. This is the first
+        // thing that fails today: the throw happens during the first render,
+        // so the heading never reaches the tree either.
+        subject: "heading:Calendar",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-calendar-mounted-five-examples",
+        group: "calendar",
+        what: "every calendar on the page rendered a grid rather than the page rendering one and dying",
+        open: None,
+        hover: None,
+        click: None,
+        // Default, Controlled Value, Range Selection, Disabled, Min / Max.
+        //
+        // Addressed by slot rather than by role, because a subject with no
+        // colon in it is a *name* pattern: `"grid"` asks for nodes whose
+        // accessible name contains "grid", and the calendar's grids have no
+        // name at all. `@calendar-grid` is the `data-slot` the component
+        // writes, and it is the only way to count a family whose members are
+        // anonymous.
+        subject: "@calendar-grid",
+        expect: Count,
+        expect_count: Some(5),
+    ),
+    (
+        id: "the-calendar-rendered-its-weekday-header-row",
+        group: "calendar",
+        what: "each calendar laid out seven column headers",
+        open: None,
+        hover: None,
+        click: None,
+        // Seven per calendar, five calendars. What these headers *say* cannot
+        // be read from here -- see the header of this file -- so this only
+        // says the row exists. Derived from the page rather than measured,
+        // because the page cannot be opened until `Intl` exists: confirm the
+        // number on the first run that gets this far.
+        subject: "@calendar-header-cell",
+        expect: Count,
+        expect_count: Some(35),
+    ),
+    (
+        id: "the-calendar-laid-out-its-month-heading",
+        group: "calendar",
+        what: "the heading the month formatter writes into occupies a box",
+        open: None,
+        hover: None,
+        click: None,
+        // The weakest check in the file, and it is here to mark the gap
+        // rather than to close it. It says the heading node exists and was
+        // laid out; it cannot say the node contains "June 2025", because a
+        // bare `div` has no accessible name. Once `@pathscale/ui` gives that
+        // element a role or a label, replace this with
+        // `heading:June 2025` / `Present`, which is the check this file
+        // actually wants.
+        subject: "@calendar-heading",
+        expect: Count,
+        expect_count: Some(5),
+    ),
+    // The formatted strings. Each of these is the exact output of
+    // `new Intl.DateTimeFormat("en-US", { dateStyle: "full" }).format(date)`,
+    // and each names a cell of the Controlled Value calendar.
+    //
+    // A `String(value)` shim fails all four. So does `Invalid Date`. So does
+    // any locale data that abbreviates the weekday or the month, or that puts
+    // the day before the month.
+    (
+        id: "the-calendar-labels-the-first-day-of-its-month",
+        group: "calendar",
+        what: "the grid's first cell carries the full date its locale spells out",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "gridcell:Sunday, June 1, 2025",
+        expect: Paints,
+    ),
+    (
+        id: "the-calendar-labels-its-selected-day",
+        group: "calendar",
+        what: "the day the example selects is the one the formatter names",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "gridcell:Sunday, June 15, 2025",
+        expect: Paints,
+    ),
+    (
+        id: "the-calendar-labels-the-last-day-of-its-month",
+        group: "calendar",
+        what: "formatting held to the end of the month rather than only its first row",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "gridcell:Monday, June 30, 2025",
+        expect: Paints,
+    ),
+    (
+        id: "the-calendar-labels-its-trailing-outside-days",
+        group: "calendar",
+        what: "the grid is a full six weeks and the days past the month are formatted too",
+        open: None,
+        hover: None,
+        click: None,
+        // 12 July 2025 is the forty-second cell of a grid that starts on
+        // Sunday 1 June. A calendar that stopped at the month boundary, or
+        // that formatted only the days it considers its own, fails here.
+        subject: "gridcell:Saturday, July 12, 2025",
+        expect: Paints,
+    ),
+    // Reactivity. Everything above is satisfied by a page that rendered once
+    // and then halted, which is exactly the failure this whole exercise is
+    // about: Solid 2 keeps painting the frame it already had. Driving the
+    // calendar and reading back what changed is what separates a live page
+    // from a corpse holding its pose.
+    (
+        id: "the-calendar-answers-a-click-on-a-day",
+        group: "calendar",
+        what: "pressing a day moves the selection, so the reactive system is still running",
+        open: None,
+        hover: None,
+        click: Some("gridcell:Tuesday, June 24, 2025"),
+        subject: "gridcell:Tuesday, June 24, 2025",
+        expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
+    ),
+    // Navigation is last, because it replaces every name above.
+    //
+    // Pressing an outside day moves the visible month to the month that day
+    // belongs to. That re-runs the formatter over forty-two new dates, which
+    // is the part worth proving: `Intl` has to work on every render, not only
+    // on the first one, and a formatter memoised into a halted graph will not
+    // produce a single new string.
+    (
+        id: "the-calendar-reformats-when-the-month-changes",
+        group: "calendar",
+        what: "moving to July produces August's outside days, formatted",
+        open: None,
+        hover: None,
+        // The July grid runs Sunday 29 June to Saturday 9 August 2025.
+        click: Some("gridcell:Saturday, July 12, 2025"),
+        subject: "gridcell:Friday, August 1, 2025",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-calendar-left-the-month-it-came-from",
+        group: "calendar",
+        what: "the June cells are gone rather than the new month being drawn over them",
+        open: None,
+        hover: None,
+        click: None,
+        // 1 June is not in the July grid, which starts on 29 June. A page that
+        // painted July without discarding June would keep this cell.
+        //
+        // Absence is satisfied by a page that renders nothing, so this one
+        // passes today and will pass on any broken calendar. It is worth
+        // keeping anyway, for the one thing it does catch -- a grid that
+        // accumulates months instead of replacing them -- but it is only
+        // evidence at all once every check above it is green. Do not read a
+        // pass here on its own.
+        subject: "gridcell:Sunday, June 1, 2025",
+        expect: Absent,
+    ),
+]
