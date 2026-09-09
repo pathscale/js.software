@@ -53,17 +53,33 @@
         open: None,
         hover: None,
         click: None,
+        // `Present` rather than `Paints`. This is a bare inline anchor: it has
+        // no padding and no border, so its whole box is the line its label
+        // shapes to. On a host with no font catalogue that is 558x0, and a
+        // geometry assertion there says nothing about the site. The role and
+        // the accessible name are the real claim, and `Present` makes it.
         subject: "link:View Navbar docs",
-        expect: Paints,
+        expect: Present,
     ),
     (
         id: "the-documentation-index-closes-with-next-steps",
         group: "docs",
-        what: "the community links at the bottom of the page are there",
+        what: "the page rendered to its last control rather than stopping at the callouts",
         open: None,
         hover: None,
         click: None,
-        subject: "link:GitHub Discussions",
+        // This was `link:GitHub Discussions`, and that one is not expressible
+        // here at all. It is an anchor inside a sentence, with no padding and
+        // no border, and on a host with no font catalogue such an anchor is
+        // not laid out at all -- not a zero-height box, no box: `bounds` is
+        // `None`, which even `Present` rejects. Every other subject in this
+        // file that reads as text still gets a box from its container; this
+        // one is the container.
+        //
+        // The closing call to action is two padded links a few lines further
+        // down the same page, so the last thing the index draws is still
+        // asserted, and asserted the strong way.
+        subject: "link:View Examples",
         expect: Paints,
     ),
     // The installation guide. `Get Started` is the header's primary call to

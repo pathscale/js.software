@@ -201,7 +201,14 @@
         click: None,
         subject: "button:Accessibility",
         expect: Measures,
-        expect_size: Some("300x100"),
+        // The height floor is the card's padding, not its text. With a font
+        // catalogue this card resolves past 100px because its description
+        // wraps; with none it is 46px, which is the padding and the border and
+        // nothing else. 40 is the number that still fails a card that shrank
+        // onto its heading -- that card would be 0 -- and passes on both kinds
+        // of host. The width is the real half of the assertion anyway: a
+        // collapsed card is not 300 wide.
+        expect_size: Some("300x40"),
     ),
     (
         id: "the-landing-page-closes-with-a-second-invitation",

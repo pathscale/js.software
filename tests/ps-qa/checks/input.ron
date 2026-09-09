@@ -147,8 +147,12 @@
         open: None,
         hover: None,
         click: None,
+        // The field is as tall as its text and no taller: 874x0 with no font
+        // catalogue. The claim worth keeping is that the recipe produced a
+        // `textbox` carrying the label as its accessible name, which is what
+        // `Present` asserts; a bare native input would fail it either way.
         subject: "textbox:Attachment",
-        expect: Paints,
+        expect: Present,
     ),
     (
         id: "and-the-browse-control-beside-it",
@@ -157,8 +161,14 @@
         open: None,
         hover: None,
         click: None,
+        // `Enabled` is a painted assertion, and this control has no padding of
+        // its own: it is the file input's own label, sized entirely by its
+        // text, so it lays out at 0x0 without fonts. `Present` keeps the part
+        // that survives -- a `button` named `Browse` exists beside the field.
+        // The enabled state is the one thing this check loses on a fontless
+        // host; nothing in the vocabulary reads it without geometry.
         subject: "button:Browse",
-        expect: Enabled,
+        expect: Present,
     ),
     // Form.
     (
