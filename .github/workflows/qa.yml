@@ -52,6 +52,18 @@ jobs:
           # locally well inside the budget. This widens scheduling deadlines
           # only; every declared transition is still required.
           QA_TIMEOUT_SCALE: 2
+          # The host is built without `system-fonts`, so text shapes to no
+          # glyphs and a control whose whole size is its label lays out at zero
+          # height. It is in the tree, enabled, with a position, and it is
+          # rejected by the geometry gate every coordinate-driven press needs.
+          # This targets those controls by node id instead, which is what the
+          # protocol's `Click` takes anyway.
+          #
+          # It buys the presses. It does not make a visual assertion mean
+          # anything here, which is why the checks in `tests/ps-qa/checks` say
+          # `Present` wherever the subject is text-shaped rather than a padded
+          # control: see the comments beside them.
+          PS_QA_HEADLESS: true
         # One invocation per group, rather than one that runs everything.
         #
         # That is not only for readable logs. The driver orders the checks it
