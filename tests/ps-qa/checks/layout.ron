@@ -1,0 +1,341 @@
+// The Layout category: Accordion, Collapsible, Drawer, Flex, Grid, Join,
+// Separator.
+//
+// These are the pages where a semantic assertion runs out and a geometric one
+// has to take over. A layout component has no state and no label: `Flex` and
+// `Grid` produce boxes, `Join` produces boxes that touch, and none of them adds
+// a role or a name a check could ask about. So this group asks where things
+// are, with `RightOf` and `CenterAlignedY`, which is the question a layout is
+// actually answering.
+//
+// One limit is worth writing down, because it looks like missing coverage and
+// is not. `Accordion` and `Collapsible` expose their panel as an unnamed
+// `region` that keeps its box when it closes and only flips `hidden`. The
+// harness has no `Hidden` expectation, and every other one it has is geometric,
+// so a closed panel is provable and an open one is not: `Vanishes` is the only
+// assertion in the vocabulary that reads the visibility flag. The trigger does
+// not carry an expanded state in the tree either. Both are recorded in the
+// handover; nothing here can close that gap from the check file's side.
+[
+    (
+        id: "the-layout-group-starts-from-a-page-that-clears-the-menu",
+        group: "layout",
+        what: "the run reaches a route whose navigation resets the component disclosure",
+        open: Some("Docs"),
+        hover: None,
+        click: None,
+        subject: "heading:Quick Start",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-layout-group-opens-the-component-menu",
+        group: "layout",
+        what: "the component index offers its categories when asked",
+        open: None,
+        hover: None,
+        click: Some("Components"),
+        subject: "button:Layout",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-layout-group-selects-its-category",
+        group: "layout",
+        what: "picking a category lists the pages under it",
+        open: None,
+        hover: None,
+        click: Some("button:Layout"),
+        subject: "link:Collapsible",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    // Accordion.
+    (
+        id: "the-accordion-page-opens",
+        group: "layout",
+        what: "the menu reaches the Accordion showcase",
+        open: Some("link:Accordion"),
+        hover: None,
+        click: None,
+        subject: "heading:Accordion",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-accordion-page-mounts-every-example",
+        group: "layout",
+        what: "the four single-group examples each drew their three triggers",
+        open: None,
+        hover: None,
+        click: None,
+        // Default, arrow, plus/minus and joined: four accordions of three.
+        subject: "button:Click to open this one and close others",
+        expect: Count,
+        expect_count: Some(12),
+    ),
+    (
+        id: "the-accordion-page-keeps-two-groups-independent",
+        group: "layout",
+        what: "the multiple-group example rendered both of its groups",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Group B",
+        expect: Count,
+        expect_count: Some(3),
+    ),
+    (
+        id: "an-accordion-trigger-is-a-full-width-control",
+        group: "layout",
+        what: "the trigger fills its item rather than shrinking to its text",
+        open: None,
+        hover: None,
+        click: None,
+        // A header a person can only hit on the words is the failure this
+        // notices, and it is one of the few assertions here that does not
+        // depend on the text having been shaped.
+        subject: "button:Group A",
+        expect: Measures,
+        expect_size: Some("800x48"),
+    ),
+    // Collapsible.
+    (
+        id: "the-collapsible-page-opens",
+        group: "layout",
+        what: "the menu reaches the Collapsible showcase",
+        open: Some("link:Collapsible"),
+        hover: None,
+        click: None,
+        subject: "heading:Collapsible",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-collapsible-trigger-is-there-to-press",
+        group: "layout",
+        what: "the disclosure offers a control rather than only a caption",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:What does Solid Layouts compile?",
+        expect: Enabled,
+    ),
+    (
+        id: "and-its-content-starts-closed",
+        group: "layout",
+        what: "a disclosure that starts open is not a disclosure",
+        open: None,
+        hover: None,
+        click: None,
+        // The only assertion in the vocabulary that reads the visibility flag,
+        // and the reason this page's open state cannot be checked the same way:
+        // the panel keeps its 896x24 box either way.
+        subject: "region:",
+        expect: Vanishes,
+    ),
+    (
+        id: "and-it-closes-again-after-being-opened",
+        group: "layout",
+        what: "the trigger is a toggle, proved by opening and then closing it",
+        open: None,
+        hover: None,
+        // The first press opens it; the measured press closes it. Preparation
+        // rather than a second check because the open state is the one this
+        // harness cannot see.
+        prepare: Some("button:What does Solid Layouts compile?"),
+        click: Some("button:What does Solid Layouts compile?"),
+        subject: "region:",
+        expect: Vanishes,
+        outcome_timeout_ms: 8000,
+    ),
+    // Flex and Grid: parameters rather than components. The examples are
+    // unnamed boxes, so what is asserted is that each parameter has a section
+    // and that the responsive form is documented.
+    (
+        id: "the-flex-page-opens",
+        group: "layout",
+        what: "the menu reaches the Flex showcase",
+        open: Some("link:Flex"),
+        hover: None,
+        click: None,
+        subject: "heading:Flex",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-flex-page-covers-every-parameter",
+        group: "layout",
+        what: "direction, justify, align, wrap and gap all have examples",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Responsive Props",
+        expect: Present,
+    ),
+    (
+        id: "the-grid-page-opens",
+        group: "layout",
+        what: "the menu reaches the Grid showcase",
+        open: Some("link:Grid"),
+        hover: None,
+        click: None,
+        subject: "heading:Grid",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-grid-page-covers-auto-sizing",
+        group: "layout",
+        what: "the section past the ordinary parameters rendered",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "heading:Auto Sizing",
+        expect: Present,
+    ),
+    // Join. Three buttons that have to sit in a row and touch, which is the one
+    // thing on this page that a semantic assertion cannot see at all.
+    (
+        id: "the-join-page-opens",
+        group: "layout",
+        what: "the menu reaches the Join showcase",
+        open: Some("link:Join"),
+        hover: None,
+        click: None,
+        subject: "heading:Join",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "a-join-lays-its-children-out-in-a-row",
+        group: "layout",
+        what: "the middle control is beside the first rather than under it",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Current",
+        compare: Some("button:Previous"),
+        expect: RightOf,
+    ),
+    (
+        id: "and-the-row-runs-to-its-last-child",
+        group: "layout",
+        what: "the third control is beside the second, so the group did not wrap",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Next",
+        compare: Some("button:Current"),
+        expect: RightOf,
+    ),
+    (
+        id: "and-the-joined-controls-share-a-centre-line",
+        group: "layout",
+        what: "a joined group is one control visually, not three that happen to be adjacent",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Next",
+        compare: Some("button:Previous"),
+        expect: CenterAlignedY,
+    ),
+    // Separator.
+    (
+        id: "the-separator-page-opens",
+        group: "layout",
+        what: "the menu reaches the Separator showcase",
+        open: Some("link:Separator"),
+        hover: None,
+        click: None,
+        subject: "heading:Separator",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "a-separator-is-a-hairline-across-its-container",
+        group: "layout",
+        what: "the rule spans the content and is one pixel tall",
+        open: None,
+        hover: None,
+        click: None,
+        // Width is the assertion that matters: a separator that loses its
+        // stretch collapses to nothing and the page looks like it lost a
+        // section boundary rather than a component.
+        subject: "separator:",
+        expect: Measures,
+        expect_size: Some("800x<=2"),
+    ),
+    // Drawer, last in the group because what it opens cannot be closed.
+    //
+    // The default example gives its drawer no close control, pressing the
+    // trigger again does not toggle it shut, and nothing inside the panel
+    // accepts keyboard focus, so `Escape` cannot be delivered to it either:
+    // the inspector answers `notFocusable`. Navigating away is the only exit,
+    // and the last check here is that navigating away works -- which is the
+    // question that matters, because a modal that traps the application is a
+    // much worse defect than one that needs a route change to dismiss.
+    (
+        id: "the-drawer-page-opens",
+        group: "layout",
+        what: "the menu reaches the Drawer showcase",
+        open: Some("link:Drawer"),
+        hover: None,
+        click: None,
+        subject: "heading:Drawer",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "no-drawer-is-open-to-begin-with",
+        group: "layout",
+        what: "the page starts with nothing over it",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "menuitem:Sidebar Item 1",
+        expect: Absent,
+    ),
+    (
+        id: "and-the-trigger-is-there-to-press",
+        group: "layout",
+        what: "the absence above is about the drawer rather than a page that drew nothing",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "button:Open drawer",
+        expect: Enabled,
+    ),
+    (
+        id: "and-a-drawer-opens-with-its-contents",
+        group: "layout",
+        what: "the trigger mounts an edge panel carrying the menu it was given",
+        open: None,
+        hover: None,
+        click: Some("button:Open drawer"),
+        subject: "menuitem:Sidebar Item 2",
+        expect: Paints,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "and-the-drawer-is-a-dialog-rather-than-a-panel",
+        group: "layout",
+        what: "an edge overlay takes the modal role, so focus and dismissal mean something",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "dialog:",
+        expect: Paints,
+    ),
+    (
+        id: "and-the-open-drawer-does-not-trap-the-application",
+        group: "layout",
+        what: "the header is still reachable behind an open modal drawer",
+        open: None,
+        hover: None,
+        click: Some("link:Docs"),
+        subject: "menuitem:Sidebar Item 2",
+        expect: Vanishes,
+        outcome_timeout_ms: 8000,
+    ),
+]
