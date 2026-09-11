@@ -1,33 +1,11 @@
-// What the harness has to be told about this application.
-//
-// `Components` is a button rather than a link: it opens a menu instead of
-// navigating, so it is listed as navigation and not as a surface of its own.
-//
-// A marker has to be absent from the page being left, not merely present on
-// the page being reached: every one of these names is in the header of every
-// page, so each surface is marked by a control its own page owns.
-//
-// None of them is a heading, and that is the point. `on_surface` accepts a
-// marker only when the node is `onscreen`, which means a box with width and
-// height. A host with no font catalogue -- a Linux CI runner, and any host
-// built without `system-fonts` -- shapes text to no glyphs, so a heading lays
-// out at zero height and no surface is ever recognised as being in front. The
-// symptom is not a heading check failing: every check in the file fails at
-// `open`, because arrival is what the marker decides.
-//
-// So each marker is a padded control. A link or a button with padding has a
-// box whether or not its label shapes, and the five below measure 38x44,
-// 148x36, 48x26, 26x36 and 26x36 with no font at all.
-//
-// The match is `name.contains(marker)`, case-sensitive. `Usage cheatsheet` is
-// therefore not the home page's `Usage Cheatsheet`, and that lower-case `c` is
-// load-bearing.
+// Route markers identify page-owned content, never shared navigation or text
+// that can appear in another document. Rendered QA uses the font-enabled host.
 AppProfile(
     surfaces: [
         (name: "home", opener: "Home", marker: Some("Start Building Today")),
         (name: "theming", opener: "Theming", marker: Some("Random")),
         (name: "docs", opener: "Docs", marker: Some("Browse Components")),
-        (name: "layouts", opener: "Layouts", marker: Some("Usage cheatsheet")),
+        (name: "layouts", opener: "Layouts", marker: Some("#layouts-documentation")),
         (name: "showcases", opener: "Showcases", marker: Some("Theme Customization")),
     ],
     navigation_controls: ["Home", "Theming", "Docs", "Layouts", "Showcases", "Components"],

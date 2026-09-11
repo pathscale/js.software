@@ -75,7 +75,7 @@ export default function CardShowcase() {
     {
       name: "role",
       type: "string",
-      description: "ARIA role attribute (defaults to 'button' when isInteractive)",
+      description: "ARIA role attribute (defaults to 'button' when an onClick handler is provided)",
     },
   ];
 
@@ -229,14 +229,14 @@ export default function CardShowcase() {
 
         <ShowcaseSection id="hoverable" title="Hoverable">
           <Flex direction="col" gap="md">
-            <Card isInteractive>
+            <Card isInteractive role="article" aria-label="Hover me">
               <Card.Body>
                 <h2 class="text-lg font-semibold">Hover me</h2>
                 <p>Hover state adds an interactive treatment.</p>
               </Card.Body>
             </Card>
             <CodeBlock
-              code={`<Card isInteractive>
+              code={`<Card isInteractive role="article" aria-label="Hover me">
   <Card.Body>
     <h2 class="text-lg font-semibold">Hover me</h2>
     <p>Hover state adds an interactive treatment.</p>
@@ -259,7 +259,6 @@ export default function CardShowcase() {
             </Card>
             <CodeBlock
               code={`<Card
-  isInteractive
   isInteractive
   onClick={() => console.log("card pressed")}
 >

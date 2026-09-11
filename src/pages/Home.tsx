@@ -113,7 +113,7 @@ const Home: Component = () => {
             </div>
           </Card>
 
-          <Card variant="plain" padding="lg" isInteractive>
+          <Card variant="plain" padding="lg" role="article" aria-label="Developer Friendly">
             <div class="text-center">
               <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <Icon src="icon-[lucide--heart]" class="w-8 h-8 text-white" />
@@ -145,7 +145,7 @@ const Home: Component = () => {
                 components
               </p>
             </Card>
-            <Card variant="plain" padding="md" isInteractive>
+            <Card variant="plain" padding="md" role="article" aria-label="Accessibility">
               <h3 class="font-bold text-lg mb-3 text-secondary">
                 Accessibility
               </h3>
