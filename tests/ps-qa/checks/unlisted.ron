@@ -263,7 +263,7 @@
         open: None,
         hover: None,
         click: None,
-        subject: "radio:AnnualBilled once a year.",
+        subject: "radio:Annual Billed once a year.",
         expect: Paints,
     ),
     // Video Preview.

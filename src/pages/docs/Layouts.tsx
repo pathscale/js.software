@@ -7,14 +7,14 @@ import { ROUTES } from "../../config/routes";
 export default function Layouts() {
   return (
     <ContentContainer maxWidth="2xl" prose={false}>
-      <Flex direction="col" gap="xl">
+      <Flex id="layouts-documentation" direction="col" gap="xl">
         <header>
           <p class="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             Solid Layouts
           </p>
           <h1 class="mt-3 text-5xl font-bold">Presentation compiled into the component</h1>
           <p class="mt-5 max-w-3xl text-xl leading-relaxed text-base-content/70">
-            PathScale UI 2 uses Solid Layouts to keep component recipes in the library and
+            PathScale UI uses Solid Layouts to keep component recipes in the library and
             presentation choices at the call site. Your application receives ordinary SolidJS
             output before the normal Solid compiler runs.
           </p>

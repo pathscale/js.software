@@ -40,8 +40,8 @@ const Usage: Component = () => {
         </h2>
         <p class="text-base-content/70 mb-6 max-w-3xl">
           Peer dependencies: solid-js 2.0, @solidjs/web and solid-layouts, plus
-          popmotion and @standard-schema/spec (both optional). TanStack is gone
-          in 4.0 - forms and the grid model are the library's own now.
+          popmotion and @standard-schema/spec (both optional). Forms and the grid
+          model are provided by the library.
         </p>
         <CodeBlock
           language="bash"

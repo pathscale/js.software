@@ -179,7 +179,7 @@
         open: Some("Home"),
         hover: None,
         click: None,
-        subject: "button:Developer Friendly",
+        subject: "article:Developer Friendly",
         expect: Paints,
     ),
     (
@@ -189,7 +189,7 @@
         open: Some("Home"),
         hover: None,
         click: None,
-        subject: "button:Accessibility",
+        subject: "article:Accessibility",
         expect: Paints,
     ),
     (
@@ -199,7 +199,7 @@
         open: Some("Home"),
         hover: None,
         click: None,
-        subject: "button:Accessibility",
+        subject: "article:Accessibility",
         expect: Measures,
         // The height floor is the card's padding, not its text. With a font
         // catalogue this card resolves past 100px because its description
