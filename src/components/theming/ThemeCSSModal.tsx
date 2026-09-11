@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Icon } from "@pathscale/ui";
+import { Button, Dialog, Icon, Textarea } from "@pathscale/ui";
 import { createEffect, createSignal } from "solid-js";
 import {
   GLASS_THEME_DEFAULTS,
@@ -133,57 +133,54 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       placement="center"
       shouldCloseOnEsc
       shouldCloseOnBackdropClick
-      class="w-11/12 max-w-4xl"
     >
-      <DialogHeader class="font-bold">
-        <div class="flex items-center gap-2">
-          <Icon src="mdi--code-braces" width={20} height={20} />
-          CSS Theme
-        </div>
-      </DialogHeader>
+      <Dialog.Content class="w-11/12 max-w-4xl">
+        <Dialog.Header class="font-bold">
+          <Dialog.Heading class="flex items-center gap-2">
+            <Icon src="mdi--code-braces" width={20} height={20} />
+            CSS Theme
+          </Dialog.Heading>
+        </Dialog.Header>
 
-      <DialogBody>
-        <p class="text-sm text-base-content/60 mb-4">
-          Copy this CSS to add your theme to @pathscale/ui
-        </p>
+        <Dialog.Body>
+          <p class="text-sm text-base-content/60 mb-4">
+            Copy this CSS to add your theme to @pathscale/ui
+          </p>
 
-        <div class="relative">
-          <textarea
-            class="w-full rounded-field border border-base-300 bg-base-100 p-3 font-mono text-xs w-full h-80 font-mono text-xs resize-none"
-            value={cssText()}
-            readonly
-            spellcheck={false}
-          />
+          <div class="relative">
+            <Textarea
+              aria-label="Generated theme CSS"
+              class="h-80 w-full resize-none font-mono text-xs"
+              value={cssText()}
+              readonly
+              spellcheck={false}
+            />
 
-          <Button
-            class="absolute top-2 right-5"
-            size="sm"
-            flavor={isClipboardButtonPressed() ? "primary" : "secondary"}
-            onClick={copyThemeCSSToClipboard}
-          >
-            {isClipboardButtonPressed() ? (
-              <>
-                <Icon src="mdi--check" width={16} height={16} />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Icon src="mdi--content-copy" width={16} height={16} />
-                Copy
-              </>
-            )}
-          </Button>
-        </div>
-      </DialogBody>
+            <Button
+              class="absolute top-2 right-5"
+              size="sm"
+              flavor={isClipboardButtonPressed() ? "primary" : "secondary"}
+              onClick={copyThemeCSSToClipboard}
+            >
+              {isClipboardButtonPressed() ? (
+                <>
+                  <Icon src="mdi--check" width={16} height={16} />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Icon src="mdi--content-copy" width={16} height={16} />
+                  Copy
+                </>
+              )}
+            </Button>
+          </div>
+        </Dialog.Body>
 
-      <DialogFooter>
-        <Button
-          onClick={props.onClose}
-          class="mt-5"
-        >
-          Close
-        </Button>
-      </DialogFooter>
+        <Dialog.Footer>
+          <Button onClick={props.onClose}>Close</Button>
+        </Dialog.Footer>
+      </Dialog.Content>
     </Dialog>
   );
 }

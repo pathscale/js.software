@@ -10,23 +10,8 @@
 // This group changes only things it puts back. The colour popover is opened and
 // closed, and no colour is committed.
 //
-// One defect is visible from here and is asserted around rather than at.
-// `ThemeCSSModal` renders `DialogHeader`/`DialogBody`/`DialogFooter` as direct
-// children of `Dialog` instead of wrapping them in `Dialog.Content`. Only the
-// content is portalled and positioned, so pressing `CSS` mounts the export
-// panel at the bottom of the document flow -- measured at y=2482 in a 900px
-// window, with `dialog-root` reporting 0x0 -- instead of over the page. There
-// is no backdrop and nothing moves on screen, so a person pressing the button
-// sees the page do nothing.
-//
-// Its Close button does not work either, for the same reason: the footer is
-// outside the content the dialog root owns, so pressing Close re-renders the
-// page and leaves the panel exactly where it was.
-//
-// One check therefore asserts what the control is *for*, which stays true once
-// it is fixed: pressing it produces the exported CSS and a way to copy it.
-// Nothing here asserts the position it currently renders at, and because the
-// panel cannot be dismissed that check runs last.
+// Export is a real UI Dialog. The last pair opens it, proves the generated CSS
+// is available in a named UI Textarea, and closes it again.
 [
     (
         id: "the-theme-editor-opens",
@@ -127,6 +112,143 @@
         click: None,
         subject: "button:CSS",
         expect: Enabled,
+    ),
+    // Every editor control below is the UI component itself. These checks
+    // drive the value exposed by that component, rather than accepting a
+    // native input hidden behind a lookalike.
+    (
+        id: "the-radius-editor-offers-the-whole-scale",
+        group: "theming",
+        what: "the box radius is one named UI radio per supported token value",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "radio:Boxes radius",
+        expect: Count,
+        expect_count: Some(5),
+    ),
+    (
+        id: "a-radius-choice-updates-the-selected-token",
+        group: "theming",
+        what: "choosing a radius moves the UI radio selection",
+        open: None,
+        prepare: Some("radio:Boxes radius square"),
+        hover: None,
+        click: Some("radio:Boxes radius 4 pixels"),
+        subject: "radio:Boxes radius 4 pixels",
+        expect: SelectionChanges,
+    ),
+    (
+        id: "the-field-size-slider-updates-the-token",
+        group: "theming",
+        what: "the UI slider changes the field size token from its keyboard contract",
+        open: None,
+        prepare: Some("slider:Fields base size"),
+        prepare_key: Some("Home"),
+        hover: None,
+        click: None,
+        key: Some("End"),
+        key_on: Some("slider:Fields base size"),
+        subject: "slider:Fields base size",
+        expect: ValueChanges,
+    ),
+    (
+        id: "the-selector-size-slider-updates-the-token",
+        group: "theming",
+        what: "the UI slider changes the selector size token from its keyboard contract",
+        open: None,
+        prepare: Some("slider:Selectors base size"),
+        prepare_key: Some("Home"),
+        hover: None,
+        click: None,
+        key: Some("End"),
+        key_on: Some("slider:Selectors base size"),
+        subject: "slider:Selectors base size",
+        expect: ValueChanges,
+    ),
+    (
+        id: "the-border-slider-updates-the-token",
+        group: "theming",
+        what: "the UI slider changes the border token from its keyboard contract",
+        open: None,
+        prepare: Some("slider:Border width"),
+        prepare_key: Some("Home"),
+        hover: None,
+        click: None,
+        key: Some("End"),
+        key_on: Some("slider:Border width"),
+        subject: "slider:Border width",
+        expect: ValueChanges,
+    ),
+    (
+        id: "the-depth-effect-switch-updates-the-token",
+        group: "theming",
+        what: "the named UI switch toggles depth in the live theme",
+        open: None,
+        hover: None,
+        click: Some("switch:Depth Effect"),
+        subject: "switch:Depth Effect",
+        expect: SelectionChanges,
+    ),
+    (
+        id: "the-noise-effect-switch-updates-the-token",
+        group: "theming",
+        what: "the named UI switch toggles noise in the live theme",
+        open: None,
+        hover: None,
+        click: Some("switch:Noise Effect"),
+        subject: "switch:Noise Effect",
+        expect: SelectionChanges,
+    ),
+    (
+        id: "the-whole-site-option-is-a-named-switch",
+        group: "theming",
+        what: "the site-wide option is operable by its visible label",
+        open: None,
+        hover: None,
+        click: Some("switch:Apply to whole site"),
+        subject: "switch:Apply to whole site",
+        expect: SelectionChanges,
+    ),
+    (
+        id: "the-remember-option-is-a-named-switch",
+        group: "theming",
+        what: "the persistence option is operable by its visible label",
+        open: None,
+        hover: None,
+        click: Some("switch:Remember this theme"),
+        subject: "switch:Remember this theme",
+        expect: SelectionChanges,
+    ),
+    (
+        id: "the-default-theme-option-is-a-named-switch",
+        group: "theming",
+        what: "the export default option is operable by its visible label",
+        open: None,
+        hover: None,
+        click: Some("switch:Default theme"),
+        subject: "switch:Default theme",
+        expect: SelectionChanges,
+    ),
+    (
+        id: "the-dark-default-option-is-a-named-switch",
+        group: "theming",
+        what: "the export dark-default option is operable by its visible label",
+        open: None,
+        hover: None,
+        click: Some("switch:Default dark theme"),
+        subject: "switch:Default dark theme",
+        expect: SelectionChanges,
+    ),
+    (
+        id: "the-color-scheme-option-is-a-named-switch",
+        group: "theming",
+        what: "the export color-scheme option is operable by its visible label",
+        open: None,
+        hover: None,
+        click: Some("switch:Dark color scheme"),
+        subject: "switch:Dark color scheme",
+        expect: SelectionChanges,
     ),
     // The colour popover, opened and closed. This is the one write path on the
     // site, and the round trip is what proves the page is still reactive rather
@@ -280,18 +402,38 @@
         expect: Vanishes,
         outcome_timeout_ms: 8000,
     ),
-    // Last, because what it opens cannot be closed again. See the header: the
-    // export panel has no working dismissal, so anything after this would run
-    // with it mounted.
     (
         id: "the-export-control-produces-the-theme-as-css",
         group: "theming",
-        what: "pressing CSS generates the stylesheet and offers a way to take it",
+        what: "pressing CSS opens the export dialog over the page",
         open: None,
         hover: None,
         click: Some("button:CSS"),
-        subject: "button:Copy",
-        expect: Paints,
+        subject: "heading:CSS Theme",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+        settle_after_ms: 300,
+    ),
+    (
+        id: "the-export-dialog-paints-the-generated-css",
+        group: "theming",
+        what: "the export dialog contains readable generated CSS rather than an empty field",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "Generated theme CSS",
+        expect: InteriorInk,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-export-dialog-can-be-closed",
+        group: "theming",
+        what: "Close dismisses the export dialog instead of leaving it in document flow",
+        open: None,
+        hover: None,
+        click: Some("button:Close"),
+        subject: "textbox:Generated theme CSS",
+        expect: Vanishes,
         outcome_timeout_ms: 8000,
     ),
 ]

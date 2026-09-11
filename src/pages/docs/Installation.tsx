@@ -37,9 +37,9 @@ const Installation: Component = () => {
           </ul>
           <p class="mt-4">
             The library also declares solid-layouts as a peer dependency;
-            popmotion and @standard-schema/spec are optional. TanStack is gone
-            in 4.0: forms and the grid model are the library's own, so there is
-            no @tanstack/solid-form or @tanstack/solid-table to install.
+            popmotion and @standard-schema/spec are optional. TanStack is no
+            longer required: forms and the grid model are the library's own, so
+            there is no @tanstack/solid-form or @tanstack/solid-table to install.
           </p>
         </Callout>
       </section>
