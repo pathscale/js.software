@@ -39,23 +39,23 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       </Grid>
 
       <div class="flex flex-col gap-2 w-full">
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-base-content/60 text-xs">Apply to whole site</span>
-          <Switch 
-            size="sm"
-            checked={applyToWholeSite()}
-            onChange={setApplyToWholeSite}
-          />
-        </div>
-        
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-base-content/60 text-xs">Remember this theme</span>
-          <Switch 
-            size="sm"
-            checked={rememberTheme()}
-            onChange={setRememberTheme}
-          />
-        </div>
+        <Switch
+          class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
+          size="sm"
+          checked={applyToWholeSite()}
+          onChange={setApplyToWholeSite}
+        >
+          Apply to whole site
+        </Switch>
+
+        <Switch
+          class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
+          size="sm"
+          checked={rememberTheme()}
+          onChange={setRememberTheme}
+        >
+          Remember this theme
+        </Switch>
       </div>
 
       <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex gap-1.5">
@@ -100,33 +100,33 @@ export default function ThemeEditor(props: ThemeEditorProps) {
           Options
         </span></span><Separator class="flex-1" /></h3>
       
-      <div class="flex flex-col gap-3">
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-base-content/60 text-xs">Default theme</span>
-          <Switch 
-            size="sm"
-            checked={isDefault()}
-            onChange={setIsDefault}
-          />
-        </div>
-        
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-base-content/60 text-xs">Default dark theme</span>
-          <Switch 
-            size="sm"
-            checked={isPrefersDark()}
-            onChange={setIsPrefersDark}
-          />
-        </div>
-        
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-base-content/60 text-xs">Dark color scheme</span>
-          <Switch 
-            size="sm"
-            checked={colorScheme() === "dark"}
-            onChange={(checked) => setColorScheme(checked ? "dark" : "light")}
-          />
-        </div>
+      <div class="flex flex-col gap-3 w-full">
+        <Switch
+          class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
+          size="sm"
+          checked={isDefault()}
+          onChange={setIsDefault}
+        >
+          Default theme
+        </Switch>
+
+        <Switch
+          class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
+          size="sm"
+          checked={isPrefersDark()}
+          onChange={setIsPrefersDark}
+        >
+          Default dark theme
+        </Switch>
+
+        <Switch
+          class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
+          size="sm"
+          checked={colorScheme() === "dark"}
+          onChange={(checked) => setColorScheme(checked ? "dark" : "light")}
+        >
+          Dark color scheme
+        </Switch>
       </div>
     </div>
   );

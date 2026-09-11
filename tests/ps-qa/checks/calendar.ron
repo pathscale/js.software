@@ -163,6 +163,7 @@
         group: "calendar",
         what: "pressing a day moves the selection, so the reactive system is still running",
         open: None,
+        prepare: Some("link:Controlled Value"),
         hover: None,
         click: Some("gridcell:Tuesday, June 24, 2025"),
         subject: "gridcell:Tuesday, June 24, 2025",
@@ -181,6 +182,7 @@
         group: "calendar",
         what: "moving to July produces August's outside days, formatted",
         open: None,
+        prepare: Some("link:Controlled Value"),
         hover: None,
         // The July grid runs Sunday 29 June to Saturday 9 August 2025.
         click: Some("gridcell:Saturday, July 12, 2025"),

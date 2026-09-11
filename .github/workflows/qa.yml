@@ -38,7 +38,12 @@ jobs:
           # only; every declared transition is still required.
           QA_TIMEOUT_SCALE: 2
         run: |
-          ps-qa --app tests/ps-qa/ps-qa.ron \
-            qa-hosted \
-            --host "${{ steps.qa.outputs.host }}" \
-            --page dist --checks tests/ps-qa/checks
+          for group in \
+            actions calendar data-display docs feedback input \
+            layout navigation showcase surfaces theming unlisted
+          do
+            ps-qa --app tests/ps-qa/ps-qa.ron \
+              qa-hosted \
+              --host "${{ steps.qa.outputs.host }}" \
+              --page dist --checks tests/ps-qa/checks "$group"
+          done

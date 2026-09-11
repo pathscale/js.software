@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import { Icon, Separator } from "@pathscale/ui";
+import { Icon, Radio, RadioGroup, Separator } from "@pathscale/ui";
 import { Theme } from "../../utils/themeUtils";
 
 interface RadiusSectionProps {
@@ -8,6 +8,9 @@ interface RadiusSectionProps {
 }
 
 const RADIUS_VALUES = ["0rem", "0.25rem", "0.5rem", "1rem", "2rem"];
+
+const radiusLabel = (value: string) =>
+  value === "0rem" ? "square" : `${Number.parseFloat(value) * 16} pixels`;
 
 const RADIUS_TYPES = [
   {
@@ -38,37 +41,34 @@ export default function RadiusSection(props: RadiusSectionProps) {
       <div class="flex flex-col gap-1.5">
         <For each={RADIUS_TYPES}>
           {(radiusType) => (
-            <div class="w-full">
-              <div class="mb-0.5">
-                <div class="text-base-content/70 text-xs">{radiusType.label}</div>
-                <div class="text-base-content/40 text-xs italic">{radiusType.description}</div>
-              </div>
-              
-              <div class="flex gap-1">
+            <RadioGroup
+              class="w-full gap-1.5 [&_[data-slot=radio-group-items]]:gap-1"
+              name={radiusType.key}
+              label={radiusType.label}
+              description={radiusType.description}
+              orientation="horizontal"
+              value={props.theme[radiusType.key]}
+              onChange={(value) => props.onThemeUpdate(radiusType.key, value)}
+            >
                 <For each={RADIUS_VALUES}>
                   {(value) => (
-                    <label class="bg-base-200 hover:bg-base-300 focus-within:outline-base-content relative cursor-pointer overflow-hidden transition-colors focus-within:outline-2 focus-within:outline-offset-2 rounded-lg">
-                      <input 
-                        type="radio" 
-                        class="sr-only"
-                        name={radiusType.key}
-                        checked={props.theme[radiusType.key] === value}
-                        onChange={() => props.onThemeUpdate(radiusType.key, value)}
-                      />
-                      <div class="px-1.5 py-1">
-                        <div 
-                          class={`border-base-content/20 bg-base-200 h-6 w-8 border-e-2 border-t-2 ${props.theme[radiusType.key] === value ? "border-primary bg-base-300" : ""} ${props.theme[radiusType.key] !== value ? "bg-base-200" : ""}`}
-                          style={{ 
+                    <Radio
+                      value={value}
+                      aria-label={`${radiusType.label} radius ${radiusLabel(value)}`}
+                      class="h-8 w-10 [&_[data-slot=radio-control]]:mt-0 [&_[data-slot=radio-control]]:h-8 [&_[data-slot=radio-control]]:w-10 [&_[data-slot=radio-control]]:rounded-lg [&_[data-slot=radio-control]]:border-base-content/20 [&_[data-slot=radio-control]]:bg-base-200"
+                      indicator={
+                        <div
+                          class={`h-6 w-8 border-e-2 border-t-2 ${props.theme[radiusType.key] === value ? "border-primary bg-base-300" : "border-base-content/20 bg-base-200"}`}
+                          style={{
                             "border-start-end-radius": value,
-                            "border-top-right-radius": value
+                            "border-top-right-radius": value,
                           }}
                         />
-                      </div>
-                    </label>
+                      }
+                    />
                   )}
                 </For>
-              </div>
-            </div>
+            </RadioGroup>
           )}
         </For>
       </div>

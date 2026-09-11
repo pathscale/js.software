@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import { Icon, Separator } from "@pathscale/ui";
+import { Icon, Separator, Switch } from "@pathscale/ui";
 import { Theme } from "../../utils/themeUtils";
 
 interface EffectsSectionProps {
@@ -31,20 +31,17 @@ export default function EffectsSection(props: EffectsSectionProps) {
       <div class="flex flex-col gap-1">
         <For each={EFFECTS}>
           {(effect) => (
-            <label class="flex cursor-pointer items-center justify-between gap-2">
-              <span class="flex flex-col">
-                <span class="text-base-content/70 text-xs">{effect.label}</span>
-                <span class="text-base-content/40 text-xs italic">{effect.description}</span>
-              </span>
-              <input 
-                type="checkbox" 
-                class="accent-primary"
-                checked={props.theme[effect.key] === "1"}
-                onChange={(e) => 
-                  props.onThemeUpdate(effect.key, e.currentTarget.checked ? "1" : "0")
-                }
-              />
-            </label>
+            <Switch
+              class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
+              size="sm"
+              checked={props.theme[effect.key] === "1"}
+              onChange={(checked) =>
+                props.onThemeUpdate(effect.key, checked ? "1" : "0")
+              }
+              description={effect.description}
+            >
+              {effect.label}
+            </Switch>
           )}
         </For>
       </div>

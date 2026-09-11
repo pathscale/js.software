@@ -3,7 +3,7 @@
    glass surface on it rendered as a washed sage panel over the dark page
    regardless of the theme actually selected.
 
-   These are @pathscale/ui 2.5.0's own dark-theme values. The library derives
+   These mirror @pathscale/ui's dark-theme values. The library derives
    them from three numbers now - `resolveGlassTokens({ blur, refraction,
    depth })` - and this table should be replaced by that call rather than kept
    in step by hand. */

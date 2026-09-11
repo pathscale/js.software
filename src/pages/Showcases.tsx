@@ -44,7 +44,7 @@ const Showcases: Component = () => {
           <h1 class="text-5xl font-bold mb-6">Component Showcases</h1>
           <p class="text-xl text-base-content/70 mb-8 max-w-3xl mx-auto leading-relaxed">
             {showcaseRoutes.length} focused family demonstrations plus a complete
-            coverage lab for the current @pathscale/ui 2.x public surface.
+            coverage lab for the current @pathscale/ui 3.x public surface.
           </p>
 
           <Flex gap="md" justify="center" wrap="wrap" class="mb-8">

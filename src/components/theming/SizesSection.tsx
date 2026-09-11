@@ -1,5 +1,5 @@
-import { createMemo, For } from "solid-js";
-import { Icon, Separator } from "@pathscale/ui";
+import { For } from "solid-js";
+import { Icon, Separator, Slider } from "@pathscale/ui";
 import { Theme } from "../../utils/themeUtils";
 
 interface SizesSectionProps {
@@ -31,12 +31,14 @@ const SIZE_TYPES = [
 export default function SizesSection(props: SizesSectionProps) {
   const getCurrentSizeIndex = (sizeKey: string) => {
     const currentValue = props.theme[sizeKey] || "0.25rem";
-    return SIZE_VALUES.indexOf(currentValue);
+    const index = SIZE_VALUES.indexOf(currentValue);
+    return index >= 0 ? index : 2;
   };
 
   const getCurrentBorderIndex = () => {
     const currentValue = props.theme["--border"] || "1px";
-    return BORDER_VALUES.indexOf(currentValue);
+    const index = BORDER_VALUES.indexOf(currentValue);
+    return index >= 0 ? index : 1;
   };
 
   const updateSize = (key: string, index: number) => {
@@ -107,22 +109,20 @@ export default function SizesSection(props: SizesSectionProps) {
                   </For>
                 </div>
                 
-                <input 
-                  type="range" 
-                  class="w-full accent-primary" 
-                  min={0} 
-                  max={SIZE_VALUES.length - 1} 
+                <Slider
+                  label={`${sizeType.label} base size`}
+                  size="sm"
+                  min={0}
+                  max={SIZE_VALUES.length - 1}
                   step={1}
                   value={getCurrentSizeIndex(sizeType.key)}
-                  onInput={(e) => updateSize(sizeType.key, parseInt(e.currentTarget.value))}
+                  formatValue={(index) =>
+                    `${getPixelValue(SIZE_VALUES[index], sizeType.scale[0])} pixels`
+                  }
+                  onChange={(index) => updateSize(sizeType.key, index)}
                 />
               </div>
               
-              <div class="mt-0.5 text-center">
-                <span class="text-base-content/50 text-xs font-mono">
-                  {sizeType.label} base size: {getPixelValue(props.theme[sizeType.key] || "0.25rem", sizeType.scale[0])} Pixels
-                </span>
-              </div>
             </div>
           )}
         </For>
@@ -140,21 +140,17 @@ export default function SizesSection(props: SizesSectionProps) {
                 <span>2px</span>
               </div>
               
-              <input 
-                type="range" 
-                class="w-full accent-primary" 
-                min={0} 
-                max={BORDER_VALUES.length - 1} 
+              <Slider
+                label="Border width"
+                size="sm"
+                min={0}
+                max={BORDER_VALUES.length - 1}
                 step={1}
                 value={getCurrentBorderIndex()}
-                onInput={(e) => updateBorder(parseInt(e.currentTarget.value))}
+                formatValue={(index) => BORDER_VALUES[index]}
+                onChange={updateBorder}
               />
               
-              <div class="text-center mt-2">
-                <span class="text-base-content/50 text-xs font-mono">
-                  Current: {props.theme["--border"] || "1px"}
-                </span>
-              </div>
             </div>
           </div>
         </div>
