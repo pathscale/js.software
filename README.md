@@ -21,9 +21,9 @@ The Layouts route uses its own document marker, and decorative cards are
 articles rather than controls that promise an action.
 
 The production response policy is a separate release check because chuzz does
-not emulate browser CSP enforcement. It requires a CSP, rejects a policy that
-blocks UI's dynamic Slider and theme-preview styles, and rejects stale Google
-Fonts sources:
+not emulate browser CSP enforcement. When CSP is enabled, it rejects a policy
+that blocks UI's dynamic Slider and theme-preview styles. It always rejects
+stale Google Fonts sources:
 
 ```sh
 bun run qa:production-policy
