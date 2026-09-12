@@ -1,4 +1,4 @@
-import { Button, Icon, Separator } from "@pathscale/ui";
+import { Button, Icon, Separator, Slider } from "@pathscale/ui";
 import {
   BLUR_MAX,
   DEPTH_MAX,
@@ -11,7 +11,7 @@ import { Theme } from "../../utils/themeUtils";
 
 interface GlassSectionProps {
   theme: Theme;
-  onThemeUpdate: (key: string, value: string) => void;
+  onThemeUpdate: (values: Record<string, string>) => void;
 }
 
 export default function GlassSection(props: GlassSectionProps) {
@@ -27,9 +27,7 @@ export default function GlassSection(props: GlassSectionProps) {
       depth: next.depth ?? current.depth,
     };
     const cssVars = resolveGlassCssVariables(merged);
-    for (const [key, value] of Object.entries(cssVars)) {
-      props.onThemeUpdate(key, value);
-    }
+    props.onThemeUpdate(cssVars);
   };
 
   const resetToHype4 = () => applyTuning(HYPE4_DEFAULTS);
@@ -51,65 +49,43 @@ export default function GlassSection(props: GlassSectionProps) {
         </span></span><Separator class="flex-1" /></h3>
 
       <div class="flex flex-col gap-2">
-        <label class="bg-base-200 rounded-lg flex flex-col gap-1 p-2">
-          <span class="flex items-center justify-between gap-2">
-            <span class="text-base-content/70 text-xs">Blur</span>
-            <span class="text-base-content/50 font-mono text-xs">
-              {tuning().blur}px
-            </span>
-          </span>
-          <input
-            type="range"
-            class="w-full accent-primary"
+        <div class="bg-base-200 rounded-lg p-2">
+          <Slider
+            label="Blur"
+            size="sm"
             min={0}
             max={BLUR_MAX}
             step={1}
             value={tuning().blur}
-            onInput={(event) =>
-              applyTuning({ blur: Number(event.currentTarget.value) })
-            }
+            formatValue={(value) => `${value}px`}
+            onChange={(value) => applyTuning({ blur: value })}
           />
-        </label>
+        </div>
 
-        <label class="bg-base-200 rounded-lg flex flex-col gap-1 p-2">
-          <span class="flex items-center justify-between gap-2">
-            <span class="text-base-content/70 text-xs">Refraction</span>
-            <span class="text-base-content/50 font-mono text-xs">
-              {tuning().refraction.toFixed(2)}
-            </span>
-          </span>
-          <input
-            type="range"
-            class="w-full accent-primary"
+        <div class="bg-base-200 rounded-lg p-2">
+          <Slider
+            label="Refraction"
+            size="sm"
             min={0}
             max={REFRACTION_MAX}
             step={0.01}
             value={tuning().refraction}
-            onInput={(event) =>
-              applyTuning({ refraction: Number(event.currentTarget.value) })
-            }
+            formatValue={(value) => value.toFixed(2)}
+            onChange={(value) => applyTuning({ refraction: value })}
           />
-        </label>
+        </div>
 
-        <label class="bg-base-200 rounded-lg flex flex-col gap-1 p-2">
-          <span class="flex items-center justify-between gap-2">
-            <span class="text-base-content/70 text-xs">Depth</span>
-            <span class="text-base-content/50 font-mono text-xs">
-              {tuning().depth}
-            </span>
-          </span>
-          <input
-            type="range"
-            class="w-full accent-primary"
+        <div class="bg-base-200 rounded-lg p-2">
+          <Slider
+            label="Depth"
+            size="sm"
             min={0}
             max={DEPTH_MAX}
             step={1}
             value={tuning().depth}
-            onInput={(event) =>
-              applyTuning({ depth: Number(event.currentTarget.value) })
-            }
+            onChange={(value) => applyTuning({ depth: value })}
           />
-        </label>
+        </div>
       </div>
     </div>
   );

@@ -143,6 +143,10 @@ export default function Theming() {
     setCurrentTheme(newTheme);
   };
 
+  const updateGlassThemeValues = (values: Record<string, string>) => {
+    setCurrentTheme((theme) => ({ ...theme, ...values }));
+  };
+
   const exportCSS = (
     isDefault: boolean,
     isPrefersDark: boolean,
@@ -169,6 +173,7 @@ export default function Theming() {
           theme={currentTheme()}
           onColorClick={openColorPicker}
           onThemePropertyUpdate={updateThemePropertyValue}
+          onGlassThemeUpdate={updateGlassThemeValues}
           onRandomizeTheme={randomizeTheme}
           onExportCSS={exportCSS}
           dockActiveItem={dockActiveItem()}

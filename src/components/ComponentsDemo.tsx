@@ -6,6 +6,7 @@ import { ROUTES } from "../config/routes";
 export default function ComponentsDemo() {
   const [modalOpen, setModalOpen] = createSignal(false);
   const [page, setPage] = createSignal(2);
+  const [price, setPrice] = createSignal(25);
 
   return (
     <div class="text-base-content mx-auto grid gap-6 pb-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -166,7 +167,15 @@ export default function ComponentsDemo() {
               <Icon src="mdi--currency-usd" width={16} height={16} />
               <span class="font-semibold">Price Range</span>
             </Flex>
-            <Slider value={25} min={0} max={100} step={25} onChange={() => {}} />
+            <Slider
+              label="Price range"
+              value={price()}
+              min={0}
+              max={100}
+              step={25}
+              formatValue={(value) => `$${value}`}
+              onChange={setPrice}
+            />
             <Flex justify="between" class="w-full text-xs px-2">
               <span>$0</span>
               <span>$25</span>

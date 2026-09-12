@@ -92,7 +92,7 @@ export default function SizesSection(props: SizesSectionProps) {
                         <div class="flex flex-col items-center gap-1">
                           <div 
                             class="flex items-end" 
-                            style={{ height: `${maxHeightFor(FIELD_SCALE) / 4}px` }}
+                            style={{ height: `${maxHeightFor(sizeType.scale) / 4}px` }}
                           >
                             <div 
                               class="bg-base-content w-1 rounded-full" 
