@@ -39,7 +39,7 @@ jobs:
           QA_TIMEOUT_SCALE: 2
         run: |
           for group in \
-            actions calendar data-display docs feedback input \
+            actions calendar coverage data-display docs feedback input \
             layout navigation showcase surfaces theming unlisted
           do
             ps-qa --app tests/ps-qa/ps-qa.ron \

@@ -38,6 +38,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
           <Button
             variant="ghost"
             width="square"
+            aria-label={navigation.isOpen() ? "Close navigation" : "Open navigation"}
             onClick={() => navigation.setIsOpen(!navigation.isOpen())}
           >
             <HamburgerIcon />
@@ -66,9 +67,11 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         <Navbar.End class="hidden lg:flex">
           <Flex gap="md" align="center">
             <a
+              id="github-source-link"
               href={EXTERNAL_ROUTES.GITHUB}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="View UI on GitHub"
               class="hover:text-primary p-2 rounded-full transition-colors"
             >
               <GitHubIcon />
@@ -87,6 +90,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
             href={EXTERNAL_ROUTES.GITHUB}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="View UI on GitHub from mobile navigation"
             class="p-2 rounded-full"
           >
             <GitHubIcon />

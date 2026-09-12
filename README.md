@@ -5,7 +5,7 @@ The kitchen sink demo and documentation for our UI components.
 ## Native QA
 
 Build the site, then run every declared outcome with the font-enabled chuzz host
-and ps-qa 0.7.1 or newer:
+and ps-qa 0.7.2 or newer:
 
 ```sh
 bun run build
@@ -14,7 +14,7 @@ ps-qa --app tests/ps-qa/ps-qa.ron qa-hosted \
   --checks tests/ps-qa/checks
 ```
 
-The UI 3.2 registry build passes all 347 native checks across 12 groups,
+The UI 3.2 registry build passes all 555 native checks across 13 groups,
 including Calendar selection, month navigation, and keyboard and pointer-driven
 Slider and Color Picker outcomes. CI includes every group.
 The Layouts route uses its own document marker, and decorative cards are
