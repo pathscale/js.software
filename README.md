@@ -14,8 +14,9 @@ ps-qa --app tests/ps-qa/ps-qa.ron qa-hosted \
   --checks tests/ps-qa/checks
 ```
 
-The UI 3.2 registry build passes all 330 native checks across 12 groups,
-including Calendar selection and month navigation. CI includes every group.
+The UI 3.2 registry build passes all 347 native checks across 12 groups,
+including Calendar selection, month navigation, and keyboard and pointer-driven
+Slider and Color Picker outcomes. CI includes every group.
 The Layouts route uses its own document marker, and decorative cards are
 articles rather than controls that promise an action.
 

@@ -1,5 +1,5 @@
 import type { JSX } from "@solidjs/web";
-import { createErrorBoundary, For } from "solid-js";
+import { createErrorBoundary, createSignal, For } from "solid-js";
 import { Accordion, Button, Card, Checkbox, Chip, Collapsible, createI18n, Empty, Flex, Header, Input, InputOTP, LanguageSwitcher, ListBox, LiveChatBubble, MetalBorder, Popover, Progress, ScrollArea, Separator, Slider, Spinner, Text, Textarea, ThemeColorPicker } from "@pathscale/ui";
 import { ButtonGroup, CheckboxGroup, CloseButton, Meter, RadialProgress, SizePicker, TimeField, DateField, ColorPicker, ColorArea, ColorField, ColorSlider, ComboBox, DatePicker, DateRangePicker, RangeCalendar, Toolbar, Kbd } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
@@ -131,7 +131,10 @@ const EXAMPLES: Example[] = [
   { name: "SizePicker", render: () => <SizePicker /> },
   {
     name: "Slider",
-    render: () => <Slider label="Volume" value={40} onChange={() => {}} />,
+    render: () => {
+      const [value, setValue] = createSignal(40);
+      return <Slider label="Volume" value={value()} onChange={setValue} />;
+    },
   },
   { name: "Spinner", render: () => <Spinner /> },
   { name: "Card (surface)", render: () => <Card>On a surface.</Card> },
@@ -164,20 +167,36 @@ const EXAMPLES: Example[] = [
 const COMPOSED: Example[] = [
   {
     name: "ColorPicker",
-    render: () => (
-      <ColorPicker value="#6366f1">
-        <ColorPicker.Area />
-        <ColorPicker.Slider />
-        <ColorPicker.Field />
-      </ColorPicker>
-    ),
+    render: () => {
+      const [value, setValue] = createSignal("#6366f1");
+      return (
+        <ColorPicker value={value()} onChange={setValue}>
+          <ColorPicker.Area />
+          <ColorPicker.Slider />
+          <ColorPicker.Field />
+        </ColorPicker>
+      );
+    },
   },
   {
     name: "ColorArea",
     render: () => <ColorArea value={{ h: 250, s: 0.7, v: 0.9 }} />,
   },
   { name: "ColorField", render: () => <ColorField value="#6366f1" /> },
-  { name: "ColorSlider", render: () => <ColorSlider value={250} type="hue" /> },
+  {
+    name: "ColorSlider",
+    render: () => {
+      const [value, setValue] = createSignal(250);
+      return (
+        <ColorSlider
+          aria-label="Standalone hue"
+          value={value()}
+          type="hue"
+          onChange={setValue}
+        />
+      );
+    },
+  },
   {
     name: "ComboBox",
     render: () => (

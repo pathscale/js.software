@@ -4,11 +4,9 @@
 // The Input category: Checkbox, File Input, Form, Input, Radio Group, Select,
 // Slider, Textarea.
 //
-// Two of the ten pages in this category are reached but never opened, and the
-// reason is written into the first two checks. `/calendar` and `/color-picker`
-// both take the whole application down when they mount, and every group runs
-// against one shared browser, so opening either would end the run there and
-// report every later group as a failure of its own.
+// Calendar is reached but never opened. It takes the application down when it
+// mounts, and every group runs against one shared browser, so opening it would
+// end the run there and report every later group as a failure of its own.
 //
 // What takes them down:
 //
@@ -16,16 +14,8 @@
 //                    `Intl`, and the date formatting reaches for it during the
 //                    first render. Not the site's doing.
 //
-//   `/color-picker`  `useColorPickerContext must be used within a
-//                    ColorPickerContext.Provider`. The page renders
-//                    `<ColorWheelFlower />` on its own, and the prose beside it
-//                    says that is supported; it is not. The library's own
-//                    `ColorWheel` wraps the same component in the provider.
-//
-// Both escape every boundary, and Solid 2 answers an escaped error by halting
-// its reactive system for good, so the page paints once and then answers
-// nothing. What is asserted here is that a person can reach them, which is
-// true, and nothing about what they render, which is not.
+// The Color Picker provider failure was fixed in UI 3.2. Its page is now opened
+// and its two-dimensional, hue and alpha controls are driven below.
 [
     (
         id: "the-input-group-starts-from-a-page-that-clears-the-menu",
@@ -441,6 +431,78 @@
         click: None,
         subject: "slider:Volume",
         expect: Paints,
+    ),
+    (
+        id: "the-slider-responds-to-the-keyboard",
+        group: "input",
+        what: "the public Slider example changes its controlled value with the keyboard",
+        open: None,
+        prepare: Some("slider:Volume"),
+        prepare_key: Some("Home"),
+        hover: None,
+        click: None,
+        key: Some("End"),
+        key_on: Some("slider:Volume"),
+        subject: "slider:Volume",
+        expect: ValueChanges,
+    ),
+    (
+        id: "the-slider-responds-to-a-real-pointer-drag",
+        group: "input",
+        what: "dragging the public Slider example changes the value retained by its caller",
+        open: None,
+        prepare: Some("slider:Volume"),
+        prepare_key: Some("Home"),
+        hover: None,
+        click: None,
+        pointer_drag: Some((from: "slider:Volume", dx: 160.0, dy: 0.0, steps: 6)),
+        subject: "slider:Volume",
+        expect: ValueChanges,
+    ),
+    // Color Picker.
+    (
+        id: "the-colour-picker-page-opens",
+        group: "input",
+        what: "the menu reaches a live Color Picker showcase",
+        open: None,
+        hover: None,
+        click: Some("link:Color Picker"),
+        subject: "heading:Color Picker",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "the-colour-picker-area-responds-to-a-real-pointer",
+        group: "input",
+        what: "dragging the default colour area changes its controlled value",
+        open: None,
+        hover: None,
+        click: None,
+        pointer_drag: Some((from: "slider:Color area", dx: 40.0, dy: 30.0, steps: 4)),
+        subject: "slider:Color area",
+        expect: ValueChanges,
+    ),
+    (
+        id: "the-colour-picker-hue-responds-to-a-real-pointer",
+        group: "input",
+        what: "dragging the default hue rail changes its controlled value",
+        open: None,
+        hover: None,
+        click: None,
+        pointer_drag: Some((from: "slider:Hue", dx: 60.0, dy: 0.0, steps: 4)),
+        subject: "slider:Hue",
+        expect: ValueChanges,
+    ),
+    (
+        id: "the-colour-picker-alpha-responds-to-a-real-pointer",
+        group: "input",
+        what: "dragging the alpha rail changes the RGBA value retained by its caller",
+        open: None,
+        hover: None,
+        click: None,
+        pointer_drag: Some((from: "slider:Alpha", dx: 60.0, dy: 0.0, steps: 4)),
+        subject: "slider:Alpha",
+        expect: ValueChanges,
     ),
     // Textarea.
     (

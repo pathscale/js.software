@@ -11,6 +11,7 @@ interface ThemeEditorProps {
   theme: Theme;
   onColorClick: (colorKey: string, event: MouseEvent) => void;
   onThemePropertyUpdate: (key: string, value: string) => void;
+  onGlassThemeUpdate: (values: Record<string, string>) => void;
   onRandomizeTheme: () => void;
   onExportCSS: (isDefault: boolean, isPrefersDark: boolean, colorScheme: "light" | "dark") => void;
   dockActiveItem: string;
@@ -87,7 +88,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
 
       <GlassSection
         theme={props.theme}
-        onThemeUpdate={props.onThemePropertyUpdate}
+        onThemeUpdate={props.onGlassThemeUpdate}
       />
 
       <SizesSection
