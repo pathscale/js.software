@@ -92,9 +92,7 @@ export default function DrawerShowcase() {
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
             <Drawer placement="left" size="md">
-              <Drawer.Trigger>
-                <Button flavor="primary">Open drawer</Button>
-              </Drawer.Trigger>
+              <Drawer.Trigger as={Button}>Open drawer</Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
                   <Drawer.Dialog>
@@ -107,9 +105,7 @@ export default function DrawerShowcase() {
             </Drawer>
             <CodeBlock
               code={`<Drawer placement="left" size="md">
-  <Drawer.Trigger>
-    <Button flavor="primary">Open drawer</Button>
-  </Drawer.Trigger>
+  <Drawer.Trigger as={Button} flavor="primary">Open drawer</Drawer.Trigger>
   <Drawer.Backdrop>
     <Drawer.Content>
       <Drawer.Dialog>
@@ -125,9 +121,7 @@ export default function DrawerShowcase() {
         <ShowcaseSection id="right" title="Right Side">
           <Flex direction="col" gap="md">
             <Drawer placement="right" size="md">
-              <Drawer.Trigger>
-                <Button flavor="primary">Open from right</Button>
-              </Drawer.Trigger>
+              <Drawer.Trigger as={Button}>Open from right</Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
                   <Drawer.Dialog>
@@ -145,9 +139,7 @@ export default function DrawerShowcase() {
         <ShowcaseSection id="with-header" title="With Header / Footer">
           <Flex direction="col" gap="md">
             <Drawer placement="left" size="md">
-              <Drawer.Trigger>
-                <Button flavor="primary">Open with header</Button>
-              </Drawer.Trigger>
+              <Drawer.Trigger as={Button}>Open with header</Drawer.Trigger>
               <Drawer.Backdrop>
                 <Drawer.Content>
                   <Drawer.Dialog>
@@ -166,7 +158,7 @@ export default function DrawerShowcase() {
             </Drawer>
             <CodeBlock
               code={`<Drawer placement="left" size="md">
-  <Drawer.Trigger><Button>Open</Button></Drawer.Trigger>
+  <Drawer.Trigger as={Button}>Open</Drawer.Trigger>
   <Drawer.Backdrop>
     <Drawer.Content>
       <Drawer.Dialog>

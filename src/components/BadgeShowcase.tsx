@@ -1,8 +1,10 @@
 import { Badge, Button, Chip, Flex, Icon } from "@pathscale/ui";
+import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 const badgeProps = [
   { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Indicator size." },
@@ -13,19 +15,21 @@ const badgeProps = [
 ];
 
 export default function BadgeShowcase() {
+  const [selectedPlacement, setSelectedPlacement] = createSignal<"top-right" | "top-left" | "bottom-right" | "bottom-left">("top-right");
+  const actions = createActionStatus();
   return (
     <ShowcaseLayout>
       <Flex direction="col" gap="xl">
         <ShowcaseSection id="anchor" title="Anchored badge">
           <Flex gap="xl" align="center" wrap="wrap">
             <Badge.Anchor>
-              <Button variant="outline" width="square" aria-label="Inbox">
+              <Button variant="outline" width="square" aria-label="Inbox" onClick={actions.handler("Inbox opened")}>
                 <Icon src="mdi--inbox" width={20} height={20} />
               </Button>
               <Badge flavor="destructive">3</Badge>
             </Badge.Anchor>
             <Badge.Anchor>
-              <Button variant="outline">Messages</Button>
+              <Button variant="outline" onClick={actions.handler("Messages opened")}>Messages</Button>
               <Badge flavor="accent" placement="bottom-right">12</Badge>
             </Badge.Anchor>
           </Flex>
@@ -38,12 +42,23 @@ export default function BadgeShowcase() {
         <ShowcaseSection id="placements" title="Placements">
           <Flex gap="xl" align="center" wrap="wrap">
             {(["top-left", "top-right", "bottom-left", "bottom-right"] as const).map((placement) => (
-              <Badge.Anchor>
-                <Button variant="outline">{placement}</Button>
-                <Badge placement={placement} flavor="accent" />
-              </Badge.Anchor>
+              <Button
+                variant="outline"
+                aria-pressed={selectedPlacement() === placement ? "true" : "false"}
+                onClick={() => {
+                  setSelectedPlacement(placement);
+                  actions.announce(`Badge placement set to ${placement}`);
+                }}
+              >
+                {placement}
+              </Button>
             ))}
+            <Badge.Anchor>
+              <span class="inline-flex min-w-28 justify-center">Preview</span>
+              <Badge placement={selectedPlacement()} flavor="accent" />
+            </Badge.Anchor>
           </Flex>
+          <ActionStatus message={actions.message()} />
         </ShowcaseSection>
 
         <ShowcaseSection id="labels" title="Standalone labels use Tag">

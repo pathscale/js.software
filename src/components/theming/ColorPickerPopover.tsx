@@ -41,13 +41,18 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
     >
       <Dialog.Content>
         <Dialog.Body>
-          <div class="grid grid-cols-10 w-full" role="listbox">
+          <div class="grid grid-cols-10 w-full" role="group" aria-label="Material colors">
             <For each={Object.entries(MATERIAL_COLORS)}>
               {([colorName, colorValue]) => (
-                <button
-                  class="appearance-none cursor-pointer w-full"
+                <Button
+                  variant="plain"
+                  flavor="neutral"
+                  size="xs"
+                  width="full"
+                  radius="none"
+                  class="appearance-none cursor-pointer w-full !min-h-4 !p-0"
                   aria-label={colorName}
-                  aria-selected={color() === colorValue ? "true" : "false"}
+                  aria-pressed={color() === colorValue ? "true" : "false"}
                   onClick={() => handleColorSelect(colorValue)}
                 >
                   <div
@@ -61,7 +66,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
                     }}
                     title={colorName}
                   />
-                </button>
+                </Button>
               )}
             </For>
           </div>

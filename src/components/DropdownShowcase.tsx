@@ -1,10 +1,15 @@
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Button, Card, Dropdown, Flex, Navbar } from "@pathscale/ui";
+import { createSignal } from "solid-js";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import { ActionStatus } from "./showcase/ActionStatus";
 
 export default function DropdownShowcase() {
+  const [placementStatus, setPlacementStatus] = createSignal(
+    "No placement menu opened",
+  );
   const sections = [
     { id: "default", title: "Default" },
     { id: "as-card", title: "As Card" },
@@ -220,7 +225,13 @@ export default function DropdownShowcase() {
         <ShowcaseSection id="placement" title="Placement">
           <Flex direction="col" gap="md">
             <Flex justify="center" align="center" gap="md" class="my-16">
-              <Dropdown placement="left">
+              <Dropdown
+                id="left-placement"
+                placement="left"
+                onOpenChange={(open) =>
+                  setPlacementStatus(`Left menu ${open ? "opened" : "closed"}`)
+                }
+              >
                 <Dropdown.Trigger>Left</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
@@ -228,7 +239,13 @@ export default function DropdownShowcase() {
                 </Dropdown.Menu>
               </Dropdown>
 
-              <Dropdown placement="right">
+              <Dropdown
+                id="right-placement"
+                placement="right"
+                onOpenChange={(open) =>
+                  setPlacementStatus(`Right menu ${open ? "opened" : "closed"}`)
+                }
+              >
                 <Dropdown.Trigger>Right</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
@@ -236,7 +253,13 @@ export default function DropdownShowcase() {
                 </Dropdown.Menu>
               </Dropdown>
 
-              <Dropdown placement="top">
+              <Dropdown
+                id="top-placement"
+                placement="top"
+                onOpenChange={(open) =>
+                  setPlacementStatus(`Top menu ${open ? "opened" : "closed"}`)
+                }
+              >
                 <Dropdown.Trigger>Top</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
@@ -244,7 +267,13 @@ export default function DropdownShowcase() {
                 </Dropdown.Menu>
               </Dropdown>
 
-              <Dropdown placement="bottom">
+              <Dropdown
+                id="bottom-placement"
+                placement="bottom"
+                onOpenChange={(open) =>
+                  setPlacementStatus(`Bottom menu ${open ? "opened" : "closed"}`)
+                }
+              >
                 <Dropdown.Trigger>Bottom</Dropdown.Trigger>
                 <Dropdown.Menu class="w-52">
                   <Dropdown.Item>Item 1</Dropdown.Item>
@@ -252,6 +281,7 @@ export default function DropdownShowcase() {
                 </Dropdown.Menu>
               </Dropdown>
             </Flex>
+            <ActionStatus message={placementStatus()} />
             <CodeBlock
               code={`<Dropdown placement="left">...</Dropdown>
 <Dropdown placement="right">...</Dropdown>

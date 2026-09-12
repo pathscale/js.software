@@ -2,6 +2,7 @@
 // else mounted it, so the site was rendering with no theme attribute at all
 // and falling through to whatever `:root` happened to declare.
 import "./lib/theme";
+import { restoreAppliedTheme } from "./lib/themeEditorPersistence";
 /* @refresh reload */
 import "./index.css";
 import { render } from "@solidjs/web";
@@ -9,6 +10,8 @@ import { render } from "@solidjs/web";
 import App from "./App";
 
 const root = document.getElementById("root");
+
+restoreAppliedTheme();
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   throw new Error(

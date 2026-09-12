@@ -3,8 +3,12 @@ import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
 import ShowcaseLayout from "./ShowcaseLayout";
+import { createSignal } from "solid-js";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 export default function CardShowcase() {
+  const actions = createActionStatus();
+  const [cardPressed, setCardPressed] = createSignal(false);
   const sections = [
     { id: "default", title: "Default" },
     { id: "with-header-footer", title: "Header & Footer" },
@@ -102,7 +106,7 @@ export default function CardShowcase() {
                 <h2 class="text-lg font-semibold">Shoes!</h2>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <Flex justify="end" class="mt-4">
-                  <Button flavor="primary">Buy Now</Button>
+                  <Button flavor="primary" onClick={actions.handler("Shoes added to cart")}>Buy Now</Button>
                 </Flex>
               </Card.Body>
             </Card>
@@ -131,8 +135,8 @@ export default function CardShowcase() {
               </Card.Body>
               <Card.Footer>
                 <Flex justify="end" gap="sm">
-                  <Button variant="ghost">Cancel</Button>
-                  <Button flavor="primary">Confirm</Button>
+                  <Button variant="ghost" onClick={actions.handler("Card changes cancelled")}>Cancel</Button>
+                  <Button flavor="primary" onClick={actions.handler("Card changes confirmed")}>Confirm</Button>
                 </Flex>
               </Card.Footer>
             </Card>
@@ -167,7 +171,7 @@ export default function CardShowcase() {
                 <h2 class="text-lg font-semibold">Shoes!</h2>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
                 <Flex justify="end" class="mt-4">
-                  <Button flavor="primary">Buy Now</Button>
+                  <Button flavor="primary" aria-label="Buy pictured shoes" onClick={actions.handler("Pictured shoes added to cart")}>Buy Now</Button>
                 </Flex>
               </Card.Body>
             </Card>
@@ -250,13 +254,18 @@ export default function CardShowcase() {
           <Flex direction="col" gap="md">
             <Card
               isInteractive
-              onClick={() => console.log("card pressed")}
+              aria-pressed={cardPressed() ? "true" : "false"}
+              onClick={() => {
+                setCardPressed((value) => !value);
+                actions.announce(`Pressable card ${cardPressed() ? "selected" : "cleared"}`);
+              }}
             >
               <Card.Body>
                 <h2 class="text-lg font-semibold">Press me</h2>
                 <p>Acts like a button; Enter/Space activates.</p>
               </Card.Body>
             </Card>
+            <ActionStatus message={actions.message()} />
             <CodeBlock
               code={`<Card
   isInteractive

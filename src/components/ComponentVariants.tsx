@@ -1,20 +1,34 @@
 import { Button, Card, Flex, Input } from "@pathscale/ui";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 export default function ComponentVariants() {
+  const actionStatus = createActionStatus("Choose a button variant");
+  const variants = [
+    ["Button", {}],
+    ["Primary", { flavor: "primary" }],
+    ["Secondary", { flavor: "secondary" }],
+    ["Accent", { flavor: "accent" }],
+    ["Outline", { variant: "outline" }],
+    ["Ghost", { variant: "ghost" }],
+    ["Danger", { flavor: "destructive" }],
+    ["Danger Soft", { flavor: "destructive", variant: "soft" }],
+  ] as const;
+
   return (
     <Flex direction="col" gap="lg">
+      <ActionStatus message={actionStatus.message()} />
       <Card class="bg-base-100">
         <Card.Body>
           <h5 class="text-lg font-semibold mb-2">Buttons</h5>
           <Flex gap="sm" class="flex-wrap">
-            <Button>Button</Button>
-            <Button flavor="primary">Primary</Button>
-            <Button flavor="secondary">Secondary</Button>
-            <Button flavor="accent">Accent</Button>
-            <Button variant="outline">Outline</Button>
-            <Button variant="ghost">Ghost</Button>
-            <Button flavor="destructive">Danger</Button>
-            <Button flavor="destructive" variant="soft">Danger Soft</Button>
+            {variants.map(([label, props]) => (
+              <Button
+                {...props}
+                onClick={actionStatus.handler(`${label} variant activated`)}
+              >
+                {label}
+              </Button>
+            ))}
           </Flex>
         </Card.Body>
       </Card>

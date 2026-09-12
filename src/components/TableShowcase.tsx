@@ -5,10 +5,15 @@ import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 // Mask avatars, Tag "ghost" color, Button size "xs") are no longer part of the public API.
 // The new compound: Table -> ScrollContainer -> Content -> Header/Column + Body/Row/Cell.
 export default function TableShowcase() {
+  const actions = createActionStatus("Choose a row to inspect its details.");
+  const showDetails = (name: string) => {
+    actions.announce(`Showing details for ${name}`);
+  };
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
@@ -212,7 +217,7 @@ export default function TableShowcase() {
                       </Table.Cell>
                       <Table.Cell>Purple</Table.Cell>
                       <Table.Cell>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" aria-label="View Hart Hagerty details" onClick={() => showDetails("Hart Hagerty")}>
                           details
                         </Button>
                       </Table.Cell>
@@ -244,7 +249,7 @@ export default function TableShowcase() {
                       </Table.Cell>
                       <Table.Cell>Red</Table.Cell>
                       <Table.Cell>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" aria-label="View Brice Swyre details" onClick={() => showDetails("Brice Swyre")}>
                           details
                         </Button>
                       </Table.Cell>
@@ -276,7 +281,7 @@ export default function TableShowcase() {
                       </Table.Cell>
                       <Table.Cell>Crimson</Table.Cell>
                       <Table.Cell>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" aria-label="View Marjy Ferencz details" onClick={() => showDetails("Marjy Ferencz")}>
                           details
                         </Button>
                       </Table.Cell>
@@ -308,7 +313,7 @@ export default function TableShowcase() {
                       </Table.Cell>
                       <Table.Cell>Indigo</Table.Cell>
                       <Table.Cell>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" aria-label="View Yancy Tear details" onClick={() => showDetails("Yancy Tear")}>
                           details
                         </Button>
                       </Table.Cell>
@@ -318,6 +323,7 @@ export default function TableShowcase() {
               </Table.ScrollContainer>
               <Table.Footer>Footer content area</Table.Footer>
             </Table>
+            <ActionStatus message={actions.message()} />
 
             <CodeBlock
               code={`<Table>

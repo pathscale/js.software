@@ -1,11 +1,18 @@
-import { createRouter } from "@solidjs/router";
-import { ParentComponent } from "solid-js";
+import { createRouter, useLocation } from "@solidjs/router";
+import { ParentComponent, createEffect } from "solid-js";
 import { routes } from "./routes";
 
 import { BaseLayout } from "./layouts/BaseLayout";
 import { MarketingHeader } from "./components/layout/Header/MarketingHeader";
 
 const Layout: ParentComponent = (props) => {
+  const location = useLocation();
+
+  createEffect(
+    () => location.pathname,
+    () => window.scrollTo(0, 0),
+  );
+
   return (
     <BaseLayout
       header={MarketingHeader}

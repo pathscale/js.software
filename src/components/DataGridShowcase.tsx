@@ -5,6 +5,7 @@ import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 type Person = {
   id: number;
@@ -35,6 +36,7 @@ function seed(grid: ReturnType<typeof createDataGrid<Person>>) {
 }
 
 export default function DataGridShowcase() {
+  const actions = createActionStatus("Select rows, then inspect the selection.");
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
@@ -309,10 +311,18 @@ grid.addColumn("lastName", "Last Name", "string", { searchable: true });
             <Button
               size="sm"
               variant="outline"
-              onClick={() => console.log(selectable.selectedRows())}
+              onClick={() => {
+                const rows = selectable.selectedRows();
+                actions.announce(
+                  rows.length
+                    ? `Selected ${rows.map((row) => row.firstName).join(", ")}`
+                    : "No rows selected",
+                );
+              }}
             >
               Log selection
             </Button>
+            <ActionStatus message={actions.message()} />
           </Flex>
           <CodeBlock
             code={`const grid = createDataGrid<Person>({ selection: "multiple" });   // or "single"

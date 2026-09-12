@@ -34,13 +34,13 @@ export default function Preview(props: PreviewProps) {
           class="bg-base-300"
         >
           <Tabs.List>
-            <Tabs.Tab id="demo">
+            <Tabs.Tab id="demo" aria-label="Components Demo">
               <Icon src="mdi--apps" width={16} height={16} />
             </Tabs.Tab>
-            <Tabs.Tab id="variants">
+            <Tabs.Tab id="variants" aria-label="Component Variants">
               <Icon src="mdi--format-list-bulleted" width={16} height={16} />
             </Tabs.Tab>
-            <Tabs.Tab id="palette">
+            <Tabs.Tab id="palette" aria-label="Color Palette">
               <Icon src="mdi--palette" width={16} height={16} />
             </Tabs.Tab>
           </Tabs.List>

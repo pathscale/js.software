@@ -3,8 +3,10 @@ import { ContentContainer } from "../../components/content/ContentContainer";
 import { Callout } from "../../components/content/Callout";
 import { CodeBlock } from "../../components/showcase/CodeBlock";
 import { ROUTES } from "../../config/routes";
+import { ActionStatus, createActionStatus } from "../../components/showcase/ActionStatus";
 
 export default function Layouts() {
+  const actions = createActionStatus("Choose how to continue the Layouts example.");
   return (
     <ContentContainer maxWidth="2xl" prose={false}>
       <Flex id="layouts-documentation" direction="col" gap="xl">
@@ -99,9 +101,10 @@ export function Actions() {
 }`}
           />
           <Flex gap="md" align="center" wrap="wrap">
-            <Button flavor="primary" size="lg">Continue</Button>
-            <Button variant="outline" size="lg">Cancel</Button>
+            <Button flavor="primary" size="lg" onClick={actions.handler("Layouts example continued")}>Continue</Button>
+            <Button variant="outline" size="lg" onClick={actions.handler("Layouts example cancelled")}>Cancel</Button>
           </Flex>
+          <ActionStatus message={actions.message()} />
         </section>
 
         <Callout type="warning" title="Component names are case-sensitive">

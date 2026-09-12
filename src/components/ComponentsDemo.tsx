@@ -2,14 +2,20 @@ import { createSignal } from "solid-js";
 import { Alert, Avatar, Breadcrumb, BreadcrumbItem, Button, Card, ChatBubble, Checkbox, Chip, Dialog, Drawer, Dropdown, Flex, Form, Icon, Input, Navbar, Pagination, Progress, Radio, Select, Skeleton, Slider, Spinner, Switch, Table, Tabs, Tooltip, TooltipContent, TooltipTrigger } from "@pathscale/ui";
 import { Menu, Join } from "@pathscale/ui/lab";
 import { ROUTES } from "../config/routes";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 export default function ComponentsDemo() {
   const [modalOpen, setModalOpen] = createSignal(false);
   const [page, setPage] = createSignal(2);
   const [price, setPrice] = createSignal(25);
+  const [selectedDay, setSelectedDay] = createSignal(5);
+  const actionStatus = createActionStatus("Preview ready");
 
   return (
     <div class="text-base-content mx-auto grid gap-6 pb-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div class="md:col-span-2 lg:col-span-3">
+        <ActionStatus message={actionStatus.message()} />
+      </div>
       <Flex direction="col" gap="md">
         <Card class="bg-base-100">
           <Card.Body>
@@ -18,7 +24,7 @@ export default function ComponentsDemo() {
                 <Icon src="mdi--filter-variant" width={16} height={16} />
                 <span class="font-semibold">Filters</span>
               </Flex>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" onClick={actionStatus.handler("More filters requested")}>
                 more
               </Button>
             </Flex>
@@ -29,7 +35,7 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm" class="mt-4">
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox />
+                  <Checkbox aria-label="Hoodies" />
                   <span class="text-sm">Hoodies</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -38,7 +44,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox checked />
+                  <Checkbox aria-label="Bags" checked />
                   <span class="text-sm">Bags</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -47,7 +53,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox />
+                  <Checkbox aria-label="Shoes" />
                   <span class="text-sm">Shoes</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -56,7 +62,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox />
+                  <Checkbox aria-label="Accessories" />
                   <span class="text-sm">Accessories</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -96,27 +102,21 @@ export default function ComponentsDemo() {
                 <Flex class="font-semibold opacity-60" justify="center">
                   S
                 </Flex>
-                <Button size="sm" variant="outline" class="p-2">
-                  1
-                </Button>
-                <Button size="sm" variant="outline" class="p-2">
-                  2
-                </Button>
-                <Button size="sm" variant="outline" class="p-2">
-                  3
-                </Button>
-                <Button size="sm" variant="outline" class="p-2">
-                  4
-                </Button>
-                <Button size="sm" flavor="primary" class="p-2">
-                  5
-                </Button>
-                <Button size="sm" variant="outline" class="p-2">
-                  6
-                </Button>
-                <Button size="sm" variant="outline" class="p-2">
-                  7
-                </Button>
+                {[1, 2, 3, 4, 5, 6, 7].map((day) => (
+                  <Button
+                    size="sm"
+                    variant={selectedDay() === day ? "solid" : "outline"}
+                    flavor={selectedDay() === day ? "primary" : undefined}
+                    class="p-2"
+                    aria-pressed={selectedDay() === day ? "true" : "false"}
+                    onClick={() => {
+                      setSelectedDay(day);
+                      actionStatus.announce(`Calendar day ${day} selected`);
+                    }}
+                  >
+                    {day}
+                  </Button>
+                ))}
               </Flex>
               <Input
                 placeholder="Search events..."
@@ -125,7 +125,7 @@ export default function ComponentsDemo() {
               />
               <Flex justify="between" align="center">
                 <span class="text-sm">Show all day events</span>
-                <Switch size="sm" />
+                <Switch aria-label="Show all day events" size="sm" />
               </Flex>
               <Card class="mt-2">
                 <Card.Body class="p-2">
@@ -189,7 +189,7 @@ export default function ComponentsDemo() {
                 <span class="text-sm opacity-60">to</span>
                 <Input placeholder="Max" size="sm" />
               </Flex>
-              <Button size="sm" flavor="primary" width="full">
+              <Button size="sm" flavor="primary" width="full" onClick={actionStatus.handler("Price range applied")}>
                 Apply
               </Button>
             </Flex>
@@ -303,7 +303,7 @@ export default function ComponentsDemo() {
               </Alert>
               <Alert flavor="warning">
                 <span class="text-xs">
-                  <Button variant="ghost" size="sm" class="p-0 h-auto">
+                  <Button variant="ghost" size="sm" class="p-0 h-auto" onClick={actionStatus.handler("Email verification requested")}>
                     Click
                   </Button>{" "}
                   to verify email
@@ -312,7 +312,7 @@ export default function ComponentsDemo() {
               <Alert flavor="destructive">
                 <Flex justify="between" align="center" class="w-full">
                   <span class="text-xs">Access denied</span>
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" onClick={actionStatus.handler("Support requested")}>
                     Support
                   </Button>
                 </Flex>
@@ -377,7 +377,7 @@ export default function ComponentsDemo() {
                   <span class="text-sm opacity-50">Advanced analytics</span>
                 </Flex>
               </Flex>
-              <Button flavor="primary" width="full" class="mt-4">
+              <Button flavor="primary" width="full" class="mt-4" onClick={actionStatus.handler("Plan selected")}>
                 Choose Plan
               </Button>
             </Flex>
@@ -461,8 +461,8 @@ export default function ComponentsDemo() {
                   <Dialog.Body>Are you sure you want to continue?</Dialog.Body>
                   <Dialog.Footer>
                     <Flex gap="sm" class="mt-2">
-                      <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-                      <Button flavor="primary" onClick={() => setModalOpen(false)}>
+                      <Button onClick={() => { setModalOpen(false); actionStatus.announce("Dialog cancelled"); }}>Cancel</Button>
+                      <Button flavor="primary" onClick={() => { setModalOpen(false); actionStatus.announce("Dialog confirmed"); }}>
                         Confirm
                       </Button>
                     </Flex>
@@ -489,7 +489,7 @@ export default function ComponentsDemo() {
                   <Chip size="sm">
                     3
                   </Chip>
-                  <Button size="sm" variant="outline" width="square">
+                  <Button aria-label="Notifications" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Notifications opened")}>
                     <Icon src="mdi--bell" width={16} height={16} />
                   </Button>
                 </Flex>
@@ -527,13 +527,13 @@ export default function ComponentsDemo() {
               </ChatBubble>
             </Flex>
             <Flex gap="sm" class="mt-4 justify-center">
-              <Button size="sm" variant="outline" width="square">
+              <Button aria-label="Start call" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Call started")}>
                 <Icon src="mdi--phone" width={16} height={16} />
               </Button>
-              <Button size="sm" variant="outline" width="square">
+              <Button aria-label="Open messages" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Messages opened")}>
                 <Icon src="mdi--message" width={16} height={16} />
               </Button>
-              <Button size="sm" variant="outline" width="square">
+              <Button aria-label="Conversation settings" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Conversation settings opened")}>
                 <Icon src="mdi--cog" width={16} height={16} />
               </Button>
             </Flex>
@@ -542,7 +542,7 @@ export default function ComponentsDemo() {
 
         <Card class="bg-base-100">
           <Card.Body>
-            <Menu>
+            <Menu onAction={(key) => actionStatus.announce(`Menu opened: ${String(key)}`)}>
               <Menu.Item id="database">
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
@@ -603,17 +603,17 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Button size="sm" width="square">
+                  <Button aria-label="Previous track" size="sm" width="square" onClick={actionStatus.handler("Previous track selected")}>
                     <Icon src="mdi--skip-previous" width={16} height={16} />
                   </Button>
-                  <Button size="sm" width="square" flavor="primary">
+                  <Button aria-label="Play track" size="sm" width="square" flavor="primary" onClick={actionStatus.handler("Playback started")}>
                     <Icon src="mdi--play" width={16} height={16} />
                   </Button>
-                  <Button size="sm" width="square">
+                  <Button aria-label="Next track" size="sm" width="square" onClick={actionStatus.handler("Next track selected")}>
                     <Icon src="mdi--skip-next" width={16} height={16} />
                   </Button>
                 </Flex>
-                <Button size="sm" variant="outline">
+                <Button aria-label="Toggle volume" size="sm" variant="outline" onClick={actionStatus.handler("Volume toggled")}>
                   <Icon src="mdi--volume-high" width={16} height={16} />
                 </Button>
               </Flex>
@@ -643,10 +643,8 @@ export default function ComponentsDemo() {
             <Navbar class="bg-base-200 px-4">
               <Navbar.Start>
                 <Dropdown>
-                  <Dropdown.Trigger>
-                    <Button variant="ghost" width="square" size="sm">
-                      <Icon src="mdi--menu" width={16} height={16} />
-                    </Button>
+                  <Dropdown.Trigger aria-label="Open navigation menu" class="btn btn-ghost btn-sm btn-square">
+                    <Icon src="mdi--menu" width={16} height={16} />
                   </Dropdown.Trigger>
                   <Dropdown.Menu class="w-52 mt-3 z-[1]">
                     <Dropdown.Item>Dashboard</Dropdown.Item>
@@ -659,7 +657,7 @@ export default function ComponentsDemo() {
                 <span class="font-bold text-sm">Brand</span>
               </Navbar.Center>
               <Navbar.End>
-                <Button variant="ghost" width="square" size="sm">
+                <Button aria-label="Open account" variant="ghost" width="square" size="sm" onClick={actionStatus.handler("Account opened")}>
                   <Icon src="mdi--account" width={16} height={16} />
                 </Button>
               </Navbar.End>
@@ -694,13 +692,13 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex direction="col" gap="sm">
               <Join>
-                <Button size="sm">
+                <Button size="sm" onClick={actionStatus.handler("Button 1 activated")}>
                   Button 1
                 </Button>
-                <Button size="sm" flavor="primary">
+                <Button size="sm" flavor="primary" onClick={actionStatus.handler("Button 2 activated")}>
                   Button 2
                 </Button>
-                <Button size="sm">
+                <Button size="sm" onClick={actionStatus.handler("Button 3 activated")}>
                   Button 3
                 </Button>
               </Join>
@@ -710,7 +708,7 @@ export default function ComponentsDemo() {
                   class="flex-1"
                   size="sm"
                 />
-                <Button size="sm" flavor="primary">
+                <Button aria-label="Search preview" size="sm" flavor="primary" onClick={actionStatus.handler("Preview search submitted")}>
                   <Icon src="mdi--magnify" width={16} height={16} />
                 </Button>
               </Join>
@@ -741,10 +739,10 @@ export default function ComponentsDemo() {
                 </Flex>
               </Form>
               <Flex gap="sm" class="mt-2">
-                <Radio name="recommend" checked />
+                <Radio aria-label="Would recommend" name="recommend" checked />
                 <span class="text-sm">Would recommend</span>
               </Flex>
-              <Button size="sm" flavor="primary">
+              <Button size="sm" flavor="primary" onClick={actionStatus.handler("Feedback submitted")}>
                 Submit
               </Button>
             </Flex>
