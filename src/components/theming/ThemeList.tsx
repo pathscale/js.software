@@ -17,7 +17,7 @@ const themeDomId = (theme: Theme) =>
 
 export default function ThemeList(props: ThemeListProps) {
   return (
-    <aside class="bg-base-100 border-base-300 flex min-w-0 flex-col gap-3 border-b p-3 md:border-b-0 md:border-e">
+    <aside class="bg-base-100 border-base-300 flex min-w-0 flex-col gap-3 border-b p-3 xl:border-b-0 xl:border-e">
       <div class="flex items-center justify-between gap-2">
         <h2 class="text-sm font-semibold">My themes</h2>
         <Button

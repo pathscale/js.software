@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import { convertOklchToHex, createOklchColor } from "./colorConversion";
+import { createOklchColor } from "./colorConversion";
 import { AccessibilityOptions } from "../../types/theme";
 
 const DEFAULT_ACCESSIBILITY_OPTIONS: Required<AccessibilityOptions> = {
@@ -76,34 +76,25 @@ export const generateAccessibleTextColor = (
   backgroundColor: string,
   options: AccessibilityOptions = {}
 ): string => {
-  const { minContrastRatio, maxAttempts } = {
+  const { minContrastRatio } = {
     ...DEFAULT_ACCESSIBILITY_OPTIONS,
     ...options,
   };
+  const black = createOklchColor(0, 0, 0);
+  const white = createOklchColor(100, 0, 0);
+  const blackContrast = calculateContrastRatio(backgroundColor, black);
+  const whiteContrast = calculateContrastRatio(backgroundColor, white);
 
-  const bgHex = convertOklchToHex(backgroundColor);
-  const bgColor = chroma(bgHex);
-  const [bgL] = bgColor.lch();
+  // One of pure black or white always provides the stronger WCAG contrast.
+  // Selecting the stronger pole avoids the old LCh loop's two failure modes:
+  // accepting a low-WCAG result because an approximate APCA score passed, and
+  // emitting `oklch(... NaN)` for achromatic colours whose hue is undefined.
+  const strongest = blackContrast >= whiteContrast ? black : white;
+  if (Math.max(blackContrast, whiteContrast) >= minContrastRatio) return strongest;
 
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const targetLightness =
-      bgL > 50 ? Math.max(5, 15 - attempt * 2) : Math.min(95, 85 + attempt * 2);
-
-    const adjustedColor = chroma.lch(targetLightness, 0, 0);
-    const [l, c, h] = adjustedColor.oklch();
-    const textColor = createOklchColor(Math.round(l * 100), c, h || 0);
-
-    const wcagContrast = calculateContrastRatio(backgroundColor, textColor);
-    const apcaScore = calculateAPCAContrast(textColor, backgroundColor);
-
-    if (wcagContrast >= minContrastRatio || apcaScore >= 60) {
-      return textColor;
-    }
-  }
-
-  const fallbackColor = chroma.oklch(bgL > 50 ? 0 : 1, 0, 0);
-  const [l, c, h] = fallbackColor.oklch();
-  return createOklchColor(Math.round(l * 100), c, h);
+  // Invalid colour input reaches here with both ratios reported as 1. Keep the
+  // output valid and deterministic so callers never receive an unparsable token.
+  return black;
 };
 
 export const validateThemeAccessibility = (

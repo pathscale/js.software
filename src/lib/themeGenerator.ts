@@ -16,7 +16,7 @@ import {
   generateRandomMaterialTheme,
   selectColorFromFamily,
 } from "../utils/theme/colorSelection";
-import { GLASS_THEME_DEFAULTS } from "./glassTokens";
+import { glassThemeDefaults } from "./glassTokens";
 
 export function generateRandomTheme(
   palette: ColorPalette,
@@ -118,6 +118,13 @@ export function generateRandomTheme(
     }
   }
 
+  // Base content is shared by all three surface tiers. Generate it against the
+  // tier with the weakest contrast, rather than freezing the value when
+  // base-100 happens to be visited first.
+  newColors["--color-base-content"] = generateAccessibleTextColor(
+    newColors["--color-base-300"],
+  );
+
   newColors["--radius-selector"] = randomFrom([...RADIUS_VALUES]);
   newColors["--radius-field"] = randomFrom([...RADIUS_VALUES]);
   newColors["--radius-box"] = randomFrom([...RADIUS_VALUES]);
@@ -127,7 +134,7 @@ export function generateRandomTheme(
   newColors["--depth"] = randomFrom([...THEME_PROPERTY_VALUES.depth]);
   newColors["--noise"] = randomFrom([...THEME_PROPERTY_VALUES.noise]);
 
-  Object.assign(newColors, GLASS_THEME_DEFAULTS);
+  Object.assign(newColors, glassThemeDefaults(isDarkTheme ? "dark" : "light"));
 
   return newColors as Theme;
 }

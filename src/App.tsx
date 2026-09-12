@@ -2,34 +2,28 @@ import { createRouter, useLocation } from "@solidjs/router";
 import { ParentComponent, createEffect } from "solid-js";
 import { routes } from "./routes";
 
-import { BaseLayout } from "./layouts/BaseLayout";
 import { MarketingHeader } from "./components/layout/Header/MarketingHeader";
+import { BaseLayout } from "./layouts/BaseLayout";
 
 const Layout: ParentComponent = (props) => {
   const location = useLocation();
 
   createEffect(
     () => location.pathname,
-    () => window.scrollTo(0, 0),
+    () => {
+      // Chrome 152 returns a Promise from scrollTo(). Solid 2 treats an
+      // effect return value as cleanup, so return nothing explicitly.
+      window.scrollTo(0, 0);
+    },
   );
 
   return (
-    <BaseLayout
-      header={MarketingHeader}
-      class="min-h-screen"
-    >
+    <BaseLayout header={MarketingHeader} class="min-h-screen">
       {props.children}
     </BaseLayout>
   );
 };
 
-/*
- * Routes are configuration, not JSX children.
- *
- * `@solidjs/router` 2.x replaced <Router>/<Route> with a factory: the tree is
- * declared once as plain objects and `createRouter` returns the provider
- * component. The old `root` prop becomes the outermost route's `component`.
- */
 const Routes = createRouter({
   routes: [
     {

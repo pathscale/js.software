@@ -42,7 +42,9 @@ export const validateWildbitPrinciples = (
   });
 
   return {
-    isValid: validation.isValid && recommendations.length === 0,
+    // APCA is reported as guidance here; the local approximation is not the
+    // normative APCA algorithm and must not veto an otherwise valid WCAG pair.
+    isValid: validation.isValid,
     violations: validation.violations,
     apcaResults: validation.apcaResults,
     recommendations,

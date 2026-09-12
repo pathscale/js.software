@@ -9,8 +9,8 @@
  *
  * CORE IMPLEMENTATION PRINCIPLES:
  *
- * 1. LCh COLOR SPACE (Wildbit + Chroma.js)
- *    - chroma.lch(lightness, chroma, hue) for perceptually uniform generation
+ * 1. OKLCH COLOR SPACE (Wildbit + Chroma.js)
+ *    - chroma.oklch(lightness, chroma, hue) for perceptually uniform generation
  *    - OKLCH conversion for CSS compatibility
  *    - Abandons HSL completely per Wildbit recommendations
  *
@@ -33,10 +33,9 @@
  *    - Hue compensation prevents unnatural color shifts across lightness
  *    - No random variation - fixed mathematical relationships
  *
- * 5. DUAL ACCESSIBILITY VALIDATION
- *    - WCAG 2.1: 4.5:1 minimum contrast ratio
- *    - APCA (WCAG 3): 60+ score minimum per Wildbit recommendation
- *    - Automatic text color generation meeting both standards
+ * 5. ACCESSIBILITY VALIDATION
+ *    - WCAG: 4.5:1 minimum contrast ratio
+ *    - Automatic black/white content selection using the stronger contrast
  *
  * 6. MATERIAL DESIGN COLOR FOUNDATION
  *    - Random selection from 17 Material Design colors only
@@ -49,15 +48,19 @@
  */
 
 import { createSignal } from "solid-js";
+import { Button } from "@pathscale/ui";
+import chroma from "chroma-js";
 import Preview from "../components/Preview";
 import {
-  generateRandomTheme,
   updateThemeColor,
   updateThemeProperty,
   oklchToHex,
   Theme,
   withGlassThemeDefaults,
+  resetGlassTheme,
 } from "../utils/themeUtils";
+import { MATERIAL_COLORS } from "../lib/themeIndex";
+import { generateRandomTheme as generateRandomThemeWithOptions } from "../lib/themeGenerator";
 import ThemeEditor from "../components/theming/ThemeEditor";
 import ThemeList from "../components/theming/ThemeList";
 import ColorPickerPopover from "../components/theming/ColorPickerPopover";
@@ -70,18 +73,85 @@ import {
   writeThemeEditorState,
 } from "../lib/themeEditorPersistence";
 import { createActionStatus } from "../components/showcase/ActionStatus";
+import {
+  accentOptions,
+  artworkAccentOptions,
+  applyThemeComposition,
+  DEFAULT_SOFTNESS,
+  DEFAULT_STRENGTH,
+  DEFAULT_SURFACE,
+  DEFAULT_TEXT_BRIGHTNESS,
+  SOFTNESS_STOPS,
+  STRENGTH_STOPS,
+  surfaceColors,
+  TEXT_BRIGHTNESS_STOPS,
+} from "../lib/themeComposer";
+import {
+  selectBrandColor,
+  selectSemanticColor,
+} from "../utils/theme/colorSelection";
 
 const withIdentity = (theme: Theme): Theme => ({
   ...theme,
   _id: theme._id || `${Date.now()}-${Math.random().toString(36).slice(2)}`,
 });
 
+const randomItem = <T,>(values: readonly T[]): T =>
+  values[Math.floor(Math.random() * values.length)];
+
+const createComposedTheme = (): Theme => {
+  const mode = Math.random() > 0.5 ? "dark" : "light";
+  const seed = generateRandomThemeWithOptions(MATERIAL_COLORS, {
+    forceDarkTheme: mode === "dark",
+    forceLightTheme: mode === "light",
+  });
+  const composition = {
+    surface: randomItem(surfaceColors(mode)),
+    strength: randomItem(STRENGTH_STOPS),
+    softness: randomItem(SOFTNESS_STOPS),
+    textBrightness: randomItem(TEXT_BRIGHTNESS_STOPS),
+  };
+  let theme = applyThemeComposition(seed, composition);
+  const primaryHue = chroma(composition.surface).oklch()[2] || 0;
+  theme = updateThemeColor(
+    theme,
+    "--color-secondary",
+    selectBrandColor("secondary", primaryHue, mode === "dark"),
+  );
+  for (const semantic of ["info", "success", "warning", "error"] as const) {
+    theme = updateThemeColor(
+      theme,
+      `--color-${semantic}`,
+      selectSemanticColor(semantic, primaryHue, mode === "dark"),
+    );
+  }
+  const controlFriends = accentOptions(
+    composition.surface,
+    mode,
+    composition.strength,
+    composition.softness,
+  );
+  const artworkFriends = artworkAccentOptions(
+    composition.surface,
+    mode,
+    composition.strength,
+    composition.softness,
+  );
+  const primaryIndex = Math.floor(Math.random() * controlFriends.length);
+  const accentIndex = (primaryIndex + 1 + Math.floor(Math.random() * (controlFriends.length - 1))) % controlFriends.length;
+  theme = updateThemeColor(theme, "--color-primary", controlFriends[primaryIndex]);
+  theme = updateThemeColor(theme, "--color-accent", artworkFriends[accentIndex]);
+  theme._controlAccentIndex = `${primaryIndex}`;
+  theme._artAccentIndex = `${accentIndex}`;
+  return resetGlassTheme(theme);
+};
+
 const restoreThemeLibrary = (
   persisted: ReturnType<typeof readThemeEditorState>,
 ): { currentTheme: Theme; themes: Theme[] } => {
   if (!persisted) {
     const currentTheme = withIdentity(
-      withGlassThemeDefaults({ ...generateRandomTheme(), name: "Theme 1" }),
+      withGlassThemeDefaults({ ...createComposedTheme(), name: "Theme 1" }),
     );
     return { currentTheme, themes: [currentTheme] };
   }
@@ -130,7 +200,9 @@ export default function Theming() {
     isPrefersDark: false,
     colorScheme: initialIsDark ? "dark" : ("light" as "light" | "dark"),
   });
-  const [dockActiveItem] = createSignal("editor");
+  const [dockActiveItem, setDockActiveItem] = createSignal<"editor" | "preview">(
+    "editor",
+  );
 
   const identity = (theme: Theme) => theme._id || theme.name;
 
@@ -163,7 +235,7 @@ export default function Theming() {
    * 1. MATERIAL COLOR SELECTION: Randomly picks 1 of 17 Material Design colors
    *    (pink, red, orange, yellow, green, blue, purple, etc.)
    *
-   * 2. LCh HUE EXTRACTION: Uses chroma.js to extract scientific hue value
+   * 2. OKLCH HUE EXTRACTION: Uses chroma.js to extract perceptual hue
    *    from selected Material color (abandoning HSL per Wildbit)
    *
    * 3. LIGHTNESS ASSIGNMENT: Uses exact AccessiblePalette.com scale positions:
@@ -177,18 +249,34 @@ export default function Theming() {
    * 5. SCIENTIFIC CHROMA: Applies getChromaForLightness() to reduce chroma
    *    at extremes and adjust per hue (yellows -20%, blues +10%)
    *
-   * 6. ACCESSIBILITY VALIDATION: All colors automatically meet WCAG 2.1 (4.5:1)
-   *    and APCA (60+) contrast requirements through scientific lightness control
+   * 6. ACCESSIBILITY VALIDATION: Content colours choose the stronger black or
+   *    white WCAG contrast, including the weakest base-surface tier.
    *
    * Result: Scientifically balanced theme with consistent perceived lightness,
-   * mathematical color harmony, and guaranteed accessibility.
+   * mathematical color harmony, and WCAG-readable content pairs.
    */
   const randomizeTheme = () => {
-    const newTheme = withGlassThemeDefaults(generateRandomTheme());
+    const previous = currentTheme();
+    const signature = (theme: Theme) =>
+      [
+        "--color-base-100",
+        "--color-primary",
+        "--color-secondary",
+        "--color-accent",
+      ]
+        .map((key) => theme[key])
+        .join("|");
+    let newTheme = createComposedTheme();
+    for (let attempt = 0; attempt < 7 && signature(newTheme) === signature(previous); attempt += 1) {
+      newTheme = createComposedTheme();
+    }
+    if (signature(newTheme) === signature(previous)) {
+      newTheme = createComposedTheme();
+    }
     const replacement = {
       ...newTheme,
-      name: currentTheme().name,
-      _id: currentTheme()._id,
+      name: previous.name,
+      _id: previous._id,
     };
     commitTheme(replacement);
     actionStatus.announce("Theme randomized");
@@ -206,7 +294,7 @@ export default function Theming() {
     while (usedNames.has(`Theme ${nextThemeNumber}`)) nextThemeNumber += 1;
     const theme = withIdentity(
       withGlassThemeDefaults({
-        ...generateRandomTheme(),
+        ...createComposedTheme(),
         name: `Theme ${nextThemeNumber}`,
       }),
     );
@@ -234,7 +322,7 @@ export default function Theming() {
       return;
     }
 
-    const next = remaining[0] || withIdentity(withGlassThemeDefaults(generateRandomTheme()));
+    const next = remaining[0] || withIdentity(createComposedTheme());
     setCurrentTheme(next);
     setCustomThemes(remaining);
     if (applyToWholeSite()) applyThemeToDocument(next);
@@ -243,7 +331,7 @@ export default function Theming() {
   };
 
   const clearAllThemes = () => {
-    const next = withIdentity(withGlassThemeDefaults(generateRandomTheme()));
+    const next = withIdentity(createComposedTheme());
     setCurrentTheme(next);
     setCustomThemes([]);
     if (applyToWholeSite()) applyThemeToDocument(next);
@@ -296,6 +384,10 @@ export default function Theming() {
 
     if (key) {
       const newTheme = updateThemeColor(currentTheme(), key, colorValue);
+      // A direct token edit leaves the friend palette and becomes authoritative
+      // until the person explicitly picks another harmony.
+      if (key === "--color-primary") delete newTheme._controlAccentIndex;
+      if (key === "--color-accent") delete newTheme._artAccentIndex;
       commitTheme(newTheme);
       actionStatus.announce(`Color updated: ${key}`);
     }
@@ -310,6 +402,40 @@ export default function Theming() {
   const updateGlassThemeValues = (values: Record<string, string>) => {
     commitTheme({ ...currentTheme(), ...values });
     actionStatus.announce("Glass settings updated");
+  };
+
+  const replaceTheme = (theme: Theme, message: string) => {
+    commitTheme(theme);
+    actionStatus.announce(message);
+  };
+
+  const resetTheme = () => {
+    const previous = currentTheme();
+    const mode = previous._themeType === "dark" ? "dark" : "light";
+    let next = applyThemeComposition(previous, {
+      surface: DEFAULT_SURFACE,
+      strength: DEFAULT_STRENGTH,
+      softness: DEFAULT_SOFTNESS,
+      textBrightness: DEFAULT_TEXT_BRIGHTNESS,
+    });
+    const controlFriends = accentOptions(
+      DEFAULT_SURFACE,
+      mode,
+      DEFAULT_STRENGTH,
+      DEFAULT_SOFTNESS,
+    );
+    const artworkFriends = artworkAccentOptions(
+      DEFAULT_SURFACE,
+      mode,
+      DEFAULT_STRENGTH,
+      DEFAULT_SOFTNESS,
+    );
+    next = updateThemeColor(next, "--color-primary", controlFriends[0]);
+    next = updateThemeColor(next, "--color-accent", artworkFriends[0]);
+    next._controlAccentIndex = "0";
+    next._artAccentIndex = "0";
+    commitTheme(resetGlassTheme(next));
+    actionStatus.announce("Theme builder reset");
   };
 
   const exportCSS = (
@@ -333,22 +459,45 @@ export default function Theming() {
         </p>
       </div>
 
-      <div class="relative grid md:grid-cols-[14rem_20rem_minmax(0,1fr)]">
-        <ThemeList
-          themes={customThemes()}
-          currentTheme={currentTheme()}
-          onThemeSelect={loadTheme}
-          onThemeRemove={removeTheme}
-          onCreateNewTheme={createNewTheme}
-          onClearAllThemes={clearAllThemes}
-        />
+      <div class="mb-3 grid grid-cols-2 gap-2 xl:hidden" aria-label="Theme editor view">
+        <Button
+          id="theme-view-editor"
+          aria-pressed={dockActiveItem() === "editor" ? "true" : "false"}
+          flavor={dockActiveItem() === "editor" ? "primary" : "secondary"}
+          onClick={() => setDockActiveItem("editor")}
+        >
+          Editor
+        </Button>
+        <Button
+          id="theme-view-preview"
+          aria-pressed={dockActiveItem() === "preview" ? "true" : "false"}
+          flavor={dockActiveItem() === "preview" ? "primary" : "secondary"}
+          onClick={() => setDockActiveItem("preview")}
+        >
+          Preview
+        </Button>
+      </div>
+
+      <div class="relative grid xl:grid-cols-[14rem_26rem_minmax(0,1fr)]">
+        <div class={dockActiveItem() === "preview" ? "max-xl:hidden" : ""}>
+          <ThemeList
+            themes={customThemes()}
+            currentTheme={currentTheme()}
+            onThemeSelect={loadTheme}
+            onThemeRemove={removeTheme}
+            onCreateNewTheme={createNewTheme}
+            onClearAllThemes={clearAllThemes}
+          />
+        </div>
         <ThemeEditor
           theme={currentTheme()}
           onThemeNameChange={updateThemeName}
           onColorClick={openColorPicker}
+          onThemeChange={replaceTheme}
           onThemePropertyUpdate={updateThemePropertyValue}
           onGlassThemeUpdate={updateGlassThemeValues}
           onRandomizeTheme={randomizeTheme}
+          onResetTheme={resetTheme}
           onExportCSS={exportCSS}
           dockActiveItem={dockActiveItem()}
           applyToWholeSite={applyToWholeSite()}
@@ -358,14 +507,25 @@ export default function Theming() {
           status={actionStatus.message()}
         />
 
-        <div class="overflow-x-hidden">
-          <div class="border-base-300 overflow-hidden border-s border-t md:rounded-ss-xl">
+        <div class={`min-w-0 overflow-x-hidden ${dockActiveItem() === "editor" ? "max-xl:hidden" : ""}`}>
+          <div class="border-base-300 min-w-0 overflow-hidden border-s border-t xl:rounded-ss-xl">
             <div
+              id="theme-preview-scope"
               style={Object.fromEntries(
                 Object.entries(currentTheme())
                   .filter(([key]) => key.startsWith("--"))
                   .map(([key, value]) => [key, value])
+                  .concat(
+                    currentTheme()._glassEnabled === "0"
+                      ? [
+                          ["--glass-background-opacity", "100%"],
+                          ["--glass-control-opacity", "100%"],
+                          ["--glass-blur", "0px"],
+                        ]
+                      : [],
+                  )
               )}
+              class={currentTheme()._glassEnabled === "0" ? "theme-glass-disabled" : ""}
             >
               <Preview currentTheme={currentTheme()} />
             </div>

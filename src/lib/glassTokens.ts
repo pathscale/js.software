@@ -1,56 +1,126 @@
-/* Was the pre-2.4 light theme's numbers: a 38% white background at 80%
-   highlight and a 40% sheen. The theming page writes these inline, so every
-   glass surface on it rendered as a washed sage panel over the dark page
-   regardless of the theme actually selected.
+import {
+  GLASS_DEFAULTS,
+  GLASS_LIMITS,
+  resolveGlassTokens,
+  type GlassMode,
+  type GlassTuning,
+} from "@pathscale/ui/styles/glass.js";
 
-   These mirror @pathscale/ui's dark-theme values. The library derives
-   them from three numbers now - `resolveGlassTokens({ blur, refraction,
-   depth })` - and this table should be replaced by that call rather than kept
-   in step by hand. */
-export const GLASS_THEME_DEFAULTS = {
-  "--glass-background-color": "white",
-  "--glass-background-opacity": "8%",
-  "--glass-border-color": "white",
-  "--glass-border-opacity": "26%",
-  "--glass-highlight-color": "white",
-  "--glass-highlight-opacity": "24%",
-  "--glass-bottom-highlight-opacity": "10%",
-  "--glass-edge-highlight-opacity": "30%",
-  "--glass-inner-glow-rgb": "255 255 255",
-  "--glass-inner-glow-alpha": "0",
-  "--glass-inner-glow-blur": "0px",
-  "--glass-inner-glow-spread": "0px",
-  "--glass-depth-top-glow-opacity": "8%",
-  "--glass-depth-bottom-glow-opacity": "12%",
-  "--glass-depth-sheen-opacity": "10%",
-  "--glass-depth-sheen-size": "70%",
-  "--glass-depth-surface-opacity": "0%",
-  "--glass-depth-surface-size": "82%",
-  "--glass-rim-start-color": "var(--color-base-content)",
-  "--glass-rim-start-opacity": "21%",
-  "--glass-rim-end-color": "white",
-  "--glass-rim-end-opacity": "35%",
-  "--glass-glow-ring-opacity": "10%",
-  "--glass-liquid-edge-size": "3px",
-  "--glass-liquid-inner-blur": "18px",
-  "--glass-border-radius": "20px",
-  "--glass-blur": "9px",
-  "--glass-saturation": "1.2",
-  "--glass-brightness": "1",
-  "--glass-shadow-depth": "0 8px 32px rgb(0 0 0 / 10%)",
-  "--glass-fallback-background-opacity": "78%",
-  "--glass-refraction-depth": "5px",
-  "--glass-refraction-strength": "0.38",
-  "--glass-refraction-chromatic-aberration": "0.01",
-} as const;
+export const GLASS_OPACITY_DEFAULT = 55;
+export const GLASS_OPACITY_MAX = 100;
+export const GLASS_SCRIM_DEFAULT = 0;
+export const GLASS_SCRIM_MAX = 70;
 
+export interface GlassThemeTuning extends Required<GlassTuning> {
+  opacity: number;
+  scrim: number;
+}
+
+const finite = (value: string | undefined, fallback: number) => {
+  const parsed = Number.parseFloat(value ?? "");
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value));
+
+export const tuningFromTheme = (
+  theme: Record<string, string | undefined>,
+  mode: GlassMode,
+): GlassThemeTuning => {
+  const defaults = GLASS_DEFAULTS[mode];
+  return {
+    blur: clamp(
+      finite(theme._glassBlur ?? theme["--glass-blur"], defaults.blur),
+      GLASS_LIMITS.blur.min,
+      GLASS_LIMITS.blur.max,
+    ),
+    refraction: clamp(
+      finite(
+        theme._glassRefraction ?? theme["--glass-refraction-strength"],
+        defaults.refraction,
+      ),
+      GLASS_LIMITS.refraction.min,
+      GLASS_LIMITS.refraction.max,
+    ),
+    depth: clamp(
+      finite(
+        theme._glassDepth ?? theme["--glass-refraction-depth"],
+        defaults.depth,
+      ),
+      GLASS_LIMITS.depth.min,
+      GLASS_LIMITS.depth.max,
+    ),
+    controlTint: clamp(
+      finite(theme._glassControlTint, defaults.controlTint),
+      GLASS_LIMITS.controlTint.min,
+      GLASS_LIMITS.controlTint.max,
+    ),
+    opacity: clamp(
+      finite(theme._glassOpacity, GLASS_OPACITY_DEFAULT),
+      0,
+      GLASS_OPACITY_MAX,
+    ),
+    scrim: clamp(
+      finite(theme._glassScrim, GLASS_SCRIM_DEFAULT),
+      0,
+      GLASS_SCRIM_MAX,
+    ),
+  };
+};
+
+export const resolveGlassThemeValues = (
+  tuning: GlassThemeTuning,
+  mode: GlassMode,
+): Record<string, string> => {
+  const tokens = resolveGlassTokens(tuning, mode);
+  const opacity = clamp(tuning.opacity, 0, GLASS_OPACITY_MAX);
+  const scrim = clamp(tuning.scrim, 0, GLASS_SCRIM_MAX);
+  return {
+    ...tokens,
+    "--glass-background-opacity": `${opacity}%`,
+    "--theme-glass-scrim-opacity": `${scrim}%`,
+    _glassBlur: `${tuning.blur}`,
+    _glassRefraction: `${tuning.refraction}`,
+    _glassDepth: `${tuning.depth}`,
+    _glassControlTint: `${tuning.controlTint}`,
+    _glassOpacity: `${opacity}`,
+    _glassScrim: `${scrim}`,
+  };
+};
+
+export const glassThemeDefaults = (mode: GlassMode): Record<string, string> =>
+  resolveGlassThemeValues(
+    {
+      ...GLASS_DEFAULTS[mode],
+      opacity: GLASS_OPACITY_DEFAULT,
+      scrim: GLASS_SCRIM_DEFAULT,
+    },
+    mode,
+  );
+
+export const GLASS_THEME_DEFAULTS = glassThemeDefaults("dark");
 export const GLASS_THEME_TOKEN_ORDER = Object.keys(
-  GLASS_THEME_DEFAULTS,
-) as (keyof typeof GLASS_THEME_DEFAULTS)[];
+  resolveGlassTokens(GLASS_DEFAULTS.dark, "dark"),
+).concat("--theme-glass-scrim-opacity");
 
 export function withGlassThemeDefaults<T extends Record<string, string>>(theme: T) {
+  const mode: GlassMode = theme._themeType === "light" ? "light" : "dark";
+  const tuning = tuningFromTheme(theme, mode);
   return {
-    ...GLASS_THEME_DEFAULTS,
+    _glassEnabled: "1",
     ...theme,
+    ...resolveGlassThemeValues(tuning, mode),
   };
 }
+
+export function resetGlassTheme<T extends Record<string, string>>(theme: T) {
+  const mode: GlassMode = theme._themeType === "light" ? "light" : "dark";
+  return {
+    ...theme,
+    ...glassThemeDefaults(mode),
+    _glassEnabled: "1",
+  };
+}
+
+export { GLASS_DEFAULTS, GLASS_LIMITS };

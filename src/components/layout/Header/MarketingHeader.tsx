@@ -7,6 +7,7 @@ import { MobileSidebar } from "./components/MobileSidebar";
 import { GitHubIcon } from "./components/GitHubIcon";
 import { MarketingHeaderProps } from "./types";
 import { ROUTES, EXTERNAL_ROUTES } from "../../../config/routes";
+import Search from "../../content/Search";
 
 export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
   const navigation = useNavigation();
@@ -66,6 +67,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
 
         <Navbar.End class="hidden lg:flex">
           <Flex gap="md" align="center">
+            <Search class="w-48" />
             <a
               id="github-source-link"
               href={EXTERNAL_ROUTES.GITHUB}

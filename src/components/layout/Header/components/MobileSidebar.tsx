@@ -47,7 +47,11 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
           </div>
 
           <div class="p-4">
-            <Search />
+            <Search
+              idPrefix="mobile-site-search"
+              globalShortcut={false}
+              onNavigate={() => setIsOpen(false)}
+            />
           </div>
 
           <div class="flex-1 overflow-y-auto p-4">

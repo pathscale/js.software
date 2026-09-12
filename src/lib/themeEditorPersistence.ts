@@ -61,6 +61,7 @@ export const applyThemeToDocument = (theme: Theme | null) => {
   const root = document.documentElement;
   for (const property of appliedProperties) root.style.removeProperty(property);
   appliedProperties.clear();
+  root.classList.remove("glass", "theme-glass-disabled");
 
   if (!theme) return;
   for (const [property, value] of Object.entries(theme)) {
@@ -69,6 +70,17 @@ export const applyThemeToDocument = (theme: Theme | null) => {
       appliedProperties.add(property);
     }
   }
+  const glassEnabled = theme._glassEnabled !== "0";
+  if (!glassEnabled) {
+    root.style.setProperty("--glass-background-opacity", "100%");
+    root.style.setProperty("--glass-control-opacity", "100%");
+    root.style.setProperty("--glass-blur", "0px");
+    appliedProperties.add("--glass-background-opacity");
+    appliedProperties.add("--glass-control-opacity");
+    appliedProperties.add("--glass-blur");
+  }
+  root.classList.toggle("glass", glassEnabled);
+  root.classList.toggle("theme-glass-disabled", !glassEnabled);
 };
 
 export const restoreAppliedTheme = () => {
