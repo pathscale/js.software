@@ -1,8 +1,10 @@
 import { Button, Flex, Icon } from "@pathscale/ui";
+import { createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { PropsTable } from "./showcase/PropsTable";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 const buttonProps = [
   { name: "variant", type: '"primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger" | "danger-soft"', default: '"primary"', description: "Semantic visual treatment." },
@@ -16,6 +18,8 @@ const buttonProps = [
 ];
 
 export default function ButtonShowcase() {
+  const actions = createActionStatus();
+  const [pressed, setPressed] = createSignal(true);
   const startIcon = <Icon src="mdi--arrow-left" width={18} height={18} />;
   const endIcon = <Icon src="mdi--arrow-right" width={18} height={18} />;
 
@@ -24,13 +28,13 @@ export default function ButtonShowcase() {
       <Flex direction="col" gap="xl">
         <ShowcaseSection id="variants" title="Variants">
           <Flex gap="md" wrap="wrap">
-            <Button flavor="primary">Primary</Button>
-            <Button flavor="secondary">Secondary</Button>
-            <Button flavor="accent">Accent</Button>
-            <Button variant="outline">Outline</Button>
-            <Button variant="ghost">Ghost</Button>
-            <Button flavor="destructive">Danger</Button>
-            <Button flavor="destructive" variant="soft">Danger soft</Button>
+            <Button flavor="primary" onClick={actions.handler("Primary button activated")}>Primary</Button>
+            <Button flavor="secondary" onClick={actions.handler("Secondary button activated")}>Secondary</Button>
+            <Button flavor="accent" onClick={actions.handler("Accent button activated")}>Accent</Button>
+            <Button variant="outline" onClick={actions.handler("Outline button activated")}>Outline</Button>
+            <Button variant="ghost" onClick={actions.handler("Ghost button activated")}>Ghost</Button>
+            <Button flavor="destructive" onClick={actions.handler("Danger button activated")}>Danger</Button>
+            <Button flavor="destructive" variant="soft" onClick={actions.handler("Danger soft button activated")}>Danger soft</Button>
           </Flex>
           <CodeBlock code={`<Button flavor="primary">Primary</Button>
 <Button variant="outline">Outline</Button>
@@ -39,9 +43,9 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="sizes" title="Sizes">
           <Flex gap="md" align="center" wrap="wrap">
-            <Button size="sm">Small</Button>
-            <Button size="md">Medium</Button>
-            <Button size="lg">Large</Button>
+            <Button size="sm" onClick={actions.handler("Small button activated")}>Small</Button>
+            <Button size="md" onClick={actions.handler("Medium button activated")}>Medium</Button>
+            <Button size="lg" onClick={actions.handler("Large button activated")}>Large</Button>
           </Flex>
           <CodeBlock code={`<Button size="sm">Small</Button>
 <Button size="md">Medium</Button>
@@ -50,9 +54,9 @@ export default function ButtonShowcase() {
 
         <ShowcaseSection id="icons" title="Icons">
           <Flex gap="md" align="center" wrap="wrap">
-            <Button variant="outline" startIcon={startIcon}>Previous</Button>
-            <Button flavor="primary" endIcon={endIcon}>Continue</Button>
-            <Button variant="ghost" width="square" aria-label="Settings">
+            <Button variant="outline" startIcon={startIcon} onClick={actions.handler("Moved to the previous step")}>Previous</Button>
+            <Button flavor="primary" endIcon={endIcon} onClick={actions.handler("Continued to the next step")}>Continue</Button>
+            <Button variant="ghost" width="square" aria-label="Settings" onClick={actions.handler("Settings opened")}>
               <Icon src="mdi--cog" width={20} height={20} />
             </Button>
           </Flex>
@@ -65,7 +69,14 @@ export default function ButtonShowcase() {
           <Flex gap="md" align="center" wrap="wrap">
             <Button state="loading">Saving</Button>
             <Button state="disabled">Unavailable</Button>
-            <Button variant="outline" aria-pressed="true">Pressed</Button>
+            <Button
+              variant="outline"
+              aria-pressed={pressed() ? "true" : "false"}
+              onClick={() => {
+                setPressed((value) => !value);
+                actions.announce(`Pressed state ${pressed() ? "on" : "off"}`);
+              }}
+            >Pressed</Button>
           </Flex>
           <CodeBlock code={`<Button state="loading">Saving</Button>
 <Button state="disabled">Unavailable</Button>
@@ -73,9 +84,11 @@ export default function ButtonShowcase() {
         </ShowcaseSection>
 
         <ShowcaseSection id="width" title="Full width">
-          <Button width="full" flavor="primary">Continue</Button>
+          <Button width="full" flavor="primary" aria-label="Continue full width" onClick={actions.handler("Full-width action continued")}>Continue</Button>
           <CodeBlock code={`<Button width="full" flavor="primary">Continue</Button>`} />
         </ShowcaseSection>
+
+        <ActionStatus message={actions.message()} />
 
         <ShowcaseSection id="native-link" title="Navigation styled as an action">
           <p class="mb-4 text-base-content/70">

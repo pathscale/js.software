@@ -142,9 +142,8 @@ export default function CalendarShowcase() {
     setRangePreview(undefined);
   };
 
-  const today = new Date();
-  const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
-  const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+  const minDate = new Date(2025, 5, 1);
+  const maxDate = new Date(2025, 6, 31);
 
   return (
     <ShowcaseLayout>
@@ -164,7 +163,7 @@ export default function CalendarShowcase() {
 
         <ShowcaseSection id="default" title="Default">
           <Flex direction="col" gap="md">
-            <Calendar />
+            <Calendar id="default-calendar" defaultValue={new Date(2025, 5, 15)} />
             <CodeBlock code={`<Calendar />`} />
           </Flex>
         </ShowcaseSection>
@@ -172,6 +171,7 @@ export default function CalendarShowcase() {
         <ShowcaseSection id="controlled" title="Controlled Value">
           <Flex direction="col" gap="md">
             <Calendar
+              id="controlled-calendar"
               value={selectedDate()}
               onChange={(value) => setSelectedDate(value)}
             />
@@ -191,6 +191,8 @@ export default function CalendarShowcase() {
         <ShowcaseSection id="range" title="Range Selection">
           <Flex direction="col" gap="md">
             <Calendar
+              id="range-calendar"
+              defaultValue={new Date(2025, 5, 15)}
               selectionMode="range"
               rangeStart={rangeStart()}
               rangeEnd={rangeEnd()}
@@ -221,14 +223,14 @@ export default function CalendarShowcase() {
 
         <ShowcaseSection id="disabled" title="Disabled">
           <Flex direction="col" gap="md">
-            <Calendar state="disabled" />
+            <Calendar id="disabled-calendar" state="disabled" />
             <CodeBlock code={`<Calendar state="disabled" />`} />
           </Flex>
         </ShowcaseSection>
 
         <ShowcaseSection id="min-max" title="Min / Max">
           <Flex direction="col" gap="md">
-            <Calendar minValue={minDate} maxValue={maxDate} />
+            <Calendar id="bounded-calendar" minValue={minDate} maxValue={maxDate} />
             <CodeBlock
               code={`const today = new Date();
 const minDate = new Date(today.getFullYear(), today.getMonth(), 1);

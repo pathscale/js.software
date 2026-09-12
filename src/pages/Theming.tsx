@@ -59,17 +59,69 @@ import {
   withGlassThemeDefaults,
 } from "../utils/themeUtils";
 import ThemeEditor from "../components/theming/ThemeEditor";
+import ThemeList from "../components/theming/ThemeList";
 import ColorPickerPopover from "../components/theming/ColorPickerPopover";
 import ThemeCSSModal from "../components/theming/ThemeCSSModal";
 import { ContentContainer } from "../components/content/ContentContainer";
+import {
+  applyThemeToDocument,
+  clearThemeEditorState,
+  readThemeEditorState,
+  writeThemeEditorState,
+} from "../lib/themeEditorPersistence";
+import { createActionStatus } from "../components/showcase/ActionStatus";
+
+const withIdentity = (theme: Theme): Theme => ({
+  ...theme,
+  _id: theme._id || `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+});
+
+const restoreThemeLibrary = (
+  persisted: ReturnType<typeof readThemeEditorState>,
+): { currentTheme: Theme; themes: Theme[] } => {
+  if (!persisted) {
+    const currentTheme = withIdentity(
+      withGlassThemeDefaults({ ...generateRandomTheme(), name: "Theme 1" }),
+    );
+    return { currentTheme, themes: [currentTheme] };
+  }
+
+  const currentTheme = withIdentity(
+    withGlassThemeDefaults(persisted.currentTheme),
+  );
+  let linkedCurrentTheme = false;
+  const themes = persisted.themes.map((theme) => {
+    const isCurrentTheme =
+      !linkedCurrentTheme &&
+      (theme._id === currentTheme._id ||
+        (!persisted.currentTheme._id && theme.name === currentTheme.name));
+    if (isCurrentTheme) {
+      linkedCurrentTheme = true;
+      return currentTheme;
+    }
+    return withIdentity(withGlassThemeDefaults(theme));
+  });
+
+  return { currentTheme, themes };
+};
 
 export default function Theming() {
-  const initialTheme = withGlassThemeDefaults(generateRandomTheme());
+  const persisted = readThemeEditorState();
+  const restored = restoreThemeLibrary(persisted);
+  const initialTheme = restored.currentTheme;
   const [currentTheme, setCurrentTheme] = createSignal<Theme>(initialTheme);
+  const [customThemes, setCustomThemes] = createSignal<Theme[]>(restored.themes);
   const [showColorPicker, setShowColorPicker] = createSignal(false);
   const [selectedColorKey, setSelectedColorKey] = createSignal("");
   const [pickerPosition, setPickerPosition] = createSignal({ x: 0, y: 0 });
   const [showCSSModal, setShowCSSModal] = createSignal(false);
+  const [applyToWholeSite, setApplyToWholeSite] = createSignal(
+    persisted?.applyToWholeSite || false,
+  );
+  const [rememberTheme, setRememberTheme] = createSignal(Boolean(persisted));
+  const actionStatus = createActionStatus(
+    persisted ? "Remembered theme restored" : "Theme editor ready",
+  );
 
   // Detect initial theme type automatically
   const initialIsDark = (initialTheme as any)._themeType === "dark";
@@ -79,6 +131,29 @@ export default function Theming() {
     colorScheme: initialIsDark ? "dark" : ("light" as "light" | "dark"),
   });
   const [dockActiveItem] = createSignal("editor");
+
+  const identity = (theme: Theme) => theme._id || theme.name;
+
+  const persist = (
+    theme = currentTheme(),
+    themes = customThemes(),
+    apply = applyToWholeSite(),
+  ) => {
+    if (rememberTheme()) {
+      writeThemeEditorState({ currentTheme: theme, themes, applyToWholeSite: apply });
+    }
+  };
+
+  const commitTheme = (theme: Theme) => {
+    const next = withIdentity(withGlassThemeDefaults(theme));
+    setCurrentTheme(next);
+    const themes = customThemes().map((saved) =>
+      identity(saved) === identity(next) ? next : saved,
+    );
+    setCustomThemes(themes);
+    if (applyToWholeSite()) applyThemeToDocument(next);
+    persist(next, themes);
+  };
 
   /**
    * RANDOM THEME GENERATION PROCESS
@@ -110,13 +185,100 @@ export default function Theming() {
    */
   const randomizeTheme = () => {
     const newTheme = withGlassThemeDefaults(generateRandomTheme());
-    setCurrentTheme(newTheme);
+    const replacement = {
+      ...newTheme,
+      name: currentTheme().name,
+      _id: currentTheme()._id,
+    };
+    commitTheme(replacement);
+    actionStatus.announce("Theme randomized");
 
     const isDark = (newTheme as any)._themeType === "dark";
     setThemeOptions((prev) => ({
       ...prev,
       colorScheme: isDark ? "dark" : "light",
     }));
+  };
+
+  const createNewTheme = () => {
+    const usedNames = new Set(customThemes().map((theme) => theme.name));
+    let nextThemeNumber = 1;
+    while (usedNames.has(`Theme ${nextThemeNumber}`)) nextThemeNumber += 1;
+    const theme = withIdentity(
+      withGlassThemeDefaults({
+        ...generateRandomTheme(),
+        name: `Theme ${nextThemeNumber}`,
+      }),
+    );
+    const themes = [theme, ...customThemes()];
+    setCurrentTheme(theme);
+    setCustomThemes(themes);
+    if (applyToWholeSite()) applyThemeToDocument(theme);
+    persist(theme, themes);
+    actionStatus.announce(`Theme added: ${theme.name}`);
+  };
+
+  const loadTheme = (theme: Theme) => {
+    commitTheme(theme);
+    actionStatus.announce(`Theme selected: ${theme.name}`);
+  };
+
+  const removeTheme = (theme: Theme) => {
+    const remaining = customThemes().filter(
+      (saved) => identity(saved) !== identity(theme),
+    );
+    if (identity(currentTheme()) !== identity(theme)) {
+      setCustomThemes(remaining);
+      persist(currentTheme(), remaining);
+      actionStatus.announce(`Theme deleted: ${theme.name}`);
+      return;
+    }
+
+    const next = remaining[0] || withIdentity(withGlassThemeDefaults(generateRandomTheme()));
+    setCurrentTheme(next);
+    setCustomThemes(remaining);
+    if (applyToWholeSite()) applyThemeToDocument(next);
+    persist(next, remaining);
+    actionStatus.announce(`Theme deleted: ${theme.name}`);
+  };
+
+  const clearAllThemes = () => {
+    const next = withIdentity(withGlassThemeDefaults(generateRandomTheme()));
+    setCurrentTheme(next);
+    setCustomThemes([]);
+    if (applyToWholeSite()) applyThemeToDocument(next);
+    persist(next, []);
+    actionStatus.announce("Saved themes cleared");
+  };
+
+  const updateThemeName = (name: string) => {
+    commitTheme({ ...currentTheme(), name });
+    actionStatus.announce(`Theme renamed: ${name}`);
+  };
+
+  const changeApplyToWholeSite = (checked: boolean) => {
+    setApplyToWholeSite(checked);
+    applyThemeToDocument(checked ? currentTheme() : null);
+    persist(currentTheme(), customThemes(), checked);
+    actionStatus.announce(
+      checked ? "Theme applied to whole site" : "Theme scoped to preview",
+    );
+  };
+
+  const changeRememberTheme = (checked: boolean) => {
+    setRememberTheme(checked);
+    if (checked) {
+      writeThemeEditorState({
+        currentTheme: currentTheme(),
+        themes: customThemes(),
+        applyToWholeSite: applyToWholeSite(),
+      });
+    } else {
+      clearThemeEditorState();
+    }
+    actionStatus.announce(
+      checked ? "Theme will be remembered" : "Theme will not be remembered",
+    );
   };
 
   const openColorPicker = (colorKey: string, event: MouseEvent) => {
@@ -134,17 +296,20 @@ export default function Theming() {
 
     if (key) {
       const newTheme = updateThemeColor(currentTheme(), key, colorValue);
-      setCurrentTheme(newTheme);
+      commitTheme(newTheme);
+      actionStatus.announce(`Color updated: ${key}`);
     }
   };
 
   const updateThemePropertyValue = (key: string, value: string) => {
     const newTheme = updateThemeProperty(currentTheme(), key, value);
-    setCurrentTheme(newTheme);
+    commitTheme(newTheme);
+    actionStatus.announce(`Theme token updated: ${key}`);
   };
 
   const updateGlassThemeValues = (values: Record<string, string>) => {
-    setCurrentTheme((theme) => ({ ...theme, ...values }));
+    commitTheme({ ...currentTheme(), ...values });
+    actionStatus.announce("Glass settings updated");
   };
 
   const exportCSS = (
@@ -168,15 +333,29 @@ export default function Theming() {
         </p>
       </div>
 
-      <div class="relative grid md:grid-cols-[20rem_1fr]">
+      <div class="relative grid md:grid-cols-[14rem_20rem_minmax(0,1fr)]">
+        <ThemeList
+          themes={customThemes()}
+          currentTheme={currentTheme()}
+          onThemeSelect={loadTheme}
+          onThemeRemove={removeTheme}
+          onCreateNewTheme={createNewTheme}
+          onClearAllThemes={clearAllThemes}
+        />
         <ThemeEditor
           theme={currentTheme()}
+          onThemeNameChange={updateThemeName}
           onColorClick={openColorPicker}
           onThemePropertyUpdate={updateThemePropertyValue}
           onGlassThemeUpdate={updateGlassThemeValues}
           onRandomizeTheme={randomizeTheme}
           onExportCSS={exportCSS}
           dockActiveItem={dockActiveItem()}
+          applyToWholeSite={applyToWholeSite()}
+          rememberTheme={rememberTheme()}
+          onApplyToWholeSiteChange={changeApplyToWholeSite}
+          onRememberThemeChange={changeRememberTheme}
+          status={actionStatus.message()}
         />
 
         <div class="overflow-x-hidden">

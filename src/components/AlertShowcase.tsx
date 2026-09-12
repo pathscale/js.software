@@ -1,11 +1,14 @@
-import { Component } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import ShowcaseLayout from "./ShowcaseLayout";
 import { Alert, Button, Flex } from "@pathscale/ui";
 import { PropsTable } from "./showcase/PropsTable";
 import { CodeBlock } from "./showcase/CodeBlock";
 import { ShowcaseSection } from "./showcase/ShowcaseSection";
+import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
 const AlertShowcase: Component = () => {
+  const [cookieChoice, setCookieChoice] = createSignal<"accept" | "deny" | null>(null);
+  const actions = createActionStatus();
   const sections = [
     { id: "contents", title: "Contents" },
     { id: "default", title: "Default" },
@@ -154,15 +157,20 @@ const AlertShowcase: Component = () => {
             justify="start"
             gap="md"
           >
-            <Alert class="shadow-lg">
-              we use cookies for no reason.
-              <div class="space-x-1">
-                <Button size="sm">Deny</Button>
-                <Button size="sm" flavor="primary">
-                  Accept
-                </Button>
-              </div>
-            </Alert>
+            <div>
+              <Alert class="shadow-lg">
+                we use cookies for no reason.
+                <div class="space-x-1">
+                  <Button size="sm" onClick={() => setCookieChoice("deny")}>Deny</Button>
+                  <Button size="sm" flavor="primary" onClick={() => setCookieChoice("accept")}>
+                    Accept
+                  </Button>
+                </div>
+              </Alert>
+              <p role="status" aria-live="polite" class="mt-3 text-sm text-base-content/70">
+                {cookieChoice() ? `Cookie preference saved: ${cookieChoice()}.` : "Choose a cookie preference."}
+              </p>
+            </div>
           </Flex>
           <CodeBlock
             code={`<Alert>
@@ -182,8 +190,9 @@ const AlertShowcase: Component = () => {
           >
             <Alert class="shadow-lg">
               You have 1 unread message
-              <Button size="sm">See</Button>
+              <Button size="sm" onClick={actions.handler("Unread message opened")}>See</Button>
             </Alert>
+            <ActionStatus message={actions.message()} />
           </Flex>
           <CodeBlock
             code={`<Alert>

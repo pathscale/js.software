@@ -14,13 +14,20 @@ export default function VideoPreviewShowcase() {
   ] as const;
 
   const [stream, setStream] = createSignal<MediaStream | null>(null);
+  const [cameraStatus, setCameraStatus] = createSignal("Camera is off.");
+  let cameraAttempts = 0;
 
   const startCamera = async () => {
+    cameraAttempts += 1;
+    const attempt = cameraAttempts;
+    setCameraStatus(`Requesting camera access · attempt ${attempt}`);
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
       setStream(mediaStream);
+      setCameraStatus(`Camera is active · attempt ${attempt}`);
     } catch (err) {
       console.error("Failed to access camera:", err);
+      setCameraStatus(`Camera unavailable · attempt ${attempt}`);
     }
   };
 
@@ -31,6 +38,7 @@ export default function VideoPreviewShowcase() {
         track.stop();
       }
       setStream(null);
+      setCameraStatus("Camera stopped.");
     }
   };
 
@@ -102,6 +110,9 @@ export default function VideoPreviewShowcase() {
                 </Button>
               )}
             </Flex>
+            <p role="status" aria-live="polite" class="text-sm text-base-content/70">
+              {cameraStatus()}
+            </p>
             <VideoPreview
               stream={stream}
               class="w-80 rounded-lg bg-black"

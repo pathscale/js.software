@@ -9,5 +9,6 @@ AppProfile(
         (name: "showcases", opener: "Showcases", marker: Some("Theme Customization")),
     ],
     navigation_controls: ["Home", "Theming", "Docs", "Layouts", "Showcases", "Components"],
+    inert_controls: ["Bottom with arrow"],
     home_opener: Some("Home"),
 )

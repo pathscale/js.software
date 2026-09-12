@@ -1,7 +1,8 @@
 import type { JSX } from "@solidjs/web";
 import { createErrorBoundary, createSignal, For } from "solid-js";
 import { Accordion, Button, Card, Checkbox, Chip, Collapsible, createI18n, Empty, Flex, Header, Input, InputOTP, LanguageSwitcher, ListBox, LiveChatBubble, MetalBorder, Popover, Progress, ScrollArea, Separator, Slider, Spinner, Text, Textarea, ThemeColorPicker } from "@pathscale/ui";
-import { ButtonGroup, CheckboxGroup, CloseButton, Meter, RadialProgress, SizePicker, TimeField, DateField, ColorPicker, ColorArea, ColorField, ColorSlider, ComboBox, DatePicker, DateRangePicker, RangeCalendar, Toolbar, Kbd } from "@pathscale/ui/lab";
+import CloseButton from "@pathscale/ui/components/close-button";
+import { ButtonGroup, CheckboxGroup, Meter, RadialProgress, SizePicker, TimeField, DateField, ColorPicker, ColorArea, ColorField, ColorSlider, ComboBox, DatePicker, DateRangePicker, RangeCalendar, Toolbar, Kbd } from "@pathscale/ui/lab";
 import ShowcaseLayout from "./ShowcaseLayout";
 
 /**
@@ -22,15 +23,35 @@ type Example = {
   render: () => JSX.Element;
 };
 
+function CloseButtonExample() {
+  const [closed, setClosed] = createSignal(false);
+  return (
+    <>
+      <CloseButton
+        aria-label="Dismiss coverage notice"
+        state={closed() ? "disabled" : "default"}
+        onClick={() => setClosed(true)}
+      />
+      <p role="status">{closed() ? "Dismissed" : "Coverage notice open"}</p>
+    </>
+  );
+}
+
 const EXAMPLES: Example[] = [
   {
     name: "ButtonGroup",
-    render: () => (
-      <ButtonGroup>
-        <Button>One</Button>
-        <Button>Two</Button>
-      </ButtonGroup>
-    ),
+    render: () => {
+      const [selected, setSelected] = createSignal("");
+      return (
+        <>
+          <ButtonGroup>
+            <Button aria-pressed={selected() === "One" ? "true" : "false"} onClick={() => setSelected("One")}>One</Button>
+            <Button aria-pressed={selected() === "Two" ? "true" : "false"} onClick={() => setSelected("Two")}>Two</Button>
+          </ButtonGroup>
+          <p role="status">{selected() ? `Selected ${selected()}` : "No button selected"}</p>
+        </>
+      );
+    },
   },
   {
     name: "CheckboxGroup",
@@ -41,7 +62,10 @@ const EXAMPLES: Example[] = [
       </CheckboxGroup>
     ),
   },
-  { name: "CloseButton", render: () => <CloseButton /> },
+  {
+    name: "CloseButton",
+    render: () => <CloseButtonExample />,
+  },
   {
     // Kbd itself is shown on its own page, but its Abbr is used nowhere: it
     // renders a glyph for a named key and titles itself with that key's name.
@@ -87,12 +111,25 @@ const EXAMPLES: Example[] = [
   { name: "Input (invalid)", render: () => <Input state="invalid" /> },
   {
     name: "Input (grouped)",
-    render: () => (
-      <Flex gap="sm">
-        <Input type="text" />
-        <Button>Go</Button>
-      </Flex>
-    ),
+    render: () => {
+      const [value, setValue] = createSignal("");
+      const [submitted, setSubmitted] = createSignal("Nothing submitted");
+      let submissions = 0;
+      return (
+        <>
+          <Flex gap="sm">
+            <Input
+              type="text"
+              aria-label="Grouped input"
+              value={value()}
+              onInput={(event) => setValue(event.currentTarget.value)}
+            />
+            <Button onClick={() => setSubmitted(`Submitted ${value() || "empty value"} · ${++submissions}`)}>Go</Button>
+          </Flex>
+          <p role="status">{submitted()}</p>
+        </>
+      );
+    },
   },
   { name: "InputOTP", render: () => <InputOTP /> },
   {

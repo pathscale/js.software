@@ -8,6 +8,7 @@ import {
   Show,
 } from "solid-js";
 import { createStore } from "solid-js";
+import { Button, Icon, Input } from "@pathscale/ui";
 import { ROUTES } from "../../config/routes";
 
 export interface SearchResult {
@@ -217,23 +218,16 @@ export const Search: Component<SearchProps> = (props) => {
   });
 
   const SearchIcon = () => (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="M21 21l-4.35-4.35" />
-    </svg>
+    <Icon src="icon-[lucide--search]" width={20} height={20} />
   );
 
   return (
     <>
-      <button
+      <Button
         onClick={openSearch}
+        variant="outline"
+        flavor="neutral"
+        radius="lg"
         class={`flex items-center gap-2 px-3 py-2 text-sm bg-base-100 border border-base-300 rounded-lg hover:bg-base-200 transition-colors ${
           props.class || ""
         }`}
@@ -245,7 +239,7 @@ export const Search: Component<SearchProps> = (props) => {
         <kbd class="hidden sm:flex items-center gap-1 ml-auto text-xs text-base-content/70">
           <span class="text-xs">⌘</span>K
         </kbd>
-      </button>
+      </Button>
 
       <Show when={isOpen()}>
         <div class="fixed inset-0 z-50 bg-black/50 flex items-start justify-center pt-[10vh] px-4">
@@ -255,7 +249,7 @@ export const Search: Component<SearchProps> = (props) => {
           >
             <div class="flex items-center px-4 py-3 border-b border-base-300">
               <SearchIcon />
-              <input
+              <Input
                 ref={searchRef}
                 type="text"
                 placeholder="Search documentation..."
@@ -278,7 +272,11 @@ export const Search: Component<SearchProps> = (props) => {
               >
                 <For each={results}>
                   {(result, index) => (
-                    <button
+                    <Button
+                      variant="plain"
+                      flavor="neutral"
+                      radius="none"
+                      width="full"
                       class={`w-full text-left p-4 hover:bg-base-200 transition-colors border-b border-base-300 last:border-b-0 ${
                         index() === selectedIndex() ? "bg-base-200" : ""
                       }`}
@@ -299,7 +297,7 @@ export const Search: Component<SearchProps> = (props) => {
                           </span>
                         </div>
                       </div>
-                    </button>
+                    </Button>
                   )}
                 </For>
               </Show>

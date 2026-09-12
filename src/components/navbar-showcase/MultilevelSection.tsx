@@ -31,7 +31,15 @@ export const MultilevelSection = () => {
         <Navbar.Stack sticky>
           <Navbar.Row flavor="primary" padded>
             <Navbar.Start>
-              <Button variant="ghost" class="text-xl font-bold text-white">
+              <Button
+                variant="ghost"
+                class="text-xl font-bold text-white"
+                aria-pressed={activeMain() === "Dashboard" ? "true" : "false"}
+                onClick={() => {
+                  setActiveMain("Dashboard");
+                  setActiveStrategy(null);
+                }}
+              >
                 Trading Platform
               </Button>
             </Navbar.Start>
@@ -45,15 +53,18 @@ export const MultilevelSection = () => {
                   "Performance",
                   "Funding Comparison",
                 ].map((item) => (
-                  <button
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    aria-pressed={activeMain() === item ? "true" : "false"}
                     onClick={() => {
                       setActiveMain(item);
                       setActiveStrategy(null);
                     }}
-                    class={`hover:underline ${activeMain() === item ? "font-bold underline" : ""}`}
+                    class={`text-white hover:underline ${activeMain() === item ? "font-bold underline" : ""}`}
                   >
                     {item}
-                  </button>
+                  </Button>
                 ))}
               </Flex>
             </Navbar.End>
@@ -63,12 +74,15 @@ export const MultilevelSection = () => {
             <Navbar.Row class="bg-pink-500 text-white" padded>
               <Flex gap="md">
                 {strategies.map((s) => (
-                  <button
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    aria-pressed={activeStrategy() === s ? "true" : "false"}
                     class={`relative pb-1 ${activeStrategy() === s ? "border-b-2 border-green-300" : ""}`}
                     onClick={() => setActiveStrategy(s)}
                   >
                     {s}
-                  </button>
+                  </Button>
                 ))}
               </Flex>
             </Navbar.Row>
@@ -98,7 +112,7 @@ export const MultilevelSection = () => {
     <Navbar.End>
       <Flex gap="md" class="text-white">
         {["Dashboard", "Strategies", ...].map((item) => (
-          <button onClick={...}>{item}</button>
+          <Button onClick={...}>{item}</Button>
         ))}
       </Flex>
     </Navbar.End>
@@ -108,7 +122,7 @@ export const MultilevelSection = () => {
     <Navbar.Row class="bg-pink-500 text-white" padded>
       <Flex gap="md">
         {strategies.map((s) => (
-          <button onClick={() => setActiveStrategy(s)}>{s}</button>
+          <Button onClick={() => setActiveStrategy(s)}>{s}</Button>
         ))}
       </Flex>
     </Navbar.Row>

@@ -1,4 +1,4 @@
-import { Icon } from "@pathscale/ui";
+import { Button, Icon } from "@pathscale/ui";
 import { setTheme, theme } from "./lib/theme";
 
 export default function ThemeToggle() {
@@ -8,12 +8,16 @@ export default function ThemeToggle() {
   };
 
   return (
-    <button
+    <Button
       onClick={toggleTheme}
-      class="p-2 rounded-md bg-primary text-primary-content"
+      variant="solid"
+      flavor="primary"
+      size="sm"
+      width="square"
+      radius="md"
       aria-label="Switch theme"
     >
       {theme() === "dark" ? <Icon src="icon-[lucide--sun]" width={20} height={20} /> : <Icon src="icon-[lucide--moon]" width={20} height={20} />}
-    </button>
+    </Button>
   );
 }
