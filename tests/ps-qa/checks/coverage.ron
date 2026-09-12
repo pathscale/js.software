@@ -459,6 +459,14 @@
         subject: "button:Load LiveChatBubble", expect: Paints,
     ),
     (
+        id: "coverage-read_only_progress_updates",
+        group: "coverage",
+        what: "a caller can address and update a read-only component by its stable DOM identity",
+        open: Some("Complete Coverage"), hover: None,
+        click: Some("#coverage-progress-advance"),
+        subject: "#coverage-progress", expect: ValueChanges,
+    ),
+    (
         id: "coverage-auth-provider-link_acts",
         group: "coverage",
         what: "the authentication provider mark remains an operable link",
