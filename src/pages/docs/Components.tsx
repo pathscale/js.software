@@ -66,6 +66,7 @@ const Components: Component = () => {
       "Mask",
     ],
     "Utilities & Helpers": [
+      "Auth Powered By",
       "Kbd",
       "Join",
       "Collapse",

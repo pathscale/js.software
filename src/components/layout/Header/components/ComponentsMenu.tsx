@@ -1,5 +1,5 @@
 import { Component, For, createMemo } from "solid-js";
-import { Button, Flex, Navbar } from "@pathscale/ui";
+import { Button, Flex, Link, Navbar } from "@pathscale/ui";
 import { navigationItems } from "../navigationData";
 import { useNavigation } from "../hooks/useNavigation";
 import clsx from "clsx";
@@ -34,8 +34,8 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
                   "px-3 py-1 rounded-md text-sm transition-colors",
                   activeCategory() === subcategory.title ||
                   (activeCategory() === "Components" && subcategory === componentsItem?.subcategories?.[0])
-                    ? "bg-primary text-white"
-                    : "hover:bg-base-300"
+                    ? "bg-primary text-primary-content"
+                    : "text-base-content hover:bg-base-300"
                 )}
               >
                 {subcategory.title}
@@ -49,15 +49,17 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
         <Flex wrap="wrap" gap="sm" align="center">
           <For each={selectedSubcategory()?.items || []}>
             {(item) => (
-              <a
+              <Link
                 href={item.href}
                 class={clsx(
                   "px-3 py-1 rounded-md text-sm transition-colors",
-                  isActive(item.href) ? "bg-primary text-white" : "hover:bg-base-300"
+                  isActive(item.href)
+                    ? "bg-primary text-primary-content"
+                    : "text-base-content hover:bg-base-300"
                 )}
               >
                 {item.title}
-              </a>
+              </Link>
             )}
           </For>
         </Flex>

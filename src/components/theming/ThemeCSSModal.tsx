@@ -64,6 +64,19 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
       .filter(key => theme[key])
       .map(key => `  ${key}: ${theme[key]};`);
 
+    const aliasOrder = [
+      "--color-default", "--color-default-foreground", "--color-default-hover",
+      "--color-background", "--color-foreground",
+      "--color-bg-body", "--color-bg-inverse", "--color-bg-primary",
+      "--color-bg-secondary", "--color-bg-tertiary",
+      "--color-fg-body", "--color-fg-inverse", "--color-fg-primary",
+      "--color-fg-secondary", "--color-fg-tertiary",
+      "--b1", "--b2", "--b3", "--bc", "--shade",
+    ];
+    const aliasProps = aliasOrder
+      .filter(key => theme[key])
+      .map(key => `  ${key}: ${theme[key]};`);
+
     // Add default radius, size and effect values if not present
     const defaultValues: Record<string, string> = {
       "--radius-selector": "0.5rem",
@@ -101,6 +114,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
     const allProps = [
       ...baseProps,
       ...colorProps,
+      ...aliasProps,
       ...radiusProps,
       ...sizeProps,
       ...effectProps,

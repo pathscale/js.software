@@ -1,4 +1,5 @@
 import type { Theme } from "../types/theme";
+import { withThemeAliases } from "./themeAliases";
 
 const STORAGE_KEY = "js-software-theme-editor";
 const appliedProperties = new Set<string>();
@@ -64,7 +65,8 @@ export const applyThemeToDocument = (theme: Theme | null) => {
   root.classList.remove("glass", "theme-glass-disabled");
 
   if (!theme) return;
-  for (const [property, value] of Object.entries(theme)) {
+  const normalizedTheme = withThemeAliases(theme);
+  for (const [property, value] of Object.entries(normalizedTheme)) {
     if (property.startsWith("--")) {
       root.style.setProperty(property, value);
       appliedProperties.add(property);

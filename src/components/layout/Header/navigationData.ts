@@ -83,6 +83,7 @@ export const navigationItems: NavigationItem[] = [
       {
         title: "Surfaces",
         items: [
+          { title: "Auth Powered By", href: ROUTES.AUTH_POWERED_BY },
           { title: "Glass Panel", href: ROUTES.GLASS_PANEL },
           { title: "Glow Card", href: ROUTES.GLOW_CARD },
           { title: "Noise Background", href: ROUTES.NOISE_BACKGROUND },
@@ -94,5 +95,4 @@ export const navigationItems: NavigationItem[] = [
   },
   { title: "Docs", href: ROUTES.DOCS },
   { title: "Layouts", href: ROUTES.DOCS_LAYOUTS },
-  { title: "Showcases", href: ROUTES.SHOWCASES },
 ];

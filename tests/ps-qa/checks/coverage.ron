@@ -435,7 +435,7 @@
         group: "coverage",
         what: "normal navigation unmounts the fullscreen specimen cleanly",
         open: Some("Home"), hover: None, click: None,
-        subject: "heading:Build Exceptional UIs", expect: Present,
+        subject: "heading:Build Exceptional UI/", expect: Present,
     ),
     (
         id: "coverage-reopens-the-component-menu-after-fullscreen-navigation",

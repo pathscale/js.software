@@ -6,10 +6,9 @@ AppProfile(
         (name: "theming", opener: "Theming", marker: Some("Random")),
         (name: "docs", opener: "Docs", marker: Some("Browse Components")),
         (name: "layouts", opener: "Layouts", marker: Some("#layouts-documentation")),
-        (name: "showcases", opener: "Showcases", marker: Some("Theme Customization")),
         (name: "coverage", opener: "Complete Coverage", marker: Some("Load LiveChatPanel")),
     ],
-    navigation_controls: ["Home", "Theming", "Docs", "Layouts", "Showcases", "Components", "Complete Coverage"],
+    navigation_controls: ["Home", "Theming", "Docs", "Layouts", "Explore Components", "Components", "Complete Coverage"],
     inert_controls: ["Bottom with arrow"],
     home_opener: Some("Home"),
 )

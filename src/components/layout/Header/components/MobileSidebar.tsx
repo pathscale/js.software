@@ -1,5 +1,5 @@
 import { Component, For } from "solid-js";
-import { Button } from "@pathscale/ui";
+import { Button, Link } from "@pathscale/ui";
 import { navigationItems } from "../navigationData";
 import { useNavigation } from "../hooks/useNavigation";
 import Search from "../../../content/Search";
@@ -60,17 +60,17 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
                 {(item) => (
                   <div>
                     {item.href ? (
-                      <a
+                      <Link
                         href={item.href}
                         class={`block px-3 py-2 rounded-lg transition-colors font-semibold ${
                           isActive(item.href)
-                            ? "bg-primary text-white"
+                            ? "bg-primary text-primary-content"
                             : "text-base-content hover:bg-base-200"
                         }`}
                         onClick={() => setIsOpen(false)}
                       >
                         {item.title}
-                      </a>
+                      </Link>
                     ) : (
                       <>
                         <div class="font-semibold text-base-content mb-3">
@@ -86,17 +86,17 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
                                 <div class="space-y-1">
                                   <For each={subcategory.items}>
                                     {(component) => (
-                                      <a
+                                      <Link
                                         href={component.href}
                                         class={`block px-3 py-1 rounded-md text-sm transition-colors ${
                                           isActive(component.href)
-                                            ? "bg-primary text-white"
+                                            ? "bg-primary text-primary-content"
                                             : "text-base-content/70 hover:bg-base-200"
                                         }`}
                                         onClick={() => setIsOpen(false)}
                                       >
                                         {component.title}
-                                      </a>
+                                      </Link>
                                     )}
                                   </For>
                                 </div>
@@ -113,13 +113,14 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
           </div>
 
           <div class="p-4">
-            <a
+            <Button
               href="/docs/installation"
-              class="block w-full bg-primary text-white hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-center transition-all whitespace-nowrap"
+              flavor="primary"
+              class="w-full whitespace-nowrap"
               onClick={() => setIsOpen(false)}
             >
               Get Started
-            </a>
+            </Button>
           </div>
         </div>
       </div>

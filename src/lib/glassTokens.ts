@@ -6,15 +6,7 @@ import {
   type GlassTuning,
 } from "@pathscale/ui/styles/glass.js";
 
-export const GLASS_OPACITY_DEFAULT = 55;
-export const GLASS_OPACITY_MAX = 100;
-export const GLASS_SCRIM_DEFAULT = 0;
-export const GLASS_SCRIM_MAX = 70;
-
-export interface GlassThemeTuning extends Required<GlassTuning> {
-  opacity: number;
-  scrim: number;
-}
+export type GlassThemeTuning = Required<GlassTuning>;
 
 const finite = (value: string | undefined, fallback: number) => {
   const parsed = Number.parseFloat(value ?? "");
@@ -56,16 +48,6 @@ export const tuningFromTheme = (
       GLASS_LIMITS.controlTint.min,
       GLASS_LIMITS.controlTint.max,
     ),
-    opacity: clamp(
-      finite(theme._glassOpacity, GLASS_OPACITY_DEFAULT),
-      0,
-      GLASS_OPACITY_MAX,
-    ),
-    scrim: clamp(
-      finite(theme._glassScrim, GLASS_SCRIM_DEFAULT),
-      0,
-      GLASS_SCRIM_MAX,
-    ),
   };
 };
 
@@ -74,42 +56,37 @@ export const resolveGlassThemeValues = (
   mode: GlassMode,
 ): Record<string, string> => {
   const tokens = resolveGlassTokens(tuning, mode);
-  const opacity = clamp(tuning.opacity, 0, GLASS_OPACITY_MAX);
-  const scrim = clamp(tuning.scrim, 0, GLASS_SCRIM_MAX);
   return {
     ...tokens,
-    "--glass-background-opacity": `${opacity}%`,
-    "--theme-glass-scrim-opacity": `${scrim}%`,
     _glassBlur: `${tuning.blur}`,
     _glassRefraction: `${tuning.refraction}`,
     _glassDepth: `${tuning.depth}`,
     _glassControlTint: `${tuning.controlTint}`,
-    _glassOpacity: `${opacity}`,
-    _glassScrim: `${scrim}`,
   };
 };
 
 export const glassThemeDefaults = (mode: GlassMode): Record<string, string> =>
-  resolveGlassThemeValues(
-    {
-      ...GLASS_DEFAULTS[mode],
-      opacity: GLASS_OPACITY_DEFAULT,
-      scrim: GLASS_SCRIM_DEFAULT,
-    },
-    mode,
-  );
+  resolveGlassThemeValues(GLASS_DEFAULTS[mode], mode);
 
 export const GLASS_THEME_DEFAULTS = glassThemeDefaults("dark");
 export const GLASS_THEME_TOKEN_ORDER = Object.keys(
   resolveGlassTokens(GLASS_DEFAULTS.dark, "dark"),
-).concat("--theme-glass-scrim-opacity");
+);
+
+const withoutLegacyGlassOverrides = <T extends Record<string, string>>(theme: T) => {
+  const next = { ...theme };
+  delete next._glassOpacity;
+  delete next._glassScrim;
+  delete next["--theme-glass-scrim-opacity"];
+  return next;
+};
 
 export function withGlassThemeDefaults<T extends Record<string, string>>(theme: T) {
   const mode: GlassMode = theme._themeType === "light" ? "light" : "dark";
   const tuning = tuningFromTheme(theme, mode);
   return {
     _glassEnabled: "1",
-    ...theme,
+    ...withoutLegacyGlassOverrides(theme),
     ...resolveGlassThemeValues(tuning, mode),
   };
 }
@@ -117,7 +94,7 @@ export function withGlassThemeDefaults<T extends Record<string, string>>(theme: 
 export function resetGlassTheme<T extends Record<string, string>>(theme: T) {
   const mode: GlassMode = theme._themeType === "light" ? "light" : "dark";
   return {
-    ...theme,
+    ...withoutLegacyGlassOverrides(theme),
     ...glassThemeDefaults(mode),
     _glassEnabled: "1",
   };
