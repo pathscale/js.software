@@ -96,3 +96,5 @@ export const navigationItems: NavigationItem[] = [
   { title: "Docs", href: ROUTES.DOCS },
   { title: "Layouts", href: ROUTES.DOCS_LAYOUTS },
 ];
+
+export const DEFAULT_COMPONENT_CATEGORY = "Surfaces";

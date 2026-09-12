@@ -1,6 +1,9 @@
 import { Component, For, createMemo } from "solid-js";
 import { Button, Flex, Link, Navbar } from "@pathscale/ui";
-import { navigationItems } from "../navigationData";
+import {
+  DEFAULT_COMPONENT_CATEGORY,
+  navigationItems,
+} from "../navigationData";
 import { useNavigation } from "../hooks/useNavigation";
 import clsx from "clsx";
 
@@ -33,7 +36,8 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
                 class={clsx(
                   "px-3 py-1 rounded-md text-sm transition-colors",
                   activeCategory() === subcategory.title ||
-                  (activeCategory() === "Components" && subcategory === componentsItem?.subcategories?.[0])
+                  (activeCategory() === "Components" &&
+                    subcategory.title === DEFAULT_COMPONENT_CATEGORY)
                     ? "bg-primary text-primary-content"
                     : "text-base-content hover:bg-base-300"
                 )}

@@ -1,7 +1,10 @@
 import { createSignal, createEffect, createMemo } from "solid-js";
 import { useLocation } from "@solidjs/router";
 import { setIsNavbarExpanded } from "../../LayoutGrid";
-import { navigationItems } from "../navigationData";
+import {
+  DEFAULT_COMPONENT_CATEGORY,
+  navigationItems,
+} from "../navigationData";
 import { ROUTES } from "../../../../config/routes";
 
 export const useNavigation = () => {
@@ -24,7 +27,9 @@ export const useNavigation = () => {
         (cat) => cat.title === activeCategory()
       );
     } else if (activeCategory() === "Components") {
-      return componentsItem?.subcategories?.[0];
+      return componentsItem?.subcategories?.find(
+        (category) => category.title === DEFAULT_COMPONENT_CATEGORY,
+      );
     }
     return null;
   };
