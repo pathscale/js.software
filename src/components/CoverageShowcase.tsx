@@ -594,7 +594,7 @@ const EXAMPLES: Example[] = [
     name: "MetalBorder",
     render: () => <MetalBorder>Bordered</MetalBorder>,
   },
-  { name: "Meter", render: () => <Meter value={60} /> },
+  { name: "Meter", render: () => <Meter id="coverage-meter" value={60} /> },
   { name: "Input (number)", render: () => <Input id="coverage-number-input" aria-label="Coverage number input" type="number" /> },
   {
     name: "Popover",
@@ -605,8 +605,24 @@ const EXAMPLES: Example[] = [
       </Popover>
     ),
   },
-  { name: "Progress", render: () => <Progress value={40} /> },
-  { name: "RadialProgress", render: () => <RadialProgress value={40} /> },
+  {
+    name: "Progress",
+    render: () => {
+      const [value, setValue] = createSignal(40);
+      return (
+        <Flex direction="col" gap="sm">
+          <Progress id="coverage-progress" label="Coverage progress" value={value()} showValue />
+          <Button
+            id="coverage-progress-advance"
+            onClick={() => setValue((current) => current === 40 ? 75 : 40)}
+          >
+            Advance coverage progress
+          </Button>
+        </Flex>
+      );
+    },
+  },
+  { name: "RadialProgress", render: () => <RadialProgress id="coverage-radial-progress" value={40} /> },
   {
     name: "ScrollArea",
     render: () => (
