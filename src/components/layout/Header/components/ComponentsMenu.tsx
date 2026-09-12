@@ -24,6 +24,7 @@ export const ComponentsMenu: Component<ComponentsMenuProps> = (props) => {
           <For each={componentsItem?.subcategories || []}>
             {(subcategory) => (
               <Button
+                id={`component-category-${subcategory.title.toLowerCase().replace(/\s+/g, "-")}`}
                 variant="ghost"
                 size="sm"
                 onClick={() => {

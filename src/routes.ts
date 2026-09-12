@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import { componentFamilies, type ComponentFamilyId } from "@pathscale/ui";
 import { ROUTES } from "./config/routes";
 import Home from "./pages/Home";
 import Showcases from "./pages/Showcases";
@@ -18,7 +19,7 @@ import CardShowcase from "./components/CardShowcase";
 import ChatBubbleShowcase from "./components/ChatBubbleShowcase";
 import CheckboxShowcase from "./components/CheckboxShowcase";
 import ColorPickerShowcase from "./components/ColorPickerShowcase";
-import CoverageShowcase from "./components/CoverageShowcase";
+import CoverageShowcase, { coverageFamilyIds } from "./components/CoverageShowcase";
 import DataGridShowcase from "./components/DataGridShowcase";
 import CollapsibleShowcase from "./components/CollapsibleShowcase";
 import DrawerShowcase from "./components/DrawerShowcase";
@@ -67,6 +68,60 @@ export interface RouteConfig {
   component: Component;
   description: string;
 }
+
+const dedicatedFamiliesByRoute = {
+  Accordion: ["accordion"],
+  Alert: ["alert"],
+  Avatar: ["avatar"],
+  Badge: ["badge"],
+  Breadcrumb: ["breadcrumb"],
+  Button: ["button"],
+  Calendar: ["calendar"],
+  Card: ["card"],
+  "Chat Bubble": ["chat-bubble"],
+  Checkbox: ["checkbox"],
+  "Color Picker": ["color-picker"],
+  Collapsible: ["collapsible"],
+  Drawer: ["drawer"],
+  Dropdown: ["dropdown"],
+  Empty: ["empty"],
+  Fieldset: ["fieldset"],
+  "File Input": ["input"],
+  Flex: ["flex"],
+  Dock: ["dock"],
+  Footer: ["footer"],
+  Form: ["form"],
+  "Fieldset Actions": ["fieldset"],
+  "Glow Card": ["glow-card"],
+  Grid: ["grid"],
+  Icon: ["icon"],
+  Input: ["input"],
+  Join: ["join"],
+  Kbd: ["kbd"],
+  Link: ["link"],
+  Menu: ["menu"],
+  Dialog: ["dialog"],
+  Navbar: ["navbar"],
+  "Noise Background": ["noise-background"],
+  Pagination: ["pagination"],
+  Progress: ["progress"],
+  "Radial Progress": ["radial-progress"],
+  Radio: ["radio"],
+  "Radio Group": ["radio-group"],
+  Select: ["select"],
+  Separator: ["separator"],
+  Skeleton: ["skeleton"],
+  Slider: ["slider"],
+  Spinner: ["spinner"],
+  "Data Grid": ["data-grid"],
+  Table: ["table"],
+  Tabs: ["tabs"],
+  Textarea: ["textarea"],
+  Toast: ["toast"],
+  Switch: ["switch"],
+  Tooltip: ["tooltip"],
+  "Video Preview": ["video-preview"],
+} as const satisfies Record<string, readonly ComponentFamilyId[]>;
 
 const componentRoutes = ([
   ["Accordion", ROUTES.ACCORDION, AccordionShowcase, "Expandable content sections."],
@@ -125,6 +180,21 @@ const componentRoutes = ([
 ] satisfies [string, string, Component, string][]).map(
   ([name, path, component, description]): RouteConfig => ({ name, path, component, description }),
 );
+
+const demonstratedFamilies = new Set<ComponentFamilyId>(coverageFamilyIds);
+for (const ids of Object.values(dedicatedFamiliesByRoute)) {
+  for (const id of ids) demonstratedFamilies.add(id);
+}
+const missingFamilies = componentFamilies.filter(
+  (family) => !demonstratedFamilies.has(family.id),
+);
+if (missingFamilies.length > 0) {
+  throw new Error(
+    `js.software has no showcase for: ${missingFamilies
+      .map((family) => `${family.id} (${family.name})`)
+      .join(", ")}`,
+  );
+}
 
 export const routes: RouteConfig[] = [
   { name: "Home", path: ROUTES.HOME, component: Home, description: "PathScale UI documentation." },

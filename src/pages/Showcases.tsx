@@ -1,6 +1,6 @@
 import { Component, For } from "solid-js";
 import { ContentContainer } from "../components/content/ContentContainer";
-import { Button, Card, Chip, Flex, Grid } from "@pathscale/ui";
+import { Button, Card, Chip, componentFamilies, Flex, Grid } from "@pathscale/ui";
 import { routes } from "../routes";
 import { ROUTES } from "../config/routes";
 
@@ -43,13 +43,13 @@ const Showcases: Component = () => {
         <div class="text-center">
           <h1 class="text-5xl font-bold mb-6">Component Showcases</h1>
           <p class="text-xl text-base-content/70 mb-8 max-w-3xl mx-auto leading-relaxed">
-            {showcaseRoutes.length} focused family demonstrations plus a complete
-            coverage lab for the current @pathscale/ui 3.x public surface.
+            All {componentFamilies.length} public @pathscale/ui component families,
+            with focused demonstrations and a complete coverage lab.
           </p>
 
           <Flex gap="md" justify="center" wrap="wrap" class="mb-8">
             <Chip class="px-4 py-2">
-              {showcaseRoutes.length} Interactive Demos
+              {componentFamilies.length} Component Families
             </Chip>
             <Chip class="px-4 py-2">
               Live Code Examples

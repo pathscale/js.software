@@ -39,6 +39,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
               variant="ghost"
               size="sm"
               width="square"
+              aria-label="Close navigation"
               onClick={() => setIsOpen(false)}
             >
               <CloseIcon />
