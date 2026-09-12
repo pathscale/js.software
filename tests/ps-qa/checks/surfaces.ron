@@ -291,7 +291,7 @@
         open: None,
         hover: None,
         click: None,
-        subject: "button:Change theme color",
+        subject: "#coverage-theme-color-picker--trigger",
         expect: Enabled,
     ),
     (
@@ -320,11 +320,11 @@
     (
         id: "the-coverage-page-builds-a-field-with-helper-text",
         group: "surfaces",
-        what: "a field's description reaches its accessible name rather than sitting beside it",
+        what: "a caller-authored stable identity reaches the semantic field",
         open: None,
         hover: None,
         click: None,
-        subject: "textbox:Helper text.",
+        subject: "#coverage-helper-input",
         expect: Paints,
     ),
 ]

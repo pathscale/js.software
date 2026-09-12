@@ -32,6 +32,7 @@ export default function EffectsSection(props: EffectsSectionProps) {
         <For each={EFFECTS}>
           {(effect) => (
             <Switch
+              id={`theme-effect-${effect.key.replace(/^--/, "")}`}
               class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
               size="sm"
               checked={props.theme[effect.key] === "1"}

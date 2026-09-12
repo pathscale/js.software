@@ -9,6 +9,17 @@ export default function ComponentsDemo() {
   const [page, setPage] = createSignal(2);
   const [price, setPrice] = createSignal(25);
   const [selectedDay, setSelectedDay] = createSignal(5);
+  const [hoodies, setHoodies] = createSignal(false);
+  const [bags, setBags] = createSignal(true);
+  const [shoes, setShoes] = createSignal(false);
+  const [accessories, setAccessories] = createSignal(false);
+  const [eventSearch, setEventSearch] = createSignal("");
+  const [showAllDay, setShowAllDay] = createSignal(false);
+  const [minimumPrice, setMinimumPrice] = createSignal("");
+  const [maximumPrice, setMaximumPrice] = createSignal("");
+  const [themeSwitch, setThemeSwitch] = createSignal(false);
+  const [previewSearch, setPreviewSearch] = createSignal("");
+  const [recommendation, setRecommendation] = createSignal("yes");
   const actionStatus = createActionStatus("Preview ready");
 
   return (
@@ -24,7 +35,7 @@ export default function ComponentsDemo() {
                 <Icon src="mdi--filter-variant" width={16} height={16} />
                 <span class="font-semibold">Filters</span>
               </Flex>
-              <Button variant="ghost" size="sm" onClick={actionStatus.handler("More filters requested")}>
+              <Button id="preview-more-filters" variant="ghost" size="sm" onClick={actionStatus.handler("More filters requested")}>
                 more
               </Button>
             </Flex>
@@ -35,7 +46,7 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm" class="mt-4">
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox aria-label="Hoodies" />
+                  <Checkbox id="preview-filter-hoodies" aria-label="Hoodies" checked={hoodies()} onChange={setHoodies} />
                   <span class="text-sm">Hoodies</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -44,7 +55,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox aria-label="Bags" checked />
+                  <Checkbox id="preview-filter-bags" aria-label="Bags" checked={bags()} onChange={setBags} />
                   <span class="text-sm">Bags</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -53,7 +64,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox aria-label="Shoes" />
+                  <Checkbox id="preview-filter-shoes" aria-label="Shoes" checked={shoes()} onChange={setShoes} />
                   <span class="text-sm">Shoes</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -62,7 +73,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Checkbox aria-label="Accessories" />
+                  <Checkbox id="preview-filter-accessories" aria-label="Accessories" checked={accessories()} onChange={setAccessories} />
                   <span class="text-sm">Accessories</span>
                 </Flex>
                 <Chip size="sm" variant="flat">
@@ -104,6 +115,7 @@ export default function ComponentsDemo() {
                 </Flex>
                 {[1, 2, 3, 4, 5, 6, 7].map((day) => (
                   <Button
+                    id={`preview-calendar-day-${day}`}
                     size="sm"
                     variant={selectedDay() === day ? "solid" : "outline"}
                     flavor={selectedDay() === day ? "primary" : undefined}
@@ -119,13 +131,16 @@ export default function ComponentsDemo() {
                 ))}
               </Flex>
               <Input
+                id="preview-event-search"
                 placeholder="Search events..."
                 startIcon={<Icon src="mdi--magnify" width={16} height={16} />}
                 size="sm"
+                value={eventSearch()}
+                onInput={(event) => setEventSearch(event.currentTarget.value)}
               />
               <Flex justify="between" align="center">
                 <span class="text-sm">Show all day events</span>
-                <Switch aria-label="Show all day events" size="sm" />
+                <Switch id="preview-all-day-events" aria-label="Show all day events" size="sm" checked={showAllDay()} onChange={setShowAllDay} />
               </Flex>
               <Card class="mt-2">
                 <Card.Body class="p-2">
@@ -143,7 +158,7 @@ export default function ComponentsDemo() {
 
         <Card class="bg-base-100">
           <Card.Body>
-            <Tabs defaultSelectedKey="tab-1">
+            <Tabs id="preview-content-tabs" defaultSelectedKey="tab-1">
               <Tabs.List>
                 <Tabs.Tab id="tab-1">Tab 1</Tabs.Tab>
                 <Tabs.Tab id="tab-2">Tab 2</Tabs.Tab>
@@ -168,6 +183,7 @@ export default function ComponentsDemo() {
               <span class="font-semibold">Price Range</span>
             </Flex>
             <Slider
+              id="preview-price-range"
               label="Price range"
               value={price()}
               min={0}
@@ -185,11 +201,11 @@ export default function ComponentsDemo() {
             </Flex>
             <Flex direction="col" gap="sm" class="mt-4">
               <Flex justify="between" align="center">
-                <Input placeholder="Min" size="sm" />
+                <Input id="preview-min-price" placeholder="Min" size="sm" value={minimumPrice()} onInput={(event) => setMinimumPrice(event.currentTarget.value)} />
                 <span class="text-sm opacity-60">to</span>
-                <Input placeholder="Max" size="sm" />
+                <Input id="preview-max-price" placeholder="Max" size="sm" value={maximumPrice()} onInput={(event) => setMaximumPrice(event.currentTarget.value)} />
               </Flex>
-              <Button size="sm" flavor="primary" width="full" onClick={actionStatus.handler("Price range applied")}>
+              <Button id="preview-apply-price" size="sm" flavor="primary" width="full" onClick={actionStatus.handler("Price range applied")}>
                 Apply
               </Button>
             </Flex>
@@ -264,7 +280,7 @@ export default function ComponentsDemo() {
               </Flex>
               <Skeleton class="h-4 w-3/4" />
               <Skeleton class="h-4 w-1/2" />
-              <Button size="sm" state="loading">
+              <Button id="preview-submitting" size="sm" state="loading">
                 Submitting
               </Button>
             </Flex>
@@ -303,7 +319,7 @@ export default function ComponentsDemo() {
               </Alert>
               <Alert flavor="warning">
                 <span class="text-xs">
-                  <Button variant="ghost" size="sm" class="p-0 h-auto" onClick={actionStatus.handler("Email verification requested")}>
+                  <Button id="preview-verify-email" variant="ghost" size="sm" class="p-0 h-auto" onClick={actionStatus.handler("Email verification requested")}>
                     Click
                   </Button>{" "}
                   to verify email
@@ -312,7 +328,7 @@ export default function ComponentsDemo() {
               <Alert flavor="destructive">
                 <Flex justify="between" align="center" class="w-full">
                   <span class="text-xs">Access denied</span>
-                  <Button variant="ghost" size="sm" onClick={actionStatus.handler("Support requested")}>
+                  <Button id="preview-support" variant="ghost" size="sm" onClick={actionStatus.handler("Support requested")}>
                     Support
                   </Button>
                 </Flex>
@@ -351,7 +367,7 @@ export default function ComponentsDemo() {
 
         <Card class="bg-base-100">
           <Card.Body>
-            <Tabs defaultSelectedKey="monthly">
+            <Tabs id="preview-billing-tabs" defaultSelectedKey="monthly">
               <Tabs.List>
                 <Tabs.Tab id="monthly">Monthly</Tabs.Tab>
                 <Tabs.Tab id="yearly">
@@ -377,7 +393,7 @@ export default function ComponentsDemo() {
                   <span class="text-sm opacity-50">Advanced analytics</span>
                 </Flex>
               </Flex>
-              <Button flavor="primary" width="full" class="mt-4" onClick={actionStatus.handler("Plan selected")}>
+              <Button id="preview-choose-plan" flavor="primary" width="full" class="mt-4" onClick={actionStatus.handler("Plan selected")}>
                 Choose Plan
               </Button>
             </Flex>
@@ -445,7 +461,7 @@ export default function ComponentsDemo() {
         <Card class="bg-base-100">
           <Card.Body>
             <Flex direction="col" gap="sm">
-              <Button size="sm" onClick={() => setModalOpen(true)}>
+              <Button id="preview-open-dialog" size="sm" onClick={() => setModalOpen(true)}>
                 Open Dialog
               </Button>
               <Dialog
@@ -461,8 +477,8 @@ export default function ComponentsDemo() {
                   <Dialog.Body>Are you sure you want to continue?</Dialog.Body>
                   <Dialog.Footer>
                     <Flex gap="sm" class="mt-2">
-                      <Button onClick={() => { setModalOpen(false); actionStatus.announce("Dialog cancelled"); }}>Cancel</Button>
-                      <Button flavor="primary" onClick={() => { setModalOpen(false); actionStatus.announce("Dialog confirmed"); }}>
+                      <Button id="preview-dialog-cancel" onClick={() => { setModalOpen(false); actionStatus.announce("Dialog cancelled"); }}>Cancel</Button>
+                      <Button id="preview-dialog-confirm" flavor="primary" onClick={() => { setModalOpen(false); actionStatus.announce("Dialog confirmed"); }}>
                         Confirm
                       </Button>
                     </Flex>
@@ -479,7 +495,7 @@ export default function ComponentsDemo() {
               <Flex align="center" gap="sm">
                 <Tooltip>
                   <TooltipTrigger>
-                    <Button size="sm" variant="outline">
+                    <Button id="preview-tooltip" size="sm" variant="outline">
                       Hover me
                     </Button>
                   </TooltipTrigger>
@@ -489,13 +505,13 @@ export default function ComponentsDemo() {
                   <Chip size="sm">
                     3
                   </Chip>
-                  <Button aria-label="Notifications" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Notifications opened")}>
+                  <Button id="preview-notifications" aria-label="Notifications" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Notifications opened")}>
                     <Icon src="mdi--bell" width={16} height={16} />
                   </Button>
                 </Flex>
               </Flex>
               <Flex gap="sm">
-                <Switch />
+                <Switch id="preview-theme-switch" aria-label="Theme switch" checked={themeSwitch()} onChange={setThemeSwitch} />
                 <span class="text-sm">Theme Switch</span>
               </Flex>
             </Flex>
@@ -527,13 +543,13 @@ export default function ComponentsDemo() {
               </ChatBubble>
             </Flex>
             <Flex gap="sm" class="mt-4 justify-center">
-              <Button aria-label="Start call" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Call started")}>
+              <Button id="preview-start-call" aria-label="Start call" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Call started")}>
                 <Icon src="mdi--phone" width={16} height={16} />
               </Button>
-              <Button aria-label="Open messages" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Messages opened")}>
+              <Button id="preview-open-messages" aria-label="Open messages" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Messages opened")}>
                 <Icon src="mdi--message" width={16} height={16} />
               </Button>
-              <Button aria-label="Conversation settings" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Conversation settings opened")}>
+              <Button id="preview-conversation-settings" aria-label="Conversation settings" size="sm" variant="outline" width="square" onClick={actionStatus.handler("Conversation settings opened")}>
                 <Icon src="mdi--cog" width={16} height={16} />
               </Button>
             </Flex>
@@ -542,7 +558,7 @@ export default function ComponentsDemo() {
 
         <Card class="bg-base-100">
           <Card.Body>
-            <Menu onAction={(key) => actionStatus.announce(`Menu opened: ${String(key)}`)}>
+            <Menu id="preview-menu" onAction={(key) => actionStatus.announce(`Menu opened: ${String(key)}`)}>
               <Menu.Item id="database">
                 <Flex justify="between" align="center" class="w-full">
                   <Flex align="center" gap="sm">
@@ -603,17 +619,17 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Flex justify="between" align="center">
                 <Flex align="center" gap="sm">
-                  <Button aria-label="Previous track" size="sm" width="square" onClick={actionStatus.handler("Previous track selected")}>
+                  <Button id="preview-previous-track" aria-label="Previous track" size="sm" width="square" onClick={actionStatus.handler("Previous track selected")}>
                     <Icon src="mdi--skip-previous" width={16} height={16} />
                   </Button>
-                  <Button aria-label="Play track" size="sm" width="square" flavor="primary" onClick={actionStatus.handler("Playback started")}>
+                  <Button id="preview-play-track" aria-label="Play track" size="sm" width="square" flavor="primary" onClick={actionStatus.handler("Playback started")}>
                     <Icon src="mdi--play" width={16} height={16} />
                   </Button>
-                  <Button aria-label="Next track" size="sm" width="square" onClick={actionStatus.handler("Next track selected")}>
+                  <Button id="preview-next-track" aria-label="Next track" size="sm" width="square" onClick={actionStatus.handler("Next track selected")}>
                     <Icon src="mdi--skip-next" width={16} height={16} />
                   </Button>
                 </Flex>
-                <Button aria-label="Toggle volume" size="sm" variant="outline" onClick={actionStatus.handler("Volume toggled")}>
+                <Button id="preview-toggle-volume" aria-label="Toggle volume" size="sm" variant="outline" onClick={actionStatus.handler("Volume toggled")}>
                   <Icon src="mdi--volume-high" width={16} height={16} />
                 </Button>
               </Flex>
@@ -642,14 +658,14 @@ export default function ComponentsDemo() {
           <Card.Body class="p-0">
             <Navbar class="bg-base-200 px-4">
               <Navbar.Start>
-                <Dropdown>
+                <Dropdown id="preview-navigation">
                   <Dropdown.Trigger aria-label="Open navigation menu" class="btn btn-ghost btn-sm btn-square">
                     <Icon src="mdi--menu" width={16} height={16} />
                   </Dropdown.Trigger>
                   <Dropdown.Menu class="w-52 mt-3 z-[1]">
-                    <Dropdown.Item>Dashboard</Dropdown.Item>
-                    <Dropdown.Item>Settings</Dropdown.Item>
-                    <Dropdown.Item>Logout</Dropdown.Item>
+                    <Dropdown.Item id="preview-navigation-dashboard" onClick={actionStatus.handler("Dashboard opened")}>Dashboard</Dropdown.Item>
+                    <Dropdown.Item id="preview-navigation-settings" onClick={actionStatus.handler("Navigation settings opened")}>Settings</Dropdown.Item>
+                    <Dropdown.Item id="preview-navigation-logout" onClick={actionStatus.handler("Preview logout requested")}>Logout</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Navbar.Start>
@@ -657,7 +673,7 @@ export default function ComponentsDemo() {
                 <span class="font-bold text-sm">Brand</span>
               </Navbar.Center>
               <Navbar.End>
-                <Button aria-label="Open account" variant="ghost" width="square" size="sm" onClick={actionStatus.handler("Account opened")}>
+                <Button id="preview-open-account" aria-label="Open account" variant="ghost" width="square" size="sm" onClick={actionStatus.handler("Account opened")}>
                   <Icon src="mdi--account" width={16} height={16} />
                 </Button>
               </Navbar.End>
@@ -692,23 +708,26 @@ export default function ComponentsDemo() {
           <Card.Body>
             <Flex direction="col" gap="sm">
               <Join>
-                <Button size="sm" onClick={actionStatus.handler("Button 1 activated")}>
+                <Button id="preview-joined-button-1" size="sm" onClick={actionStatus.handler("Button 1 activated")}>
                   Button 1
                 </Button>
-                <Button size="sm" flavor="primary" onClick={actionStatus.handler("Button 2 activated")}>
+                <Button id="preview-joined-button-2" size="sm" flavor="primary" onClick={actionStatus.handler("Button 2 activated")}>
                   Button 2
                 </Button>
-                <Button size="sm" onClick={actionStatus.handler("Button 3 activated")}>
+                <Button id="preview-joined-button-3" size="sm" onClick={actionStatus.handler("Button 3 activated")}>
                   Button 3
                 </Button>
               </Join>
               <Join>
                 <Input
+                  id="preview-search"
                   placeholder="Search..."
                   class="flex-1"
                   size="sm"
+                  value={previewSearch()}
+                  onInput={(event) => setPreviewSearch(event.currentTarget.value)}
                 />
-                <Button aria-label="Search preview" size="sm" flavor="primary" onClick={actionStatus.handler("Preview search submitted")}>
+                <Button id="preview-search-submit" aria-label="Search preview" size="sm" flavor="primary" onClick={actionStatus.handler("Preview search submitted")}>
                   <Icon src="mdi--magnify" width={16} height={16} />
                 </Button>
               </Join>
@@ -721,7 +740,7 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Form>
                 <span class="text-sm font-medium">How did you hear about us?</span>
-                <Select placeholder="Select an option">
+                <Select id="preview-referral-source" placeholder="Select an option">
                   <Select.Option value="search">Search Engine</Select.Option>
                   <Select.Option value="social">Social Media</Select.Option>
                   <Select.Option value="friend">Friend</Select.Option>
@@ -739,10 +758,12 @@ export default function ComponentsDemo() {
                 </Flex>
               </Form>
               <Flex gap="sm" class="mt-2">
-                <Radio aria-label="Would recommend" name="recommend" checked />
+                <Radio id="preview-recommend-yes" aria-label="Would recommend" name="recommend" checked={recommendation() === "yes"} onChange={(checked) => checked && setRecommendation("yes")} />
                 <span class="text-sm">Would recommend</span>
+                <Radio id="preview-recommend-no" aria-label="Would not recommend" name="recommend" checked={recommendation() === "no"} onChange={(checked) => checked && setRecommendation("no")} />
+                <span class="text-sm">Would not recommend</span>
               </Flex>
-              <Button size="sm" flavor="primary" onClick={actionStatus.handler("Feedback submitted")}>
+              <Button id="preview-feedback-submit" size="sm" flavor="primary" onClick={actionStatus.handler("Feedback submitted")}>
                 Submit
               </Button>
             </Flex>
@@ -752,12 +773,12 @@ export default function ComponentsDemo() {
         <Card class="bg-base-100">
           <Card.Body>
             <Breadcrumb>
-              <BreadcrumbItem href={ROUTES.HOME}>Home</BreadcrumbItem>
-              <BreadcrumbItem href="/products">Products</BreadcrumbItem>
+              <BreadcrumbItem id="preview-breadcrumb-home" href={ROUTES.HOME}>Home</BreadcrumbItem>
+              <BreadcrumbItem id="preview-breadcrumb-products" href="#products" onClick={(event) => { event.preventDefault(); actionStatus.announce("Products opened"); }}>Products</BreadcrumbItem>
               <BreadcrumbItem isCurrent>Details</BreadcrumbItem>
             </Breadcrumb>
             <div class="my-3 border-t opacity-20" />
-            <Pagination page={page()} total={3} onChange={setPage} />
+            <Pagination id="preview-pagination" page={page()} total={3} onChange={(nextPage) => { setPage(nextPage); actionStatus.announce(`Page ${nextPage} selected`); }} />
           </Card.Body>
         </Card>
       </Flex>

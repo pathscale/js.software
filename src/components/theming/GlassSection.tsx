@@ -38,6 +38,7 @@ export default function GlassSection(props: GlassSectionProps) {
           <Icon src="mdi--blur" width={16} height={16} class="opacity-40" />
           Glass
           <Button
+            id="theme-glass-reset"
             size="sm"
             variant="ghost"
             class="ml-auto"
@@ -51,6 +52,7 @@ export default function GlassSection(props: GlassSectionProps) {
       <div class="flex flex-col gap-2">
         <div class="bg-base-200 rounded-lg p-2">
           <Slider
+            id="theme-glass-blur"
             label="Blur"
             size="sm"
             min={0}
@@ -64,6 +66,7 @@ export default function GlassSection(props: GlassSectionProps) {
 
         <div class="bg-base-200 rounded-lg p-2">
           <Slider
+            id="theme-glass-refraction"
             label="Refraction"
             size="sm"
             min={0}
@@ -77,6 +80,7 @@ export default function GlassSection(props: GlassSectionProps) {
 
         <div class="bg-base-200 rounded-lg p-2">
           <Slider
+            id="theme-glass-depth"
             label="Depth"
             size="sm"
             min={0}

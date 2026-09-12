@@ -101,8 +101,8 @@ export function Actions() {
 }`}
           />
           <Flex gap="md" align="center" wrap="wrap">
-            <Button flavor="primary" size="lg" onClick={actions.handler("Layouts example continued")}>Continue</Button>
-            <Button variant="outline" size="lg" onClick={actions.handler("Layouts example cancelled")}>Cancel</Button>
+            <Button id="layouts-example-continue" flavor="primary" size="lg" onClick={actions.handler("Layouts example continued")}>Continue</Button>
+            <Button id="layouts-example-cancel" variant="outline" size="lg" onClick={actions.handler("Layouts example cancelled")}>Cancel</Button>
           </Flex>
           <ActionStatus message={actions.message()} />
         </section>
@@ -134,9 +134,9 @@ export const SettingsPanel = () => <SaveActions />;`}
         </section>
 
         <Flex gap="md" wrap="wrap">
-          <Button href={ROUTES.DOCS_INSTALLATION} flavor="primary">Installation</Button>
-          <Button href={ROUTES.DOCS_USAGE} variant="outline">Usage cheatsheet</Button>
-          <Button href={ROUTES.SHOWCASES} variant="outline">Component showcases</Button>
+          <Button id="layouts-installation" href={ROUTES.DOCS_INSTALLATION} flavor="primary">Installation</Button>
+          <Button id="layouts-usage" href={ROUTES.DOCS_USAGE} variant="outline">Usage cheatsheet</Button>
+          <Button id="layouts-showcases" href={ROUTES.SHOWCASES} variant="outline">Component showcases</Button>
         </Flex>
       </Flex>
     </ContentContainer>

@@ -45,6 +45,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
             <For each={Object.entries(MATERIAL_COLORS)}>
               {([colorName, colorValue]) => (
                 <Button
+                  id={`theme-material-${colorName.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                   variant="plain"
                   flavor="neutral"
                   size="xs"
@@ -82,7 +83,7 @@ export default function ColorPickerPopover(props: ColorPickerPopoverProps) {
           </div>
         </Dialog.Body>
         <Dialog.Footer class="bg-base-100">
-          <Button onClick={props.onClose} flavor="primary">
+          <Button id="theme-color-picker-done" onClick={props.onClose} flavor="primary">
             Done
           </Button>
         </Dialog.Footer>

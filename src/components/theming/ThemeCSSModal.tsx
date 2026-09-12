@@ -149,6 +149,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
 
           <div class="relative">
             <Textarea
+              id="theme-generated-css"
               aria-label="Generated theme CSS"
               class="h-80 w-full resize-none font-mono text-xs"
               value={cssText()}
@@ -157,6 +158,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
             />
 
             <Button
+              id="theme-copy-css"
               class="absolute top-2 right-5"
               size="sm"
               flavor={isClipboardButtonPressed() ? "primary" : "secondary"}
@@ -178,7 +180,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
         </Dialog.Body>
 
         <Dialog.Footer>
-          <Button onClick={props.onClose}>Close</Button>
+          <Button id="theme-close-css" onClick={props.onClose}>Close</Button>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog>
