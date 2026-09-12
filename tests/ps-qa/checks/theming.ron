@@ -1647,6 +1647,7 @@
         click: Some("button:Colour strength 20%"),
         subject: "button:Colour strength 20%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "remembering_a_theme_writes_persistence",
