@@ -20,7 +20,7 @@ export const MainNavigation: Component<MainNavigationProps> = (props) => {
                 href={item.href}
                 class={`px-3 py-2 rounded-lg transition-colors font-medium text-base ${
                   isActive(item.href)
-                    ? "bg-primary/20 text-primary"
+                    ? "bg-primary text-primary-content"
                     : "text-base-content hover:bg-base-200"
                 }`}
               >
@@ -37,7 +37,7 @@ export const MainNavigation: Component<MainNavigationProps> = (props) => {
                 }}
                 class={`px-3 py-2 rounded-lg transition-colors font-medium text-base ${
                   activeCategory() === item.title
-                    ? "bg-primary/20 text-primary"
+                    ? "bg-primary text-primary-content"
                     : "text-base-content hover:bg-base-200"
                 }`}
               >

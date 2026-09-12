@@ -211,6 +211,6 @@ export const routes: RouteConfig[] = [
   { name: "Installation", path: ROUTES.DOCS_INSTALLATION, component: DocsInstallation, description: "Install UI and Solid Layouts." },
   { name: "Solid Layouts", path: ROUTES.DOCS_LAYOUTS, component: DocsLayouts, description: "Understand the two compiler passes." },
   { name: "Usage Cheatsheet", path: ROUTES.DOCS_USAGE, component: DocsUsage, description: "Common component patterns." },
-  { name: "Showcases", path: ROUTES.SHOWCASES, component: Showcases, description: "Current interactive examples." },
+  { name: "Components", path: ROUTES.SHOWCASES, component: Showcases, description: "Current interactive examples." },
   ...componentRoutes,
 ];

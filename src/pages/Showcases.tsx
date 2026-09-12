@@ -10,6 +10,7 @@ const Showcases: Component = () => {
       route.path !== ROUTES.HOME &&
       route.path !== ROUTES.DOCS &&
       route.path !== ROUTES.THEMING &&
+      route.path !== ROUTES.SHOWCASES &&
       !route.path.startsWith("/docs/")
   );
 
@@ -41,7 +42,7 @@ const Showcases: Component = () => {
     <ContentContainer maxWidth="2xl" prose={false}>
       <Card material="glass" padding="lg" flavor="secondary">
         <div class="text-center">
-          <h1 class="text-5xl font-bold mb-6">Component Showcases</h1>
+          <h1 class="text-5xl font-bold mb-6">Components</h1>
           <p class="text-xl text-base-content/70 mb-8 max-w-3xl mx-auto leading-relaxed">
             All {componentFamilies.length} public @pathscale/ui component families,
             with focused demonstrations and a complete coverage lab.

@@ -119,7 +119,7 @@
         open: Some("Home"),
         hover: None,
         click: Some("link:Explore Components"),
-        subject: "heading:Component Showcases",
+        subject: "heading:Components",
         expect: Present,
         outcome_timeout_ms: 3000,
     ),
@@ -260,7 +260,7 @@
         open: Some("Home"),
         hover: None,
         click: Some("link:Explore Components"),
-        subject: "heading:Component Showcases",
+        subject: "heading:Components",
         expect: Present,
     ),
     (
@@ -280,7 +280,7 @@
         open: Some("Home"),
         hover: None,
         click: Some("link:Explore all components"),
-        subject: "heading:Component Showcases",
+        subject: "heading:Components",
         expect: Present,
     ),
     (

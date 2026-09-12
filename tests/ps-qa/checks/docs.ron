@@ -268,7 +268,7 @@
         open: Some("Layouts"),
         hover: None,
         click: Some("link:Component showcases"),
-        subject: "heading:Component Showcases",
+        subject: "heading:Components",
         expect: Present,
         outcome_timeout_ms: 8000,
     ),

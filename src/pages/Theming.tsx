@@ -82,6 +82,7 @@ import {
   DEFAULT_STRENGTH,
   DEFAULT_SURFACE,
   DEFAULT_TEXT_BRIGHTNESS,
+  enforceThemeInkContrast,
   SOFTNESS_STOPS,
   STRENGTH_STOPS,
   surfaceColors,
@@ -98,7 +99,9 @@ const withIdentity = (theme: Theme): Theme => ({
 });
 
 const normalizeTheme = (theme: Theme): Theme =>
-  withIdentity(withThemeAliases(withGlassThemeDefaults(theme)));
+  withIdentity(
+    withThemeAliases(withGlassThemeDefaults(enforceThemeInkContrast(theme))),
+  );
 
 const randomItem = <T,>(values: readonly T[]): T =>
   values[Math.floor(Math.random() * values.length)];

@@ -32,7 +32,10 @@ export default function ColorGroup(props: ColorGroupProps) {
                 id={`theme-color-${colorKey.replace(/^--/, "").replace(/[^a-z0-9_-]+/gi, "-")}`}
                 onClick={(event: MouseEvent) => props.onColorClick(colorKey, event)}
                 class="w-8 h-8 rounded border border-gray-300 hover:border-gray-400 transition-colors relative group flex items-center justify-center"
-                style={{ background: backgroundColor() }}
+                style={{
+                  background: backgroundColor(),
+                  color: textColor(),
+                }}
                 title={colorKey}
               >
                 <div
@@ -41,7 +44,6 @@ export default function ColorGroup(props: ColorGroupProps) {
                 />
                 <span
                   class="text-xs font-semibold relative z-10"
-                  style={{ color: textColor() }}
                 >
                   {label}
                 </span>
