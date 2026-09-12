@@ -12,6 +12,8 @@ interface ThemeListProps {
 }
 
 const themeIdentity = (theme: Theme) => theme._id || theme.name;
+const themeDomId = (theme: Theme) =>
+  String(themeIdentity(theme)).toLowerCase().replace(/[^a-z0-9_-]+/g, "-");
 
 export default function ThemeList(props: ThemeListProps) {
   return (
@@ -19,6 +21,7 @@ export default function ThemeList(props: ThemeListProps) {
       <div class="flex items-center justify-between gap-2">
         <h2 class="text-sm font-semibold">My themes</h2>
         <Button
+          id="theme-add"
           size="sm"
           flavor="secondary"
           onClick={props.onCreateNewTheme}
@@ -37,6 +40,7 @@ export default function ThemeList(props: ThemeListProps) {
             return (
               <div class="flex min-w-0 items-center gap-1">
                 <Button
+                  id={`theme-select-${themeDomId(theme)}`}
                   class="min-w-0 flex-1 justify-start"
                   size="sm"
                   flavor={selected() ? "primary" : "secondary"}
@@ -46,6 +50,7 @@ export default function ThemeList(props: ThemeListProps) {
                   <span class="truncate">{theme.name}</span>
                 </Button>
                 <Button
+                  id={`theme-delete-${themeDomId(theme)}`}
                   size="sm"
                   flavor="secondary"
                   aria-label={`Delete theme ${theme.name}`}
@@ -61,6 +66,7 @@ export default function ThemeList(props: ThemeListProps) {
 
       <Show when={props.themes.length > 1}>
         <Button
+          id="theme-clear-all"
           class="justify-start"
           size="sm"
           flavor="secondary"

@@ -28,6 +28,7 @@ export default function Preview(props: PreviewProps) {
       <div class="flex items-center justify-between gap-4 px-8 ps-10">
         <h2 class="font-title text-lg md:max-lg:hidden">{TAB_TITLES[selectedKey()]}</h2>
         <Tabs
+          id="theme-preview-tabs"
           variant="primary"
           selectedKey={selectedKey()}
           onSelectionChange={handleSelectionChange as never}

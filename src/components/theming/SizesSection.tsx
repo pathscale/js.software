@@ -110,6 +110,7 @@ export default function SizesSection(props: SizesSectionProps) {
                 </div>
                 
                 <Slider
+                  id={`theme-size-${sizeType.key.replace(/^--/, "")}`}
                   label={`${sizeType.label} base size`}
                   size="sm"
                   min={0}
@@ -141,6 +142,7 @@ export default function SizesSection(props: SizesSectionProps) {
               </div>
               
               <Slider
+                id="theme-border-width"
                 label="Border width"
                 size="sm"
                 min={0}

@@ -80,6 +80,7 @@ function CloseButtonExample() {
   return (
     <>
       <CloseButton
+        id="coverage-close-button"
         aria-label="Dismiss coverage notice"
         state={closed() ? "disabled" : "default"}
         onClick={() => setClosed(true)}
@@ -132,6 +133,7 @@ function DeferredExample(props: { name: string; render: () => JSX.Element }) {
       {activeFullscreenExample() === props.name
         ? props.render()
         : <Button
+            id={`coverage-load-${props.name.toLowerCase()}`}
             type="button"
             onClick={() => openFullscreenExample(props.name)}
           >
@@ -145,7 +147,7 @@ function AddressExample() {
   const [copied, setCopied] = createSignal("Nothing copied");
   return (
     <>
-      <Address value="0x1234567890abcdef" onCopy={(value) => setCopied(`Copied ${value}`)} />
+      <Address id="coverage-address" value="0x1234567890abcdef" onCopy={(value) => setCopied(`Copied ${value}`)} />
       <p role="status">{copied()}</p>
     </>
   );
@@ -159,15 +161,16 @@ function AuthActionsExample() {
         <Label for="coverage-email">Email</Label>
         <Input id="coverage-email" type="email" />
         <AuthMessage flavor="info" message="This is a complete auth composition." />
-        <AuthSubmitButton type="button" onClick={() => setResult("Sign in submitted")}>Sign in</AuthSubmitButton>
+        <AuthSubmitButton id="coverage-auth-submit" type="button" onClick={() => setResult("Sign in submitted")}>Sign in</AuthSubmitButton>
       </AuthFieldGroup>
       <AuthFooterLinks
+        id="coverage-auth-footer-links"
         items={[
           { key: "privacy", label: "Privacy", onClick: () => setResult("Privacy opened") },
           { key: "help", label: "Help", onClick: () => setResult("Help opened") },
         ]}
       />
-      <AuthPoweredBy href="#coverage-honey" />
+      <AuthPoweredBy id="coverage-auth-powered-by" href="#coverage-honey" />
       <p role="status">{result()}</p>
     </AuthCard>
   );
@@ -179,6 +182,7 @@ function ComposerExample() {
   return (
     <>
       <Composer
+        id="coverage-composer"
         value={value()}
         placeholder="Write a showcase message"
         onChange={setValue}
@@ -201,6 +205,7 @@ function ConnectionSettingsExample() {
   return (
     <>
       <ConnectionSettings
+        id="coverage-connection-settings"
         store={store}
         endpoints={[{ name: "api", label: "API URL" }]}
         labels={{ useCustom: "Use custom backend", save: "Save connection", reset: "Reset connection" }}
@@ -216,7 +221,7 @@ function InlineEditExample() {
   const [value, setValue] = createSignal("Showcase title");
   return (
     <>
-      <InlineEdit value={value()} label="Edit showcase title" onCommit={setValue} />
+      <InlineEdit id="coverage-inline-edit" value={value()} label="Edit showcase title" onCommit={setValue} />
       <p role="status">Saved title: {value()}</p>
     </>
   );
@@ -244,6 +249,7 @@ function PasswordFieldExample() {
   return (
     <>
       <PasswordField
+        id="coverage-password"
         label="Coverage password"
         showLabel="Show password"
         hideLabel="Hide password"
@@ -414,7 +420,7 @@ const EXAMPLES: Example[] = [
       const [selected, setSelected] = createSignal("No swatch selected");
       return (
         <>
-          <ColorSwatch color="#6366f1" colorName="Indigo swatch" onSelect={(value) => setSelected(`Selected ${value}`)} />
+          <ColorSwatch id="coverage-indigo-swatch" color="#6366f1" colorName="Indigo swatch" onSelect={(value) => setSelected(`Selected ${value}`)} />
           <p role="status">{selected()}</p>
         </>
       );
@@ -426,8 +432,8 @@ const EXAMPLES: Example[] = [
       const [value, setValue] = createSignal("#ef4444");
       return (
         <ColorSwatchPicker value={value()} onChange={setValue}>
-          <ColorSwatch color="#ef4444" colorName="Red swatch" />
-          <ColorSwatch color="#3b82f6" colorName="Blue swatch" />
+          <ColorSwatch id="coverage-red-swatch" color="#ef4444" colorName="Red swatch" />
+          <ColorSwatch id="coverage-blue-swatch" color="#3b82f6" colorName="Blue swatch" />
         </ColorSwatchPicker>
       );
     },
@@ -436,14 +442,14 @@ const EXAMPLES: Example[] = [
     name: "ColorWheel",
     render: () => {
       const [value, setValue] = createSignal("#6366f1");
-      return <ColorWheel aria-label="Coverage color wheel" value={value()} onChange={setValue} />;
+      return <ColorWheel id="coverage-color-wheel" aria-label="Coverage color wheel" value={value()} onChange={setValue} />;
     },
   },
   {
     name: "ColorWheelFlower",
     render: () => {
       const [value, setValue] = createSignal("#6366f1");
-      return <ColorWheelFlower color={value()} onChange={(next) => setValue(next.hex)} />;
+      return <ColorWheelFlower id="coverage-standalone-color-wheel-flower" color={value()} onChange={(next) => setValue(next.hex)} />;
     },
   },
   {
@@ -453,6 +459,7 @@ const EXAMPLES: Example[] = [
       const [strength, setStrength] = createSignal(10);
       return (
         <ComplexColorWheel
+          id="coverage-complex-color-wheel"
           aria-label="Coverage complex color wheel"
           value={value()}
           onChange={setValue}
@@ -471,7 +478,7 @@ const EXAMPLES: Example[] = [
         rows={["Alpha", "Beta", "Gamma"]}
         pageSize={2}
         autoLoad={false}
-        more={({ count, reveal }) => <Button onClick={reveal}>Show {count} more</Button>}
+        more={({ count, reveal }) => <Button id="coverage-flex-grid-more" onClick={reveal}>Show {count} more</Button>}
       >
         {(row) => <div>{String(row)}</div>}
       </FlexGrid>
@@ -489,8 +496,8 @@ const EXAMPLES: Example[] = [
       return (
         <>
           <ButtonGroup>
-            <Button aria-pressed={selected() === "One" ? "true" : "false"} onClick={() => setSelected("One")}>One</Button>
-            <Button aria-pressed={selected() === "Two" ? "true" : "false"} onClick={() => setSelected("Two")}>Two</Button>
+            <Button id="coverage-button-group-one" aria-pressed={selected() === "One" ? "true" : "false"} onClick={() => setSelected("One")}>One</Button>
+            <Button id="coverage-button-group-two" aria-pressed={selected() === "Two" ? "true" : "false"} onClick={() => setSelected("Two")}>Two</Button>
           </ButtonGroup>
           <p role="status">{selected() ? `Selected ${selected()}` : "No button selected"}</p>
         </>
@@ -501,8 +508,8 @@ const EXAMPLES: Example[] = [
     name: "CheckboxGroup",
     render: () => (
       <CheckboxGroup>
-        <Checkbox>First</Checkbox>
-        <Checkbox>Second</Checkbox>
+        <Checkbox id="coverage-checkbox-first">First</Checkbox>
+        <Checkbox id="coverage-checkbox-second">Second</Checkbox>
       </CheckboxGroup>
     ),
   },
@@ -521,12 +528,12 @@ const EXAMPLES: Example[] = [
       </Kbd>
     ),
   },
-  { name: "Input (placeholder)", render: () => <Input placeholder="Helper text." /> },
+  { name: "Input (placeholder)", render: () => <Input id="coverage-helper-input" aria-label="Coverage helper input" placeholder="Helper text." /> },
   {
     name: "Collapsible",
     render: () => (
-      <Collapsible>
-        <Collapsible.Trigger>More</Collapsible.Trigger>
+      <Collapsible id="coverage-collapsible">
+        <Collapsible.Trigger id="coverage-collapsible-trigger">More</Collapsible.Trigger>
         <Collapsible.Content>Hidden until opened.</Collapsible.Content>
       </Collapsible>
     ),
@@ -534,9 +541,9 @@ const EXAMPLES: Example[] = [
   {
     name: "Accordion",
     render: () => (
-      <Accordion>
-        <Collapsible>
-          <Collapsible.Trigger>First</Collapsible.Trigger>
+      <Accordion id="coverage-accordion">
+        <Collapsible id="coverage-accordion-first">
+          <Collapsible.Trigger id="coverage-accordion-first-trigger">First</Collapsible.Trigger>
           <Collapsible.Content>One.</Collapsible.Content>
         </Collapsible>
       </Accordion>
@@ -551,8 +558,8 @@ const EXAMPLES: Example[] = [
       </Empty>
     ),
   },
-  { name: "Input (issues)", render: () => <Input issues={[{ code: "required", message: "Required." }]} /> },
-  { name: "Input (invalid)", render: () => <Input state="invalid" /> },
+  { name: "Input (issues)", render: () => <Input id="coverage-issues-input" aria-label="Coverage input with issues" issues={[{ code: "required", message: "Required." }]} /> },
+  { name: "Input (invalid)", render: () => <Input id="coverage-invalid-input" aria-label="Coverage invalid input" state="invalid" /> },
   {
     name: "Input (grouped)",
     render: () => {
@@ -563,19 +570,20 @@ const EXAMPLES: Example[] = [
         <>
           <Flex gap="sm">
             <Input
+              id="coverage-grouped-input"
               type="text"
               aria-label="Grouped input"
               value={value()}
               onInput={(event) => setValue(event.currentTarget.value)}
             />
-            <Button onClick={() => setSubmitted(`Submitted ${value() || "empty value"} · ${++submissions}`)}>Go</Button>
+            <Button id="coverage-grouped-submit" onClick={() => setSubmitted(`Submitted ${value() || "empty value"} · ${++submissions}`)}>Go</Button>
           </Flex>
           <p role="status">{submitted()}</p>
         </>
       );
     },
   },
-  { name: "InputOTP", render: () => <InputOTP aria-label="Coverage verification code" /> },
+  { name: "InputOTP", render: () => <InputOTP id="coverage-verification-code" aria-label="Coverage verification code" /> },
   {
     name: "ListBox",
     render: () => (
@@ -587,12 +595,12 @@ const EXAMPLES: Example[] = [
     render: () => <MetalBorder>Bordered</MetalBorder>,
   },
   { name: "Meter", render: () => <Meter value={60} /> },
-  { name: "Input (number)", render: () => <Input type="number" /> },
+  { name: "Input (number)", render: () => <Input id="coverage-number-input" aria-label="Coverage number input" type="number" /> },
   {
     name: "Popover",
     render: () => (
-      <Popover>
-        <Popover.Trigger>Open</Popover.Trigger>
+      <Popover id="coverage-popover">
+        <Popover.Trigger id="coverage-popover-trigger">Open</Popover.Trigger>
         <Popover.Content>Content.</Popover.Content>
       </Popover>
     ),
@@ -607,14 +615,14 @@ const EXAMPLES: Example[] = [
       </ScrollArea>
     ),
   },
-  { name: "Input (search)", render: () => <Input type="search" /> },
+  { name: "Input (search)", render: () => <Input id="coverage-search-input" aria-label="Coverage search input" type="search" /> },
   { name: "Separator", render: () => <Separator /> },
-  { name: "SizePicker", render: () => <SizePicker /> },
+  { name: "SizePicker", render: () => <SizePicker id="coverage-size-picker" /> },
   {
     name: "Slider",
     render: () => {
       const [value, setValue] = createSignal(40);
-      return <Slider label="Volume" value={value()} onChange={setValue} />;
+      return <Slider id="coverage-volume" label="Volume" value={value()} onChange={setValue} />;
     },
   },
   { name: "Spinner", render: () => <Spinner /> },
@@ -630,20 +638,20 @@ const EXAMPLES: Example[] = [
     ),
   },
   { name: "Text", render: () => <Text>Body text.</Text> },
-  { name: "Textarea", render: () => <Textarea /> },
-  { name: "Input (text)", render: () => <Input type="text" /> },
+  { name: "Textarea", render: () => <Textarea id="coverage-textarea" aria-label="Coverage textarea" /> },
+  { name: "Input (text)", render: () => <Input id="coverage-text-input" aria-label="Coverage text input" type="text" /> },
   {
     name: "TimeField",
     render: () => {
       const [value, setValue] = createSignal("");
-      return <TimeField value={value()} onChange={setValue}><TimeField.Group><TimeField.Input aria-label="Coverage time" /></TimeField.Group></TimeField>;
+      return <TimeField value={value()} onChange={setValue}><TimeField.Group><TimeField.Input id="coverage-time" aria-label="Coverage time" /></TimeField.Group></TimeField>;
     },
   },
   {
     name: "DateField",
     render: () => {
       const [value, setValue] = createSignal("");
-      return <DateField value={value()} onChange={setValue}><DateField.Group><DateField.Input aria-label="Coverage date" /></DateField.Group></DateField>;
+      return <DateField value={value()} onChange={setValue}><DateField.Group><DateField.Input id="coverage-date" aria-label="Coverage date" /></DateField.Group></DateField>;
     },
   },
 ];
@@ -663,10 +671,10 @@ const COMPOSED: Example[] = [
     render: () => {
       const [value, setValue] = createSignal("#6366f1");
       return (
-        <ColorPicker value={value()} onChange={setValue}>
-          <ColorPicker.Area />
-          <ColorPicker.Slider />
-          <ColorPicker.Field />
+        <ColorPicker id="coverage-color-picker" value={value()} onChange={setValue}>
+          <ColorPicker.Area id="coverage-color-picker-area" aria-label="Coverage color area" />
+          <ColorPicker.Slider id="coverage-color-picker-hue" aria-label="Coverage color hue" />
+          <ColorPicker.Field id="coverage-color-picker-value" aria-label="Coverage color value" />
         </ColorPicker>
       );
     },
@@ -675,14 +683,14 @@ const COMPOSED: Example[] = [
     name: "ColorArea",
     render: () => {
       const [value, setValue] = createSignal({ h: 250, s: 0.7, v: 0.9 });
-      return <ColorArea aria-label="Standalone color area" value={value()} onChange={setValue} />;
+      return <ColorArea id="coverage-standalone-color-area" aria-label="Standalone color area" value={value()} onChange={setValue} />;
     },
   },
   {
     name: "ColorField",
     render: () => {
       const [value, setValue] = createSignal("#6366f1");
-      return <ColorField aria-label="Standalone color value" value={value()} onChange={setValue} />;
+      return <ColorField id="coverage-standalone-color-value" aria-label="Standalone color value" value={value()} onChange={setValue} />;
     },
   },
   {
@@ -691,6 +699,7 @@ const COMPOSED: Example[] = [
       const [value, setValue] = createSignal(250);
       return (
         <ColorSlider
+          id="coverage-standalone-hue"
           aria-label="Standalone hue"
           value={value()}
           type="hue"
@@ -705,6 +714,7 @@ const COMPOSED: Example[] = [
       const [selected, setSelected] = createSignal<string | null>(null);
       return (
         <ComboBox
+          id="coverage-combo-box"
           items={[
             { id: "a", label: "Alpha" },
             { id: "b", label: "Beta" },
@@ -713,8 +723,8 @@ const COMPOSED: Example[] = [
           onSelectionChange={setSelected}
         >
           <ComboBox.InputGroup>
-            <ComboBox.Input aria-label="Coverage combo box" />
-            <ComboBox.Trigger />
+            <ComboBox.Input id="coverage-combo-box-input" aria-label="Coverage combo box" />
+            <ComboBox.Trigger id="coverage-combo-box-trigger" />
           </ComboBox.InputGroup>
           <ComboBox.Popover><ComboBox.List /></ComboBox.Popover>
         </ComboBox>
@@ -725,32 +735,38 @@ const COMPOSED: Example[] = [
     name: "DatePicker",
     render: () => {
       const [value, setValue] = createSignal(new Date());
-      return <DatePicker value={value()} onChange={setValue} />;
+      return <DatePicker id="coverage-date-picker" value={value()} onChange={setValue} />;
     },
   },
   {
     name: "DateRangePicker",
     render: () => {
       const [value, setValue] = createSignal({ start: new Date(), end: new Date() });
-      return <DateRangePicker value={value()} onChange={setValue} />;
+      return <DateRangePicker id="coverage-date-range-picker" value={value()} onChange={setValue} />;
     },
   },
   {
     name: "RangeCalendar",
     render: () => {
       const [value, setValue] = createSignal({ start: new Date(), end: new Date() });
-      return <RangeCalendar value={value()} onChange={setValue} />;
+      return <RangeCalendar id="coverage-range-calendar" value={value()} onChange={setValue} />;
     },
   },
   { name: "Header", render: () => <Header>Header content</Header> },
   {
     name: "Toolbar",
-    render: () => (
-      <Toolbar aria-label="Coverage tools">
-        <Button>First coverage tool</Button>
-        <Button>Second coverage tool</Button>
-      </Toolbar>
-    ),
+    render: () => {
+      const [result, setResult] = createSignal("No coverage tool selected");
+      return (
+        <>
+          <Toolbar id="coverage-toolbar" aria-label="Coverage tools">
+            <Button id="coverage-toolbar-first" onClick={() => setResult("First coverage tool selected")}>First coverage tool</Button>
+            <Button id="coverage-toolbar-second" onClick={() => setResult("Second coverage tool selected")}>Second coverage tool</Button>
+          </Toolbar>
+          <p role="status">{result()}</p>
+        </>
+      );
+    },
   },
   {
     // Needs an i18n store. The library exports the factory for it, so the
@@ -758,7 +774,7 @@ const COMPOSED: Example[] = [
     name: "LanguageSwitcher",
     render: () => <LanguageSwitcherExample />,
   },
-  { name: "ThemeColorPicker", render: () => <ThemeColorPicker /> },
+  { name: "ThemeColorPicker", render: () => <ThemeColorPicker id="coverage-theme-color-picker" aria-label="Change coverage theme color" storagePrefix="js-software-coverage" /> },
   {
     // There is no `LiveChat` export — the tracker names components after their
     // recipe file, and this one ships as a bubble and a panel.

@@ -53,6 +53,7 @@ export default function RadiusSection(props: RadiusSectionProps) {
                 <For each={RADIUS_VALUES}>
                   {(value) => (
                     <Radio
+                      id={`theme-radius-${radiusType.key.replace(/^--/, "")}-${value.replace(/[^a-z0-9]+/gi, "-")}`}
                       value={value}
                       aria-label={`${radiusType.label} radius ${radiusLabel(value)}`}
                       class="h-8 w-10 [&_[data-slot=radio-control]]:mt-0 [&_[data-slot=radio-control]]:h-8 [&_[data-slot=radio-control]]:w-10 [&_[data-slot=radio-control]]:rounded-lg [&_[data-slot=radio-control]]:border-base-content/20 [&_[data-slot=radio-control]]:bg-base-200"

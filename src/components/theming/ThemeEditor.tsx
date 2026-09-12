@@ -34,6 +34,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       class={`bg-base-100 flex w-full shrink-0 flex-col items-center gap-2 p-2 pb-20 md:sticky md:top-16 md:items-start lg:items-stretch ${props.dockActiveItem !== "editor" ? "max-md:hidden" : ""}`}
     >
       <Input
+        id="theme-name"
         aria-label="Theme name"
         value={props.theme.name}
         onInput={(event) => props.onThemeNameChange(event.currentTarget.value)}
@@ -41,11 +42,11 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       <ActionStatus message={props.status} />
 
       <Grid cols="2" gap="sm" class="w-full">
-        <Button onClick={props.onRandomizeTheme}>
+        <Button id="theme-randomize" onClick={props.onRandomizeTheme}>
           <Icon src="mdi--dice" width={16} height={16} class="group-active:scale-95" />
           Random
         </Button>
-        <Button flavor="secondary" onClick={() => props.onExportCSS(isDefault(), isPrefersDark(), colorScheme())}>
+        <Button id="theme-export-css" flavor="secondary" onClick={() => props.onExportCSS(isDefault(), isPrefersDark(), colorScheme())}>
           <Icon src="mdi--code-braces" width={16} height={16} />
           CSS
         </Button>
@@ -53,6 +54,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
 
       <div class="flex flex-col gap-2 w-full">
         <Switch
+          id="theme-apply-whole-site"
           class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
           size="sm"
           checked={props.applyToWholeSite}
@@ -62,6 +64,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         </Switch>
 
         <Switch
+          id="theme-remember"
           class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
           size="sm"
           checked={props.rememberTheme}
@@ -115,6 +118,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
       
       <div class="flex flex-col gap-3 w-full">
         <Switch
+          id="theme-default"
           class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
           size="sm"
           checked={isDefault()}
@@ -124,6 +128,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         </Switch>
 
         <Switch
+          id="theme-default-dark"
           class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
           size="sm"
           checked={isPrefersDark()}
@@ -133,6 +138,7 @@ export default function ThemeEditor(props: ThemeEditorProps) {
         </Switch>
 
         <Switch
+          id="theme-color-scheme-dark"
           class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
           size="sm"
           checked={colorScheme() === "dark"}
