@@ -1,5 +1,5 @@
 import { Component, Show } from "solid-js";
-import { Button, Flex, Navbar } from "@pathscale/ui";
+import { Button, Flex, Link, Navbar } from "@pathscale/ui";
 import { useNavigation } from "./hooks/useNavigation";
 import { MainNavigation } from "./components/MainNavigation";
 import { ComponentsMenu } from "./components/ComponentsMenu";
@@ -47,18 +47,18 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         </Navbar.Start>
 
         <Navbar.Start class="hidden lg:flex">
-          <a
+          <Link
             href={ROUTES.HOME}
-            class="text-xl font-bold normal-case hover:text-primary transition-colors px-4 py-2"
+            class="text-base-content text-xl font-bold normal-case hover:text-primary transition-colors px-4 py-2"
           >
             UI
-          </a>
+          </Link>
         </Navbar.Start>
 
         <Navbar.Center class="lg:hidden">
-          <a href={ROUTES.HOME} class="text-xl font-bold normal-case px-4 py-2">
+          <Link href={ROUTES.HOME} class="text-base-content text-xl font-bold normal-case px-4 py-2">
             UI
-          </a>
+          </Link>
         </Navbar.Center>
 
         <Navbar.Center class="hidden lg:flex">
@@ -68,35 +68,34 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         <Navbar.End class="hidden lg:flex">
           <Flex gap="md" align="center">
             <Search class="w-48" />
-            <a
+            <Link
               id="github-source-link"
               href={EXTERNAL_ROUTES.GITHUB}
-              target="_blank"
-              rel="noopener noreferrer"
+              isExternal
               aria-label="View UI on GitHub"
-              class="hover:text-primary p-2 rounded-full transition-colors"
+              class="text-base-content hover:text-primary p-2 rounded-full transition-colors"
             >
               <GitHubIcon />
-            </a>
-            <a
+            </Link>
+            <Button
               href={ROUTES.DOCS_INSTALLATION}
-              class="bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-lg font-semibold transition-all whitespace-nowrap"
+              flavor="primary"
+              class="whitespace-nowrap"
             >
               Get Started
-            </a>
+            </Button>
           </Flex>
         </Navbar.End>
 
         <Navbar.End class="lg:hidden">
-          <a
+          <Link
             href={EXTERNAL_ROUTES.GITHUB}
-            target="_blank"
-            rel="noopener noreferrer"
+            isExternal
             aria-label="View UI on GitHub from mobile navigation"
-            class="p-2 rounded-full"
+            class="text-base-content p-2 rounded-full"
           >
             <GitHubIcon />
-          </a>
+          </Link>
         </Navbar.End>
         </Navbar.Row>
       </div>

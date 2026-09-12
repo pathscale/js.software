@@ -27,10 +27,6 @@ export default function Preview(props: PreviewProps) {
     <div
       id="theme-preview"
       class="text-base-content pt-6 transition-colors duration-500 bg-base-300"
-      style={{
-        "background-image":
-          "linear-gradient(rgb(0 0 0 / var(--theme-glass-scrim-opacity, 0%)), rgb(0 0 0 / var(--theme-glass-scrim-opacity, 0%)))",
-      }}
     >
       <div class="flex flex-col items-start gap-3 px-3 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:ps-10">
         <h2 class="font-title text-lg">{TAB_TITLES[selectedKey()]}</h2>

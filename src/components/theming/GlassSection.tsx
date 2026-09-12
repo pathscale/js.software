@@ -1,8 +1,6 @@
 import { Button, Icon, Separator, Slider, Switch } from "@pathscale/ui";
 import {
   GLASS_LIMITS,
-  GLASS_OPACITY_MAX,
-  GLASS_SCRIM_MAX,
   glassThemeDefaults,
   resolveGlassThemeValues,
   tuningFromTheme,
@@ -95,34 +93,6 @@ export default function GlassSection(props: GlassSectionProps) {
             step={1}
             value={tuning().depth}
             onChange={(value) => applyTuning({ depth: value })}
-          />
-        </div>
-
-        <div class="bg-base-200 rounded-lg p-2">
-          <Slider
-            id="theme-glass-opacity"
-            label="Opacity"
-            size="sm"
-            min={0}
-            max={GLASS_OPACITY_MAX}
-            step={1}
-            value={tuning().opacity}
-            formatValue={(value) => `${value}%`}
-            onChange={(value) => applyTuning({ opacity: value })}
-          />
-        </div>
-
-        <div class="bg-base-200 rounded-lg p-2">
-          <Slider
-            id="theme-glass-scrim"
-            label="Scrim"
-            size="sm"
-            min={0}
-            max={GLASS_SCRIM_MAX}
-            step={1}
-            value={tuning().scrim}
-            formatValue={(value) => `${value}%`}
-            onChange={(value) => applyTuning({ scrim: value })}
           />
         </div>
       </div>

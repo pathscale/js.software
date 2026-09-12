@@ -10,6 +10,7 @@ import DocsLayouts from "./pages/docs/Layouts";
 import DocsUsage from "./pages/docs/Usage";
 import AccordionShowcase from "./components/AccordionShowcase";
 import AlertShowcase from "./components/AlertShowcase";
+import AuthPoweredByShowcase from "./components/AuthPoweredByShowcase";
 import AvatarShowcase from "./components/AvatarShowcase";
 import BadgeShowcase from "./components/BadgeShowcase";
 import BreadcrumbShowcase from "./components/BreadcrumbShowcase";
@@ -72,6 +73,7 @@ export interface RouteConfig {
 const dedicatedFamiliesByRoute = {
   Accordion: ["accordion"],
   Alert: ["alert"],
+  "Auth Powered By": ["auth-powered-by"],
   Avatar: ["avatar"],
   Badge: ["badge"],
   Breadcrumb: ["breadcrumb"],
@@ -126,6 +128,12 @@ const dedicatedFamiliesByRoute = {
 const componentRoutes = ([
   ["Accordion", ROUTES.ACCORDION, AccordionShowcase, "Expandable content sections."],
   ["Alert", ROUTES.ALERT, AlertShowcase, "Important status and feedback messages."],
+  [
+    "Auth Powered By",
+    ROUTES.AUTH_POWERED_BY,
+    AuthPoweredByShowcase,
+    "Honey identity-provider attribution, variants, alignment, and custom marks.",
+  ],
   ["Avatar", ROUTES.AVATAR, AvatarShowcase, "Images, initials, and user identity."],
   ["Badge", ROUTES.BADGE, BadgeShowcase, "Compact labels, counts, and statuses."],
   ["Breadcrumb", ROUTES.BREADCRUMB, BreadcrumbShowcase, "Hierarchical navigation paths."],

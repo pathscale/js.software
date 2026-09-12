@@ -72,6 +72,7 @@ import {
   readThemeEditorState,
   writeThemeEditorState,
 } from "../lib/themeEditorPersistence";
+import { withThemeAliases } from "../lib/themeAliases";
 import { createActionStatus } from "../components/showcase/ActionStatus";
 import {
   accentOptions,
@@ -95,6 +96,9 @@ const withIdentity = (theme: Theme): Theme => ({
   ...theme,
   _id: theme._id || `${Date.now()}-${Math.random().toString(36).slice(2)}`,
 });
+
+const normalizeTheme = (theme: Theme): Theme =>
+  withIdentity(withThemeAliases(withGlassThemeDefaults(theme)));
 
 const randomItem = <T,>(values: readonly T[]): T =>
   values[Math.floor(Math.random() * values.length)];
@@ -150,15 +154,11 @@ const restoreThemeLibrary = (
   persisted: ReturnType<typeof readThemeEditorState>,
 ): { currentTheme: Theme; themes: Theme[] } => {
   if (!persisted) {
-    const currentTheme = withIdentity(
-      withGlassThemeDefaults({ ...createComposedTheme(), name: "Theme 1" }),
-    );
+    const currentTheme = normalizeTheme({ ...createComposedTheme(), name: "Theme 1" });
     return { currentTheme, themes: [currentTheme] };
   }
 
-  const currentTheme = withIdentity(
-    withGlassThemeDefaults(persisted.currentTheme),
-  );
+  const currentTheme = normalizeTheme(persisted.currentTheme);
   let linkedCurrentTheme = false;
   const themes = persisted.themes.map((theme) => {
     const isCurrentTheme =
@@ -169,7 +169,7 @@ const restoreThemeLibrary = (
       linkedCurrentTheme = true;
       return currentTheme;
     }
-    return withIdentity(withGlassThemeDefaults(theme));
+    return normalizeTheme(theme);
   });
 
   return { currentTheme, themes };
@@ -217,7 +217,7 @@ export default function Theming() {
   };
 
   const commitTheme = (theme: Theme) => {
-    const next = withIdentity(withGlassThemeDefaults(theme));
+    const next = normalizeTheme(theme);
     setCurrentTheme(next);
     const themes = customThemes().map((saved) =>
       identity(saved) === identity(next) ? next : saved,
@@ -292,12 +292,10 @@ export default function Theming() {
     const usedNames = new Set(customThemes().map((theme) => theme.name));
     let nextThemeNumber = 1;
     while (usedNames.has(`Theme ${nextThemeNumber}`)) nextThemeNumber += 1;
-    const theme = withIdentity(
-      withGlassThemeDefaults({
-        ...createComposedTheme(),
-        name: `Theme ${nextThemeNumber}`,
-      }),
-    );
+    const theme = normalizeTheme({
+      ...createComposedTheme(),
+      name: `Theme ${nextThemeNumber}`,
+    });
     const themes = [theme, ...customThemes()];
     setCurrentTheme(theme);
     setCustomThemes(themes);
@@ -322,7 +320,7 @@ export default function Theming() {
       return;
     }
 
-    const next = remaining[0] || withIdentity(createComposedTheme());
+    const next = remaining[0] || normalizeTheme(createComposedTheme());
     setCurrentTheme(next);
     setCustomThemes(remaining);
     if (applyToWholeSite()) applyThemeToDocument(next);
@@ -331,7 +329,7 @@ export default function Theming() {
   };
 
   const clearAllThemes = () => {
-    const next = withIdentity(createComposedTheme());
+    const next = normalizeTheme(createComposedTheme());
     setCurrentTheme(next);
     setCustomThemes([]);
     if (applyToWholeSite()) applyThemeToDocument(next);

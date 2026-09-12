@@ -2,7 +2,8 @@ import { useLocation } from "@solidjs/router";
 import { routes } from "../routes";
 import type { JSX } from "@solidjs/web";
 import type { ParentComponent } from "solid-js";
-import { Flex } from "@pathscale/ui";
+import { Flex, Link } from "@pathscale/ui";
+import { ROUTES } from "../config/routes";
 
 interface ShowcaseLayoutProps {
   children: JSX.Element;
@@ -31,8 +32,16 @@ const ShowcaseLayout: ParentComponent = (props) => {
       <div class="mx-auto max-w-5xl">
         <Flex direction="col" gap="lg" class="max-w-4xl mx-auto">
           <div>
+            <Link
+              id="showcase-all-components"
+              href={ROUTES.SHOWCASES}
+              underline="hover"
+              class="mb-3"
+            >
+              All components
+            </Link>
             <h1 class="text-3xl font-bold mb-2">{current()?.name}</h1>
-            <p class="text-gray-600 dark:text-gray-400">
+            <p class="text-base-content/70">
               {current()?.description}
             </p>
           </div>

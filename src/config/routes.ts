@@ -8,6 +8,7 @@ export const ROUTES = {
   SHOWCASES: "/showcases",
   ACCORDION: "/accordion",
   ALERT: "/alert",
+  AUTH_POWERED_BY: "/auth-powered-by",
   AVATAR: "/avatar",
   BADGE: "/badge",
   BREADCRUMB: "/breadcrumb",

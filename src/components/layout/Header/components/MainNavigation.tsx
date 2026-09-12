@@ -1,5 +1,5 @@
 import { Component, For } from "solid-js";
-import { Button, Flex } from "@pathscale/ui";
+import { Button, Flex, Link } from "@pathscale/ui";
 import { navigationItems } from "../navigationData";
 import { useNavigation } from "../hooks/useNavigation";
 
@@ -16,16 +16,16 @@ export const MainNavigation: Component<MainNavigationProps> = (props) => {
         {(item) => (
           <>
             {item.href ? (
-              <a
+              <Link
                 href={item.href}
                 class={`px-3 py-2 rounded-lg transition-colors font-medium text-base ${
                   isActive(item.href)
                     ? "bg-primary/20 text-primary"
-                    : "hover:bg-base-200"
+                    : "text-base-content hover:bg-base-200"
                 }`}
               >
                 {item.title}
-              </a>
+              </Link>
             ) : (
               <Button
                 variant="ghost"
@@ -38,7 +38,7 @@ export const MainNavigation: Component<MainNavigationProps> = (props) => {
                 class={`px-3 py-2 rounded-lg transition-colors font-medium text-base ${
                   activeCategory() === item.title
                     ? "bg-primary/20 text-primary"
-                    : "hover:bg-base-200"
+                    : "text-base-content hover:bg-base-200"
                 }`}
               >
                 {item.title}

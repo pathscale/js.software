@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { Button, Card, Chip, Flex, Icon } from "@pathscale/ui";
+import { Button, Card, Chip, Flex, Icon, Text } from "@pathscale/ui";
 import { ContentContainer } from "../components/content/ContentContainer";
 import { ROUTES } from "../config/routes";
 
@@ -22,10 +22,9 @@ const Home: Component = () => {
                 </Chip>
               </div>
 
-              <h1 class="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
-                Build Exceptional UIs with{" "}
-                <span class="text-primary">JS.Software UI</span>
-              </h1>
+              <Text as="h1" class="text-5xl lg:text-7xl font-bold mb-8 leading-tight">
+                Build Exceptional UI/
+              </Text>
 
               <p class="text-xl lg:text-2xl text-base-content/70 mb-12 max-w-4xl mx-auto leading-relaxed">
                 A type-safe component library that keeps reusable presentation in
