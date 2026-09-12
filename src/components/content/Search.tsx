@@ -50,7 +50,7 @@ export const Search: Component<SearchProps> = (props) => {
     DOCS_LAYOUTS: "Solid Layouts",
     DOCS_USAGE: "Usage Cheatsheet",
     THEMING: "Theme Editor",
-    SHOWCASES: "Component Showcases",
+    SHOWCASES: "Components",
     CHAT_BUBBLE: "Chat Bubble",
     COLOR_PICKER: "Color Picker",
     FILE_INPUT: "File Input",

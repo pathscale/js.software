@@ -51,12 +51,20 @@ const colorsMatch = (stored: string, swatch: string) => {
   );
 };
 
+const storedSelection = (value: string | undefined) => {
+  const parsed = Number.parseInt(value ?? "", 10);
+  return Number.isInteger(parsed) && parsed >= 0 && parsed < 7
+    ? parsed
+    : undefined;
+};
+
 function AccentSelector(props: {
   id: string;
   label: string;
   hint: string;
   value: string;
   options: readonly string[];
+  selectedIndex?: number;
   onPick: (value: string) => void;
 }) {
   return (
@@ -65,12 +73,15 @@ function AccentSelector(props: {
         <span class="font-semibold text-base-content/70 text-xs uppercase tracking-[.04em]">
           {props.label}
         </span>
-        <span class="text-base-content/50 text-xs">{props.hint}</span>
+        <span class="text-base-content/60 text-xs">{props.hint}</span>
       </div>
       <Flex align="center" gap="sm">
         <For each={props.options}>
           {(option, index) => {
-            const selected = () => colorsMatch(props.value, option);
+            const selected = () =>
+              props.selectedIndex === undefined
+                ? colorsMatch(props.value, option)
+                : props.selectedIndex === index();
             return (
               <Button
                 id={`${props.id}-${index()}`}
@@ -100,23 +111,27 @@ function AccentSelector(props: {
 }
 
 export default function ThemeComposer(props: ThemeComposerProps) {
-  const mode = () => (props.theme._themeType === "dark" ? "dark" : "light");
-  const composition = () => compositionFromTheme(props.theme);
-  const palette = () => surfaceColors(mode());
-  const controlFriends = () =>
+  const mode = createMemo(() =>
+    props.theme._themeType === "dark" ? "dark" : "light",
+  );
+  const composition = createMemo(() => compositionFromTheme(props.theme));
+  const palette = createMemo(() => surfaceColors(mode()));
+  const controlFriends = createMemo(() =>
     accentOptions(
       composition().surface,
       mode(),
       composition().strength,
       composition().softness,
-    );
-  const artworkFriends = () =>
+    ),
+  );
+  const artworkFriends = createMemo(() =>
     artworkAccentOptions(
       composition().surface,
       mode(),
       composition().strength,
       composition().softness,
-    );
+    ),
+  );
 
   const commitComposition = (patch: Partial<ThemeComposition>, message: string) =>
     props.onThemeChange(applyCompositionWithAccentHarmony(props.theme, patch), message);
@@ -191,6 +206,7 @@ export default function ThemeComposer(props: ThemeComposerProps) {
           hint="Buttons, focus rings, active tabs"
           value={props.theme["--color-primary"]}
           options={controlFriends()}
+          selectedIndex={storedSelection(props.theme._controlAccentIndex)}
           onPick={(value) =>
             props.onThemeChange(
               {
@@ -207,6 +223,7 @@ export default function ThemeComposer(props: ThemeComposerProps) {
           hint="Icons and decorative emphasis"
           value={props.theme["--color-accent"]}
           options={artworkFriends()}
+          selectedIndex={storedSelection(props.theme._artAccentIndex)}
           onPick={(value) =>
             props.onThemeChange(
               {

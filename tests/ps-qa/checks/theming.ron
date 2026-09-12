@@ -66,6 +66,7 @@
         click: Some("button:Light mode"),
         subject: "button:Light mode",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-theme-flower-updates-the-surface",
@@ -77,6 +78,7 @@
         click: Some("radio:Theme color #"),
         subject: "#theme-preview-glass-card",
         expect: PixelsChange,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-theme-composer-offers-five-strength-stops",
@@ -99,6 +101,7 @@
         click: Some("button:Colour strength 50%"),
         subject: "button:Colour strength 50%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "theme-strength-repaints-the-preview",
@@ -133,6 +136,7 @@
         click: Some("button:Control accent 1"),
         subject: "button:Control accent 1",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-theme-composer-offers-artwork-accent-friends",
@@ -155,6 +159,7 @@
         click: Some("button:Artwork accent 1"),
         subject: "button:Artwork accent 1",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "and-a-swatch-per-token",
@@ -259,6 +264,7 @@
         click: Some("radio:Boxes radius 4 pixels"),
         subject: "radio:Boxes radius 4 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-field-size-slider-updates-the-token",
@@ -273,6 +279,7 @@
         key_on: Some("slider:Fields base size"),
         subject: "slider:Fields base size",
         expect: ValueChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-selector-size-slider-updates-the-token",
@@ -287,6 +294,7 @@
         key_on: Some("slider:Selectors base size"),
         subject: "slider:Selectors base size",
         expect: ValueChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-border-slider-updates-the-token",
@@ -301,6 +309,7 @@
         key_on: Some("slider:Border width"),
         subject: "slider:Border width",
         expect: ValueChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-glass-depth-slider-responds-to-a-real-pointer",
@@ -314,6 +323,7 @@
         pointer_drag: Some((from: "slider:Depth", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Depth",
         expect: ValueChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-glass-depth-slider-visibly-moves",
@@ -327,6 +337,7 @@
         pointer_drag: Some((from: "slider:Depth", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Depth",
         expect: PixelsChange,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-field-size-slider-responds-to-a-real-pointer",
@@ -340,6 +351,7 @@
         pointer_drag: Some((from: "slider:Fields base size", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Fields base size",
         expect: ValueChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-field-size-slider-visibly-moves",
@@ -353,6 +365,7 @@
         pointer_drag: Some((from: "slider:Fields base size", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Fields base size",
         expect: PixelsChange,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-selector-size-slider-responds-to-a-real-pointer",
@@ -366,6 +379,7 @@
         pointer_drag: Some((from: "slider:Selectors base size", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Selectors base size",
         expect: ValueChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-selector-size-slider-visibly-moves",
@@ -379,6 +393,7 @@
         pointer_drag: Some((from: "slider:Selectors base size", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Selectors base size",
         expect: PixelsChange,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-border-slider-responds-to-a-real-pointer",
@@ -392,6 +407,7 @@
         pointer_drag: Some((from: "slider:Border width", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Border width",
         expect: ValueChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-border-slider-visibly-moves",
@@ -405,6 +421,7 @@
         pointer_drag: Some((from: "slider:Border width", dx: 100.0, dy: 0.0, steps: 4)),
         subject: "slider:Border width",
         expect: PixelsChange,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-preview-price-slider-is-labelled-and-interactive",
@@ -1386,6 +1403,7 @@
         click: Some("radio:Boxes radius square"),
         subject: "radio:Boxes radius square",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "boxes_4_pixels_can_be_selected",
@@ -1397,6 +1415,7 @@
         click: Some("radio:Boxes radius 4 pixels"),
         subject: "radio:Boxes radius 4 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "boxes_8_pixels_can_be_selected",
@@ -1408,6 +1427,7 @@
         click: Some("radio:Boxes radius 8 pixels"),
         subject: "radio:Boxes radius 8 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "boxes_16_pixels_can_be_selected",
@@ -1419,6 +1439,7 @@
         click: Some("radio:Boxes radius 16 pixels"),
         subject: "radio:Boxes radius 16 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "boxes_32_pixels_can_be_selected",
@@ -1430,6 +1451,7 @@
         click: Some("radio:Boxes radius 32 pixels"),
         subject: "radio:Boxes radius 32 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "fields_square_can_be_selected",
@@ -1441,6 +1463,7 @@
         click: Some("radio:Fields radius square"),
         subject: "radio:Fields radius square",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "fields_4_pixels_can_be_selected",
@@ -1452,6 +1475,7 @@
         click: Some("radio:Fields radius 4 pixels"),
         subject: "radio:Fields radius 4 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "fields_8_pixels_can_be_selected",
@@ -1463,6 +1487,7 @@
         click: Some("radio:Fields radius 8 pixels"),
         subject: "radio:Fields radius 8 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "fields_16_pixels_can_be_selected",
@@ -1474,6 +1499,7 @@
         click: Some("radio:Fields radius 16 pixels"),
         subject: "radio:Fields radius 16 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "fields_32_pixels_can_be_selected",
@@ -1485,6 +1511,7 @@
         click: Some("radio:Fields radius 32 pixels"),
         subject: "radio:Fields radius 32 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "selectors_square_can_be_selected",
@@ -1496,6 +1523,7 @@
         click: Some("radio:Selectors radius square"),
         subject: "radio:Selectors radius square",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "selectors_4_pixels_can_be_selected",
@@ -1507,6 +1535,7 @@
         click: Some("radio:Selectors radius 4 pixels"),
         subject: "radio:Selectors radius 4 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "selectors_8_pixels_can_be_selected",
@@ -1518,6 +1547,7 @@
         click: Some("radio:Selectors radius 8 pixels"),
         subject: "radio:Selectors radius 8 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "selectors_16_pixels_can_be_selected",
@@ -1529,6 +1559,7 @@
         click: Some("radio:Selectors radius 16 pixels"),
         subject: "radio:Selectors radius 16 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "selectors_32_pixels_can_be_selected",
@@ -1540,6 +1571,7 @@
         click: Some("radio:Selectors radius 32 pixels"),
         subject: "radio:Selectors radius 32 pixels",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "glass_defaults_execute_their_reset_callback",
@@ -1582,6 +1614,17 @@
         click: Some("button:Light mode"),
         subject: "link:Home",
         expect: PixelsChange,
+        outcome_timeout_ms: 8000,
+    ),
+    (
+        id: "whole_site_header_keeps_readable_contrast",
+        group: "theming",
+        what: "the generated header text remains readable against the applied site theme",
+        open: None,
+        hover: None,
+        click: None,
+        subject: "link:Home",
+        expect: Contrast,
         outcome_timeout_ms: 8000,
     ),
     (
@@ -2247,6 +2290,7 @@
         click: Some("button:Colour strength 20%"),
         subject: "button:Colour strength 20%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "colour_strength_30_is_selectable",
@@ -2258,6 +2302,7 @@
         click: Some("button:Colour strength 30%"),
         subject: "button:Colour strength 30%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "colour_strength_40_is_selectable",
@@ -2269,6 +2314,7 @@
         click: Some("button:Colour strength 40%"),
         subject: "button:Colour strength 40%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "softness_0_is_selectable",
@@ -2280,6 +2326,7 @@
         click: Some("button:Softness 0%"),
         subject: "button:Softness 0%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "softness_25_is_selectable",
@@ -2291,6 +2338,7 @@
         click: Some("button:Softness 25%"),
         subject: "button:Softness 25%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "softness_50_is_selectable",
@@ -2302,6 +2350,7 @@
         click: Some("button:Softness 50%"),
         subject: "button:Softness 50%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "softness_75_is_selectable",
@@ -2313,6 +2362,7 @@
         click: Some("button:Softness 75%"),
         subject: "button:Softness 75%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "softness_100_is_selectable",
@@ -2324,6 +2374,7 @@
         click: Some("button:Softness 100%"),
         subject: "button:Softness 100%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "text_brightness_minus_4_is_selectable",
@@ -2335,6 +2386,7 @@
         click: Some("button:Text brightness -4"),
         subject: "button:Text brightness -4",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "text_brightness_minus_2_is_selectable",
@@ -2346,6 +2398,7 @@
         click: Some("button:Text brightness -2"),
         subject: "button:Text brightness -2",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "text_brightness_0_is_selectable",
@@ -2357,6 +2410,7 @@
         click: Some("button:Text brightness 0"),
         subject: "button:Text brightness 0",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "text_brightness_3_is_selectable",
@@ -2368,6 +2422,7 @@
         click: Some("button:Text brightness +3"),
         subject: "button:Text brightness +3",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "text_brightness_6_is_selectable",
@@ -2379,6 +2434,7 @@
         click: Some("button:Text brightness +6"),
         subject: "button:Text brightness +6",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "control_accent_3_is_selectable",
@@ -2390,6 +2446,7 @@
         click: Some("button:Control accent 3"),
         subject: "button:Control accent 3",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "control_accent_4_is_selectable",
@@ -2401,6 +2458,7 @@
         click: Some("button:Control accent 4"),
         subject: "button:Control accent 4",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "control_accent_5_is_selectable",
@@ -2412,6 +2470,7 @@
         click: Some("button:Control accent 5"),
         subject: "button:Control accent 5",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "control_accent_6_is_selectable",
@@ -2423,6 +2482,7 @@
         click: Some("button:Control accent 6"),
         subject: "button:Control accent 6",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "control_accent_7_is_selectable",
@@ -2434,6 +2494,7 @@
         click: Some("button:Control accent 7"),
         subject: "button:Control accent 7",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "artwork_accent_3_is_selectable",
@@ -2445,6 +2506,7 @@
         click: Some("button:Artwork accent 3"),
         subject: "button:Artwork accent 3",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "artwork_accent_4_is_selectable",
@@ -2456,6 +2518,7 @@
         click: Some("button:Artwork accent 4"),
         subject: "button:Artwork accent 4",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "artwork_accent_5_is_selectable",
@@ -2467,6 +2530,7 @@
         click: Some("button:Artwork accent 5"),
         subject: "button:Artwork accent 5",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "artwork_accent_6_is_selectable",
@@ -2478,6 +2542,7 @@
         click: Some("button:Artwork accent 6"),
         subject: "button:Artwork accent 6",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "artwork_accent_7_is_selectable",
@@ -2489,6 +2554,7 @@
         click: Some("button:Artwork accent 7"),
         subject: "button:Artwork accent 7",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "theme-softness-repaints-the-preview",
@@ -2524,6 +2590,7 @@
         click: Some("button:Reset"),
         subject: "status:Theme builder reset",
         expect: PaintsNamed,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "the-glass-blur-slider-repaints-the-preview",
