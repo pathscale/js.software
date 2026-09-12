@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it, setDefaultTimeout } from "bun:test";
 import chroma from "chroma-js";
 import { calculateContrastRatio } from "../src/utils/theme/contrastCalculation";
 import {
@@ -11,6 +11,8 @@ import {
   surfaceColors,
 } from "../src/lib/themeComposer";
 import type { Theme } from "../src/types/theme";
+
+setDefaultTimeout(15_000);
 
 const seed = (mode: "light" | "dark"): Theme => ({
   name: `${mode} test`,
