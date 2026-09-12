@@ -75,6 +75,28 @@
 }
 
 @layer components {
+  .components-demo-grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, 18rem), 1fr)
+    );
+  }
+
+  .components-demo-grid > * {
+    min-width: 0;
+  }
+
+  .theme-glass-disabled [data-material="glass"] {
+    background-color: var(--color-base-100);
+    border-color: var(--color-base-300);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .theme-glass-disabled [data-material="glass"]::before {
+    box-shadow: none;
+  }
+
   /* --------------------------------------------------------------------------
      Showcase surfaces.
 

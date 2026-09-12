@@ -86,15 +86,9 @@ export function generateLightnessScale(
     getChromaForLightness(lightness, hues[i], chromaLevel)
   );
 
-  const colors = lightnessPalette.map((lightness, i) => {
-    try {
-      const lchColor = chroma.lch(lightness, chromas[i], hues[i]);
-      const [l, c, h] = lchColor.oklch();
-      return createOklchColor(Math.round(l * 100), c, h || baseHue);
-    } catch (error) {
-      return createOklchColor(lightness, 0.02, baseHue);
-    }
-  });
+  const colors = lightnessPalette.map((lightness, i) =>
+    createOklchColor(lightness, chromas[i] / 250, hues[i]),
+  );
 
   return {
     base100: colors[0],
@@ -137,9 +131,11 @@ export const selectSemanticColor = (
     const semanticChroma = 40;
 
     const adjustedChroma = getChromaForLightness(semanticLightness, targetHue, semanticChroma);
-    const semanticColor = chroma.lch(semanticLightness, adjustedChroma, targetHue);
-    const [l, c, h] = semanticColor.oklch();
-    return createOklchColor(Math.round(l * 100), c, h || targetHue);
+    return createOklchColor(
+      semanticLightness,
+      adjustedChroma / 250,
+      targetHue,
+    );
   } catch (error) {
     console.warn("Error in selectSemanticColor:", error);
     const fallbackHues = generateSemanticHues(primaryHue);
@@ -159,7 +155,7 @@ export const generateBaseColors = (
     MATERIAL_COLORS[randomKey as keyof typeof MATERIAL_COLORS];
 
   const baseColor = chroma(selectedColor);
-  const [, , baseHue] = baseColor.lch();
+  const [, , baseHue] = baseColor.oklch();
 
   const baseChroma = 15;
   return generateLightnessScale(
@@ -197,10 +193,11 @@ export const selectBrandColor = (
     }
 
     const adjustedChroma = getChromaForLightness(brandLightness, targetHue, brandChroma);
-    const brandColor = chroma.lch(brandLightness, adjustedChroma, targetHue);
-    
-    const [l, c, h] = brandColor.oklch();
-    return createOklchColor(Math.round(l * 100), c, h || targetHue);
+    return createOklchColor(
+      brandLightness,
+      adjustedChroma / 250,
+      targetHue,
+    );
   } catch (error) {
     console.warn("Error in selectBrandColor:", error);
     const fallbackLightness = isDarkTheme ? 55 : 60;
@@ -329,22 +326,11 @@ export const createAccessiblePaletteSystem = (
       hueShiftAmount
     );
 
-    try {
-      const color = chroma.lch(lightness, adjustedChroma, adjustedHue);
-      const [l, c, h] = color.oklch();
-      fullPalette[`shade-${shades[index]}`] = createOklchColor(
-        Math.round(l * 100),
-        c,
-        h || adjustedHue
-      );
-    } catch (error) {
-      console.warn(`Failed to generate shade ${shades[index]}:`, error);
-      fullPalette[`shade-${shades[index]}`] = createOklchColor(
-        lightness,
-        0.05,
-        baseHue
-      );
-    }
+    fullPalette[`shade-${shades[index]}`] = createOklchColor(
+      lightness,
+      adjustedChroma / 250,
+      adjustedHue,
+    );
   });
 
   let contrastValidation: Record<
@@ -396,7 +382,7 @@ export const generateRandomMaterialTheme = (
     MATERIAL_COLORS[randomKey as keyof typeof MATERIAL_COLORS];
 
   const baseColor = chroma(selectedMaterialColor);
-  const [, , primaryHue] = baseColor.lch();
+  const [, , primaryHue] = baseColor.oklch();
 
   const baseColors = generateBaseColors(isDarkTheme);
 

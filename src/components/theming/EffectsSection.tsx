@@ -11,14 +11,14 @@ const EFFECTS = [
   {
     key: "--depth",
     label: "Depth Effect",
-    description: "3D depth on fields & selectors",
+    description: "Depth on fields and selectors",
   },
   {
     key: "--noise",
-    label: "Noise Effect", 
-    description: "Noise pattern on fields & selectors",
+    label: "Noise Effect",
+    description: "Texture on fields and selectors",
   },
-];
+] as const;
 
 export default function EffectsSection(props: EffectsSectionProps) {
   return (
@@ -26,13 +26,13 @@ export default function EffectsSection(props: EffectsSectionProps) {
       <h3 class="flex items-center gap-3 opacity-70 text-xs"><span><span class="flex gap-1.5">
           <Icon src="mdi--auto-fix" width={16} height={16} class="opacity-40" />
           Effects
-        </span></span><Separator class="flex-1" /></h3>
-      
+      </span></span><Separator class="flex-1" /></h3>
+
       <div class="flex flex-col gap-1">
         <For each={EFFECTS}>
           {(effect) => (
             <Switch
-              id={`theme-effect-${effect.key.replace(/^--/, "")}`}
+              id={`theme-effect-${effect.key.slice(2)}`}
               class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
               size="sm"
               checked={props.theme[effect.key] === "1"}

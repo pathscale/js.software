@@ -4,7 +4,7 @@ import { Menu, Join } from "@pathscale/ui/lab";
 import { ROUTES } from "../config/routes";
 import { ActionStatus, createActionStatus } from "./showcase/ActionStatus";
 
-export default function ComponentsDemo() {
+export default function ComponentsDemo(props: { glassEnabled?: boolean }) {
   const [modalOpen, setModalOpen] = createSignal(false);
   const [page, setPage] = createSignal(2);
   const [price, setPrice] = createSignal(25);
@@ -20,20 +20,34 @@ export default function ComponentsDemo() {
   const [themeSwitch, setThemeSwitch] = createSignal(false);
   const [previewSearch, setPreviewSearch] = createSignal("");
   const [recommendation, setRecommendation] = createSignal("yes");
+  const [referralSource, setReferralSource] = createSignal<string | null>(null);
   const actionStatus = createActionStatus("Preview ready");
 
   return (
-    <div class="text-base-content mx-auto grid gap-6 pb-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      <div class="md:col-span-2 lg:col-span-3">
+    <div class="components-demo-grid text-base-content mx-auto grid gap-6 pb-20">
+      <div class="col-span-full">
         <ActionStatus message={actionStatus.message()} />
       </div>
       <Flex direction="col" gap="md">
-        <Card class="bg-base-100">
+        <Card
+          id="theme-preview-glass-card"
+          material={props.glassEnabled === false ? "solid" : "glass"}
+          variant={props.glassEnabled === false ? "plain" : "soft"}
+          elevation="md"
+        >
           <Card.Body>
             <Flex justify="between" align="center">
               <Flex align="center" gap="sm">
                 <Icon src="mdi--filter-variant" width={16} height={16} />
                 <span class="font-semibold">Filters</span>
+                <Chip
+                  id="theme-preview-material-label"
+                  aria-label={`Preview material: ${props.glassEnabled === false ? "Solid" : "Glass"}`}
+                  size="sm"
+                  variant="flat"
+                >
+                  {props.glassEnabled === false ? "Solid" : "Glass"}
+                </Chip>
               </Flex>
               <Button id="preview-more-filters" variant="ghost" size="sm" onClick={actionStatus.handler("More filters requested")}>
                 more
@@ -740,11 +754,28 @@ export default function ComponentsDemo() {
             <Flex direction="col" gap="sm">
               <Form>
                 <span class="text-sm font-medium">How did you hear about us?</span>
-                <Select id="preview-referral-source" placeholder="Select an option">
-                  <Select.Option value="search">Search Engine</Select.Option>
-                  <Select.Option value="social">Social Media</Select.Option>
-                  <Select.Option value="friend">Friend</Select.Option>
-                  <Select.Option value="ad">Advertisement</Select.Option>
+                <Select
+                  id="preview-referral-source"
+                  placeholder="Select an option"
+                  value={referralSource()}
+                  onChange={(value) => {
+                    const selected = typeof value === "string" ? value : null;
+                    setReferralSource(selected);
+                    if (selected) actionStatus.announce(`Referral source selected: ${selected}`);
+                  }}
+                >
+                  <Select.Trigger>
+                    <Select.Value />
+                    <Select.Indicator />
+                  </Select.Trigger>
+                  <Select.Popover>
+                    <Select.Listbox>
+                      <Select.Option value="search">Search Engine</Select.Option>
+                      <Select.Option value="social">Social Media</Select.Option>
+                      <Select.Option value="friend">Friend</Select.Option>
+                      <Select.Option value="ad">Advertisement</Select.Option>
+                    </Select.Listbox>
+                  </Select.Popover>
                 </Select>
               </Form>
               <Form>

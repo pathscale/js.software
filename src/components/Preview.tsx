@@ -24,9 +24,16 @@ export default function Preview(props: PreviewProps) {
   };
 
   return (
-    <div class="text-base-content pt-6 transition-colors duration-500 bg-base-300">
-      <div class="flex items-center justify-between gap-4 px-8 ps-10">
-        <h2 class="font-title text-lg md:max-lg:hidden">{TAB_TITLES[selectedKey()]}</h2>
+    <div
+      id="theme-preview"
+      class="text-base-content pt-6 transition-colors duration-500 bg-base-300"
+      style={{
+        "background-image":
+          "linear-gradient(rgb(0 0 0 / var(--theme-glass-scrim-opacity, 0%)), rgb(0 0 0 / var(--theme-glass-scrim-opacity, 0%)))",
+      }}
+    >
+      <div class="flex flex-col items-start gap-3 px-3 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:ps-10">
+        <h2 class="font-title text-lg">{TAB_TITLES[selectedKey()]}</h2>
         <Tabs
           id="theme-preview-tabs"
           variant="primary"
@@ -37,18 +44,23 @@ export default function Preview(props: PreviewProps) {
           <Tabs.List>
             <Tabs.Tab id="demo" aria-label="Components Demo">
               <Icon src="mdi--apps" width={16} height={16} />
+              <span>Demo</span>
             </Tabs.Tab>
             <Tabs.Tab id="variants" aria-label="Component Variants">
               <Icon src="mdi--format-list-bulleted" width={16} height={16} />
+              <span>Variants</span>
             </Tabs.Tab>
             <Tabs.Tab id="palette" aria-label="Color Palette">
               <Icon src="mdi--palette" width={16} height={16} />
+              <span>Palette</span>
             </Tabs.Tab>
           </Tabs.List>
         </Tabs>
       </div>
-      <div class="px-8 py-6">
-        {selectedKey() === "demo" && <ComponentsDemo />}
+      <div class="px-3 py-4 sm:px-8 sm:py-6">
+        {selectedKey() === "demo" && (
+          <ComponentsDemo glassEnabled={props.currentTheme._glassEnabled !== "0"} />
+        )}
         {selectedKey() === "variants" && <ComponentVariants />}
         {selectedKey() === "palette" && <ColorPalette currentTheme={props.currentTheme} />}
       </div>

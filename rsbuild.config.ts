@@ -5,6 +5,10 @@ import CompressionPlugin from "compression-webpack-plugin";
 import { pluginSolid2LayoutsApplication } from "rsbuild-plugin-solid-layouts";
 
 export default defineConfig({
+  html: {
+    template: "./index.html",
+    title: "JS.Software - SolidJS Component Library",
+  },
   plugins: [
     pluginSolid2LayoutsApplication({ layouts: ["@pathscale/ui"] }),
     /*

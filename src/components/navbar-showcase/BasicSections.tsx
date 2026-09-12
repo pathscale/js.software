@@ -146,7 +146,7 @@ export const SearchInputSection = () => (
           </Button>
         </Flex>
         <Flex shrink={false} gap="md">
-          <Input placeholder="Search" class="w-24 md:w-auto" />
+          <Input id="showcase-navbar-search" placeholder="Search" class="w-24 md:w-auto" />
           <Dropdown placement="bottom">
             <Dropdown.Trigger>
               <div class="w-10 rounded-full">

@@ -15,7 +15,9 @@ export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
     { title: "Overview", href: ROUTES.DOCS },
     { title: "Components", href: ROUTES.SHOWCASES },
     { title: "Theming", href: ROUTES.THEMING },
-    { title: "Guides", href: "/docs/guides" },
+    { title: "Installation", href: ROUTES.DOCS_INSTALLATION },
+    { title: "Solid Layouts", href: ROUTES.DOCS_LAYOUTS },
+    { title: "Usage", href: ROUTES.DOCS_USAGE },
   ];
 
   const getCurrentPageTitle = () => {
@@ -68,13 +70,6 @@ export const CompactNavigation: Component<CompactNavigationProps> = (props) => {
           </For>
 
           <div class="border-t border-chromatic-border">
-            <a
-              href="/resources"
-              class="block px-4 py-3 text-sm text-chromatic-muted hover: hover:bg-base-200 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Resources
-            </a>
             <a
               href={EXTERNAL_ROUTES.GITHUB}
               target="_blank"

@@ -1,5 +1,6 @@
 import { Button, Dialog, Icon, Textarea } from "@pathscale/ui";
 import { createEffect, createSignal } from "solid-js";
+import { ActionStatus } from "../showcase/ActionStatus";
 import {
   GLASS_THEME_DEFAULTS,
   GLASS_THEME_TOKEN_ORDER,
@@ -15,9 +16,16 @@ interface ThemeCSSModalProps {
   colorScheme?: "light" | "dark";
 }
 
+const escapeCssString = (value: string) =>
+  value.replace(/[\0-\x1f\x7f"\\]/g, (character) => {
+    const codePoint = character.codePointAt(0) || 0;
+    return codePoint === 0 ? "\uFFFD" : `\\${codePoint.toString(16)} `;
+  });
+
 export default function ThemeCSSModal(props: ThemeCSSModalProps) {
   const [cssText, setCssText] = createSignal("");
   const [isClipboardButtonPressed, setIsClipboardButtonPressed] = createSignal(false);
+  const [copyStatus, setCopyStatus] = createSignal("Copy generated CSS");
 
   const generateCSS = (theme: Theme) => {
     /*
@@ -35,7 +43,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
      */
     const selectors = [
       props.isDefault ? ":root" : null,
-      `[data-theme="${theme.name}"]`,
+      `[data-theme="${escapeCssString(theme.name)}"]`,
     ].filter(Boolean).join(",\n");
     const baseProps = [`  color-scheme: ${props.colorScheme || "light"};`];
 
@@ -111,18 +119,27 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
   createEffect(
     () => ({ open: props.open, theme: props.theme }),
     ({ open, theme }) => {
-      if (open) setCssText(generateCSS(theme));
+      if (open) {
+        setCssText(generateCSS(theme));
+        setCopyStatus("Copy generated CSS");
+        setIsClipboardButtonPressed(false);
+      }
     },
   );
 
   const copyThemeCSSToClipboard = () => {
-    navigator.clipboard
-      .writeText(cssText())
+    const write = navigator.clipboard?.writeText(cssText());
+    if (!write) {
+      setCopyStatus("CSS copy unavailable");
+      return;
+    }
+    write
       .then(() => {
         setIsClipboardButtonPressed(true);
+        setCopyStatus("CSS copied");
         setTimeout(() => setIsClipboardButtonPressed(false), 2000);
       })
-      .catch((err) => console.error("Failed to copy:", err));
+      .catch(() => setCopyStatus("CSS copy unavailable"));
   };
 
   return (
@@ -159,6 +176,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
 
             <Button
               id="theme-copy-css"
+              aria-label={copyStatus()}
               class="absolute top-2 right-5"
               size="sm"
               flavor={isClipboardButtonPressed() ? "primary" : "secondary"}
@@ -177,6 +195,7 @@ export default function ThemeCSSModal(props: ThemeCSSModalProps) {
               )}
             </Button>
           </div>
+          <ActionStatus message={copyStatus()} />
         </Dialog.Body>
 
         <Dialog.Footer>

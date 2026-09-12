@@ -242,7 +242,7 @@ function App() {
             Browse Components
           </a>
           <a
-            href="/docs/examples"
+            href={ROUTES.SHOWCASES}
             class="border border-base-300 hover:bg-base-200 px-6 py-3 rounded-lg transition-all inline-block"
           >
             View Examples

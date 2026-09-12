@@ -37,7 +37,7 @@ export const convertHexPaletteToOklch = (
 export const createOklchColor = (l: number, c: number, h: number): string => {
   const lightness = Math.max(0, Math.min(100, l));
   const chroma = Math.max(0, c);
-  const hue = h % 360;
+  const hue = Number.isFinite(h) ? ((h % 360) + 360) % 360 : 0;
 
   return `oklch(${lightness}% ${chroma.toFixed(3)} ${Math.round(hue)})`;
 };

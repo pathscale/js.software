@@ -1,36 +1,32 @@
-import { Button, Icon, Separator, Slider } from "@pathscale/ui";
+import { Button, Icon, Separator, Slider, Switch } from "@pathscale/ui";
 import {
-  BLUR_MAX,
-  DEPTH_MAX,
-  HYPE4_DEFAULTS,
-  REFRACTION_MAX,
-  resolveGlassCssVariables,
+  GLASS_LIMITS,
+  GLASS_OPACITY_MAX,
+  GLASS_SCRIM_MAX,
+  glassThemeDefaults,
+  resolveGlassThemeValues,
   tuningFromTheme,
-} from "../../lib/glassFormulas";
+} from "../../lib/glassTokens";
 import { Theme } from "../../utils/themeUtils";
 
 interface GlassSectionProps {
   theme: Theme;
   onThemeUpdate: (values: Record<string, string>) => void;
+  enabled: boolean;
+  onEnabledChange: (enabled: boolean) => void;
 }
 
 export default function GlassSection(props: GlassSectionProps) {
-  const tuning = () => tuningFromTheme(props.theme);
+  const mode = () => (props.theme._themeType === "light" ? "light" : "dark");
+  const tuning = () => tuningFromTheme(props.theme, mode());
 
   const applyTuning = (
-    next: Partial<{ blur: number; refraction: number; depth: number }>,
+    next: Partial<ReturnType<typeof tuning>>,
   ) => {
-    const current = tuning();
-    const merged = {
-      blur: next.blur ?? current.blur,
-      refraction: next.refraction ?? current.refraction,
-      depth: next.depth ?? current.depth,
-    };
-    const cssVars = resolveGlassCssVariables(merged);
-    props.onThemeUpdate(cssVars);
+    props.onThemeUpdate(resolveGlassThemeValues({ ...tuning(), ...next }, mode()));
   };
 
-  const resetToHype4 = () => applyTuning(HYPE4_DEFAULTS);
+  const resetGlass = () => props.onThemeUpdate(glassThemeDefaults(mode()));
 
   return (
     <div class="w-full">
@@ -42,21 +38,32 @@ export default function GlassSection(props: GlassSectionProps) {
             size="sm"
             variant="ghost"
             class="ml-auto"
-            onClick={resetToHype4}
-            title="Reset to Hype4 defaults"
+            onClick={resetGlass}
+            title="Reset glass settings"
           >
-            Hype4
+            Reset
           </Button>
         </span></span><Separator class="flex-1" /></h3>
 
       <div class="flex flex-col gap-2">
+        <Switch
+          id="theme-glass-enabled"
+          class="w-full justify-between [&_[data-slot=switch-content]]:order-first"
+          size="sm"
+          checked={props.enabled}
+          onChange={props.onEnabledChange}
+          description="Switch the preview surface between solid and glass"
+        >
+          Glass material
+        </Switch>
+
         <div class="bg-base-200 rounded-lg p-2">
           <Slider
             id="theme-glass-blur"
             label="Blur"
             size="sm"
             min={0}
-            max={BLUR_MAX}
+            max={GLASS_LIMITS.blur.max}
             step={1}
             value={tuning().blur}
             formatValue={(value) => `${value}px`}
@@ -70,7 +77,7 @@ export default function GlassSection(props: GlassSectionProps) {
             label="Refraction"
             size="sm"
             min={0}
-            max={REFRACTION_MAX}
+            max={GLASS_LIMITS.refraction.max}
             step={0.01}
             value={tuning().refraction}
             formatValue={(value) => value.toFixed(2)}
@@ -84,10 +91,38 @@ export default function GlassSection(props: GlassSectionProps) {
             label="Depth"
             size="sm"
             min={0}
-            max={DEPTH_MAX}
+            max={GLASS_LIMITS.depth.max}
             step={1}
             value={tuning().depth}
             onChange={(value) => applyTuning({ depth: value })}
+          />
+        </div>
+
+        <div class="bg-base-200 rounded-lg p-2">
+          <Slider
+            id="theme-glass-opacity"
+            label="Opacity"
+            size="sm"
+            min={0}
+            max={GLASS_OPACITY_MAX}
+            step={1}
+            value={tuning().opacity}
+            formatValue={(value) => `${value}%`}
+            onChange={(value) => applyTuning({ opacity: value })}
+          />
+        </div>
+
+        <div class="bg-base-200 rounded-lg p-2">
+          <Slider
+            id="theme-glass-scrim"
+            label="Scrim"
+            size="sm"
+            min={0}
+            max={GLASS_SCRIM_MAX}
+            step={1}
+            value={tuning().scrim}
+            formatValue={(value) => `${value}%`}
+            onChange={(value) => applyTuning({ scrim: value })}
           />
         </div>
       </div>
