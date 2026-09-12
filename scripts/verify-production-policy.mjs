@@ -31,8 +31,9 @@ if (/fonts\.(googleapis|gstatic)\.com/i.test(productionSource)) {
 }
 
 if (!policy) {
-  console.log(`Production policy accepts runtime theme styles and has no Google Fonts source: ${targetUrl} has no CSP header.`);
-  process.exit(0);
+  throw new Error(
+    `Production CSP is missing for ${targetUrl}. Configure the Bunny response header before release.`,
+  );
 }
 
 const directives = new Map(
@@ -68,6 +69,18 @@ const styleAttributeSources =
 if (!styleAttributeSources.includes("'unsafe-inline'")) {
   throw new Error(
     "Production CSP blocks the dynamic style attributes used by UI sliders and the theme preview.",
+  );
+}
+
+const styleElementSources =
+  directives.get("style-src-elem") ??
+  directives.get("style-src") ??
+  directives.get("default-src") ??
+  [];
+
+if (!styleElementSources.includes("'unsafe-inline'")) {
+  throw new Error(
+    "Production CSP blocks the style elements used by the UI runtime.",
   );
 }
 
