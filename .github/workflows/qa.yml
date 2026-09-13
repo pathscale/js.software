@@ -1,4 +1,5 @@
-# Every declared showcase group runs against the font-enabled native host.
+# Every one of the 675 declared outcomes runs against the font-enabled native
+# host. The matrix partitions the complete corpus; it is not a smoke suite.
 name: QA
 
 on:
@@ -8,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  rendered-outcomes:
+  build:
     runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +26,42 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: Store the production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: dist
+          retention-days: 1
+
+  rendered-outcomes:
+    needs: build
+    runs-on: ubicloud-standard-4
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: theme-controls
+            groups: "theming-controls"
+          - suite: theme-workflows
+            groups: "theming-workflows actions calendar"
+          - suite: theme-colors
+            groups: "theming-colors coverage"
+          - suite: theme-behavior
+            groups: "theming-behavior data-display input"
+          - suite: theme-preview
+            groups: "theming-preview docs feedback layout navigation showcase surfaces unlisted"
+          - suite: theme-model
+            groups: "theming-model"
+    name: Rendered outcomes (${{ matrix.suite }})
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore the production build
+        uses: actions/download-artifact@v4
+        with:
+          name: production-build
+          path: dist
+
       - name: Headless browser host
         id: qa
         uses: pathscale/chuzz/.github/actions/headless-host@master
@@ -38,12 +75,12 @@ jobs:
           # only; every declared transition is still required.
           QA_TIMEOUT_SCALE: 2
         run: |
-          for group in \
-            actions calendar coverage data-display docs feedback input \
-            layout navigation showcase surfaces theming unlisted
+          status=0
+          for group in ${{ matrix.groups }}
           do
             ps-qa --app tests/ps-qa/ps-qa.ron \
               qa-hosted \
               --host "${{ steps.qa.outputs.host }}" \
-              --page dist --checks tests/ps-qa/checks "$group"
+              --page dist --checks tests/ps-qa/checks "$group" || status=$?
           done
+          exit "$status"
