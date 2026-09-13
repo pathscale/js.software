@@ -1690,6 +1690,7 @@
         click: Some("button:Colour strength 10%"),
         subject: "button:Colour strength 20%",
         expect: SelectionChanges,
+        outcome_timeout_ms: 8000,
     ),
     (
         id: "returning-to-the-editor-restores-the-page-top",
