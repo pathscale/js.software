@@ -72,21 +72,19 @@ const Showcases: Component = () => {
         <Grid cols={{ base: "1", sm: "2", md: "3", lg: "4" }} gap="lg">
           <For each={featuredRoutes}>
             {(route) => (
-              <a href={route.path} class="block">
-                <Card material="glass" padding="md" flavor="secondary" isInteractive>
-                  <div>
-                    <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                      {route.name}
-                    </h3>
-                    <p class="text-base-content/70 text-sm leading-relaxed mb-4">
-                      {route.description}
-                    </p>
-                    <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
-                      View Demo →
-                    </span>
-                  </div>
-                </Card>
-              </a>
+              <Card href={route.path} material="glass" padding="md" flavor="secondary" isInteractive>
+                <div>
+                  <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    {route.name}
+                  </h3>
+                  <p class="text-base-content/70 text-sm leading-relaxed mb-4">
+                    {route.description}
+                  </p>
+                  <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
+                    View Demo →
+                  </span>
+                </div>
+              </Card>
             )}
           </For>
         </Grid>
@@ -102,21 +100,19 @@ const Showcases: Component = () => {
         <Grid cols={{ base: "1", sm: "2", md: "3" }} gap="lg">
           <For each={otherRoutes}>
             {(route) => (
-              <a href={route.path} class="block">
-                <Card material="glass" padding="md" flavor="secondary" isInteractive>
-                  <div>
-                    <h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                      {route.name}
-                    </h3>
-                    <p class="text-base-content/70 text-sm leading-relaxed mb-3">
-                      {route.description}
-                    </p>
-                    <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
-                      Explore →
-                    </span>
-                  </div>
-                </Card>
-              </a>
+              <Card href={route.path} material="glass" padding="md" flavor="secondary" isInteractive>
+                <div>
+                  <h3 class="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                    {route.name}
+                  </h3>
+                  <p class="text-base-content/70 text-sm leading-relaxed mb-3">
+                    {route.description}
+                  </p>
+                  <span class="inline-flex items-center text-primary group-hover:text-primary/80 font-medium text-sm">
+                    Explore →
+                  </span>
+                </div>
+              </Card>
             )}
           </For>
         </Grid>
