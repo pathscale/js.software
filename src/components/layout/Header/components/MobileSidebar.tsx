@@ -36,6 +36,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
           <div class="flex items-center justify-between p-4">
             <span class="text-xl font-bold">UI</span>
             <Button
+              id="mobile-navigation-close"
               variant="ghost"
               size="sm"
               width="square"
@@ -61,6 +62,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
                   <div>
                     {item.href ? (
                       <Link
+                        id={`mobile-nav-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
                         href={item.href}
                         class={`block px-3 py-2 rounded-lg transition-colors font-semibold ${
                           isActive(item.href)
@@ -87,6 +89,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
                                   <For each={subcategory.items}>
                                     {(component) => (
                                       <Link
+                                        id={`mobile-nav-component-${component.title.toLowerCase().replace(/\s+/g, "-")}`}
                                         href={component.href}
                                         class={`block px-3 py-1 rounded-md text-sm transition-colors ${
                                           isActive(component.href)
@@ -114,6 +117,7 @@ export const MobileSidebar: Component<MobileSidebarProps> = (props) => {
 
           <div class="p-4">
             <Button
+              id="mobile-navigation-get-started"
               href="/docs/installation"
               flavor="primary"
               class="w-full whitespace-nowrap"
