@@ -1,4 +1,6 @@
-# Every declared showcase group runs against the font-enabled native host.
+# Every declared outcome runs in one unfiltered invocation against the
+# font-enabled native host. Adding a file or group automatically expands the
+# gate; there is no hand-maintained group list that can drift from the corpus.
 name: QA
 
 on:
@@ -8,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  rendered-outcomes:
+  build:
     runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v4
@@ -25,11 +27,35 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: Production response policy
+        run: bun run qa:production-policy
+
+      - name: Store the production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: dist
+          retention-days: 1
+
+  rendered-outcomes:
+    needs: build
+    runs-on: ubicloud-standard-4
+    name: Rendered outcomes (complete corpus)
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore the production build
+        uses: actions/download-artifact@v4
+        with:
+          name: production-build
+          path: dist
+
       - name: Headless browser host
         id: qa
-        uses: pathscale/chuzz/.github/actions/headless-host@master
+        uses: pathscale/chuzz/.github/actions/headless-host@b0e4ce0d35fe96230c90d2a3ed55a64686abe370
         with:
           token: ${{ secrets.SIBLING_REPOS_TOKEN }}
+          ps-qa-version: ^0.7.4
 
       - name: Rendered outcomes
         env:
@@ -38,12 +64,16 @@ jobs:
           # only; every declared transition is still required.
           QA_TIMEOUT_SCALE: 2
         run: |
-          for group in \
-            actions calendar coverage data-display docs feedback input \
-            layout navigation showcase surfaces theming unlisted
-          do
-            ps-qa --app tests/ps-qa/ps-qa.ron \
-              qa-hosted \
-              --host "${{ steps.qa.outputs.host }}" \
-              --page dist --checks tests/ps-qa/checks "$group"
-          done
+          ps-qa --app tests/ps-qa/ps-qa.ron \
+            qa-hosted \
+            --host "${{ steps.qa.outputs.host }}" \
+            --page dist \
+            --checks tests/ps-qa/checks \
+            --require-outcomes
+
+      - name: Every registered direct route
+        env:
+          QA_TIMEOUT_SCALE: 2
+          CHUZZ_HEADLESS_BIN: ${{ steps.qa.outputs.host }}
+          PS_QA_BIN: ps-qa
+        run: tests/ps-qa/direct-route-outcomes.sh dist
