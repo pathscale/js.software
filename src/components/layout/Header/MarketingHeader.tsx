@@ -37,6 +37,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         <Navbar.Row class="py-2 bg-transparent">
         <Navbar.Start class="lg:hidden">
           <Button
+            id="mobile-navigation-toggle"
             variant="ghost"
             width="square"
             aria-label={navigation.isOpen() ? "Close navigation" : "Open navigation"}
@@ -48,6 +49,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
 
         <Navbar.Start class="hidden lg:flex">
           <Link
+            id="desktop-logo-home"
             href={ROUTES.HOME}
             class="text-base-content text-xl font-bold normal-case hover:text-primary transition-colors px-4 py-2"
           >
@@ -56,7 +58,11 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
         </Navbar.Start>
 
         <Navbar.Center class="lg:hidden">
-          <Link href={ROUTES.HOME} class="text-base-content text-xl font-bold normal-case px-4 py-2">
+          <Link
+            id="mobile-logo-home"
+            href={ROUTES.HOME}
+            class="text-base-content text-xl font-bold normal-case px-4 py-2"
+          >
             UI
           </Link>
         </Navbar.Center>
@@ -78,6 +84,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
               <GitHubIcon />
             </Link>
             <Button
+              id="header-get-started"
               href={ROUTES.DOCS_INSTALLATION}
               flavor="primary"
               class="whitespace-nowrap"
@@ -89,6 +96,7 @@ export const MarketingHeader: Component<MarketingHeaderProps> = (props) => {
 
         <Navbar.End class="lg:hidden">
           <Link
+            id="mobile-github-source-link"
             href={EXTERNAL_ROUTES.GITHUB}
             isExternal
             aria-label="View UI on GitHub from mobile navigation"

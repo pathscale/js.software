@@ -33,16 +33,36 @@ const Home: Component = () => {
               </p>
 
               <Flex gap="lg" justify="center" wrap="wrap" class="mb-16">
-                <Button href={ROUTES.DOCS_INSTALLATION} flavor="primary" size="lg">
+                <Button
+                  id="home-start-building"
+                  href={ROUTES.DOCS_INSTALLATION}
+                  flavor="primary"
+                  size="lg"
+                >
                   Start Building Today
                 </Button>
-                <Button href={ROUTES.SHOWCASES} variant="outline" size="lg">
+                <Button
+                  id="home-explore-components"
+                  href={ROUTES.SHOWCASES}
+                  variant="outline"
+                  size="lg"
+                >
                   Explore Components
                 </Button>
-                <Button href={ROUTES.DOCS_USAGE} variant="ghost" size="lg">
+                <Button
+                  id="home-usage-cheatsheet"
+                  href={ROUTES.DOCS_USAGE}
+                  variant="ghost"
+                  size="lg"
+                >
                   Usage Cheatsheet
                 </Button>
-                <Button href={ROUTES.DOCS_LAYOUTS} variant="ghost" size="lg">
+                <Button
+                  id="home-layouts-guide"
+                  href={ROUTES.DOCS_LAYOUTS}
+                  variant="ghost"
+                  size="lg"
+                >
                   How Layouts work
                 </Button>
               </Flex>
@@ -162,7 +182,12 @@ const Home: Component = () => {
             </Card>
           </div>
 
-          <Button href={ROUTES.SHOWCASES} flavor="primary" size="lg">
+          <Button
+            id="home-explore-all-components"
+            href={ROUTES.SHOWCASES}
+            flavor="primary"
+            size="lg"
+          >
             Explore all components
           </Button>
         </div>
@@ -177,10 +202,20 @@ const Home: Component = () => {
               projects. Get started in minutes, not hours.
             </p>
             <Flex gap="lg" justify="center" wrap="wrap">
-              <Button href={ROUTES.DOCS_INSTALLATION} flavor="primary" size="lg">
+              <Button
+                id="home-get-started"
+                href={ROUTES.DOCS_INSTALLATION}
+                flavor="primary"
+                size="lg"
+              >
                 Get started for free
               </Button>
-              <Button href={ROUTES.DOCS} variant="outline" size="lg">
+              <Button
+                id="home-view-documentation"
+                href={ROUTES.DOCS}
+                variant="outline"
+                size="lg"
+              >
                 View documentation
               </Button>
             </Flex>
