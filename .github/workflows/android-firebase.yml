@@ -20,6 +20,8 @@ jobs:
     runs-on: ubicloud-standard-2
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Find latest successful build (if needed)
         if: ${{ github.event_name == 'workflow_dispatch' && !inputs.build_run_id }}
