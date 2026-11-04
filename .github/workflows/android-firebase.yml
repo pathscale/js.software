@@ -1,10 +1,6 @@
 name: Distribute Android to Firebase
 
 on:
-  workflow_run:
-    workflows: ["Build Signed Android APK"]
-    types: [completed]
-    branches: [master]
   workflow_dispatch:
     inputs:
       build_run_id:
