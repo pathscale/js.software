@@ -7,15 +7,17 @@
 // style. A theme token that stops resolving shows up here first, and nowhere
 // else on the site does a control change anything.
 //
-// This group changes only things it puts back. The colour popover is opened and
-// closed, and no colour is committed.
+// The release gate runs every group in this file. They are split only at clean
+// browser-state boundaries so CI can run the complete theme-editor corpus in
+// parallel. Each group's first check opens Theming; later checks may depend on
+// earlier state inside that same group.
 //
 // Export is a real UI Dialog. The last pair opens it, proves the generated CSS
 // is available in a named UI Textarea, and closes it again.
 [
     (
         id: "the-theme-editor-opens",
-        group: "theming",
+        group: "theming-controls",
         what: "the header reaches the theme editor",
         open: Some("Theming"),
         hover: None,
@@ -26,7 +28,7 @@
     ),
     (
         id: "the-editor-offers-the-colour-tokens",
-        group: "theming",
+        group: "theming-controls",
         what: "the colour section rendered, not only the page title",
         open: None,
         hover: None,
@@ -36,7 +38,7 @@
     ),
     (
         id: "the-theme-composer-uses-the-full-flower",
-        group: "theming",
+        group: "theming-controls",
         what: "the theme builder exposes 30 colours around a neutral reset centre",
         open: None,
         hover: None,
@@ -47,7 +49,7 @@
     ),
     (
         id: "the-theme-composer-exposes-both-colour-modes",
-        group: "theming",
+        group: "theming-controls",
         what: "the theme builder exposes explicit light and dark composition modes",
         open: None,
         hover: None,
@@ -58,7 +60,7 @@
     ),
     (
         id: "the-theme-composer-switches-colour-mode",
-        group: "theming",
+        group: "theming-controls",
         what: "changing mode rebuilds the surface ladder and selects the requested mode",
         open: None,
         prepare: Some("button:Dark mode"),
@@ -70,7 +72,7 @@
     ),
     (
         id: "the-theme-flower-updates-the-surface",
-        group: "theming",
+        group: "theming-controls",
         what: "choosing a flower petal changes the selected surface colour",
         open: None,
         prepare: Some("radio:Reset to neutral"),
@@ -82,7 +84,7 @@
     ),
     (
         id: "the-theme-composer-offers-five-strength-stops",
-        group: "theming",
+        group: "theming-controls",
         what: "surface strength is a deliberate five-stop UI control",
         open: None,
         hover: None,
@@ -93,7 +95,7 @@
     ),
     (
         id: "the-theme-composer-updates-strength",
-        group: "theming",
+        group: "theming-controls",
         what: "a strength choice updates the surface composition",
         open: None,
         prepare: Some("button:Colour strength 10%"),
@@ -105,7 +107,7 @@
     ),
     (
         id: "theme-strength-repaints-the-preview",
-        group: "theming",
+        group: "theming-controls",
         what: "surface strength visibly changes the composed component preview",
         open: None,
         prepare: Some("button:Colour strength 10%"),
@@ -117,7 +119,7 @@
     ),
     (
         id: "the-theme-composer-offers-control-accent-friends",
-        group: "theming",
+        group: "theming-controls",
         what: "the flower is paired with seven control-accent harmonies",
         open: None,
         hover: None,
@@ -128,7 +130,7 @@
     ),
     (
         id: "the-theme-composer-updates-the-control-accent",
-        group: "theming",
+        group: "theming-controls",
         what: "choosing a control accent updates its selected harmony",
         open: None,
         prepare: Some("button:Control accent 2"),
@@ -140,7 +142,7 @@
     ),
     (
         id: "the-theme-composer-offers-artwork-accent-friends",
-        group: "theming",
+        group: "theming-controls",
         what: "artwork colour remains independent from the control accent",
         open: None,
         hover: None,
@@ -151,7 +153,7 @@
     ),
     (
         id: "the-theme-composer-updates-the-artwork-accent",
-        group: "theming",
+        group: "theming-controls",
         what: "choosing an artwork accent updates its selected harmony",
         open: None,
         prepare: Some("button:Artwork accent 2"),
@@ -163,7 +165,7 @@
     ),
     (
         id: "and-a-swatch-per-token",
-        group: "theming",
+        group: "theming-controls",
         what: "each colour token is a control a person can press",
         open: None,
         hover: None,
@@ -178,7 +180,7 @@
     ),
     (
         id: "and-the-full-token-set-rather-than-a-few",
-        group: "theming",
+        group: "theming-controls",
         what: "every colour role has a swatch, content colours included",
         open: None,
         hover: None,
@@ -192,7 +194,7 @@
     ),
     (
         id: "the-editor-offers-the-shape-tokens",
-        group: "theming",
+        group: "theming-controls",
         what: "radius, sizes and effects are all present",
         open: None,
         hover: None,
@@ -202,7 +204,7 @@
     ),
     (
         id: "and-the-glass-tokens",
-        group: "theming",
+        group: "theming-controls",
         what: "the glass section, which is this library's own addition, rendered",
         open: None,
         hover: None,
@@ -212,7 +214,7 @@
     ),
     (
         id: "and-a-way-to-put-the-glass-tokens-back",
-        group: "theming",
+        group: "theming-controls",
         what: "the glass section can be reset rather than only edited",
         open: None,
         hover: None,
@@ -222,7 +224,7 @@
     ),
     (
         id: "the-editor-offers-both-of-its-actions",
-        group: "theming",
+        group: "theming-controls",
         what: "randomize and export are offered as pressable controls",
         open: None,
         hover: None,
@@ -232,7 +234,7 @@
     ),
     (
         id: "and-the-export-control-is-enabled",
-        group: "theming",
+        group: "theming-controls",
         what: "the CSS export control is offered rather than greyed out",
         open: None,
         hover: None,
@@ -245,7 +247,7 @@
     // native input hidden behind a lookalike.
     (
         id: "the-radius-editor-offers-the-whole-scale",
-        group: "theming",
+        group: "theming-controls",
         what: "the box radius is one named UI radio per supported token value",
         open: None,
         hover: None,
@@ -256,7 +258,7 @@
     ),
     (
         id: "a-radius-choice-updates-the-selected-token",
-        group: "theming",
+        group: "theming-controls",
         what: "choosing a radius moves the UI radio selection",
         open: None,
         prepare: Some("radio:Boxes radius square"),
@@ -268,7 +270,7 @@
     ),
     (
         id: "the-field-size-slider-updates-the-token",
-        group: "theming",
+        group: "theming-controls",
         what: "the UI slider changes the field size token from its keyboard contract",
         open: None,
         prepare: Some("slider:Fields base size"),
@@ -283,7 +285,7 @@
     ),
     (
         id: "the-selector-size-slider-updates-the-token",
-        group: "theming",
+        group: "theming-controls",
         what: "the UI slider changes the selector size token from its keyboard contract",
         open: None,
         prepare: Some("slider:Selectors base size"),
@@ -298,7 +300,7 @@
     ),
     (
         id: "the-border-slider-updates-the-token",
-        group: "theming",
+        group: "theming-controls",
         what: "the UI slider changes the border token from its keyboard contract",
         open: None,
         prepare: Some("slider:Border width"),
@@ -313,7 +315,7 @@
     ),
     (
         id: "the-glass-depth-slider-responds-to-a-real-pointer",
-        group: "theming",
+        group: "theming-controls",
         what: "the UI depth slider stays changed after a real pointer drag",
         open: None,
         prepare: Some("slider:Depth"),
@@ -327,7 +329,7 @@
     ),
     (
         id: "the-glass-depth-slider-visibly-moves",
-        group: "theming",
+        group: "theming-controls",
         what: "the glass depth slider thumb visibly follows a real pointer drag",
         open: None,
         prepare: Some("slider:Depth"),
@@ -341,7 +343,7 @@
     ),
     (
         id: "the-field-size-slider-responds-to-a-real-pointer",
-        group: "theming",
+        group: "theming-controls",
         what: "the field size token changes from the Slider pointer contract",
         open: None,
         prepare: Some("slider:Fields base size"),
@@ -355,7 +357,7 @@
     ),
     (
         id: "the-field-size-slider-visibly-moves",
-        group: "theming",
+        group: "theming-controls",
         what: "the field-size slider thumb visibly follows a real pointer drag",
         open: None,
         prepare: Some("slider:Fields base size"),
@@ -369,7 +371,7 @@
     ),
     (
         id: "the-selector-size-slider-responds-to-a-real-pointer",
-        group: "theming",
+        group: "theming-controls",
         what: "the selector size token changes from the Slider pointer contract",
         open: None,
         prepare: Some("slider:Selectors base size"),
@@ -383,7 +385,7 @@
     ),
     (
         id: "the-selector-size-slider-visibly-moves",
-        group: "theming",
+        group: "theming-controls",
         what: "the selector-size slider thumb visibly follows a real pointer drag",
         open: None,
         prepare: Some("slider:Selectors base size"),
@@ -397,7 +399,7 @@
     ),
     (
         id: "the-border-slider-responds-to-a-real-pointer",
-        group: "theming",
+        group: "theming-controls",
         what: "the border token changes from the Slider pointer contract",
         open: None,
         prepare: Some("slider:Border width"),
@@ -411,7 +413,7 @@
     ),
     (
         id: "the-border-slider-visibly-moves",
-        group: "theming",
+        group: "theming-controls",
         what: "the border-width slider thumb visibly follows a real pointer drag",
         open: None,
         prepare: Some("slider:Border width"),
@@ -425,7 +427,7 @@
     ),
     (
         id: "the-preview-price-slider-is-labelled-and-interactive",
-        group: "theming",
+        group: "theming-controls",
         what: "the live component preview retains a price changed by a real pointer drag",
         open: None,
         prepare: Some("slider:Price range"),
@@ -438,7 +440,7 @@
     ),
     (
         id: "the-preview-price-slider-visibly-moves",
-        group: "theming",
+        group: "theming-controls",
         what: "the preview slider thumb visibly follows a real pointer drag",
         open: None,
         prepare: Some("slider:Price range"),
@@ -451,7 +453,7 @@
     ),
     (
         id: "the-depth-effect-switch-updates-the-token",
-        group: "theming",
+        group: "theming-controls",
         what: "the named UI switch toggles depth in the live theme",
         open: None,
         hover: None,
@@ -462,7 +464,7 @@
     ),
     (
         id: "the-depth-effect-switch-visibly-toggles",
-        group: "theming",
+        group: "theming-controls",
         what: "the depth switch visibly returns to its starting state",
         open: None,
         hover: None,
@@ -472,7 +474,7 @@
     ),
     (
         id: "the-noise-effect-switch-updates-the-token",
-        group: "theming",
+        group: "theming-controls",
         what: "the named UI switch toggles the existing noise theme token",
         open: None,
         hover: None,
@@ -483,7 +485,7 @@
     ),
     (
         id: "the-noise-effect-switch-visibly-toggles",
-        group: "theming",
+        group: "theming-controls",
         what: "the noise switch visibly returns to its starting state",
         open: None,
         hover: None,
@@ -493,7 +495,7 @@
     ),
     (
         id: "the-glass-material-switch-updates-the-preview",
-        group: "theming",
+        group: "theming-controls",
         what: "the glass switch changes the material used by the preview card",
         open: None,
         hover: None,
@@ -504,7 +506,7 @@
     ),
     (
         id: "the-glass-material-switch-visibly-updates-the-preview",
-        group: "theming",
+        group: "theming-controls",
         what: "the glass switch repaints a real UI Card rather than a dead token",
         open: None,
         hover: None,
@@ -514,7 +516,7 @@
     ),
     (
         id: "the-whole-site-option-is-a-named-switch",
-        group: "theming",
+        group: "theming-controls",
         what: "the site-wide option is operable by its visible label",
         open: None,
         hover: None,
@@ -524,7 +526,7 @@
     ),
     (
         id: "and-the-whole-site-option-is-restored",
-        group: "theming",
+        group: "theming-controls",
         what: "the editor leaves the showcase theme scoped to its preview",
         open: None,
         hover: None,
@@ -534,7 +536,7 @@
     ),
     (
         id: "the-remember-option-is-a-named-switch",
-        group: "theming",
+        group: "theming-controls",
         what: "the persistence option is operable by its visible label",
         open: None,
         hover: None,
@@ -544,7 +546,7 @@
     ),
     (
         id: "and-the-remember-option-is-restored",
-        group: "theming",
+        group: "theming-controls",
         what: "the suite does not persist its generated theme into later runs",
         open: None,
         hover: None,
@@ -554,7 +556,7 @@
     ),
     (
         id: "the-default-theme-option-is-a-named-switch",
-        group: "theming",
+        group: "theming-controls",
         what: "the export default option is operable by its visible label",
         open: None,
         hover: None,
@@ -564,7 +566,7 @@
     ),
     (
         id: "the-default-theme-option-visibly-restores",
-        group: "theming",
+        group: "theming-controls",
         what: "the default-theme switch visibly returns to its starting state",
         open: None,
         hover: None,
@@ -574,7 +576,7 @@
     ),
     (
         id: "the-dark-default-option-is-a-named-switch",
-        group: "theming",
+        group: "theming-controls",
         what: "the export dark-default option is operable by its visible label",
         open: None,
         hover: None,
@@ -584,7 +586,7 @@
     ),
     (
         id: "the-dark-default-option-visibly-restores",
-        group: "theming",
+        group: "theming-controls",
         what: "the dark-default switch visibly returns to its starting state",
         open: None,
         hover: None,
@@ -594,7 +596,7 @@
     ),
     (
         id: "the-color-scheme-option-is-a-named-switch",
-        group: "theming",
+        group: "theming-controls",
         what: "the export color-scheme option is operable by its visible label",
         open: None,
         hover: None,
@@ -604,7 +606,7 @@
     ),
     (
         id: "the-color-scheme-option-visibly-restores",
-        group: "theming",
+        group: "theming-controls",
         what: "the color-scheme switch visibly returns to its starting state",
         open: None,
         hover: None,
@@ -617,9 +619,9 @@
     // than a frozen first render.
     (
         id: "pressing-a-swatch-opens-the-colour-picker",
-        group: "theming",
+        group: "theming-workflows",
         what: "a colour token can be edited, and the palette appears when asked",
-        open: None,
+        open: Some("Theming"),
         hover: None,
         click: Some("button:--color-primary"),
         // The Material palette this editor picks from. A colour by name rather
@@ -631,7 +633,7 @@
     ),
     (
         id: "and-the-palette-is-the-whole-material-set",
-        group: "theming",
+        group: "theming-workflows",
         what: "the picker offers a grid of colours rather than one stray square",
         open: None,
         hover: None,
@@ -641,7 +643,7 @@
     ),
     (
         id: "and-closing-it-leaves-the-theme-alone",
-        group: "theming",
+        group: "theming-workflows",
         what: "the popover dismisses, and this group changes nothing it cannot put back",
         open: None,
         hover: None,
@@ -655,7 +657,7 @@
     // while CSP blocked the inline custom properties that paint the result.
     (
         id: "the-theme-randomizer-visibly-changes-a-token",
-        group: "theming",
+        group: "theming-workflows",
         what: "Random visibly repaints the live component preview",
         open: None,
         hover: None,
@@ -667,7 +669,7 @@
     // The editor must remain reactive after a full theme regeneration too.
     (
         id: "the-theme-can-be-randomized",
-        group: "theming",
+        group: "theming-workflows",
         what: "the randomize control runs without taking the editor down with it",
         open: None,
         hover: None,
@@ -678,7 +680,7 @@
     ),
     (
         id: "and-the-editor-still-answers-afterwards",
-        group: "theming",
+        group: "theming-workflows",
         what: "the page is reactive after a full theme regeneration, not merely painted",
         open: None,
         hover: None,
@@ -689,7 +691,7 @@
     ),
     (
         id: "and-the-picker-is-closed-again",
-        group: "theming",
+        group: "theming-workflows",
         what: "the group leaves no overlay open for the next one",
         open: None,
         hover: None,
@@ -704,7 +706,7 @@
     // empty while the editor beside it still draws.
     (
         id: "the-preview-column-renders-the-library",
-        group: "theming",
+        group: "theming-workflows",
         what: "the live preview is there beside the editor",
         open: None,
         hover: None,
@@ -714,7 +716,7 @@
     ),
     (
         id: "and-the-preview-includes-a-tab-strip",
-        group: "theming",
+        group: "theming-workflows",
         what: "a composite component, not only boxes and text",
         open: None,
         hover: None,
@@ -724,7 +726,7 @@
     ),
     (
         id: "and-a-menu-with-real-items",
-        group: "theming",
+        group: "theming-workflows",
         what: "the menu in the preview drew its items",
         open: None,
         hover: None,
@@ -734,7 +736,7 @@
     ),
     (
         id: "and-a-disabled-control-to-style",
-        group: "theming",
+        group: "theming-workflows",
         what: "the preview covers the disabled state, which has its own tokens",
         open: None,
         hover: None,
@@ -744,7 +746,7 @@
     ),
     (
         id: "and-an-enabled-one-beside-it",
-        group: "theming",
+        group: "theming-workflows",
         what: "the disabled assertion above is about state rather than about a dead column",
         open: None,
         hover: None,
@@ -754,7 +756,7 @@
     ),
     (
         id: "and-the-preview-drives-a-dialog",
-        group: "theming",
+        group: "theming-workflows",
         what: "an overlay opens from inside the preview, over the themed page",
         open: None,
         hover: None,
@@ -765,7 +767,7 @@
     ),
     (
         id: "and-that-dialog-can-be-answered-no",
-        group: "theming",
+        group: "theming-workflows",
         what: "the group leaves the preview as it found it",
         open: None,
         hover: None,
@@ -776,7 +778,7 @@
     ),
     (
         id: "the-export-control-produces-the-theme-as-css",
-        group: "theming",
+        group: "theming-workflows",
         what: "pressing CSS opens the export dialog over the page",
         open: None,
         hover: None,
@@ -788,7 +790,7 @@
     ),
     (
         id: "the-export-dialog-paints-the-generated-css",
-        group: "theming",
+        group: "theming-workflows",
         what: "the export dialog contains readable generated CSS rather than an empty field",
         open: None,
         hover: None,
@@ -800,7 +802,7 @@
     ),
     (
         id: "the-generated-css-can-be-copied",
-        group: "theming",
+        group: "theming-workflows",
         what: "Copy completes the clipboard write and reports its terminal success state",
         open: None,
         hover: None,
@@ -811,7 +813,7 @@
     ),
     (
         id: "the-export-dialog-can-be-closed",
-        group: "theming",
+        group: "theming-workflows",
         what: "Close dismisses the export dialog instead of leaving it in document flow",
         open: None,
         hover: None,
@@ -824,7 +826,7 @@
     // Restored workflows and complete editor-control coverage.
     (
         id: "the-theme-library-starts-with-the-current-theme",
-        group: "theming",
+        group: "theming-workflows",
         what: "the editor exposes the current named theme as a selectable UI control",
         open: None,
         hover: None,
@@ -834,7 +836,7 @@
     ),
     (
         id: "a-new-theme-is-added",
-        group: "theming",
+        group: "theming-workflows",
         what: "Add creates and selects a second editable theme",
         open: None,
         hover: None,
@@ -845,7 +847,7 @@
     ),
     (
         id: "the-second-theme-is-reachable",
-        group: "theming",
+        group: "theming-workflows",
         what: "the added theme appears as a selected named control",
         open: None,
         hover: None,
@@ -855,7 +857,7 @@
     ),
     (
         id: "a-saved-theme-can-be-selected",
-        group: "theming",
+        group: "theming-workflows",
         what: "selecting an earlier theme loads it into the editor",
         open: None,
         hover: None,
@@ -865,7 +867,7 @@
     ),
     (
         id: "a-theme-can-be-renamed",
-        group: "theming",
+        group: "theming-workflows",
         what: "typing a new name updates the selected saved theme",
         open: None,
         hover: None,
@@ -878,7 +880,7 @@
     ),
     (
         id: "the-renamed-theme-remains-selectable",
-        group: "theming",
+        group: "theming-workflows",
         what: "the saved-theme control carries the edited name",
         open: None,
         hover: None,
@@ -888,7 +890,7 @@
     ),
     (
         id: "a-theme-can-be-deleted",
-        group: "theming",
+        group: "theming-workflows",
         what: "Delete removes the selected theme and loads a remaining one",
         open: None,
         hover: None,
@@ -900,7 +902,7 @@
     ),
     (
         id: "another-theme-can-be-added-before-clearing",
-        group: "theming",
+        group: "theming-workflows",
         what: "the library can grow again after a deletion",
         open: None,
         hover: None,
@@ -911,7 +913,7 @@
     ),
     (
         id: "saved-themes-can-be-cleared",
-        group: "theming",
+        group: "theming-workflows",
         what: "Clear saved themes empties the saved library while retaining a working editor theme",
         open: None,
         hover: None,
@@ -922,7 +924,7 @@
     ),
     (
         id: "clearing-removes-the-saved-theme-controls",
-        group: "theming",
+        group: "theming-workflows",
         what: "the saved theme controls are absent after the library is cleared",
         open: None,
         hover: None,
@@ -932,9 +934,9 @@
     ),
     (
         id: "the_base_100_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-100 control opens the material colour picker",
-        open: None,
+        open: Some("Theming"),
         hover: None,
         click: Some("button:--color-base-100"),
         subject: "button:red-500",
@@ -943,7 +945,7 @@
     ),
     (
         id: "the_base_100_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-100 picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -954,7 +956,7 @@
     ),
     (
         id: "the_base_200_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-200 control opens the material colour picker",
         open: None,
         hover: None,
@@ -965,7 +967,7 @@
     ),
     (
         id: "the_base_200_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-200 picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -976,7 +978,7 @@
     ),
     (
         id: "the_base_300_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-300 control opens the material colour picker",
         open: None,
         hover: None,
@@ -987,7 +989,7 @@
     ),
     (
         id: "the_base_300_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-300 picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -998,7 +1000,7 @@
     ),
     (
         id: "the_base_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1009,7 +1011,7 @@
     ),
     (
         id: "the_base_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-base-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1020,7 +1022,7 @@
     ),
     (
         id: "the_primary_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-primary control opens the material colour picker",
         open: None,
         prepare: Some("button:Control accent 1"),
@@ -1032,7 +1034,7 @@
     ),
     (
         id: "selecting_a_material_colour_updates_the_theme",
-        group: "theming",
+        group: "theming-colors",
         what: "a direct primary edit becomes authoritative by leaving the harmony selection",
         open: None,
         hover: None,
@@ -1043,7 +1045,7 @@
     ),
     (
         id: "selecting_a_material_colour_reports_the_token",
-        group: "theming",
+        group: "theming-colors",
         what: "the direct token edit reports which primary property changed",
         open: None,
         hover: None,
@@ -1054,7 +1056,7 @@
     ),
     (
         id: "the_primary_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-primary picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1065,7 +1067,7 @@
     ),
     (
         id: "the_primary_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-primary-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1076,7 +1078,7 @@
     ),
     (
         id: "the_primary_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-primary-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1087,7 +1089,7 @@
     ),
     (
         id: "the_secondary_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-secondary control opens the material colour picker",
         open: None,
         hover: None,
@@ -1098,7 +1100,7 @@
     ),
     (
         id: "the_secondary_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-secondary picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1109,7 +1111,7 @@
     ),
     (
         id: "the_secondary_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-secondary-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1120,7 +1122,7 @@
     ),
     (
         id: "the_secondary_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-secondary-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1131,7 +1133,7 @@
     ),
     (
         id: "the_accent_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-accent control opens the material colour picker",
         open: None,
         hover: None,
@@ -1142,7 +1144,7 @@
     ),
     (
         id: "the_accent_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-accent picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1153,7 +1155,7 @@
     ),
     (
         id: "the_accent_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-accent-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1164,7 +1166,7 @@
     ),
     (
         id: "the_accent_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-accent-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1175,7 +1177,7 @@
     ),
     (
         id: "the_neutral_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-neutral control opens the material colour picker",
         open: None,
         hover: None,
@@ -1186,7 +1188,7 @@
     ),
     (
         id: "the_neutral_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-neutral picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1197,7 +1199,7 @@
     ),
     (
         id: "the_neutral_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-neutral-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1208,7 +1210,7 @@
     ),
     (
         id: "the_neutral_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-neutral-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1219,7 +1221,7 @@
     ),
     (
         id: "the_info_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-info control opens the material colour picker",
         open: None,
         hover: None,
@@ -1230,7 +1232,7 @@
     ),
     (
         id: "the_info_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-info picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1241,7 +1243,7 @@
     ),
     (
         id: "the_info_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-info-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1252,7 +1254,7 @@
     ),
     (
         id: "the_info_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-info-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1263,7 +1265,7 @@
     ),
     (
         id: "the_success_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-success control opens the material colour picker",
         open: None,
         hover: None,
@@ -1274,7 +1276,7 @@
     ),
     (
         id: "the_success_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-success picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1285,7 +1287,7 @@
     ),
     (
         id: "the_success_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-success-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1296,7 +1298,7 @@
     ),
     (
         id: "the_success_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-success-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1307,7 +1309,7 @@
     ),
     (
         id: "the_warning_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-warning control opens the material colour picker",
         open: None,
         hover: None,
@@ -1318,7 +1320,7 @@
     ),
     (
         id: "the_warning_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-warning picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1329,7 +1331,7 @@
     ),
     (
         id: "the_warning_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-warning-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1340,7 +1342,7 @@
     ),
     (
         id: "the_warning_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-warning-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1351,7 +1353,7 @@
     ),
     (
         id: "the_error_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-error control opens the material colour picker",
         open: None,
         hover: None,
@@ -1362,7 +1364,7 @@
     ),
     (
         id: "the_error_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-error picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1373,7 +1375,7 @@
     ),
     (
         id: "the_error_content_swatch_opens_its_picker",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-error-content control opens the material colour picker",
         open: None,
         hover: None,
@@ -1384,7 +1386,7 @@
     ),
     (
         id: "the_error_content_picker_closes",
-        group: "theming",
+        group: "theming-colors",
         what: "the --color-error-content picker can be dismissed cleanly",
         open: None,
         hover: None,
@@ -1395,9 +1397,9 @@
     ),
     (
         id: "boxes_square_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "boxes radius supports square",
-        open: None,
+        open: Some("Theming"),
         prepare: Some("radio:Boxes radius 4 pixels"),
         hover: None,
         click: Some("radio:Boxes radius square"),
@@ -1407,7 +1409,7 @@
     ),
     (
         id: "boxes_4_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "boxes radius supports 4 pixels",
         open: None,
         prepare: Some("radio:Boxes radius square"),
@@ -1419,7 +1421,7 @@
     ),
     (
         id: "boxes_8_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "boxes radius supports 8 pixels",
         open: None,
         prepare: Some("radio:Boxes radius square"),
@@ -1431,7 +1433,7 @@
     ),
     (
         id: "boxes_16_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "boxes radius supports 16 pixels",
         open: None,
         prepare: Some("radio:Boxes radius square"),
@@ -1443,7 +1445,7 @@
     ),
     (
         id: "boxes_32_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "boxes radius supports 32 pixels",
         open: None,
         prepare: Some("radio:Boxes radius square"),
@@ -1455,7 +1457,7 @@
     ),
     (
         id: "fields_square_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "fields radius supports square",
         open: None,
         prepare: Some("radio:Fields radius 4 pixels"),
@@ -1467,7 +1469,7 @@
     ),
     (
         id: "fields_4_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "fields radius supports 4 pixels",
         open: None,
         prepare: Some("radio:Fields radius square"),
@@ -1479,7 +1481,7 @@
     ),
     (
         id: "fields_8_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "fields radius supports 8 pixels",
         open: None,
         prepare: Some("radio:Fields radius square"),
@@ -1491,7 +1493,7 @@
     ),
     (
         id: "fields_16_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "fields radius supports 16 pixels",
         open: None,
         prepare: Some("radio:Fields radius square"),
@@ -1503,7 +1505,7 @@
     ),
     (
         id: "fields_32_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "fields radius supports 32 pixels",
         open: None,
         prepare: Some("radio:Fields radius square"),
@@ -1515,7 +1517,7 @@
     ),
     (
         id: "selectors_square_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "selectors radius supports square",
         open: None,
         prepare: Some("radio:Selectors radius 4 pixels"),
@@ -1527,7 +1529,7 @@
     ),
     (
         id: "selectors_4_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "selectors radius supports 4 pixels",
         open: None,
         prepare: Some("radio:Selectors radius square"),
@@ -1539,7 +1541,7 @@
     ),
     (
         id: "selectors_8_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "selectors radius supports 8 pixels",
         open: None,
         prepare: Some("radio:Selectors radius square"),
@@ -1551,7 +1553,7 @@
     ),
     (
         id: "selectors_16_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "selectors radius supports 16 pixels",
         open: None,
         prepare: Some("radio:Selectors radius square"),
@@ -1563,7 +1565,7 @@
     ),
     (
         id: "selectors_32_pixels_can_be_selected",
-        group: "theming",
+        group: "theming-behavior",
         what: "selectors radius supports 32 pixels",
         open: None,
         prepare: Some("radio:Selectors radius square"),
@@ -1575,7 +1577,7 @@
     ),
     (
         id: "glass_defaults_execute_their_reset_callback",
-        group: "theming",
+        group: "theming-behavior",
         what: "Reset runs the glass-token reset path",
         open: None,
         hover: None,
@@ -1585,7 +1587,7 @@
     ),
     (
         id: "whole_site_application_changes_the_document",
-        group: "theming",
+        group: "theming-behavior",
         what: "Apply to whole site changes the surrounding page theme",
         open: None,
         hover: None,
@@ -1596,7 +1598,7 @@
     ),
     (
         id: "whole_site_application_reports_completion",
-        group: "theming",
+        group: "theming-behavior",
         what: "the site-scope callback reports its product outcome",
         open: None,
         hover: None,
@@ -1606,7 +1608,7 @@
     ),
     (
         id: "whole_site_foreground_updates_the_header",
-        group: "theming",
+        group: "theming-behavior",
         what: "the generated base-content foreground and its public aliases repaint the top navigation",
         open: None,
         prepare: Some("button:Dark mode"),
@@ -1618,7 +1620,7 @@
     ),
     (
         id: "whole_site_header_keeps_readable_contrast",
-        group: "theming",
+        group: "theming-behavior",
         what: "the generated header text remains readable against the applied site theme",
         open: None,
         hover: None,
@@ -1629,7 +1631,7 @@
     ),
     (
         id: "whole_site_application_can_be_removed",
-        group: "theming",
+        group: "theming-behavior",
         what: "turning site scope off restores preview-only styling",
         open: None,
         hover: None,
@@ -1639,7 +1641,7 @@
     ),
     (
         id: "remembered_theme_uses_a_distinct_strength",
-        group: "theming",
+        group: "theming-behavior",
         what: "persistence starts from a non-default surface strength",
         open: None,
         prepare: Some("button:Colour strength 10%"),
@@ -1651,7 +1653,7 @@
     ),
     (
         id: "remembering_a_theme_writes_persistence",
-        group: "theming",
+        group: "theming-behavior",
         what: "Remember this theme executes the persistence path",
         open: None,
         hover: None,
@@ -1661,7 +1663,7 @@
     ),
     (
         id: "the_remembered_theme_survives_route_teardown",
-        group: "theming",
+        group: "theming-behavior",
         what: "leaving the editor tears down the theming route while retaining storage",
         open: Some("Home"),
         hover: None,
@@ -1672,7 +1674,7 @@
     ),
     (
         id: "the_remembered_theme_is_restored",
-        group: "theming",
+        group: "theming-behavior",
         what: "returning to the editor restores the persisted theme state",
         open: Some("Theming"),
         hover: None,
@@ -1683,7 +1685,7 @@
     ),
     (
         id: "the_remembered_strength_value_is_restored",
-        group: "theming",
+        group: "theming-behavior",
         what: "the non-default strength is selected after the editor remounts",
         open: None,
         hover: None,
@@ -1694,7 +1696,7 @@
     ),
     (
         id: "returning-to-the-editor-restores-the-page-top",
-        group: "theming",
+        group: "theming-behavior",
         what: "route navigation returns the editor to its heading rather than retaining a deep scroll position",
         open: None,
         hover: None,
@@ -1704,7 +1706,7 @@
     ),
     (
         id: "remembered_state_can_be_cleared",
-        group: "theming",
+        group: "theming-behavior",
         what: "turning Remember off clears the persisted editor state",
         open: None,
         hover: None,
@@ -1714,9 +1716,9 @@
     ),
     (
         id: "the_preview_variants_tab_is_named_and_operable",
-        group: "theming",
+        group: "theming-preview",
         what: "the icon tab exposes a name and switches to variants",
-        open: None,
+        open: Some("Theming"),
         hover: None,
         click: Some("tab:Component Variants"),
         subject: "heading:Buttons",
@@ -1724,7 +1726,7 @@
     ),
     (
         id: "the_button_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Button specimen reports its activation",
         open: None,
         hover: None,
@@ -1734,7 +1736,7 @@
     ),
     (
         id: "the_primary_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Primary specimen reports its activation",
         open: None,
         hover: None,
@@ -1744,7 +1746,7 @@
     ),
     (
         id: "the_secondary_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Secondary specimen reports its activation",
         open: None,
         hover: None,
@@ -1754,7 +1756,7 @@
     ),
     (
         id: "the_accent_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Accent specimen reports its activation",
         open: None,
         hover: None,
@@ -1764,7 +1766,7 @@
     ),
     (
         id: "the_outline_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Outline specimen reports its activation",
         open: None,
         hover: None,
@@ -1774,7 +1776,7 @@
     ),
     (
         id: "the_ghost_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Ghost specimen reports its activation",
         open: None,
         hover: None,
@@ -1784,7 +1786,7 @@
     ),
     (
         id: "the_danger_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Danger specimen reports its activation",
         open: None,
         hover: None,
@@ -1794,7 +1796,7 @@
     ),
     (
         id: "the_danger_soft_variant_button_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Danger Soft specimen reports its activation",
         open: None,
         hover: None,
@@ -1804,7 +1806,7 @@
     ),
     (
         id: "the_preview_palette_tab_is_named_and_operable",
-        group: "theming",
+        group: "theming-preview",
         what: "the palette icon tab switches to the generated colours",
         open: None,
         hover: None,
@@ -1814,7 +1816,7 @@
     ),
     (
         id: "the_preview_demo_tab_is_named_and_operable",
-        group: "theming",
+        group: "theming-preview",
         what: "the demo icon tab returns to interactive components",
         open: None,
         hover: None,
@@ -1824,7 +1826,7 @@
     ),
     (
         id: "preview_more_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview more control reports its intended action",
         open: None,
         hover: None,
@@ -1835,7 +1837,7 @@
     ),
     (
         id: "preview_apply_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Apply control reports its intended action",
         open: None,
         hover: None,
@@ -1846,7 +1848,7 @@
     ),
     (
         id: "preview_click_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Click control reports its intended action",
         open: None,
         hover: None,
@@ -1857,7 +1859,7 @@
     ),
     (
         id: "preview_support_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Support control reports its intended action",
         open: None,
         hover: None,
@@ -1868,7 +1870,7 @@
     ),
     (
         id: "preview_choose_plan_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Choose Plan control reports its intended action",
         open: None,
         hover: None,
@@ -1879,7 +1881,7 @@
     ),
     (
         id: "preview_notifications_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Notifications control reports its intended action",
         open: None,
         hover: None,
@@ -1890,7 +1892,7 @@
     ),
     (
         id: "preview_start_call_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Start call control reports its intended action",
         open: None,
         hover: None,
@@ -1901,7 +1903,7 @@
     ),
     (
         id: "preview_open_messages_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Open messages control reports its intended action",
         open: None,
         hover: None,
@@ -1912,7 +1914,7 @@
     ),
     (
         id: "preview_conversation_settings_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Conversation settings control reports its intended action",
         open: None,
         hover: None,
@@ -1923,7 +1925,7 @@
     ),
     (
         id: "preview_previous_track_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Previous track control reports its intended action",
         open: None,
         hover: None,
@@ -1934,7 +1936,7 @@
     ),
     (
         id: "preview_play_track_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Play track control reports its intended action",
         open: None,
         hover: None,
@@ -1945,7 +1947,7 @@
     ),
     (
         id: "preview_next_track_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Next track control reports its intended action",
         open: None,
         hover: None,
@@ -1956,7 +1958,7 @@
     ),
     (
         id: "preview_toggle_volume_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Toggle volume control reports its intended action",
         open: None,
         hover: None,
@@ -1967,7 +1969,7 @@
     ),
     (
         id: "preview_open_account_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Open account control reports its intended action",
         open: None,
         hover: None,
@@ -1978,7 +1980,7 @@
     ),
     (
         id: "preview_button_1_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Button 1 control reports its intended action",
         open: None,
         hover: None,
@@ -1989,7 +1991,7 @@
     ),
     (
         id: "preview_button_2_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Button 2 control reports its intended action",
         open: None,
         hover: None,
@@ -2000,7 +2002,7 @@
     ),
     (
         id: "preview_button_3_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Button 3 control reports its intended action",
         open: None,
         hover: None,
@@ -2011,7 +2013,7 @@
     ),
     (
         id: "preview_search_preview_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Search preview control reports its intended action",
         open: None,
         hover: None,
@@ -2022,7 +2024,7 @@
     ),
     (
         id: "preview_submit_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview Submit control reports its intended action",
         open: None,
         hover: None,
@@ -2033,7 +2035,7 @@
     ),
     (
         id: "preview_calendar_day_1_selects",
-        group: "theming",
+        group: "theming-preview",
         what: "calendar day 1 reports its selected outcome",
         open: None,
         hover: None,
@@ -2043,7 +2045,7 @@
     ),
     (
         id: "preview_calendar_day_2_selects",
-        group: "theming",
+        group: "theming-preview",
         what: "calendar day 2 reports its selected outcome",
         open: None,
         hover: None,
@@ -2053,7 +2055,7 @@
     ),
     (
         id: "preview_calendar_day_3_selects",
-        group: "theming",
+        group: "theming-preview",
         what: "calendar day 3 reports its selected outcome",
         open: None,
         hover: None,
@@ -2063,7 +2065,7 @@
     ),
     (
         id: "preview_calendar_day_4_selects",
-        group: "theming",
+        group: "theming-preview",
         what: "calendar day 4 reports its selected outcome",
         open: None,
         hover: None,
@@ -2073,7 +2075,7 @@
     ),
     (
         id: "preview_calendar_day_5_selects",
-        group: "theming",
+        group: "theming-preview",
         what: "calendar day 5 reports its selected outcome",
         open: None,
         hover: None,
@@ -2083,7 +2085,7 @@
     ),
     (
         id: "preview_calendar_day_6_selects",
-        group: "theming",
+        group: "theming-preview",
         what: "calendar day 6 reports its selected outcome",
         open: None,
         hover: None,
@@ -2093,7 +2095,7 @@
     ),
     (
         id: "preview_calendar_day_7_selects",
-        group: "theming",
+        group: "theming-preview",
         what: "calendar day 7 reports its selected outcome",
         open: None,
         hover: None,
@@ -2103,7 +2105,7 @@
     ),
     (
         id: "preview_filters_change",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview filter choices retain a user's selection",
         open: None,
         hover: None,
@@ -2114,7 +2116,7 @@
     ),
     (
         id: "preview_event_search_accepts_input",
-        group: "theming",
+        group: "theming-preview",
         what: "the event search field retains entered text",
         open: None,
         hover: None,
@@ -2126,7 +2128,7 @@
     ),
     (
         id: "preview_all_day_filter_changes",
-        group: "theming",
+        group: "theming-preview",
         what: "the all-day event filter retains its selected state",
         open: None,
         hover: None,
@@ -2136,7 +2138,7 @@
     ),
     (
         id: "preview_content_tabs_change",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview tab set changes its selected tab",
         open: None,
         prepare: Some("tab:Tab 1"),
@@ -2148,7 +2150,7 @@
     ),
     (
         id: "preview_minimum_price_accepts_input",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview's explicit price bounds retain entered values",
         open: None,
         hover: None,
@@ -2161,7 +2163,7 @@
     ),
     (
         id: "preview_billing_period_changes",
-        group: "theming",
+        group: "theming-preview",
         what: "the billing preview changes between monthly and yearly",
         open: None,
         prepare: Some("tab:Monthly"),
@@ -2173,7 +2175,7 @@
     ),
     (
         id: "preview_theme_switch_changes",
-        group: "theming",
+        group: "theming-preview",
         what: "the named preview theme switch retains its state",
         open: None,
         hover: None,
@@ -2183,7 +2185,7 @@
     ),
     (
         id: "preview_menu_items_act",
-        group: "theming",
+        group: "theming-preview",
         what: "the preview menu reports the selected destination",
         open: None,
         hover: None,
@@ -2194,7 +2196,7 @@
     ),
     (
         id: "preview_navigation_menu_opens",
-        group: "theming",
+        group: "theming-preview",
         what: "the compact navigation trigger reveals its menu",
         open: None,
         hover: None,
@@ -2204,7 +2206,7 @@
     ),
     (
         id: "preview_navigation_dashboard_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Dashboard destination reports its intended action",
         open: None,
         prepare: Some("button:Open navigation menu"),
@@ -2216,7 +2218,7 @@
     ),
     (
         id: "preview_navigation_settings_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Settings destination reports its intended action",
         open: None,
         prepare: Some("button:Open navigation menu"),
@@ -2228,7 +2230,7 @@
     ),
     (
         id: "preview_navigation_logout_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Logout destination reports the requested session action",
         open: None,
         prepare: Some("button:Open navigation menu"),
@@ -2240,7 +2242,7 @@
     ),
     (
         id: "preview_search_accepts_input",
-        group: "theming",
+        group: "theming-preview",
         what: "the joined preview search retains entered text",
         open: None,
         hover: None,
@@ -2252,7 +2254,7 @@
     ),
     (
         id: "preview_recommendation_changes",
-        group: "theming",
+        group: "theming-preview",
         what: "the recommendation choice changes between its two explicit options",
         open: None,
         hover: None,
@@ -2263,7 +2265,7 @@
     ),
     (
         id: "preview_products_breadcrumb_acts",
-        group: "theming",
+        group: "theming-preview",
         what: "the Products breadcrumb reports the intended destination",
         open: None,
         hover: None,
@@ -2273,7 +2275,7 @@
     ),
     (
         id: "preview_pagination_changes_page",
-        group: "theming",
+        group: "theming-preview",
         what: "the pagination preview selects another page and reports it",
         open: None,
         hover: None,
@@ -2284,9 +2286,9 @@
     ),
     (
         id: "colour_strength_20_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "colour strength 20% updates and retains the composition",
-        open: None,
+        open: Some("Theming"),
         prepare: Some("button:Colour strength 10%"),
         hover: None,
         click: Some("button:Colour strength 20%"),
@@ -2296,7 +2298,7 @@
     ),
     (
         id: "colour_strength_30_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "colour strength 30% updates and retains the composition",
         open: None,
         prepare: Some("button:Colour strength 10%"),
@@ -2308,7 +2310,7 @@
     ),
     (
         id: "colour_strength_40_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "colour strength 40% updates and retains the composition",
         open: None,
         prepare: Some("button:Colour strength 10%"),
@@ -2320,7 +2322,7 @@
     ),
     (
         id: "softness_0_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "softness 0% updates and retains the composition",
         open: None,
         prepare: Some("button:Softness 25%"),
@@ -2332,7 +2334,7 @@
     ),
     (
         id: "softness_25_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "softness 25% updates and retains the composition",
         open: None,
         prepare: Some("button:Softness 0%"),
@@ -2344,7 +2346,7 @@
     ),
     (
         id: "softness_50_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "softness 50% updates and retains the composition",
         open: None,
         prepare: Some("button:Softness 0%"),
@@ -2356,7 +2358,7 @@
     ),
     (
         id: "softness_75_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "softness 75% updates and retains the composition",
         open: None,
         prepare: Some("button:Softness 0%"),
@@ -2368,7 +2370,7 @@
     ),
     (
         id: "softness_100_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "softness 100% updates and retains the composition",
         open: None,
         prepare: Some("button:Softness 0%"),
@@ -2380,7 +2382,7 @@
     ),
     (
         id: "text_brightness_minus_4_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "text brightness -4 updates and retains the accessible text ladder",
         open: None,
         prepare: Some("button:Text brightness 0"),
@@ -2392,7 +2394,7 @@
     ),
     (
         id: "text_brightness_minus_2_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "text brightness -2 updates and retains the accessible text ladder",
         open: None,
         prepare: Some("button:Text brightness 0"),
@@ -2404,7 +2406,7 @@
     ),
     (
         id: "text_brightness_0_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "text brightness 0 updates and retains the accessible text ladder",
         open: None,
         prepare: Some("button:Text brightness +3"),
@@ -2416,7 +2418,7 @@
     ),
     (
         id: "text_brightness_3_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "text brightness +3 updates and retains the accessible text ladder",
         open: None,
         prepare: Some("button:Text brightness 0"),
@@ -2428,7 +2430,7 @@
     ),
     (
         id: "text_brightness_6_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "text brightness +6 updates and retains the accessible text ladder",
         open: None,
         prepare: Some("button:Text brightness 0"),
@@ -2440,7 +2442,7 @@
     ),
     (
         id: "control_accent_3_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "control accent friend 3 becomes the active harmony",
         open: None,
         prepare: Some("button:Control accent 1"),
@@ -2452,7 +2454,7 @@
     ),
     (
         id: "control_accent_4_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "control accent friend 4 becomes the active harmony",
         open: None,
         prepare: Some("button:Control accent 1"),
@@ -2464,7 +2466,7 @@
     ),
     (
         id: "control_accent_5_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "control accent friend 5 becomes the active harmony",
         open: None,
         prepare: Some("button:Control accent 1"),
@@ -2476,7 +2478,7 @@
     ),
     (
         id: "control_accent_6_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "control accent friend 6 becomes the active harmony",
         open: None,
         prepare: Some("button:Control accent 1"),
@@ -2488,7 +2490,7 @@
     ),
     (
         id: "control_accent_7_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "control accent friend 7 becomes the active harmony",
         open: None,
         prepare: Some("button:Control accent 1"),
@@ -2500,7 +2502,7 @@
     ),
     (
         id: "artwork_accent_3_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "artwork accent friend 3 becomes the active harmony",
         open: None,
         prepare: Some("button:Artwork accent 1"),
@@ -2512,7 +2514,7 @@
     ),
     (
         id: "artwork_accent_4_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "artwork accent friend 4 becomes the active harmony",
         open: None,
         prepare: Some("button:Artwork accent 1"),
@@ -2524,7 +2526,7 @@
     ),
     (
         id: "artwork_accent_5_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "artwork accent friend 5 becomes the active harmony",
         open: None,
         prepare: Some("button:Artwork accent 1"),
@@ -2536,7 +2538,7 @@
     ),
     (
         id: "artwork_accent_6_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "artwork accent friend 6 becomes the active harmony",
         open: None,
         prepare: Some("button:Artwork accent 1"),
@@ -2548,7 +2550,7 @@
     ),
     (
         id: "artwork_accent_7_is_selectable",
-        group: "theming",
+        group: "theming-model",
         what: "artwork accent friend 7 becomes the active harmony",
         open: None,
         prepare: Some("button:Artwork accent 1"),
@@ -2560,7 +2562,7 @@
     ),
     (
         id: "theme-softness-repaints-the-preview",
-        group: "theming",
+        group: "theming-model",
         what: "surface softness visibly changes the composed component preview",
         open: None,
         prepare: Some("button:Softness 0%"),
@@ -2572,7 +2574,7 @@
     ),
     (
         id: "theme-text-brightness-repaints-the-preview",
-        group: "theming",
+        group: "theming-model",
         what: "text brightness visibly changes the composed component preview",
         open: None,
         prepare: Some("button:Text brightness -4"),
@@ -2584,7 +2586,7 @@
     ),
     (
         id: "theme_builder_reset_restores_the_full_model",
-        group: "theming",
+        group: "theming-model",
         what: "Reset executes the theme-builder reset path after an accent change",
         open: None,
         prepare: Some("button:Control accent 7"),
@@ -2596,7 +2598,7 @@
     ),
     (
         id: "the-glass-blur-slider-repaints-the-preview",
-        group: "theming",
+        group: "theming-model",
         what: "the blur token visibly changes the live glass material",
         open: None,
         prepare: Some("slider:Blur"),
@@ -2611,7 +2613,7 @@
     ),
     (
         id: "the-glass-refraction-slider-repaints-the-preview",
-        group: "theming",
+        group: "theming-model",
         what: "the refraction token visibly changes the live glass material",
         open: None,
         prepare: Some("slider:Refraction"),
@@ -2626,7 +2628,7 @@
     ),
     (
         id: "the-glass-depth-slider-repaints-the-preview",
-        group: "theming",
+        group: "theming-model",
         what: "the depth token visibly changes the live glass material",
         open: None,
         prepare: Some("slider:Depth"),
@@ -2641,7 +2643,7 @@
     ),
     (
         id: "the-preview-referral-select-opens",
-        group: "theming",
+        group: "theming-model",
         what: "the preview Select exposes its listbox through the UI trigger",
         open: None,
         hover: None,
@@ -2652,7 +2654,7 @@
     ),
     (
         id: "the-preview-referral-select-commits-a-value",
-        group: "theming",
+        group: "theming-model",
         what: "choosing a referral source updates the preview and reports the selection",
         open: None,
         hover: None,

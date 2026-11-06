@@ -1,0 +1,14 @@
+[
+    (
+        id: "direct-route-renders-the-application-root",
+        group: "route-inventory",
+        what: "a registered direct route renders inside the application root",
+        // The direct-route profile names the current document with an empty
+        // opener. Declaring it here keeps this file self-contained while the
+        // harness correctly treats the already-loaded route as the surface.
+        open: Some(""),
+        subject: "#root",
+        expect: Present,
+        outcome_timeout_ms: 8000,
+    ),
+]

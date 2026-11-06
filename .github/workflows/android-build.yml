@@ -16,6 +16,8 @@ jobs:
       version: ${{ steps.config.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
