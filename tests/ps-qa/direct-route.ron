@@ -1,0 +1,10 @@
+// A route sweep starts the production artifact at one URL at a time. An empty
+// opener means the current document is the inventory surface; no product link
+// is added merely to make an unlisted route reachable to the harness.
+AppProfile(
+    surfaces: [
+        (name: "current-route", opener: "", inventory_root: Some("#root")),
+    ],
+    navigation_controls: ["Home", "Theming", "Docs", "Layouts", "Explore Components", "Components", "Surfaces", "Complete Coverage"],
+    inert_controls: ["Bottom with arrow"],
+)

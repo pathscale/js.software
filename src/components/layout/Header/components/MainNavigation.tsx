@@ -17,6 +17,7 @@ export const MainNavigation: Component<MainNavigationProps> = (props) => {
           <>
             {item.href ? (
               <Link
+                id={`desktop-nav-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
                 href={item.href}
                 class={`px-3 py-2 rounded-lg transition-colors font-medium text-base ${
                   isActive(item.href)
@@ -28,6 +29,7 @@ export const MainNavigation: Component<MainNavigationProps> = (props) => {
               </Link>
             ) : (
               <Button
+                id={`desktop-nav-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
                 variant="ghost"
                 size="lg"
                 onClick={() => {
